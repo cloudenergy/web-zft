@@ -1,0 +1,12 @@
+{
+    "name": "zft",
+    "version": "1.0.0",
+    "author": "insane <luojie@medlinker.com>",
+    "scripts": {
+        "dev": "blade dev",
+        "build": "blade build"
+    },
+    "dependencies": {
+        "blade-scripts": "^1.1.23"
+    }
+}
