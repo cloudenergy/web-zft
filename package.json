@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "blade dev",
         "build": "blade build",
-        "test": "jest"
+        "test": "ava"
     },
     "dependencies": {
         "blade-scripts": "^1.1.26",
@@ -19,20 +19,12 @@
     },
     "babel": {
         "env": {
-            "test": {
-                "presets": ["env"]
-            }
+            "test": { "presets": ["env"] }
         },
-        "presets": [
-            "env"
-        ]
+        "presets": ["env"]
     },
     "jest": {
-        "moduleFileExtensions": [
-            "js",
-            "json",
-            "vue"
-        ],
+        "moduleFileExtensions": ["js", "json", "vue"],
         "moduleNameMapper": {
             "^~(.*)$": "<rootDir>/$1",
             "^vue$": "vue/dist/vue.common.js"
