@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "blade dev",
         "build": "blade build",
-        "test": "ava"
+        "test": "jest"
     },
     "dependencies": {
         "blade-scripts": "^1.1.26",
