@@ -18,7 +18,14 @@
         "vue-test-utils": "^1.0.0-beta.4"
     },
     "babel": {
-        "presets": ["./node_modules/blade-scripts/node_modules/babel-preset-vue-app"]
+        "env": {
+            "test": {
+                "presets": ["./node_modules/blade-scripts/node_modules/babel-preset-vue-app/node_modules/babel-preset-env"]
+            }
+        },
+        "presets": [
+            "./node_modules/blade-scripts/node_modules/babel-preset-vue-app/node_modules/babel-preset-env"
+        ]
     },
     "jest": {
         "moduleFileExtensions": [
@@ -27,6 +34,7 @@
             "vue"
         ],
         "moduleNameMapper": {
+            "^~(.*)$": "<rootDir>/$1",
             "^vue$": "vue/dist/vue.common.js"
         },
         "moduleDirectories": ["node_modules", "node_modules/blade-scripts/node_modules"],
