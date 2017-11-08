@@ -1,5 +1,6 @@
 <template>
     <div class="page">
+        <top-nav></top-nav>
         <el-select v-model="value" placeholder="请选择">
             <el-option
             v-for="item in options"
@@ -11,7 +12,6 @@
     </div>
 </template>
 <script>
-    import MessageList from '../components/MessageList'
     export default {
       data() {
         return {

@@ -2,18 +2,18 @@ import Vue from 'vue'
 import App from '../pages/index.vue'
 
 describe('App.test.js', () => {
-  let cmp, vm
+    let cmp, vm
 
-  beforeEach(() => {
-    cmp = Vue.extend(App) // Create a copy of the original component
-    vm = new cmp({
-      data: { // Replace data value with this fake data
-        messages: ['Cat']
-      }
-    }).$mount() // Instances and mounts the component
-  })
+    beforeEach(() => {
+        cmp = Vue.extend(App) // Create a copy of the original component
+        vm = new cmp({
+            data: { // Replace data value with this fake data
+                messages: ['Cat']
+            }
+        }).$mount() // Instances and mounts the component
+    })
 
-it('equals messages to ["Cat"]', () => {
-  expect(vm.messages).toEqual(['Cat'])
-})
+    it('equals messages to ["Cat"]', () => {
+        expect(vm.messages).toEqual(['Cat'])
+    })
 })

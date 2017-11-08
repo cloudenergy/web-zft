@@ -1,39 +1,38 @@
 {
-  "name": "zft",
-  "version": "1.0.0",
-  "author": "insane <luojie@medlinker.com>",
-  "scripts": {
-    "dev": "blade dev",
-<<<<<<< HEAD
-    "build": "blade build"
-  },
-  "dependencies": {
-    "blade-scripts": "^1.1.23",
-    "element-ui": "^2.0.3"
-=======
-    "build": "blade build",
-    "test": "jest"
-  },
-  "dependencies": {
-    "blade-scripts": "^1.1.23",
-    "vue": "latest"
-  },
-  "devDependencies": {
-    "babel-jest": "^21.2.0",
-    "babel-preset-stage-2": "^6.24.1",
-    "jest": "^21.2.1",
-    "jest-vue-preprocessor": "^1.3.1",
-    "vue-test-utils": "^1.0.0-beta.4"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+    "name": "zft",
+    "version": "1.0.0",
+    "author": "insane <luojie@medlinker.com>",
+    "scripts": {
+        "dev": "blade dev",
+        "build": "blade build",
+        "test": "jest"
+    },
+    "dependencies": {
+        "blade-scripts": "^1.1.26",
+        "element-ui": "^2.0.3"
+    },
+    "devDependencies": {
+        "babel-jest": "^21.2.0",
+        "jest": "^21.2.1",
+        "jest-vue-preprocessor": "^1.3.1",
+        "vue-test-utils": "^1.0.0-beta.4"
+    },
+    "babel": {
+        "presets": ["./node_modules/blade-scripts/node_modules/babel-preset-vue-app"]
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "vue"
+        ],
+        "moduleNameMapper": {
+            "^vue$": "vue/dist/vue.common.js"
+        },
+        "moduleDirectories": ["node_modules", "node_modules/blade-scripts/node_modules"],
+        "transform": {
+            ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+            "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+        }
     }
->>>>>>> 183164bfbcc1189f918fd732b9bb5c7b45e29e23
-  }
 }
