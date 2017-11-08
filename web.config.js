@@ -9,7 +9,7 @@ module.exports = {
         }
     },
     // options: mobile|pc|hybrid
-    "type": "mobile",
+    "type": "pc",
     "framework": "vue",
     "title": "blade",
     "routes": {
