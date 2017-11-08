@@ -19,9 +19,6 @@
     "vue-test-utils": "^1.0.0-beta.4"
   },
   "jest": {
-    "moduleNameMapper": {
-      "^vue$": "vue/dist/vue.common.js  "
-    },
     "moduleFileExtensions": [
       "js",
       "vue"
