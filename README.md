@@ -38,6 +38,12 @@
 
 - npm run build
 
+```
+// 不同环境
+npm run build -- --env=qa
+npm run build -- --env=production
+```
+
 ### Ref
 
 *[blade-vue README](https://github.com/doctorwork/blade-vue/blob/master/README.md)*
