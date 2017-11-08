@@ -20,11 +20,11 @@
     "babel": {
         "env": {
             "test": {
-                "presets": ["./node_modules/blade-scripts/node_modules/babel-preset-vue-app/node_modules/babel-preset-env"]
+                "presets": ["env"]
             }
         },
         "presets": [
-            "./node_modules/blade-scripts/node_modules/babel-preset-vue-app/node_modules/babel-preset-env"
+            "env"
         ]
     },
     "jest": {
