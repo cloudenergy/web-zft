@@ -11,7 +11,8 @@ module.exports = {
     // options: mobile|pc|hybrid
     "type": "pc",
     "framework": "vue",
-    "title": "blade",
+    "title": "租付通",
+    "layout": { main: "~/views/app.vue" },
     "routes": {
         // 'papers-details': "/:id"
     },

@@ -1,8 +1,14 @@
 <template>
-	<div>nav</div>
+	<div class="nav-wrapper">nav</div>
 </template>
 <script>
 	export default {
-		name: "nav"
-	}
+	  name: "nav"
+	};
 </script>
+
+<style lang="less" scoped>
+	.nav-wrapper {
+	  background-color: @dark;
+	}
+</style>

@@ -24,14 +24,15 @@
         "presets": ["env"]
     },
     "jest": {
-        "moduleFileExtensions": ["js", "json", "vue"],
+        "collectCoverageFrom": ["**/*.{js,jsx,vue}", "!**/node_modules/**", "!**/vendor/**"],
+        "moduleFileExtensions": ["js", "json", "vue", "less"],
         "moduleNameMapper": {
             "^~(.*)$": "<rootDir>/$1",
             "^vue$": "vue/dist/vue.common.js"
         },
         "moduleDirectories": ["node_modules", "node_modules/blade-scripts/node_modules"],
         "transform": {
-            ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+            ".*\\.vue$": "<rootDir>/node_modules/jest-vue-preprocessor",
             "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
         }
     }

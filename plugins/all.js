@@ -2,7 +2,7 @@
  * @Author: insane.luojie
  * @Date:   2017-09-30 09:33:33
  * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-08 17:33:54
+ * @Last Modified time: 2017-11-09 00:21:38
  */
 import api from "./api";
 import "../static/style";
@@ -12,21 +12,21 @@ import {
     Select,
     Option,
     Loading,
-    Dialog
+    Dialog,
+    Menu,
+    Submenu,
+    MenuItem
 } from "element-ui";
 
 export default function(vue) {
     // 设置api 
     vue.prototype.$model = api;
-    vue.prototype.$ELEMENT = { size: 'small' }
+    vue.prototype.$ELEMENT = { size: 'small' };
 
     /**
      * element ui 
      */
-    vue.use(Select)
-    vue.use(Option)
-    vue.use(Loading)
-    vue.use(Dialog)
+    [Select, Option, Loading, Dialog, Menu, Submenu, MenuItem].map(el => vue.use(el));
 
     mixin(vue);
 }
