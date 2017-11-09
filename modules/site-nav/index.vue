@@ -22,14 +22,11 @@
 </script>
 
 <style lang="less" scoped>
-    .nav {
-      position: absolute;
-      top: 60px;
-      bottom: 0px;
-      left: 0px;
+    .el-menu-vertical {
+      height: 100%;
     }
 
-    .el-menu-vertical {
+    .nav {
       height: 100%;
     }
 </style>

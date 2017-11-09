@@ -16,14 +16,23 @@
 
 
 <style lang="less" scoped>
+    @top-height: 30px;
+
     .app {
       position: relative;
       height: 100%;
     }
 
+    .sider {
+      position: absolute;
+      top: @top-height;
+      bottom: 0px;
+      left: 0px;
+    }
+
     .top-nav {
       width: 100%;
-      height: 60px;
+      height: @top-height;
     }
 </style>
 
