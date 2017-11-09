@@ -1,15 +1,15 @@
 <template>
   <div class="nav">
-      <el-menu default-active="1-4-1" class="el-menu-vertical" :collapse="true">
-        <el-menu-item index="1">
+      <el-menu default-active="1-4-1" class="el-menu-vertical" :collapse="false" :router="true">
+        <el-menu-item index="/houses">
             <i class="el-icon-location"></i>
             <span slot="title">房源</span>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="/rent">
             <i class="el-icon-menu"></i>
             <span slot="title">租务</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <el-menu-item index="/bills">
             <i class="el-icon-setting"></i>
             <span slot="title">账单</span>
         </el-menu-item>

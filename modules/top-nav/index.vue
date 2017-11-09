@@ -1,28 +1,33 @@
 <template>
-	<div class="nav-wrapper ceiling">
-		<div class="ceiling-main">
-				<a href="#">Admin</a> |
-				<a href="#">注销</a>
+	<div class="top-nav">
+		<div class="logo"></div>
+		<div class="links">
+			<el-menu class="el-menu-demo" mode="horizontal" >
+				<el-menu-item index="1" v-for="link in links" :key="link.url">{{link.text}}</el-menu-item>
+			</el-menu>
 		</div>
 	</div>
 </template>
 <script>
 	export default {
-	  name: "nav"
+	  props: {
+	    links: Array
+	  }
 	};
 </script>
 
 <style lang="less" scoped>
-	.nav-wrapper {
-	  color: #fff;
-	  background-color: @dark;
+	.logo {
+	  height: 100%;
+	  width: 100px;
+	  float: left;
 	}
 
-	.ceiling {
-	  background: #464c5b;
-	  padding: 10px 0;
-	  overflow: hidden;
+	.top-nav {
+	  color: #fff;
+	  height: 60px;
 	}
+
 	.ceiling-main {
 	  float: right;
 	  margin-right: 15px;

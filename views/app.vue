@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-      <top-nav class="top-nav" />
       <div class="sider">
           <site-nav />
       </div>
@@ -16,7 +15,7 @@
 
 
 <style lang="less" scoped>
-    @top-height: 30px;
+    @top-height: 60px;
 
     .app {
       position: relative;
@@ -24,15 +23,11 @@
     }
 
     .sider {
+      padding-top: @top-height;
       position: absolute;
-      top: @top-height;
+      top: 0px;
       bottom: 0px;
       left: 0px;
-    }
-
-    .top-nav {
-      width: 100%;
-      height: @top-height;
     }
 </style>
 
