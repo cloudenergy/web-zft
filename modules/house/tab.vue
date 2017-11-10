@@ -8,7 +8,7 @@
             </el-radio-group>
         </div>
         <div class="filters">
-            <el-select v-model="filters.city" clearable placeholder="请选择城市">
+            <el-select v-model="filters.city" size="mini" clearable placeholder="请选择城市">
                 <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -16,7 +16,7 @@
                 :value="item.value">
                 </el-option>
             </el-select>
-            <el-select v-model="filters.area" clearable placeholder="请选择区域">
+            <el-select v-model="filters.area" size="mini" clearable placeholder="请选择区域">
                 <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -25,9 +25,13 @@
                 </el-option>
             </el-select>
         </div>
-        <div class="list">
-
-        </div>
+        <el-card class="box-card">
+            <ul class="list">
+                <li class="">全部小区</li>
+                <li>朝会小区</li>
+                <li>保利香槟国际</li>
+            </ul>
+        </el-card>
     </div>
 </template>
 
@@ -42,6 +46,11 @@
           },
           options: []
         };
+      },
+      methods: {
+        change(key) {
+          this.$emit("change", key);
+        }
       }
     };
 </script>
@@ -58,6 +67,20 @@
 
         .el-select {
           width: 48%;
+        }
+      }
+
+      .box-card {
+        margin-top: 16px;
+      }
+
+      .list {
+        text-align: left;
+        list-style: none;
+
+        li {
+          height: 30px;
+          line-height: 30px;
         }
       }
     }

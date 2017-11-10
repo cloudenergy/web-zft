@@ -13,7 +13,7 @@
     export default {
       data() {
         return {
-          links: [{ url: "/houses/rent", text: "房源管理" }]
+          links: [{ url: "/houses", text: "房源管理" }]
         };
       }
     };

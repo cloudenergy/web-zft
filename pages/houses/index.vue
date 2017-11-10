@@ -2,7 +2,12 @@
   <div class="page-house-index">
       <Tab />
       <div class="houses">
-          houses
+          <div class="room" v-for="room in rooms">
+              <p>{{room.title}}</p>
+              <div class="cells">
+                  <House v-for="(cell, index) in room.cells" :key="index" class="cell" />
+              </div>
+          </div>
       </div>
   </div>
 </template>
@@ -15,7 +20,12 @@
         House
       },
       data() {
-        return {};
+        return {
+          rooms: [
+            { title: "保利香槟国际", cells: [1, 2, 3, 4] },
+            { title: "保利香槟国际", cells: [1, 2] }
+          ]
+        };
       }
     };
 </script>
@@ -27,6 +37,29 @@
       .houses {
         margin-left: 30px;
         flex: 1;
+      }
+
+      .room + .room {
+        margin-top: 20px;
+      }
+
+      .room {
+        width: 100%;
+        height: 180px;
+        background-color: #fff;
+        box-shadow: 0 0 4px #ddd;
+        border-radius: 2px;
+        color: @dark;
+        padding: 20px;
+
+        .cells {
+          display: flex;
+          margin-top: 20px;
+
+          .cell {
+            margin-right: 20px;
+          }
+        }
       }
     }
 </style>
