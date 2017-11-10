@@ -26,7 +26,7 @@
             </el-select>
         </div>
         <div class="list">
-            
+
         </div>
     </div>
 </template>
