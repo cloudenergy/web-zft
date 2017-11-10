@@ -4,7 +4,9 @@
  * @Last Modified by: insane.luojie
  * @Last Modified time: 2017-11-10 10:29:27
  */
-
 export default function(to, from, next) {
-    next();
+    if (to.path === '/bills')
+        next('/bills/ops')
+    else
+        next();
 }
