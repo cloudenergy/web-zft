@@ -2,7 +2,7 @@
 	<div class="top-nav">
 		<div class="logo"></div>
 		<div class="links">
-			<el-menu class="el-menu-demo" mode="horizontal" :router="true" >
+			<el-menu class="el-menu-demo" mode="horizontal" :router="true" :default-active="$route.path">
 				<el-menu-item :index="link.url" v-for="link in links" :key="link.url">{{link.text}}</el-menu-item>
 			</el-menu>
 		</div>
