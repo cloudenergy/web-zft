@@ -9,7 +9,7 @@
             <i class="el-icon-menu"></i>
             <span slot="title">租务</span>
         </el-menu-item>
-        <el-menu-item index="/bills">
+        <el-menu-item index="/bills/ops">
             <i class="el-icon-setting"></i>
             <span slot="title">账单</span>
         </el-menu-item>
