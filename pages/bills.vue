@@ -1,8 +1,10 @@
 <template>
-  <div class="houses">
+  <app class="bills module">
       <top-nav :links="links"></top-nav>
-      <router-view></router-view>
-  </div>
+      <div class="main-content">
+          <router-view></router-view>
+      </div>
+  </app>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 <template>
-  
+  <div>
+      租务
+  </div>
 </template>
 
 <script>

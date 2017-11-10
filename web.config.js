@@ -12,7 +12,7 @@ module.exports = {
     "type": "pc",
     "framework": "vue",
     "title": "租付通",
-    "layout": { main: "~/views/app.vue" },
+    // "layout": { main: "~/views/app.vue" },
     "routes": {
         // 'papers-details': "/:id"
     },
@@ -22,7 +22,7 @@ module.exports = {
         global: '~/plugins/all',
         route: '~/plugins/route',
     },
-    // vuex: '~/plugins/route',
+    vuex: '~/plugins/store',
     router: {
         base: "/"
     },

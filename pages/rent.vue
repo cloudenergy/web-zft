@@ -1,8 +1,12 @@
 <template>
-  <div class="houses">
-      <top-nav :links="links"></top-nav>
-      <router-view></router-view>
-  </div>
+    <app>
+        <div class="rent module">
+            <top-nav :links="links"></top-nav>
+            <div class="main-content">
+                <router-view></router-view>
+            </div>
+        </div>
+   </app>
 </template>
 
 <script>
