@@ -1,13 +1,26 @@
 <template>
-  <div>
-      账单
-  </div>
+    <div class="page-bill-index">
+        <Tab />
+        <div class="bills">
+            运营账单Body
+        </div>
+    </div>
 </template>
 
 <script>
-    export default {};
+    import { Tab } from "~/modules/house";
+    export default {
+        components: {
+            Tab
+        },
+        data() {
+            return {};
+        }
+    };
 </script>
 
-<style>
-
+<style lang="less" scoped>
+    .page-bill-index {
+        display: flex;
+    }
 </style>
