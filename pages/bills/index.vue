@@ -3,7 +3,7 @@
 <script>
   export default {
     created() {
-      this.$forward("/bills/ops");
+      this.$forward('/bills/ops');
     }
   };
 </script>
