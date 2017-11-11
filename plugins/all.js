@@ -4,11 +4,11 @@
  * @Last Modified by: insane.luojie
  * @Last Modified time: 2017-11-10 12:24:30
  */
-import api from "./api";
-import "../static/style";
-import mixin from "./mixins";
+import api from './api';
+import '../static/style';
+import mixin from './mixins';
 import 'element-ui/lib/theme-chalk/index.css';
-import Element from "element-ui";
+import Element from 'element-ui';
 
 export default function(vue) {
     // 设置api 

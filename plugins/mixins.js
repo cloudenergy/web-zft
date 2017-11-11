@@ -2,24 +2,25 @@
  * mixin
  */
 
-const noop = function () {},
-	expressionCache = (function () {
-	    var cahce = {};
-	    return {
-	        get: function (exp) {
-	            return cahce['$exp_' + exp];
-	        },
-	        put: function (exp, val) {
-	            cahce["$exp_" + exp] = val;
-	        }
-	    };
-	})();
+const noop = function () {
+    },
+    expressionCache = (function () {
+        var cahce = {};
+        return {
+            get: function (exp) {
+                return cahce['$exp_' + exp];
+            },
+            put: function (exp, val) {
+                cahce['$exp_' + exp] = val;
+            }
+        };
+    })();
 
 function parseExpression(exp) {
     // 去掉前后空字符
     exp = exp.trim()
-    if (exp.indexOf("[") == 0) {
-        throw "express start with [ not supported yet";
+    if (exp.indexOf('[') == 0) {
+        throw 'express start with [ not supported yet';
     }
 
     var hit = expressionCache.get(exp)
@@ -46,40 +47,42 @@ function makeGetterFn(body) {
 }
 
 export default function (vue) {
- 	/**
-   * 添加简单的 keypath 获取 实例值方法
-   * @param  {string} key vue实例中data 属性的 keypath - 'a.b.c', 暂不支持以 [] 开头的表达式
-   * @return {string|object}
-   */
-  vue.prototype.$get = function (key) {
-      // 解析表达式，并返回一个包含get方法的对象。
-      var res = parseExpression(key)
-      if (res) {
-          // 这里不能保证在执行get时不报错，因此需要放入try/catch中
-          try {
-              // get方法接收一个参数作为它的参数
-              return res.get.call(this, this)
-          } catch (e) {}
-      }
-  };
+    /**
+     * 添加简单的 keypath 获取 实例值方法
+     * @param  {string} key vue实例中data 属性的 keypath - 'a.b.c', 暂不支持以 [] 开头的表达式
+     * @return {string|object}
+     */
+    vue.prototype.$get = function (key) {
+        // 解析表达式，并返回一个包含get方法的对象。
+        var res = parseExpression(key)
+        if (res) {
+            // 这里不能保证在执行get时不报错，因此需要放入try/catch中
+            try {
+                // get方法接收一个参数作为它的参数
+                return res.get.call(this, this)
+            } catch (e) {
+                return noop()
+            }
+        }
+    };
 
-  vue.mixin({
-  	methods: {
-  		$forward (path, opts, replace) {
-  			// 默认使用vue-router
-  			if (!replace) {
-	  			return this.$router.push(Object.assign({ path }, opts));
-  			}
-  			this.$router.replace(Object.assign({ path }, opts));
-  		},
-  		$redirect (url, replace) {
-  			//默认使用location
-  			if (replace) {
-  				location.replace(url);
-  			} else {
-  				location.href = url;
-  			}
-  		}
-  	}
-  })
+    vue.mixin({
+        methods: {
+            $forward(path, opts, replace) {
+                // 默认使用vue-router
+                if (!replace) {
+                    return this.$router.push(Object.assign({path}, opts));
+                }
+                this.$router.replace(Object.assign({path}, opts));
+            },
+            $redirect(url, replace) {
+                //默认使用location
+                if (replace) {
+                    location.replace(url);
+                } else {
+                    location.href = url;
+                }
+            }
+        }
+    })
 }
