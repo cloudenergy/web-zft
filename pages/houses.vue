@@ -15,6 +15,9 @@
         return {
           links: [{ url: "/houses", text: "房源管理" }]
         };
+      },
+      created() {
+        this.$model("home").then(data => console.log("houses: ", data));
       }
     };
 </script>

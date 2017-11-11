@@ -1,6 +1,6 @@
 <template>
   <div class="page-house-index">
-      <Tab />
+      <Tab @change="refresh" />
       <div class="houses">
           <div class="room" v-for="room in rooms">
               <p>{{room.title}}</p>
@@ -26,6 +26,9 @@
             { title: "保利香槟国际", cells: [1, 2] }
           ]
         };
+      },
+      methods: {
+        refresh() {}
       }
     };
 </script>
