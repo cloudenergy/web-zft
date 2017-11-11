@@ -12,10 +12,10 @@
     import site_nav from "./site-nav";
 
     export default {
-      name: "app",
-      components: {
-        "site-nav": site_nav
-      }
+    	name: "app",
+    	components: {
+    		"site-nav": site_nav
+    	}
     };
 </script>
 
@@ -23,20 +23,19 @@
     @top-height: 60px;
 
     .app > .sider {
-      padding-top: @top-height;
-      position: absolute;
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      z-index: 2;
+    	padding-top: @top-height;
+    	position: absolute;
+    	top: 0px;
+    	bottom: 0px;
+    	left: 0px;
+    	z-index: 2;
     }
 </style>
 
 <style lang="less" scoped>
     .app,
     .main {
-      position: relative;
-      height: 100%;
+    	position: relative;
+    	height: 100%;
     }
 </style>
-
