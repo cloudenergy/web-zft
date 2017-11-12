@@ -12,8 +12,7 @@
 		data() {
 			return {
 				links: [
-					{ url: "/bills/ops", text: "运营账单" },
-					{ url: "/bills/other", text: "其他账单" }
+					{ url: "/bills", text: "运营账单" }
 				]
 			};
 		}
