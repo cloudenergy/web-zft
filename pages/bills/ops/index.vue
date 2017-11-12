@@ -27,9 +27,9 @@
 </template>
 
 <script>
-    import {Tab} from "~/modules/house"
-    import {BillStatus, PaymentStatus, ReportPeriod, DataTable} from "~/modules/bill"
-    import ElCol from "element-ui/packages/col/src/col";
+    import {Tab} from '~/modules/house'
+    import {BillStatus, PaymentStatus, ReportPeriod, DataTable} from '~/modules/bill'
+    import ElCol from 'element-ui/packages/col/src/col';
 
     export default {
         components: {
