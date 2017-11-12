@@ -4,7 +4,8 @@
         <p>￥ 200</p>
         <p>主卧 13平 西</p>
         <p class="rentee">
-            <span>小清新</span><span>2017-10-10</span>
+            <span>小清新</span>
+            <span>2017-10-10</span>
         </p>
     </div>
 </template>
