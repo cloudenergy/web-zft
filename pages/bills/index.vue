@@ -9,16 +9,13 @@
             <el-header>
                 <div class="ops-bills">
                     <BillStatus class="status"/>
-                    <div class="separator"></div>
-                    <PaymentStatus/>
-                    <div class="separator"></div>
+                    <BillType class="bill-type"/>
                     <ReportPeriod class="period"/>
-
+                    <BillManager class="manager"/>
                 </div>
             </el-header>
             <el-main>
                 <div class="result">
-                    <el-input placeholder="搜索" v-model="input" class="search-input"></el-input>
                     <DataTable/>
                 </div>
             </el-main>
@@ -28,7 +25,7 @@
 
 <script>
     import {Tab} from '~/modules/house'
-    import {BillStatus, PaymentStatus, ReportPeriod, DataTable} from '~/modules/bill'
+    import {BillStatus, BillType, ReportPeriod, DataTable, BillManager} from '~/modules/bill'
     import ElCol from 'element-ui/packages/col/src/col';
 
     export default {
@@ -36,8 +33,9 @@
             ElCol,
             Tab,
             BillStatus,
-            PaymentStatus,
+            BillType,
             ReportPeriod,
+            BillManager,
             DataTable
         },
         data() {
@@ -54,21 +52,6 @@
         min-width: 275px;
     }
 
-    .separator {
-        display: block;
-        height: 60px;
-        width: 1px;
-        position: relative;
-        &:before {
-            content: ' ';
-            position: absolute;
-            border-left: 1px solid #d2d2d2;
-            height: 60%;
-            top: 20%;
-            box-sizing: border-box;
-        }
-    }
-
     .ops-bills {
         display: flex;
     }
@@ -80,12 +63,9 @@
         }
     }
 
-    .period {
+    .period, .bill-type, .manager {
         padding-left: 10px;
         padding-top: 10px;
     }
 
-    .search-input {
-        padding-top: 10px;
-    }
 </style>

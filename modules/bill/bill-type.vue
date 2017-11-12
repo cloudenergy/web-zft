@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-button plain disabled>日期</el-button>
-        <el-select v-model="period" filterable placeholder="Select" class="select">
+        <el-button plain disabled>类型</el-button>
+        <el-select v-model="billType" filterable placeholder="Select" class="select">
             <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -19,19 +19,13 @@
                     value: 'all',
                     label: '全部'
                 }, {
-                    value: '1',
-                    label: '近1月'
+                    value: 'prepaid',
+                    label: '租约'
                 }, {
-                    value: '3',
-                    label: '近3月'
-                }, {
-                    value: '6',
-                    label: '近6月'
-                }, {
-                    value: '12',
-                    label: '近1年'
+                    value: 'postpaid',
+                    label: '记账'
                 }],
-                period: '1'
+                billType: 'all'
             }
         }
     }
