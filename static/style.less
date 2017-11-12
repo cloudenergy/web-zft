@@ -1,6 +1,7 @@
 @import "./less/base";
 
-html, body {
+html,
+body {
 	height: 100%;
 	user-select: none;
 }
@@ -10,9 +11,10 @@ html, body {
 }
 
 body {
-	font-size: .32rem;
+	font-size: 0.32rem;
 	width: 100%;
-	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+	font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+		"Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 
 a {
@@ -25,7 +27,7 @@ a {
 
 .top-nav {
 	position: relative;
-    z-index: 3;
+	z-index: 3;
 }
 
 .module {
@@ -39,5 +41,6 @@ a {
 		right: 0px;
 		top: 60px;
 		background-color: @light;
+		overflow-y: scroll;
 	}
 }

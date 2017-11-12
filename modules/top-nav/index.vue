@@ -9,32 +9,32 @@
 	</div>
 </template>
 <script>
-	export default {
-	  props: {
-	    links: Array
-	  }
-	};
+    export default {
+    	props: {
+    		links: Array
+    	}
+    };
 </script>
 
 <style lang="less" scoped>
-	.logo {
-	  height: 100%;
-	  width: 100px;
-	  float: left;
-	}
+    .logo {
+    	height: 100%;
+    	width: 100px;
+    	float: left;
+    }
 
-	.top-nav {
-	  color: #fff;
-	  height: 60px;
-	}
+    .top-nav {
+    	color: #fff;
+    	height: 60px;
+    }
 
-	.ceiling-main {
-	  float: right;
-	  margin-right: 15px;
+    .ceiling-main {
+    	float: right;
+    	margin-right: 15px;
 
-	  a {
-	    color: #9ba7b5;
-	    margin: 0 10px;
-	  }
-	}
+    	a {
+    		color: #9ba7b5;
+    		margin: 0 10px;
+    	}
+    }
 </style>
