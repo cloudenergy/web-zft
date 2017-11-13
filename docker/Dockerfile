@@ -1,11 +1,5 @@
-FROM node:7
+FROM nginx:latest
 
-COPY . /opt/app/
+COPY .blade/dist /usr/share/nginx/html
 
-WORKDIR /opt/app
-
-RUN cd /opt/app && npm install
-
-EXPOSE 8080
-
-CMD ["npm", "run", "dev"]
+WORKDIR /usr/share/nginx/html
