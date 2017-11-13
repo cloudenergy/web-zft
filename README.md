@@ -46,7 +46,7 @@ npm run build -- --env=production
 
 ### Ref
 
-*[blade-vue README](https://github.com/doctorwork/blade-vue/blob/master/README.md)*
+*[blade-vue README](https://doctorwork.github.io/blade-vue/#/)*
 
 
 
