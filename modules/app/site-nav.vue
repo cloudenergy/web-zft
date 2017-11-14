@@ -18,25 +18,25 @@
 </template>
 
 <script>
-export default {};
+    export default {};
 </script>
 
 <style lang="less" scoped>
     .el-menu-vertical {
-        height: 100%;
-        border-right: 0;
-        background-color: #2f3c4d;
+    	height: 100%;
+    	border-right: 0;
+    	background-color: #2f3c4d;
     }
     .el-menu-item {
-        color: #eee;
-        &:focus,
-        &:hover,
-        &.is-active {
-            background-color: #212a38;
-        }
+    	color: #eee;
+    	&:focus,
+    	&:hover,
+    	&.is-active {
+    		background-color: #212a38;
+    	}
     }
 
     .nav {
-        height: 100%;
+    	height: 100%;
     }
 </style>

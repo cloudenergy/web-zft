@@ -32,16 +32,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+    import { mapState } from 'vuex';
 
-export default {
+    export default {
     	data() {
     		return {
     			filters: {},
     			options: []
     		};
     	}
-};
+    };
 </script>
 
 <style lang="less" scoped>

@@ -2,11 +2,11 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-14 09:54:50 
  * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-14 10:07:14
+ * @Last Modified time: 2017-11-14 14:26:44
  * 
  * globla mixins
  */
-
+/*eslint no-empty:0 */
 const noop = function() {},
 	expressionCache = (function() {
 		var cahce = {};

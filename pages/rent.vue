@@ -6,17 +6,17 @@
                 <router-view></router-view>
             </div>
         </div>
-   </app>
+    </app>
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			links: [{ url: '/rent', text: '出租管理' }]
-		};
-	}
-};
+    export default {
+    	data() {
+    		return {
+    			links: [{ url: '/rent', text: '出租管理' }]
+    		};
+    	}
+    };
 </script>
 
 <style>

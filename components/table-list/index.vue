@@ -2,7 +2,7 @@
     <table class="el-table">
         <thead>
             <tr>
-                <Cell v-for="item in captions" :text="item.text" :attr="item.attr" :key="item.key"/>
+                <Cell v-for="item in captions" :text="item.text" :attr="item.attr" :key="item.key" />
             </tr>
         </thead>
         <tbody>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-const Cell = {
+    const Cell = {
     	name: 'Cell',
     	props: {
     		text: { required: true },
@@ -28,9 +28,9 @@ const Cell = {
     			<td>{this.text}</td>
     		);
     	}
-};
+    };
 
-export default {
+    export default {
     	props: {
     		columns: Array,
     		rows: Array
@@ -46,7 +46,7 @@ export default {
     	created() {
     		this.captions = this.columns;
     	}
-};
+    };
 </script>
 
 <style lang="less" scoped>

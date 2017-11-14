@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: 0 */
 import { makeGet, makePost, setup } from '@/api';
 
 const apis = {

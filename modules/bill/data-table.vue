@@ -61,7 +61,7 @@
 </template>
 
 <script>
-export default {
+    export default {
     	data() {
     		return {
     			dialogVisible: false,
@@ -136,5 +136,5 @@ export default {
     				.catch(_ => {});
     		}
     	}
-};
+    };
 </script>

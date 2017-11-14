@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { Tab, House, Search } from '~/modules/house';
-export default {
+    import { Tab, House, Search } from '~/modules/house';
+    export default {
     	components: { Tab, House, Search },
     	data() {
     		return {
@@ -34,7 +34,7 @@ export default {
     	methods: {
     		refresh() {}
     	}
-};
+    };
 </script>
 
 <style lang="less" scoped>

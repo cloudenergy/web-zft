@@ -1,11 +1,11 @@
 <template>
-  <div>
-      租务
-  </div>
+    <div>
+        租务
+    </div>
 </template>
 
 <script>
-export default {};
+    export default {};
 </script>
 
 <style>

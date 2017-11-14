@@ -6,6 +6,7 @@ module.exports = {
 	rules: {
 		// override/add rules' settings here
 		'vue/valid-v-if': 'error',
+		'vue/require-v-for-key': 'false',
 		indent: ['error', 'tab'],
 		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single'],
@@ -13,9 +14,11 @@ module.exports = {
 		'jest/no-focused-tests': 'error',
 		'jest/no-identical-title': 'error',
 		'jest/prefer-to-have-length': 'warn',
-		'jest/valid-expect': 'error'
+		'jest/valid-expect': 'error',
+		'html/indent': 'tab',
+		'no-mixed-spaces-and-tabs': ['off']
 	},
-	plugins: ['jest'],
+	plugins: ['jest', 'html'],
 	env: {
 		browser: true,
 		es6: true,
