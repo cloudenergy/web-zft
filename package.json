@@ -24,7 +24,7 @@
 	"prettier": {
 		"tabWidth": 4,
 		"useTabs": true,
-		"singleQuote": false
+		"singleQuote": true
 	},
 	"babel": {
 		"env": {
