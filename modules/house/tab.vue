@@ -33,15 +33,15 @@
     		return {
     			type: 1,
     			filters: {
-    				city: "",
-    				area: ""
+    				city: '',
+    				area: ''
     			},
     			options: []
     		};
     	},
     	methods: {
     		change(key) {
-    			this.$emit("change", key);
+    			this.$emit('change', key);
     		}
     	}
     };
