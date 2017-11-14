@@ -20,13 +20,15 @@
 
 <style lang="less" scoped>
     .top-nav {
-    	color: #fff;
-    	height: 60px;
+    	position: relative;
+    	z-index: 3;
     	display: flex;
     	flex-direction: row;
     	align-content: stretch;
     	align-items: stretch;
     	justify-content: space-between;
+    	height: 60px;
+    	color: #fff;
     }
 
     .logo {
