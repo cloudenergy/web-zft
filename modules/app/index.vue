@@ -9,13 +9,13 @@
     </div>
 </template>
 <script>
-    import site_nav from './site-nav';
+    import site_nav from "./site-nav";
 
     export default {
-        name: 'app',
-        components: {
-            'site-nav': site_nav
-        }
+    	name: "app",
+    	components: {
+    		"site-nav": site_nav
+    	}
     };
 </script>
 

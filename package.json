@@ -21,6 +21,10 @@
 		"eslint-plugin-vue": "^3.13.1",
 		"vue-test-utils": "^1.0.0-beta.4"
 	},
+	"prettier": {
+		"prettier.tabWidth": 4,
+		"prettier.useTabs": true
+	},
 	"babel": {
 		"env": {
 			"test": { "presets": ["env"] }
