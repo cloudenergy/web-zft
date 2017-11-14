@@ -1,6 +1,8 @@
 <template>
     <div class="top-nav">
-        <div class="logo"></div>
+        <div class="logo">
+            <img src="static/imgs/logo.png">
+        </div>
         <div class="links">
             <el-menu class="el-menu-demo" mode="horizontal" :router="true" :default-active="$route.path">
                 <el-menu-item :index="link.url" v-for="link in links" :key="link.url">{{link.text}}</el-menu-item>
@@ -9,37 +11,52 @@
     </div>
 </template>
 <script>
-export default {
-	props: {
-		links: Array
-	}
-};
+    export default {
+    	props: {
+    		links: Array
+    	}
+    };
 </script>
 
 <style lang="less" scoped>
-    .logo {
-        height: 100%;
-        width: 100px;
-        float: left;
-        background-color: #2f3c4d;
-    }
-    .links {
-        float: left;
-        width: calc(100% - 100px);
+    .top-nav {
+    	position: relative;
+    	z-index: 3;
+    	display: flex;
+    	flex-direction: row;
+    	align-content: stretch;
+    	align-items: stretch;
+    	justify-content: space-between;
+    	height: 60px;
+    	color: #fff;
     }
 
-    .top-nav {
-        color: #fff;
-        height: 60px;
+    .logo {
+    	display: flex;
+    	flex: 0 1 auto;
+    	flex-direction: column;
+    	align-content: center;
+    	align-items: center;
+    	justify-content: center;
+    	height: 100%;
+    	width: 100px;
+    	background-color: #3c4d68;
+    	img {
+    		max-width: 80%;
+    	}
+    }
+
+    .links {
+    	flex: 1 1 auto;
     }
 
     .ceiling-main {
-        float: right;
-        margin-right: 15px;
+    	float: right;
+    	margin-right: 15px;
 
-        a {
-            color: #9ba7b5;
-            margin: 0 10px;
-        }
+    	a {
+    		color: #9ba7b5;
+    		margin: 0 10px;
+    	}
     }
 </style>
