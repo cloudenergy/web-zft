@@ -1,46 +1,46 @@
-@import "./less/base";
+@import './less/base';
 
 html,
 body {
-	height: 100%;
-	user-select: none;
+    height: 100%;
+    user-select: none;
 }
 
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	font-size: 0.32rem;
-	width: 100%;
-	font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-		"Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    font-size: 14px;
+    width: 100%;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+        'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .clearfix {
-	.clearfix();
+    .clearfix();
 }
 
 .top-nav {
-	position: relative;
-	z-index: 3;
+    position: relative;
+    z-index: 3;
 }
 
 .module {
-	height: 100%;
-	position: relative;
-	.main-content {
-		padding: 15px;
-		position: absolute;
-		left: 98px;
-		bottom: 0px;
-		right: 0px;
-		top: 60px;
-		background-color: @light;
-		overflow-y: scroll;
-	}
+    height: 100%;
+    position: relative;
+    .main-content {
+        padding: 15px;
+        position: absolute;
+        left: 100px;
+        bottom: 0px;
+        right: 0px;
+        top: 60px;
+        background-color: @light;
+        overflow-y: scroll;
+    }
 }
