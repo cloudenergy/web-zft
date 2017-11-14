@@ -26,11 +26,9 @@
 <script>
     import {Tab} from '~/modules/house'
     import {BillStatus, BillType, ReportPeriod, DataTable, BillManager} from '~/modules/bill'
-    import ElCol from 'element-ui/packages/col/src/col';
 
     export default {
         components: {
-            ElCol,
             Tab,
             BillStatus,
             BillType,
