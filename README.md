@@ -1,4 +1,4 @@
-# web-zft [![Build Status](https://travis-ci.org/cloudenergy/web-zft.svg?branch=master)](https://travis-ci.org/cloudenergy/web-zft)
+# web-zft [![Build Status](https://travis-ci.org/cloudenergy/web-zft.svg?branch=develop)](https://travis-ci.org/cloudenergy/web-zft)
 
 ## 租付通
 基于集中工，分散式，整租，合租公寓进行租付管理的后台功能
