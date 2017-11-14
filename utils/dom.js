@@ -1,16 +1,16 @@
 const trim = function(string) {
-	return (string || "").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, "");
+	return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
 };
 
 /* istanbul ignore next */
 export function hasClass(el, cls) {
 	if (!el || !cls) return false;
-	if (cls.indexOf(" ") !== -1)
-		throw new Error("className should not contain space.");
+	if (cls.indexOf(' ') !== -1)
+		throw new Error('className should not contain space.');
 	if (el.classList) {
 		return el.classList.contains(cls);
 	} else {
-		return (" " + el.className + " ").indexOf(" " + cls + " ") > -1;
+		return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
 	}
 }
 
@@ -18,7 +18,7 @@ export function hasClass(el, cls) {
 export function addClass(el, cls) {
 	if (!el) return;
 	var curClass = el.className;
-	var classes = (cls || "").split(" ");
+	var classes = (cls || '').split(' ');
 
 	for (var i = 0, j = classes.length; i < j; i++) {
 		var clsName = classes[i];
@@ -28,7 +28,7 @@ export function addClass(el, cls) {
 			el.classList.add(clsName);
 		} else {
 			if (!hasClass(el, clsName)) {
-				curClass += " " + clsName;
+				curClass += ' ' + clsName;
 			}
 		}
 	}
@@ -40,8 +40,8 @@ export function addClass(el, cls) {
 /* istanbul ignore next */
 export function removeClass(el, cls) {
 	if (!el || !cls) return;
-	var classes = cls.split(" ");
-	var curClass = " " + el.className + " ";
+	var classes = cls.split(' ');
+	var curClass = ' ' + el.className + ' ';
 
 	for (var i = 0, j = classes.length; i < j; i++) {
 		var clsName = classes[i];
@@ -51,7 +51,7 @@ export function removeClass(el, cls) {
 			el.classList.remove(clsName);
 		} else {
 			if (hasClass(el, clsName)) {
-				curClass = curClass.replace(" " + clsName + " ", " ");
+				curClass = curClass.replace(' ' + clsName + ' ', ' ');
 			}
 		}
 	}
@@ -61,7 +61,7 @@ export function removeClass(el, cls) {
 }
 
 export function removeElement(el) {
-	if (typeof el.remove !== "undefined") {
+	if (typeof el.remove !== 'undefined') {
 		el.remove();
 	} else {
 		el.parentNode.removeChild(el);

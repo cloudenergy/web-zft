@@ -4,49 +4,49 @@
 </template>
 
 <script>
-    const app = {
-        render() {
-            return (
-                <div class="app">
-                    <div class="sider">
-                        <site-nav />
-                    </div>
-                    <div class="main">
-                        <router-view />
-                    </div>
-                </div>
-            );
-        }
-    };
+const app = {
+	render() {
+		return (
+			<div class="app">
+				<div class="sider">
+					<site-nav />
+				</div>
+				<div class="main">
+					<router-view />
+				</div>
+			</div>
+		);
+	}
+};
 
-    const login = {
-        render() {
-            return (
-                <div class="login">
-                    <router-view />
-                </div>
-            );
-        }
-    };
+const login = {
+	render() {
+		return (
+			<div class="login">
+				<router-view />
+			</div>
+		);
+	}
+};
 
-    const loader = {
-        render() {
-            return <div class="loader" />;
-        }
-    };
+const loader = {
+	render() {
+		return <div class="loader" />;
+	}
+};
 
-    export default {
-        components: {
-            loader,
-            login,
-            app
-        },
-        data() {
-            return {
-                view: 'app'
-            };
-        }
-    };
+export default {
+	components: {
+		loader,
+		login,
+		app
+	},
+	data() {
+		return {
+			view: 'app'
+		};
+	}
+};
 </script>
 
 <style lang="less">

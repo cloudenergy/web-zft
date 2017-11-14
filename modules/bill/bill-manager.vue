@@ -12,23 +12,23 @@
     </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                options: [{
-                    value: 'laojiang',
-                    label: '老蒋'
-                }, {
-                    value: 'laowang',
-                    label: '老王'
-                }, {
-                    value: 'laozhang',
-                    label: '老张'
-                }],
-                manager: 'laojiang'
-            }
-        }
-    }
+export default {
+	data() {
+		return {
+			options: [{
+				value: 'laojiang',
+				label: '老蒋'
+			}, {
+				value: 'laowang',
+				label: '老王'
+			}, {
+				value: 'laozhang',
+				label: '老张'
+			}],
+			manager: 'laojiang'
+		}
+	}
+}
 </script>
 
 <style lang="less" scoped>

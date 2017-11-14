@@ -16,25 +16,25 @@
 </template>
 
 <script>
-    import { Tab, House, Search } from "~/modules/house";
-    export default {
+import { Tab, House, Search } from '~/modules/house';
+export default {
     	components: { Tab, House, Search },
     	data() {
     		return {
     			rooms: [
-    				{ title: "保利香槟国际", cells: [1, 2, 3, 4] },
-    				{ title: "保利香槟国际", cells: [1, 2] },
-    				{ title: "保利香槟国际", cells: [1, 2] },
-    				{ title: "保利香槟国际", cells: [1, 2, 3] },
-    				{ title: "保利香槟国际", cells: [1, 2] },
-    				{ title: "保利香槟国际", cells: [1, 2] }
+    				{ title: '保利香槟国际', cells: [1, 2, 3, 4] },
+    				{ title: '保利香槟国际', cells: [1, 2] },
+    				{ title: '保利香槟国际', cells: [1, 2] },
+    				{ title: '保利香槟国际', cells: [1, 2, 3] },
+    				{ title: '保利香槟国际', cells: [1, 2] },
+    				{ title: '保利香槟国际', cells: [1, 2] }
     			]
     		};
     	},
     	methods: {
     		refresh() {}
     	}
-    };
+};
 </script>
 
 <style lang="less" scoped>

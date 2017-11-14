@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    export default {
+export default {
     	data() {
     		return {
     			type: 1,
@@ -44,7 +44,7 @@
     			this.$emit('change', key);
     		}
     	}
-    };
+};
 </script>
 
 <style lang="less" scoped>

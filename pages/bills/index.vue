@@ -24,24 +24,24 @@
 </template>
 
 <script>
-    import {Tab} from '~/modules/house'
-    import {BillStatus, BillType, ReportPeriod, DataTable, BillManager} from '~/modules/bill'
+import {Tab} from '~/modules/house'
+import {BillStatus, BillType, ReportPeriod, DataTable, BillManager} from '~/modules/bill'
 
-    export default {
-        components: {
-            Tab,
-            BillStatus,
-            BillType,
-            ReportPeriod,
-            BillManager,
-            DataTable
-        },
-        data() {
-            return {
-                input: ''
-            };
-        }
-    };
+export default {
+	components: {
+		Tab,
+		BillStatus,
+		BillType,
+		ReportPeriod,
+		BillManager,
+		DataTable
+	},
+	data() {
+		return {
+			input: ''
+		};
+	}
+};
 </script>
 
 <style lang="less" scoped>

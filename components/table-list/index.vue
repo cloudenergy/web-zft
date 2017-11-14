@@ -14,8 +14,8 @@
 </template>
 
 <script>
-    const Cell = {
-    	name: "Cell",
+const Cell = {
+    	name: 'Cell',
     	props: {
     		text: { required: true },
     		attr: Object
@@ -28,9 +28,9 @@
     			<td>{this.text}</td>
     		);
     	}
-    };
+};
 
-    export default {
+export default {
     	props: {
     		columns: Array,
     		rows: Array
@@ -46,7 +46,7 @@
     	created() {
     		this.captions = this.columns;
     	}
-    };
+};
 </script>
 
 <style lang="less" scoped>

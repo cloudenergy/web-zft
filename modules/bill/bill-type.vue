@@ -12,23 +12,23 @@
     </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                options: [{
-                    value: 'all',
-                    label: '全部'
-                }, {
-                    value: 'prepaid',
-                    label: '租约'
-                }, {
-                    value: 'postpaid',
-                    label: '记账'
-                }],
-                billType: 'all'
-            }
-        }
-    }
+export default {
+	data() {
+		return {
+			options: [{
+				value: 'all',
+				label: '全部'
+			}, {
+				value: 'prepaid',
+				label: '租约'
+			}, {
+				value: 'postpaid',
+				label: '记账'
+			}],
+			billType: 'all'
+		}
+	}
+}
 </script>
 
 <style lang="less" scoped>

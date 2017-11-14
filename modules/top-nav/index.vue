@@ -9,11 +9,11 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {
-            links: Array
-        }
-    };
+export default {
+	props: {
+		links: Array
+	}
+};
 </script>
 
 <style lang="less" scoped>

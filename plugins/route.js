@@ -5,5 +5,5 @@
  * @Last Modified time: 2017-11-11 11:52:18
  */
 export default function(to, from, next) {
-    next();
+	next();
 }

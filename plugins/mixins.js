@@ -12,10 +12,10 @@ const noop = function() {},
 		var cahce = {};
 		return {
 			get: function(exp) {
-				return cahce["$exp_" + exp];
+				return cahce['$exp_' + exp];
 			},
 			put: function(exp, val) {
-				cahce["$exp_" + exp] = val;
+				cahce['$exp_' + exp] = val;
 			}
 		};
 	})();
@@ -23,8 +23,8 @@ const noop = function() {},
 function parseExpression(exp) {
 	// 去掉前后空字符
 	exp = exp.trim();
-	if (exp.indexOf("[") == 0) {
-		throw "express start with [ not supported yet";
+	if (exp.indexOf('[') == 0) {
+		throw 'express start with [ not supported yet';
 	}
 
 	var hit = expressionCache.get(exp);
@@ -36,7 +36,7 @@ function parseExpression(exp) {
 		exp: exp
 	};
 	// 每个exp表达式的解析结果中必须有get方法
-	res.get = makeGetterFn("scope." + exp);
+	res.get = makeGetterFn('scope.' + exp);
 	expressionCache.put(exp, res);
 	return res;
 }
@@ -44,7 +44,7 @@ function parseExpression(exp) {
 function makeGetterFn(body) {
 	try {
 		// scope是函数的参数；body是方法体。将此方法赋值给表达式的get方法，就可以方便的拿到表达式的值
-		return new Function("scope", "return " + body + ";");
+		return new Function('scope', 'return ' + body + ';');
 	} catch (e) {
 		return noop;
 	}
