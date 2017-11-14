@@ -1,7 +1,7 @@
 <template>
     <div class="house-cell">
         <h3>B</h3>
-        <p>￥ 200</p>
+        <p class="info">￥ 200</p>
         <p>主卧 13平 西</p>
         <p class="rentee">
             <span>小清新</span>
@@ -16,7 +16,7 @@
 
 <style lang="less" scoped>
     .house-cell {
-    	padding: 15px;
+    	padding: 10px;
     	width: 180px;
     	height: 100px;
     	border-radius: 4px;

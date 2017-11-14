@@ -1,6 +1,6 @@
 <template>
     <div class="nav">
-        <el-menu default-active="1-4-1" class="el-menu-vertical" :collapse="false" :router="true">
+        <el-menu :default-active="$route.path" class="el-menu-vertical" :collapse="false" :router="true">
             <el-menu-item index="/houses">
                 <i class="el-icon-location"></i>
                 <span slot="title">房源</span>

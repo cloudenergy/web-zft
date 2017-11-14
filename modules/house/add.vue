@@ -1,9 +1,18 @@
 <template>
+    <div class="modal">
 
+    </div>
 </template>
 
 <script>
-    export default {};
+    import Modal from '~/plugins/modal';
+    export default {
+    	data() {
+    		return {
+    			name: ''
+    		};
+    	}
+    };
 </script>
 
 <style>

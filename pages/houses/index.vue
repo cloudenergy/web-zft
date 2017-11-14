@@ -43,7 +43,7 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 15px;
+    		margin-left: 20px;
     	}
 
     	.room + .room {

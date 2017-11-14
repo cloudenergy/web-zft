@@ -2,15 +2,11 @@ import Vue from 'vue';
 import Modal from './modal';
 
 export default {
-	open(params) {
-		let content;
-		if (typeof params === 'string') content = params;
-
-		const defaultParam = {
+	open(component) {
+		const propsData = {
 			programmatic: true,
-			content
+			component
 		};
-		const propsData = Object.assign(defaultParam, params);
 
 		const ModalComponent = Vue.extend(Modal);
 		return new ModalComponent({
