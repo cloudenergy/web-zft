@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-12 23:32:31 
  * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-13 12:30:46
+ * @Last Modified time: 2017-11-14 10:18:37
  */
 
 const opts = {
@@ -10,13 +10,9 @@ const opts = {
 };
 
 export default class Modal {
-	constructor(options) {
-		console.log("this: ", options, opts);
-	}
+	constructor(options) {}
 
-	open() {
-		console.log("open");
-	}
+	open() {}
 
 	close() {}
 }
