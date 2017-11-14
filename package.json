@@ -1,55 +1,67 @@
 {
-	"name": "zft",
-	"version": "1.0.0",
-	"author": "insane <luojie@medlinker.com>",
-	"scripts": {
-		"dev": "blade dev",
-		"build": "blade build",
-		"lint": "eslint .",
-		"test": "jest"
-	},
-	"dependencies": {
-		"blade-scripts": "^1.1.26",
-		"element-ui": "^2.0.3"
-	},
-	"devDependencies": {
-		"babel-jest": "^21.2.0",
-		"jest": "^21.2.1",
-		"jest-vue-preprocessor": "^1.3.1",
-		"eslint": "^4.11.0",
-		"eslint-plugin-jest": "^21.3.2",
-		"eslint-plugin-vue": "^3.13.1",
-		"vue-test-utils": "^1.0.0-beta.4"
-	},
-	"prettier": {
-		"tabWidth": 4,
-		"useTabs": true,
-		"singleQuote": true
-	},
-	"babel": {
-		"env": {
-			"test": { "presets": ["env"] }
-		},
-		"presets": ["env"]
-	},
-	"jest": {
-		"collectCoverageFrom": [
-			"**/*.{js,jsx,vue}",
-			"!**/node_modules/**",
-			"!**/vendor/**"
-		],
-		"moduleFileExtensions": ["js", "json", "vue", "less"],
-		"moduleNameMapper": {
-			"^~(.*)$": "<rootDir>/$1",
-			"^vue$": "vue/dist/vue.common.js"
-		},
-		"moduleDirectories": [
-			"node_modules",
-			"node_modules/blade-scripts/node_modules"
-		],
-		"transform": {
-			".*\\.vue$": "<rootDir>/node_modules/jest-vue-preprocessor",
-			"^.+\\.js$": "<rootDir>/node_modules/babel-jest"
-		}
-	}
+  "name": "zft",
+  "version": "1.0.0",
+  "author": "insane <luojie@medlinker.com>",
+  "scripts": {
+    "dev": "blade dev",
+    "build": "blade build",
+    "lint": "eslint --ext .js,.vue . --fix",
+    "test": "jest"
+  },
+  "dependencies": {
+    "blade-scripts": "^1.1.26",
+    "element-ui": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-jest": "^21.2.0",
+    "eslint": "^4.11.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-vue": "^3.13.1",
+    "jest": "^21.2.1",
+    "jest-vue-preprocessor": "^1.3.1",
+    "vue-test-utils": "^1.0.0-beta.4"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "useTabs": true,
+    "singleQuote": true
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "presets": [
+          "env"
+        ]
+      }
+    },
+    "presets": [
+      "env"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,vue}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue",
+      "less"
+    ],
+    "moduleNameMapper": {
+      "^~(.*)$": "<rootDir>/$1",
+      "^vue$": "vue/dist/vue.common.js"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "node_modules/blade-scripts/node_modules"
+    ],
+    "transform": {
+      ".*\\.vue$": "<rootDir>/node_modules/jest-vue-preprocessor",
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    }
+  }
 }

@@ -61,80 +61,81 @@
 </template>
 
 <script>
-    export default {
-    	data() {
-    		return {
-    			dialogVisible: false,
-    			dialogTitle: "Tips",
-    			tableData: [
-    				{
-    					overdue: "逾期63天",
-    					date: "2016-05-03",
-    					name: "郭德纲",
-    					rent: 1200,
-    					phone: "1300000001",
-    					rentDesc: "租金6期",
-    					address: "朝晖三区·2栋2单元201室·B2017-07-01 → 2017-07-31"
-    				},
-    				{
-    					overdue: "逾期62天",
-    					date: "2016-05-02",
-    					name: "老刘",
-    					rent: 122,
-    					rentDesc: "押金",
-    					phone: "1300000002",
-    					address: "龙湖滟澜山·8栋2单元203室·G2017-08-01 → 2017-08-20"
-    				},
-    				{
-    					overdue: "逾期61天",
-    					date: "2016-05-04",
-    					name: "冰儿",
-    					rent: 2200,
-    					rentDesc: "租金11期",
-    					phone: "1300000003",
-    					address: "朝晖三区·3栋3单元301室·改哎的名字2017-08-22 → 2017-11-21"
-    				},
-    				{
-    					overdue: "",
-    					date: "2016-05-01",
-    					name: "不是整天 ",
-    					rent: 200,
-    					rentDesc: "押金",
-    					phone: "1300000004",
-    					address:
-    						"保利香槟国际·2栋2单元2室·这个名字很长啊这个字啊这个名字很长啊这个名字很长啊这个名字很长啊2017-10-12 → 2018-04-11"
-    				}
-    			]
-    		};
-    	},
-    	methods: {
-    		handleEdit(index, row) {
-    			this.dialogVisible = true;
-    			this.dialogTitle = "编辑账单";
-    			console.log(index, row);
-    		},
-    		handleReceive(index, row) {
-    			this.dialogVisible = true;
-    			this.dialogTitle = "处理账单";
-    			console.log(index, row);
-    		},
-    		addComment(index, row) {
-    			this.dialogVisible = true;
-    			this.dialogTitle = "添加备注";
-    			console.log(index, row);
-    		},
-    		changeDate(index, row) {
-    			this.dialogVisible = true;
-    			this.dialogTitle = "账单改期";
-    			console.log(index, row);
-    		},
-    		handleClose(done) {
-    			this.$confirm("Are you sure to close this dialog?")
-    				.then(_ => {
-    					done();
-    				})
-    				.catch(_ => {});
-    		}
-    	}
-    };
+export default {
+    data() {
+        return {
+            dialogVisible: false,
+            dialogTitle: 'Tips',
+            tableData: [
+                {
+                    overdue: '逾期63天',
+                    date: '2016-05-03',
+                    name: '郭德纲',
+                    rent: 1200,
+                    phone: '1300000001',
+                    rentDesc: '租金6期',
+                    address: '朝晖三区·2栋2单元201室·B2017-07-01 → 2017-07-31'
+                },
+                {
+                    overdue: '逾期62天',
+                    date: '2016-05-02',
+                    name: '老刘',
+                    rent: 122,
+                    rentDesc: '押金',
+                    phone: '1300000002',
+                    address: '龙湖滟澜山·8栋2单元203室·G2017-08-01 → 2017-08-20'
+                },
+                {
+                    overdue: '逾期61天',
+                    date: '2016-05-04',
+                    name: '冰儿',
+                    rent: 2200,
+                    rentDesc: '租金11期',
+                    phone: '1300000003',
+                    address: '朝晖三区·3栋3单元301室·改哎的名字2017-08-22 → 2017-11-21'
+                },
+                {
+                    overdue: '',
+                    date: '2016-05-01',
+                    name: '不是整天 ',
+                    rent: 200,
+                    rentDesc: '押金',
+                    phone: '1300000004',
+                    address:
+							'保利香槟国际·2栋2单元2室·这个名字很长啊这个字啊这个名字很长啊这个名字很长啊这个名字很长啊2017-10-12 → 2018-04-11'
+                }
+            ]
+        };
+    },
+    methods: {
+        handleEdit(index, row) {
+            this.dialogVisible = true;
+            this.dialogTitle = '编辑账单';
+            console.log(index, row);
+        },
+        handleReceive(index, row) {
+            this.dialogVisible = true;
+            this.dialogTitle = '处理账单';
+            console.log(index, row);
+        },
+        addComment(index, row) {
+            this.dialogVisible = true;
+            this.dialogTitle = '添加备注';
+            console.log(index, row);
+        },
+        changeDate(index, row) {
+            this.dialogVisible = true;
+            this.dialogTitle = '账单改期';
+            console.log(index, row);
+        },
+        handleClose(done) {
+            this.$confirm('Are you sure to close this dialog?')
+                .then(() => {
+                    done();
+                })
+                .catch(() => {
+                });
+        }
+    }
+};
 </script>

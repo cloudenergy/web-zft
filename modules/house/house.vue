@@ -11,34 +11,34 @@
 </template>
 
 <script>
-    export default {};
+export default {};
 </script>
 
 <style lang="less" scoped>
     .house-cell {
-    	padding: 15px;
-    	width: 180px;
-    	height: 100px;
-    	border-radius: 4px;
-    	border: 1px solid @light;
-    	border-left: 4px solid @primary;
+        padding: 15px;
+        width: 180px;
+        height: 100px;
+        border-radius: 4px;
+        border: 1px solid @light;
+        border-left: 4px solid @primary;
 
-    	h3 {
-    		margin-bottom: 10px;
-    	}
+        h3 {
+            margin-bottom: 10px;
+        }
 
-    	p {
-    		margin-bottom: 4px;
-    		color: @gray;
-    	}
+        p {
+            margin-bottom: 4px;
+            color: @gray;
+        }
 
-    	.rentee {
-    		border-top: 1px solid @light;
-    		padding-top: 5px;
-    		margin-top: 8px;
+        .rentee {
+            border-top: 1px solid @light;
+            padding-top: 5px;
+            margin-top: 8px;
 
-    		display: flex;
-    		justify-content: space-between;
-    	}
+            display: flex;
+            justify-content: space-between;
+        }
     }
 </style>

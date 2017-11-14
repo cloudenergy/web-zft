@@ -3,13 +3,16 @@
         <div class="filter">
             <el-input placeholder="搜索小区/门牌/电话" prefix-icon="el-icon-search" size="mini"></el-input>
             <el-select v-model="filters.city" size="mini" clearable placeholder="房源状态">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                           :value="item.value"></el-option>
             </el-select>
             <el-select v-model="filters.city" size="mini" clearable placeholder="居室">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                           :value="item.value"></el-option>
             </el-select>
             <el-select v-model="filters.city" size="mini" clearable placeholder="管理">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                           :value="item.value"></el-option>
             </el-select>
         </div>
         <div class="actions">
@@ -32,37 +35,37 @@
 </template>
 
 <script>
-    import { mapState } from "vuex";
+import {mapState} from 'vuex';
 
-    export default {
-    	data() {
-    		return {
-    			filters: {},
-    			options: []
-    		};
-    	}
-    };
+export default {
+    data() {
+        return {
+            filters: {},
+            options: []
+        };
+    }
+};
 </script>
 
 <style lang="less" scoped>
     .search-wrapper {
-    	margin-bottom: 20px;
-    	display: flex;
-    	justify-content: space-between;
-    	align-items: center;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-    	.el-input {
-    		width: 240px;
-    	}
+        .el-input {
+            width: 240px;
+        }
 
-    	.el-button {
-    		margin-left: 10px;
-    	}
+        .el-button {
+            margin-left: 10px;
+        }
 
-    	.el-input,
-    	.el-select {
-    		margin-right: 10px;
-    	}
+        .el-input,
+        .el-select {
+            margin-right: 10px;
+        }
     }
 </style>
 

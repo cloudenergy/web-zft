@@ -28,56 +28,56 @@
 </template>
 
 <script>
-    export default {
-    	data() {
-    		return {
-    			type: 1,
-    			filters: {
-    				city: '',
-    				area: ''
-    			},
-    			options: []
-    		};
-    	},
-    	methods: {
-    		change(key) {
-    			this.$emit('change', key);
-    		}
-    	}
-    };
+export default {
+    data() {
+        return {
+            type: 1,
+            filters: {
+                city: '',
+                area: ''
+            },
+            options: []
+        };
+    },
+    methods: {
+        change(key) {
+            this.$emit('change', key);
+        }
+    }
+};
 </script>
 
 <style lang="less" scoped>
     .secondary-side {
-    	width: 240px;
-    	text-align: center;
+        width: 240px;
+        text-align: center;
 
-    	.filters {
-    		margin-top: 15px;
-    		display: flex;
-    		justify-content: space-between;
+        .filters {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
 
-    		.el-select {
-    			width: 48%;
-    		}
-    	}
+            .el-select {
+                width: 48%;
+            }
+        }
 
-    	.box-card {
-    		margin-top: 16px;
-    	}
+        .box-card {
+            margin-top: 16px;
+        }
 
-    	.list {
-    		text-align: left;
-    		list-style: none;
+        .list {
+            text-align: left;
+            list-style: none;
 
-    		li {
-    			height: 30px;
-    			line-height: 30px;
-    		}
-    	}
+            li {
+                height: 30px;
+                line-height: 30px;
+            }
+        }
 
-    	.house-list li + li {
-    		border-top: 1px solid @light;
-    	}
+        .house-list li + li {
+            border-top: 1px solid @light;
+        }
     }
 </style>

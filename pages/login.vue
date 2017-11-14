@@ -17,13 +17,13 @@
 </template>
 
 <script>
-  export default {
+export default {
     data() {
-      return {
-        user: {}
-      };
+        return {
+            user: {}
+        };
     }
-  };
+};
 </script>
 <style lang="less" scoped>
   .login {

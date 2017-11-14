@@ -1,5 +1,5 @@
-import { makeGet, makePost, setup } from "@/api";
-import { Object } from "core-js/library/web/timers";
+import { makeGet, makePost, setup } from '@/api';
+import { Object } from 'core-js/library/web/timers';
 
 const apis = {
     home: makeGet('/api/test')
@@ -14,5 +14,5 @@ export default function(entry) {
         return apis[entry]();
     }
 
-    throw "Entry not defined";
+    throw 'Entry not defined';
 }

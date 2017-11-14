@@ -9,16 +9,16 @@
     </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {}
-        },
-        methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath)
-            }
+export default {
+    data() {
+        return {}
+    },
+    methods: {
+        handleSelect(key, keyPath) {
+            console.log(key, keyPath)
         }
     }
+}
 </script>
 
 <style lang="less" scoped>

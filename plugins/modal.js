@@ -6,13 +6,13 @@
  */
 
 const opts = {
-	mask: true
+    mask: true
 };
 
 export default class Modal {
-	constructor(options) {}
+    constructor(options) {}
 
-	open() {}
+    open() {}
 
-	close() {}
+    close() {}
 }
