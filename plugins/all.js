@@ -11,7 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import Element from 'element-ui';
 
 export default function(vue) {
-	// 设置api 
+	// 设置api
 	vue.prototype.$model = api;
 	vue.prototype.$ELEMENT = { size: 'mini' };
 

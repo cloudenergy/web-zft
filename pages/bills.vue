@@ -8,15 +8,13 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			links: [
-				{ url: '/bills', text: '运营账单' }
-			]
-		};
-	}
-};
+	export default {
+		data() {
+			return {
+				links: [{ url: '/bills', text: '运营账单' }]
+			};
+		}
+	};
 </script>
 
 <style>
