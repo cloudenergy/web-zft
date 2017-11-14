@@ -1,7 +1,7 @@
 <template>
 	<div class="top-nav">
 		<div class="logo">
-			<img src="static/imgs/logo.png">
+			<img src="~/static/imgs/logo.png">
 		</div>
 		<div class="links">
 			<el-menu class="el-menu-demo" mode="horizontal" :router="true" :default-active="$route.path">
