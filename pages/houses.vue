@@ -15,7 +15,7 @@
     		return {
     			links: [
     				{ url: '/houses', text: '房源管理' },
-    				{ url: '/houses/rent', text: '出租管理' }
+    				{ url: '/houses/contract', text: '出租管理' }
     			]
     		};
     	},
