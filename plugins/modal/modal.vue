@@ -1,6 +1,6 @@
 <template>
     <transition :name="animation">
-        <el-dialog title="标题" :visible.sync="isActive" width="30%">
+        <el-dialog :title="title" :visible.sync="isActive" width="30%">
             <component v-if="component" v-bind="props" :is="component" @close="close"></component>
         </el-dialog>
     </transition>

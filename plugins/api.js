@@ -1,17 +1,39 @@
 /*eslint no-unused-vars: 0 */
 import { makeGet, makePost, setup } from '@/api';
 
+let baseURL = 'https://virtserver.swaggerhub.com/v1.0';
+
+switch (process.env.NODE_ENV) {
+	case 'development':
+		baseURL = 'https://virtserver.swaggerhub.com/v1.0';
+		break;
+	case 'production':
+		baseURL = 'https://virtserver.swaggerhub.com/v1.0';
+		break;
+	default:
+		baseURL: 'https://virtserver.swaggerhub.com/v1.0';
+		break;
+}
+
+setup({
+	baseURL
+});
+
 const apis = {
-	home: makeGet('/api/test')
+	houses: makeGet('/houses')
 };
 
 /**
  * 通过接口名称返回请求对象
- * @param {string} entry
+ * @param {string} entry	接口名称
+ * @param {object} data  query/body 参数
+ * @param {object} params url 参数
  */
-export default function(entry) {
+export default function(entry, data, params) {
+	// entry - string, array, function
+
 	if (apis.hasOwnProperty(entry)) {
-		return apis[entry]();
+		return apis[entry](data, params);
 	}
 
 	throw 'Entry not defined';

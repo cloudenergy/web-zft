@@ -18,9 +18,6 @@
     				{ url: '/houses/contract', text: '出租管理' }
     			]
     		};
-    	},
-    	created() {
-    		this.$model('home').then(data => console.log('houses: ', data));
     	}
     };
 </script>

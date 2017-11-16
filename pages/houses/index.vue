@@ -31,8 +31,17 @@
     			]
     		};
     	},
+    	created() {
+    		this.query();
+    	},
     	methods: {
-    		refresh() {}
+    		refresh(id) {
+    			this.house = id;
+    			this.query();
+    		},
+    		query() {
+    			this.$model('houses').then(data => console.log(data));
+    		}
     	}
     };
 </script>

@@ -7,6 +7,10 @@ export default {
 		content: String,
 		programmatic: Boolean,
 		props: Object,
+		title: {
+			type: String,
+			default: '标题'
+		},
 		width: {
 			type: [String, Number],
 			default: 960
