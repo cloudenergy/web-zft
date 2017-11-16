@@ -24,6 +24,7 @@
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item @click.native="create()">房源</el-dropdown-item>
+                    <el-dropdown-item @click.native="createContract()">租户</el-dropdown-item>
                     <el-dropdown-item>批量导入</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -34,6 +35,7 @@
 <script>
     import { mapState } from 'vuex';
     import addModal from './add';
+    import {NewContract} from '~/modules/contract';
 
     export default {
     	data() {
@@ -45,7 +47,10 @@
     	methods: {
     		create(type) {
     			let modal = this.$modal.open(addModal);
-    		}
+    		},
+		    createContract() {
+			    this.$modal.open(NewContract);
+		    }
     	}
     };
 </script>
