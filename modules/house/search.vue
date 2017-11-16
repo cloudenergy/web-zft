@@ -33,9 +33,8 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
     import addModal from './add';
-    import {NewContract} from '~/modules/contract';
+    import { NewContract } from '~/modules/contract';
 
     export default {
     	data() {
@@ -48,9 +47,9 @@
     		create(type) {
     			let modal = this.$modal.open(addModal);
     		},
-		    createContract() {
-			    this.$modal.open(NewContract);
-		    }
+    		createContract() {
+    			this.$modal.open(NewContract);
+    		}
     	}
     };
 </script>

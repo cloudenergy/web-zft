@@ -1,21 +1,42 @@
 <template>
-    <div class="modal">
-        <el-form :model="form" class="v-form" label-width="100px">
-            <el-form-item label="房源信息">
-                <el-select v-model="form.rentType" placeholder="方式">
-                    <el-option label="整租" value="1" />
-                    <el-option label="单间" value="2" />
-                </el-select>
-            </el-form-item>
-            <el-form-item label="房源配置">
-                <el-input v-model="form.belongs" auto-complete="off" />
-            </el-form-item>
+    <el-dialog title="房源信息" :visible="true">
+        <el-form :model="form" class="mini-form">
+            <div class="group">
+                <el-form-item label="方式">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="编号">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="管理">
+                    <el-select v-model="form.region" placeholder="管理">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
+            <div class="group">
+                <el-form-item label="城市">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="区域">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+            </div>
+            <div class="group">
+                <el-form-item label="地址">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="名称">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+            </div>
         </el-form>
-        <div class="dialog-footer">
-            <el-button>取 消</el-button>
-            <el-button type="primary">确 定</el-button>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="close()">取 消</el-button>
+            <el-button type="primary" @click="close()">确 定</el-button>
         </div>
-    </div>
+    </el-dialog>
 </template>
 
 <script>
