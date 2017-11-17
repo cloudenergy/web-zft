@@ -3,3 +3,4 @@ dist
 .vscode
 .blade
 coverage/
+package-lock.json
