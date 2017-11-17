@@ -29,11 +29,13 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
+        <add-modal :visible.sync="show_new_house_modal" />
+        <new-contract :visible.sync="show_new_contract_modal" />
     </div>
 </template>
 
 <script>
-    import addModal from './add';
+    import AddModal from './add';
     import { NewContract } from '~/modules/contract';
 
     export default {
@@ -43,12 +45,16 @@
     			options: []
     		};
     	},
+    	components: {
+    		AddModal,
+    		NewContract
+    	},
     	methods: {
     		create(type) {
-    			let modal = this.$modal.open(addModal);
+    			this.show_new_house_modal = true;
     		},
     		createContract() {
-    			this.$modal.open(NewContract);
+    			this.show_new_contract_modal = true;
     		}
     	}
     };

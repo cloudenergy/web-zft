@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="房源信息" :visible="true">
+    <el-dialog title="房源信息">
         <el-form :model="form" class="mini-form">
             <h3>房源信息</h3>
             <div class="group">
