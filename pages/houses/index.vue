@@ -4,10 +4,10 @@
         <div class="main-container">
             <Search />
             <div class="houses">
-                <div class="room" v-for="room in rooms">
-                    <p>{{room.title}}</p>
+                <div class="room" v-for="house in houses">
+                    <p>{{house.name}}</p>
                     <div class="cells">
-                        <House v-for="(cell, index) in room.cells" :key="index" class="cell" />
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" />
                     </div>
                 </div>
             </div>
@@ -16,19 +16,12 @@
 </template>
 
 <script>
-    import { Tab, House, Search } from '~/modules/house';
+    import { Tab, Room, Search } from '~/modules/house';
     export default {
-    	components: { Tab, House, Search },
+    	components: { Tab, Room, Search },
     	data() {
     		return {
-    			rooms: [
-    				{ title: '保利香槟国际', cells: [1, 2, 3, 4] },
-    				{ title: '保利香槟国际', cells: [1, 2] },
-    				{ title: '保利香槟国际', cells: [1, 2] },
-    				{ title: '保利香槟国际', cells: [1, 2, 3] },
-    				{ title: '保利香槟国际', cells: [1, 2] },
-    				{ title: '保利香槟国际', cells: [1, 2] }
-    			]
+    			houses: []
     		};
     	},
     	created() {
@@ -40,7 +33,7 @@
     			this.query();
     		},
     		query() {
-    			this.$model('houses').then(data => console.log(data));
+    			this.$model('houses').then(data => this.$set(this, 'houses', data));
     		}
     	}
     };

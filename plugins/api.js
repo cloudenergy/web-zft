@@ -1,17 +1,17 @@
 /*eslint no-unused-vars: 0 */
 import { makeGet, makePost, setup } from '@/api';
 
-let baseURL = 'https://virtserver.swaggerhub.com/v1.0';
+let baseURL = '/api/v1.0';
 
 switch (process.env.NODE_ENV) {
 	case 'development':
-		baseURL = 'https://virtserver.swaggerhub.com/v1.0';
+		baseURL = '/api/v1.0';
 		break;
 	case 'production':
-		baseURL = 'https://virtserver.swaggerhub.com/v1.0';
+		baseURL = '/api/v1.0';
 		break;
 	default:
-		baseURL: 'https://virtserver.swaggerhub.com/v1.0';
+		baseURL: '/api/v1.0';
 		break;
 }
 
