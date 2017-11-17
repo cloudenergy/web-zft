@@ -33,7 +33,9 @@
     			this.query();
     		},
     		query() {
-    			this.$model('houses').then(data => this.$set(this, 'houses', data));
+    			this.$model('houses')
+    				.query()
+    				.then(data => this.$set(this, 'houses', data));
     		}
     	}
     };

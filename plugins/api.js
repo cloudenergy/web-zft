@@ -1,5 +1,6 @@
 /*eslint no-unused-vars: 0 */
-import { makeGet, makePost, setup } from '@/api';
+import { makeGet, makePost, setup, makeResource } from '@/api';
+import { isFunc } from '~/utils';
 
 let baseURL = '/api/v1.0';
 
@@ -20,7 +21,7 @@ setup({
 });
 
 const apis = {
-	houses: makeGet('/houses')
+	houses: makeResource('/houses')
 };
 
 /**
@@ -33,7 +34,7 @@ export default function(entry, data, params) {
 	// entry - string, array, function
 
 	if (apis.hasOwnProperty(entry)) {
-		return apis[entry](data, params);
+		return isFunc(apis[entry]) ? apis[entry](data, params) : apis[entry];
 	}
 
 	throw 'Entry not defined';
