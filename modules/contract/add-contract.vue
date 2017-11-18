@@ -26,9 +26,20 @@
                             <template slot="prepend">性别</template>
                         </el-input>
                     </el-col>
-                    <el-col :span="16">
-                        <el-input placeholder="选填" v-model="form.profile.idNumber">
-                            <template slot="prepend">身份证</template>
+                    <el-col :span="5">
+                        <el-select v-model="form.profile.idType" class="id-type">
+                            <el-option label="身份证" value="1"></el-option>
+                            <el-option label="护照" value="2"></el-option>
+                            <el-option label="港澳通行证" value="3"></el-option>
+                            <el-option label="台胞证" value="4"></el-option>
+                            <el-option label="居住证" value="5"></el-option>
+                            <el-option label="临时居住证" value="6"></el-option>
+                            <el-option label="营业执照" value="7"></el-option>
+                            <el-option label="其他证件" value="8"></el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-input placeholder="证件号(选填)" v-model="form.profile.idNumber">
                         </el-input>
                     </el-col>
                 </el-row>
@@ -48,20 +59,24 @@
                         </el-autocomplete>
                     </el-col>
                 </el-row>
-                <el-row>
-                    <el-col :span="3">
-                        <template>租期</template>
-                    </el-col>
-                    <el-col :span="9">
-                        <el-input placeholder="2017-09-09" v-model="form.contract.leaseStart">
-                            <template slot="prepend">范围</template>
-                        </el-input>
-                    </el-col>
-                    <el-col :span="9">
-                        <el-input placeholder="2018-09-09" v-model="form.contract.leaseEnd">
-                        </el-input>
-                    </el-col>
-                </el-row>
+                <el-form-item label="租期">
+                    <el-row>
+                        <el-col :span="3">
+                            <template>范围</template>
+                        </el-col>
+                        <el-col :span="9">
+                            <div class="block">
+                                <el-date-picker v-model="form.contract.leaseStart" type="date" placeholder="起租时间" :picker-options="startOptions">
+                                    <!--<template slot="prepend">范围</template>-->
+                                </el-date-picker>
+                            </div>
+                        </el-col>
+                        <el-col :span="9" class="lease-end-input">
+                            <el-date-picker v-model="form.contract.leaseEnd" type="date" placeholder="退租时间" :picker-options="endOptions">
+                            </el-date-picker>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
                 <el-row>
                     <el-col :span="3">
                         <template>合同描述</template>
@@ -170,7 +185,8 @@
     					account: '',
     					phone: '',
     					gender: '',
-    					idNumber: ''
+    					idNumber: '',
+    					idType: '1'
     				},
     				property: {
     					houseType: '1',
@@ -197,6 +213,58 @@
     					}
     				},
     				bond: 2600
+    			},
+    			startOptions: {
+    				disabledDate(time) {
+    					return time.getTime() < Date.now();
+    				}
+    			},
+    			endOptions: {
+    				disabledDate(time) {
+    					return time.getTime() < Date.now();
+    				},
+    				shortcuts: [
+    					{
+    						text: '半年',
+    						onClick(picker) {
+    							const date = new Date();
+    							date.setTime(
+    								date.getTime() + 3600 * 1000 * 24 * 180
+    							);
+    							picker.$emit('pick', date);
+    						}
+    					},
+    					{
+    						text: '一年',
+    						onClick(picker) {
+    							const date = new Date();
+    							date.setTime(
+    								date.getTime() + 3600 * 1000 * 24 * 365
+    							);
+    							picker.$emit('pick', date);
+    						}
+    					},
+    					{
+    						text: '两年',
+    						onClick(picker) {
+    							const date = new Date();
+    							date.setTime(
+    								date.getTime() - 3600 * 1000 * 24 * 365 * 2
+    							);
+    							picker.$emit('pick', date);
+    						}
+    					},
+    					{
+    						text: '三年',
+    						onClick(picker) {
+    							const date = new Date();
+    							date.setTime(
+    								date.getTime() - 3600 * 1000 * 24 * 365 * 3
+    							);
+    							picker.$emit('pick', date);
+    						}
+    					}
+    				]
     			}
     		};
     	},
@@ -231,5 +299,22 @@
     .house-input {
     	width: 0;
     }
+
+    .lease-end-input {
+    	margin-left: 10px;
+    }
+
+    /*.group-append {*/
+    /*background-color: #f5f7fa;*/
+    /*color: #878d99;*/
+    /*vertical-align: middle;*/
+    /*display: table-cell;*/
+    /*position: relative;*/
+    /*border: 1px solid #d8dce5;*/
+    /*border-radius: 4px;*/
+    /*padding: 0 20px;*/
+    /*width: 1px;*/
+    /*white-space: nowrap;*/
+    /*}*/
 </style>
 
