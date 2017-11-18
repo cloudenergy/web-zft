@@ -48,7 +48,6 @@
 </template>
 
 <script>
-    import Modal from '~/plugins/modal';
     export default {
     	data() {
     		return {

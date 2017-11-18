@@ -192,8 +192,6 @@
 </template>
 
 <script>
-	import Modal from '~/plugins/modal';
-
 	export default {
 		data() {
 			return {
@@ -303,14 +301,10 @@
 		width: 70%;
 	}
 
-	.house-input {
-		width: 0;
-	}
-
 	.lease-end-input {
 		margin-left: 10px;
 	}
-	
+
 	.select-with-label {
 		display: inline-table;
 		.el-input__inner {
