@@ -212,10 +212,10 @@
 
 					},
 					contract: {
-						leaseStart: new Date().toISOString().slice(0,10),
-						leaseEnd: new Date("2018-11-11").toISOString().slice(0,10),
+						leaseStart: new Date().toISOString().slice(0, 10),
+						leaseEnd: new Date("2018-11-11").toISOString().slice(0, 10),
 						contractNumber: '',
-						signUpDate: new Date().toISOString().slice(0,10)
+						signUpDate: new Date().toISOString().slice(0, 10)
 					},
 					billPlan: '',
 					offset: '',
@@ -287,6 +287,7 @@
 			}
 		}
 	};
+
 </script>
 
 <style lang="less" scoped>
@@ -309,7 +310,7 @@
 	.lease-end-input {
 		margin-left: 10px;
 	}
-
+	
 	.select-with-label {
 		display: inline-table;
 		.el-input__inner {
@@ -324,6 +325,7 @@
 			}
 		}
 	}
+
 	.section-label {
 		margin-top: 10px;
 	}
