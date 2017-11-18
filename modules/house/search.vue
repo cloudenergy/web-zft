@@ -1,24 +1,24 @@
 <template>
     <div class="search-wrapper">
         <div class="filter">
-            <el-input placeholder="搜索小区/门牌/电话" prefix-icon="el-icon-search" size="mini"></el-input>
-            <el-select v-model="filters.city" size="mini" clearable placeholder="房源状态">
+            <el-input placeholder="搜索小区/门牌/电话" prefix-icon="el-icon-search"></el-input>
+            <el-select v-model="filters.city" clearable placeholder="房源状态">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-select v-model="filters.city" size="mini" clearable placeholder="居室">
+            <el-select v-model="filters.city" clearable placeholder="居室">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-select v-model="filters.city" size="mini" clearable placeholder="管理">
+            <el-select v-model="filters.city" clearable placeholder="管理">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
         </div>
         <div class="actions">
-            <el-button type="warning" size="mini">
+            <el-button type="warning">
                 导出
                 <i class="el-icon-sort"></i>
             </el-button>
             <el-dropdown>
-                <el-button type="primary" size="mini">
+                <el-button type="primary">
                     新增
                     <i class="el-icon-arrow-down"></i>
                 </el-button>
@@ -29,8 +29,12 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
-        <add-modal :visible.sync="show_new_house_modal" />
-        <new-contract :visible.sync="show_new_contract_modal" />
+        <el-dialog title="房源信息" :visible.sync="modal.house">
+            <add-modal ref="house" />
+        </el-dialog>
+        <el-dialog title="添加租户" :visible.sync="modal.contract">
+            <new-contract ref="contract" />
+        </el-dialog>
     </div>
 </template>
 
@@ -42,7 +46,11 @@
     	data() {
     		return {
     			filters: {},
-    			options: []
+    			options: [],
+    			modal: {
+    				contract: false,
+    				house: false
+    			}
     		};
     	},
     	components: {
@@ -51,10 +59,10 @@
     	},
     	methods: {
     		create(type) {
-    			this.show_new_house_modal = true;
+    			this.modal.house = true;
     		},
     		createContract() {
-    			this.show_new_contract_modal = true;
+    			this.modal.contract = true;
     		}
     	}
     };
