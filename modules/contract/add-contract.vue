@@ -144,31 +144,12 @@
 			<el-row>
 				<el-col :span="3">
 					<div class="section-label">附加费用</div>
+					<el-button size="mini">+添加</el-button>
 				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="3600月" v-model="form.bill.electricity.amount">
-						<template slot="prepend">电费</template>
-					</el-input>
-				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="预付费" v-model="form.bill.electricity.paymentMethod">
-						<template slot="prepend">方式</template>
-					</el-input>
+				<el-col :span="21">
+					<ExtraExpense v-for="item in form.extraExpense" :expense="item" :key="item.id"></ExtraExpense>
 				</el-col>
 			</el-row>
-			<el-row>
-				<el-col :offset="3" :span="9">
-					<el-input placeholder="1.2度" v-model="form.bill.water.amount">
-						<template slot="prepend">水费</template>
-					</el-input>
-				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="随租金付" v-model="form.bill.water.paymentMethod">
-						<template slot="prepend">方式</template>
-					</el-input>
-				</el-col>
-			</el-row>
-
 			<el-row>
 				<el-col :span="3">
 					<div class="section-label">押金</div>
@@ -189,6 +170,8 @@
 </template>
 
 <script>
+	import ExtraExpense from './extra-expense'
+
 	export default {
 		data() {
 			return {
@@ -216,16 +199,29 @@
 					offset: '',
 					rent: '',
 					rentPaymentMethod: '',
-					bill: {
-						electricity: {
+					extraExpense: [
+						{
+							id: 1,
+							name: '常规',
+							type: '1',
 							amount: 3600,
-							paymentMethod: '',
+							paymentMethod: '一月一付',
 						},
-						water: {
-							amount: 10,
-							paymentMethod: '',
+						{
+							id: 2,
+							name: '电费',
+							type: '2',
+							amount: 1.20,
+							paymentMethod: '预付费',
+						},
+						{
+							id: 3,
+							name: '水费',
+							type: 'water',
+							amount: 20,
+							paymentMethod: '随租金付',
 						}
-					},
+					],
 					bond: 2600
 				},
 				startOptions: {
@@ -280,7 +276,11 @@
 			save(form) {
 				//wait for close method
 			}
+		},
+		components: {
+			ExtraExpense
 		}
+
 	};
 
 </script>
