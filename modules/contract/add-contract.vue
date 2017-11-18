@@ -1,50 +1,48 @@
 <template>
-	<el-dialog title="添加租户" :visible="true">
-		<div class="modal add-contract">
-			<el-form :model="form" class="v-form" label-width="100px">
-				<h3>承租信息</h3>
-				<el-row>
-
-					<el-col :span="8">
-						<el-input placeholder="必填" v-model="form.profile.name">
-							<template slot="prepend">姓名</template>
-						</el-input>
-					</el-col>
-					<el-col :span="8">
-						<el-input placeholder="必填(建议手机号)" v-model="form.profile.account">
-							<template slot="prepend">账号</template>
-						</el-input>
-					</el-col>
-					<el-col :span="8">
-						<el-input placeholder="选填" v-model="form.profile.phone">
-							<template slot="prepend">电话</template>
-						</el-input>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-col :span="8">
-						<el-input placeholder="男" v-model="form.profile.gender">
-							<template slot="prepend">性别</template>
-						</el-input>
-					</el-col>
-					<el-col :span="5">
-						<el-select v-model="form.profile.idType" class="id-type">
-							<el-option label="身份证" value="1"></el-option>
-							<el-option label="护照" value="2"></el-option>
-							<el-option label="港澳通行证" value="3"></el-option>
-							<el-option label="台胞证" value="4"></el-option>
-							<el-option label="居住证" value="5"></el-option>
-							<el-option label="临时居住证" value="6"></el-option>
-							<el-option label="营业执照" value="7"></el-option>
-							<el-option label="其他证件" value="8"></el-option>
-						</el-select>
-					</el-col>
-					<el-col :span="11">
-						<el-input placeholder="证件号(选填)" v-model="form.profile.idNumber">
-						</el-input>
-					</el-col>
-				</el-row>
-
+	<div class="modal add-contract">
+		<el-form :model="form" class="v-form" label-width="100px">
+			<h3>承租信息</h3>
+			<el-row>
+				<el-col :span="8">
+					<el-input placeholder="必填" v-model="form.profile.name">
+						<template slot="prepend">姓名</template>
+					</el-input>
+				</el-col>
+				<el-col :span="8">
+					<el-input placeholder="必填(建议手机号)" v-model="form.profile.account">
+						<template slot="prepend">账号</template>
+					</el-input>
+				</el-col>
+				<el-col :span="8">
+					<el-input placeholder="选填" v-model="form.profile.phone">
+						<template slot="prepend">电话</template>
+					</el-input>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="8">
+					<el-input placeholder="男" v-model="form.profile.gender">
+						<template slot="prepend">性别</template>
+					</el-input>
+				</el-col>
+				<el-col :span="5">
+					<el-select v-model="form.profile.idType" class="id-type">
+						<el-option label="身份证" value="1"></el-option>
+						<el-option label="护照" value="2"></el-option>
+						<el-option label="港澳通行证" value="3"></el-option>
+						<el-option label="台胞证" value="4"></el-option>
+						<el-option label="居住证" value="5"></el-option>
+						<el-option label="临时居住证" value="6"></el-option>
+						<el-option label="营业执照" value="7"></el-option>
+						<el-option label="其他证件" value="8"></el-option>
+					</el-select>
+				</el-col>
+				<el-col :span="11">
+					<el-input placeholder="证件号(选填)" v-model="form.profile.idNumber">
+					</el-input>
+				</el-col>
+			</el-row>
+			<el-row>
 				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">承租房源</span>
 					<el-select v-model="form.property.houseType" class="house-type">
@@ -62,133 +60,132 @@
 							@select="handleSelect">
 					</el-autocomplete>
 				</div>
-
-				<el-row>
-					<el-col :span="3">
-						<div class="section-label">租期</div>
-					</el-col>
-					<el-col :span="10">
-						<div class="select-with-label el-input-group">
-							<span class="el-input-group__prepend">范围</span>
-							<div class="block lease-start-input">
-								<el-date-picker
-										v-model="form.contract.leaseStart"
-										type="date"
-										placeholder="起租时间"
-										:picker-options="startOptions">
-								</el-date-picker>
-							</div>
+			</el-row>
+			<el-row>
+				<el-col :span="3">
+					<div class="section-label">租期</div>
+				</el-col>
+				<el-col :span="10">
+					<div class="select-with-label el-input-group">
+						<span class="el-input-group__prepend">范围</span>
+						<div class="block lease-start-input">
+							<el-date-picker
+									v-model="form.contract.leaseStart"
+									type="date"
+									placeholder="起租时间"
+									:picker-options="startOptions">
+							</el-date-picker>
 						</div>
-					</el-col>
-					<el-col :span="10" class="lease-end-input">
-						<el-date-picker
-								v-model="form.contract.leaseEnd"
-								type="date"
-								placeholder="退租时间"
-								:picker-options="endOptions">
-						</el-date-picker>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-col :span="3">
-						<div class="section-label">合同描述</div>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="JG4133" v-model="form.contract.contractNumber">
-							<template slot="prepend">合同编号</template>
-						</el-input>
-					</el-col>
-					<el-col :span="9">
-						<div class="select-with-label el-input-group">
-							<span class="el-input-group__prepend">签约日期</span>
-							<div class="block lease-start-input">
-								<el-date-picker
-										v-model="form.contract.signUpDate"
-										type="date"
-										placeholder="选择日期">
-								</el-date-picker>
-							</div>
+					</div>
+				</el-col>
+				<el-col :span="10" class="lease-end-input">
+					<el-date-picker
+							v-model="form.contract.leaseEnd"
+							type="date"
+							placeholder="退租时间"
+							:picker-options="endOptions">
+					</el-date-picker>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="3">
+					<div class="section-label">合同描述</div>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="JG4133" v-model="form.contract.contractNumber">
+						<template slot="prepend">合同编号</template>
+					</el-input>
+				</el-col>
+				<el-col :span="9">
+					<div class="select-with-label el-input-group">
+						<span class="el-input-group__prepend">签约日期</span>
+						<div class="block lease-start-input">
+							<el-date-picker
+									v-model="form.contract.signUpDate"
+									type="date"
+									placeholder="选择日期">
+							</el-date-picker>
 						</div>
-					</el-col>
-				</el-row>
+					</div>
+				</el-col>
+			</el-row>
 
-				<h3>租费设置</h3>
-				<el-row>
-					<el-col :span="3">
-						<div class="section-label">收租时间</div>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="必填" v-model="form.billPlan">
-							<template slot="prepend">账单</template>
-						</el-input>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="5天" v-model="form.offset">
-							<template slot="append">收租</template>
-						</el-input>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-col :span="3">
-						<div class="section-label">租金</div>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="3600月" v-model="form.rent">
-							<template slot="prepend">常规租金</template>
-						</el-input>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="一月一付" v-model="form.rentPaymentMethod">
-							<template slot="prepend">方式</template>
-						</el-input>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-col :span="3">
-						<div class="section-label">附加费用</div>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="3600月" v-model="form.bill.electricity.amount">
-							<template slot="prepend">电费</template>
-						</el-input>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="预付费" v-model="form.bill.electricity.paymentMethod">
-							<template slot="prepend">方式</template>
-						</el-input>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-col :offset="3" :span="9">
-						<el-input placeholder="1.2度" v-model="form.bill.water.amount">
-							<template slot="prepend">水费</template>
-						</el-input>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="随租金付" v-model="form.bill.water.paymentMethod">
-							<template slot="prepend">方式</template>
-						</el-input>
-					</el-col>
-				</el-row>
+			<h3>租费设置</h3>
+			<el-row>
+				<el-col :span="3">
+					<div class="section-label">收租时间</div>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="必填" v-model="form.billPlan">
+						<template slot="prepend">账单</template>
+					</el-input>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="5天" v-model="form.offset">
+						<template slot="append">收租</template>
+					</el-input>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="3">
+					<div class="section-label">租金</div>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="3600月" v-model="form.rent">
+						<template slot="prepend">常规租金</template>
+					</el-input>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="一月一付" v-model="form.rentPaymentMethod">
+						<template slot="prepend">方式</template>
+					</el-input>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="3">
+					<div class="section-label">附加费用</div>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="3600月" v-model="form.bill.electricity.amount">
+						<template slot="prepend">电费</template>
+					</el-input>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="预付费" v-model="form.bill.electricity.paymentMethod">
+						<template slot="prepend">方式</template>
+					</el-input>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :offset="3" :span="9">
+					<el-input placeholder="1.2度" v-model="form.bill.water.amount">
+						<template slot="prepend">水费</template>
+					</el-input>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="随租金付" v-model="form.bill.water.paymentMethod">
+						<template slot="prepend">方式</template>
+					</el-input>
+				</el-col>
+			</el-row>
 
-				<el-row>
-					<el-col :span="3">
-						<div class="section-label">押金</div>
-					</el-col>
-					<el-col :span="9">
-						<el-input placeholder="3600" v-model="form.bond">
-							<template slot="prepend">常规押金</template>
-						</el-input>
-					</el-col>
+			<el-row>
+				<el-col :span="3">
+					<div class="section-label">押金</div>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="3600" v-model="form.bond">
+						<template slot="prepend">常规押金</template>
+					</el-input>
+				</el-col>
 
-				</el-row>
-			</el-form>
-			<div class="dialog-footer">
-				<el-button @click="close()">取 消</el-button>
-				<el-button type="primary" @click="save(form)">创建租户</el-button>
-			</div>
+			</el-row>
+		</el-form>
+		<div class="dialog-footer">
+			<el-button @click="close()">取 消</el-button>
+			<el-button type="primary" @click="save(form)">创建租户</el-button>
 		</div>
-	</el-dialog>
+	</div>
 </template>
 
 <script>
@@ -281,7 +278,7 @@
 				cb([]);
 			},
 			save(form) {
-				this.close()
+				//wait for close method
 			}
 		}
 	};
@@ -321,9 +318,8 @@
 	}
 
 	.section-label {
-		margin-top: 10px;
+		margin-top: 3px;
 	}
-
 </style>
 <style lang="less">
 	.select-with-label {
@@ -341,7 +337,7 @@
 		}
 	}
 
-	.modal.add-contract .el-form-item {
-
+	.modal.add-contract .el-row {
+		margin-top: 5px;
 	}
 </style>
