@@ -1,8 +1,8 @@
 <template>
 	<el-dialog title="添加租户" :visible="true">
-		<div class="modal">
+		<div class="modal add-contract">
 			<el-form :model="form" class="v-form" label-width="100px">
-				<el-form-item label="承租信息">
+				<div>承租信息</div>
 					<el-row>
 
 						<el-col :span="8">
@@ -44,32 +44,28 @@
 							</el-input>
 						</el-col>
 					</el-row>
-					<el-row>
-						<el-col :span="8">
-							<el-select v-model="form.property.houseType" class="house-type">
-								<el-option label="全部" value="1"></el-option>
-								<el-option label="整租" value="2"></el-option>
-								<el-option label="合租" value="3"></el-option>
-								<el-option label="独栋" value="4"></el-option>
-							</el-select>
-							<template slot="prepend">承租房源</template>
 
-						</el-col>
-						<el-col :span="16">
-							<el-autocomplete
-									class="inline-input"
-									v-model="form.property.house"
-									:fetch-suggestions="querySearch"
-									placeholder="搜索房源编号、小区名称等关键字"
-									:trigger-on-focus="false"
-									@select="handleSelect">
-							</el-autocomplete>
-						</el-col>
-					</el-row>
-					<el-form-item label="租期">
+					<div class="select-with-label el-input-group"><span class="el-input-group__prepend">承租房源</span>
+						<el-select v-model="form.property.houseType" class="house-type">
+							<el-option label="全部" value="1"></el-option>
+							<el-option label="整租" value="2"></el-option>
+							<el-option label="合租" value="3"></el-option>
+							<el-option label="独栋" value="4"></el-option>
+						</el-select>
+						<el-autocomplete
+								class="inline-input"
+								v-model="form.property.house"
+								:fetch-suggestions="querySearch"
+								placeholder="搜索房源编号、小区名称等关键字"
+								:trigger-on-focus="false"
+								@select="handleSelect">
+						</el-autocomplete>
+					</div>
+
+					<div>租期</div>
 						<el-row>
 							<el-col :span="3">
-								<template>范围</template>
+								<div class="range-label">范围</div>
 							</el-col>
 							<el-col :span="9">
 								<div class="block">
@@ -91,7 +87,6 @@
 								</el-date-picker>
 							</el-col>
 						</el-row>
-					</el-form-item>
 					<el-row>
 						<el-col :span="3">
 							<template>合同描述</template>
@@ -107,9 +102,8 @@
 							</el-input>
 						</el-col>
 					</el-row>
-				</el-form-item>
 
-				<el-form-item label="租费设置">
+				<div>租费设置</div>
 					<el-row>
 						<el-col :span="3">
 							<template>收租时间</template>
@@ -179,7 +173,6 @@
 						</el-col>
 
 					</el-row>
-				</el-form-item>
 			</el-form>
 			<div class="dialog-footer">
 				<el-button @click="close()">取 消</el-button>
@@ -297,7 +290,7 @@
 	}
 
 	.inline-input {
-		width: 100%;
+		width: 70%;
 	}
 
 	.house-input {
@@ -308,17 +301,36 @@
 		margin-left: 10px;
 	}
 
-	/*.group-append {*/
-	/*background-color: #f5f7fa;*/
-	/*color: #878d99;*/
-	/*vertical-align: middle;*/
-	/*display: table-cell;*/
-	/*position: relative;*/
-	/*border: 1px solid #d8dce5;*/
-	/*border-radius: 4px;*/
-	/*padding: 0 20px;*/
-	/*width: 1px;*/
-	/*white-space: nowrap;*/
-	/*}*/
-</style>
+	.select-with-label {
+		display: inline-table;
+		.el-input__inner {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		.inline-input {
+			display: table-cell;
+			.el-input__inner {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
 
+
+</style>
+<style lang="less">
+	.select-with-label {
+		.house-type .el-input__inner {
+			border-radius: 0;
+
+		}
+		.inline-input .el-input__inner {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-left: none;
+		}
+	}
+	.modal.add-contract .el-form-item {
+
+	}
+</style>
