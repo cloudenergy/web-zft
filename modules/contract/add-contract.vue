@@ -2,113 +2,9 @@
 	<div class="modal add-contract">
 		<el-form :model="form" class="v-form" label-width="100px">
 			<h3>承租信息</h3>
-			<el-row>
-				<el-col :span="8">
-					<el-input placeholder="必填" v-model="form.profile.name">
-						<template slot="prepend">姓名</template>
-					</el-input>
-				</el-col>
-				<el-col :span="8">
-					<el-input placeholder="必填(建议手机号)" v-model="form.profile.account">
-						<template slot="prepend">账号</template>
-					</el-input>
-				</el-col>
-				<el-col :span="8">
-					<el-input placeholder="选填" v-model="form.profile.phone">
-						<template slot="prepend">电话</template>
-					</el-input>
-				</el-col>
-			</el-row>
-			<el-row>
-				<el-col :span="8">
-					<el-input placeholder="男" v-model="form.profile.gender">
-						<template slot="prepend">性别</template>
-					</el-input>
-				</el-col>
-				<el-col :span="5">
-					<el-select v-model="form.profile.idType" class="id-type">
-						<el-option label="身份证" value="1"></el-option>
-						<el-option label="护照" value="2"></el-option>
-						<el-option label="港澳通行证" value="3"></el-option>
-						<el-option label="台胞证" value="4"></el-option>
-						<el-option label="居住证" value="5"></el-option>
-						<el-option label="临时居住证" value="6"></el-option>
-						<el-option label="营业执照" value="7"></el-option>
-						<el-option label="其他证件" value="8"></el-option>
-					</el-select>
-				</el-col>
-				<el-col :span="11">
-					<el-input placeholder="证件号(选填)" v-model="form.profile.idNumber">
-					</el-input>
-				</el-col>
-			</el-row>
-			<el-row>
-				<div class="select-with-label el-input-group">
-					<span class="el-input-group__prepend">承租房源</span>
-					<el-select v-model="form.property.houseType" class="house-type">
-						<el-option label="全部" value="1"></el-option>
-						<el-option label="整租" value="2"></el-option>
-						<el-option label="合租" value="3"></el-option>
-						<el-option label="独栋" value="4"></el-option>
-					</el-select>
-					<el-autocomplete
-							class="inline-input"
-							v-model="form.property.house"
-							:fetch-suggestions="querySearch"
-							placeholder="搜索房源编号、小区名称等关键字"
-							:trigger-on-focus="false"
-							@select="handleSelect">
-					</el-autocomplete>
-				</div>
-			</el-row>
-			<el-row>
-				<el-col :span="3">
-					<div class="section-label">租期</div>
-				</el-col>
-				<el-col :span="10">
-					<div class="select-with-label el-input-group">
-						<span class="el-input-group__prepend">范围</span>
-						<div class="block lease-start-input">
-							<el-date-picker
-									v-model="form.contract.leaseStart"
-									type="date"
-									placeholder="起租时间"
-									:picker-options="startOptions">
-							</el-date-picker>
-						</div>
-					</div>
-				</el-col>
-				<el-col :span="10" class="lease-end-input">
-					<el-date-picker
-							v-model="form.contract.leaseEnd"
-							type="date"
-							placeholder="退租时间"
-							:picker-options="endOptions">
-					</el-date-picker>
-				</el-col>
-			</el-row>
-			<el-row>
-				<el-col :span="3">
-					<div class="section-label">合同描述</div>
-				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="JG4133" v-model="form.contract.contractNumber">
-						<template slot="prepend">合同编号</template>
-					</el-input>
-				</el-col>
-				<el-col :span="9">
-					<div class="select-with-label el-input-group">
-						<span class="el-input-group__prepend">签约日期</span>
-						<div class="block lease-start-input">
-							<el-date-picker
-									v-model="form.contract.signUpDate"
-									type="date"
-									placeholder="选择日期">
-							</el-date-picker>
-						</div>
-					</div>
-				</el-col>
-			</el-row>
+			<UserProfile :profile="form.profile"></UserProfile>
+			<HouseProfile :property="form.property"></HouseProfile>
+			<ContractDetail :contract="form.contract"></ContractDetail>
 
 			<h3>租费设置</h3>
 			<el-row>
@@ -130,15 +26,8 @@
 				<el-col :span="3">
 					<div class="section-label">租金</div>
 				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="3600月" v-model="form.rent">
-						<template slot="prepend">常规租金</template>
-					</el-input>
-				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="一月一付" v-model="form.rentPaymentMethod">
-						<template slot="prepend">方式</template>
-					</el-input>
+				<el-col :span="21">
+					<ExpenseDisplay :expense="form.expense"></ExpenseDisplay>
 				</el-col>
 			</el-row>
 			<el-row>
@@ -147,7 +36,7 @@
 					<el-button size="mini">+添加</el-button>
 				</el-col>
 				<el-col :span="21">
-					<ExtraExpense v-for="item in form.extraExpense" :expense="item" :key="item.id"></ExtraExpense>
+					<ExpenseDisplay v-for="item in form.extraExpense" :expense="item" :key="item.id"></ExpenseDisplay>
 				</el-col>
 			</el-row>
 			<el-row>
@@ -170,7 +59,10 @@
 </template>
 
 <script>
-	import ExtraExpense from './extra-expense'
+	import ExpenseDisplay from './expense-display'
+	import UserProfile from './user-profile'
+	import HouseProfile from './house-profile'
+	import ContractDetail from './contract-detail'
 
 	export default {
 		data() {
@@ -197,16 +89,15 @@
 					},
 					billPlan: '',
 					offset: '',
-					rent: '',
-					rentPaymentMethod: '',
+					expense: {
+						id: 1,
+						name: '常规',
+						type: '2',
+						amount: 3600,
+						paymentMethod: '一月一付',
+					},
+					rentPaymentMethod: '一月一付',
 					extraExpense: [
-						{
-							id: 1,
-							name: '常规',
-							type: '1',
-							amount: 3600,
-							paymentMethod: '一月一付',
-						},
 						{
 							id: 2,
 							name: '电费',
@@ -223,62 +114,20 @@
 						}
 					],
 					bond: 2600
-				},
-				startOptions: {
-					disabledDate(time) {
-						return time.getTime() < Date.now();
-					}
-				},
-				endOptions: {
-					disabledDate(time) {
-						return time.getTime() < Date.now();
-					},
-					shortcuts: [{
-						text: '半年',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() + 3600 * 1000 * 24 * 180);
-							picker.$emit('pick', date);
-						}
-					}, {
-						text: '一年',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() + 3600 * 1000 * 24 * 365);
-							picker.$emit('pick', date);
-						}
-					}, {
-						text: '两年',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24 * 365 * 2);
-							picker.$emit('pick', date);
-						}
-					}, {
-						text: '三年',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24 * 365 * 3);
-							picker.$emit('pick', date);
-						}
-					}]
 				}
 			};
 		},
 		methods: {
-			handleSelect(item) {
-				console.log(item);
-				return {};
-			},
-			querySearch(queryString, cb) {
-				cb([]);
-			},
 			save(form) {
 				//wait for close method
+				console.log(form);
 			}
 		},
 		components: {
-			ExtraExpense
+			ExpenseDisplay,
+			UserProfile,
+			HouseProfile,
+			ContractDetail
 		}
 
 	};
@@ -290,53 +139,11 @@
 		text-align: right;
 	}
 
-	.house-type {
-		display: block;
-	}
-
-	.inline-input {
-		width: 70%;
-	}
-
-	.lease-end-input {
-		margin-left: 10px;
-	}
-
-	.select-with-label {
-		display: inline-table;
-		.el-input__inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-		.inline-input {
-			display: table-cell;
-			.el-input__inner {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
-		}
-	}
-
 	.section-label {
 		margin-top: 3px;
 	}
 </style>
 <style lang="less">
-	.select-with-label {
-		.house-type .el-input__inner {
-			border-radius: 0;
-		}
-		.lease-start-input .el-input__inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-		.inline-input .el-input__inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-			border-left: none;
-		}
-	}
-
 	.modal.add-contract .el-row {
 		margin-top: 5px;
 	}
