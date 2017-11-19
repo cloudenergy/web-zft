@@ -51,7 +51,7 @@
 						offset: '',
 						standard: {
 							id: 1,
-							name: '常规',
+							name: '常规租金',
 							type: '2',
 							amount: 3600,
 							paymentMethod: '一月一付',
