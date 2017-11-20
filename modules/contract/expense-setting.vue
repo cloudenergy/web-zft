@@ -5,14 +5,22 @@
 				<div class="section-label">收租时间</div>
 			</el-col>
 			<el-col :span="9">
-				<el-input placeholder="必填" v-model="expense.billPlan">
-					<template slot="prepend">账单</template>
-				</el-input>
+				<div class="select-with-label el-input-group">
+					<span class="el-input-group__prepend">账单</span>
+					<el-select v-model="expense.billPlan" class="bill-plan">
+						<el-option v-for="item in availablePlans" :label="item.name" :value="item.id"
+								   :key="item.id"></el-option>
+					</el-select>
+				</div>
 			</el-col>
 			<el-col :span="9">
-				<el-input placeholder="5天" v-model="expense.offset">
-					<template slot="append">收租</template>
-				</el-input>
+				<div class="select-with-label el-input-group">
+					<el-select v-model="expense.offset" class="bill-plan">
+						<el-option v-for="item in dateRange()" :label="item.label" :value="item.value"
+								   :key="item.value"></el-option>
+					</el-select>
+					<span class="el-input-group__append">收租</span>
+				</div>
 			</el-col>
 		</el-row>
 		<el-row>
@@ -41,7 +49,6 @@
 					<template slot="prepend">常规押金</template>
 				</el-input>
 			</el-col>
-
 		</el-row>
 	</div>
 </template>
@@ -57,6 +64,37 @@
 		},
 		components: {
 			ExpenseDisplay
+		},
+		methods: {
+			dateRange () {
+				return _.range(1, 31).map(i => ({
+					value: `${i}`,
+					label: `${i}天`
+				}));
+			}
+		},
+		data() {
+			return {
+				availablePlans: [
+					{
+						id: 1,
+						name: '开始前提前',
+						unit: '天'
+					}, {
+						id: 2,
+						name: '开始后固定',
+						unit: '号'
+					}, {
+						id: 3,
+						name: '开始前固定',
+						unit: '号'
+					}, {
+						id: 4,
+						name: '开始前一个月固定',
+						unit: '号'
+					},
+				]
+			}
 		}
 	}
 </script>
@@ -65,9 +103,30 @@
 	.section-label {
 		margin-top: 3px;
 	}
+
+	.select-with-label {
+		display: inline-table;
+		.el-input__inner {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		.bill-plan-input {
+			display: table-cell;
+			.el-input__inner {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
 </style>
 <style lang="less">
 	.modal.add-contract .el-row {
 		margin-top: 5px;
+	}
+
+	.select-with-label {
+		.bill-plan-input .el-input__inner {
+			border-radius: 0;
+		}
 	}
 </style>

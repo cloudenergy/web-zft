@@ -35,7 +35,10 @@
 				return {};
 			},
 			querySearch(queryString, cb) {
-				cb(["房子1", "房子2"]);
+				cb([
+					{value: "房子1"},
+					{value: "房子2"}
+				]);
 			}
 		}
 	}
@@ -45,6 +48,7 @@
 	.house-type {
 		display: block;
 	}
+
 	.inline-input {
 		width: 70%;
 	}

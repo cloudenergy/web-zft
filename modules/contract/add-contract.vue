@@ -27,7 +27,6 @@
 
 	export default {
 		data() {
-			console.log(moment().format('YYYY-MM-DD'));
 			return {
 				form: {
 					profile: {
