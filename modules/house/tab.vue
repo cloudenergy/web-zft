@@ -5,20 +5,13 @@
             <el-tab-pane label="整租" name="2"></el-tab-pane>
             <el-tab-pane label="整幢" name="3"></el-tab-pane>
         </el-tabs>
-        <div class="filters">
-            <el-select v-model="filters.city" size="mini" clearable placeholder="请选择城市">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-            <el-select v-model="filters.area" size="mini" clearable placeholder="请选择区域">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-        </div>
+        <city-area />
         <el-menu default-active="0">
             <el-menu-item index="0">
                 <!-- <i class="el-icon-menu"></i> -->
                 <span slot="title">全部小区</span>
             </el-menu-item>
-            <el-menu-item v-for="item in community" :key="item.key" :index="item.key">
+            <el-menu-item v-for="(item, index) in community" :key="index" :index="item.name">
                 <span slot="title">{{item.name}}</span>
             </el-menu-item>
         </el-menu>
@@ -35,14 +28,13 @@
     				area: ''
     			},
     			options: [],
-    			community: [
-    				{ key: '1', name: '朝会小区' },
-    				{ key: '2', name: '保利香槟国际' },
-    				{ key: '3', name: '范家天城公寓' },
-    				{ key: '4', name: '龙湖滟澜山' },
-    				{ key: '5', name: '佳丰北苑-南门' }
-    			]
+    			community: []
     		};
+    	},
+    	created() {
+    		this.$store
+    			.dispatch('getCommunities')
+    			.then(data => (this.community = data));
     	},
     	methods: {
     		change(key) {
@@ -70,14 +62,6 @@
     .secondary-side {
     	width: 240px;
     	text-align: center;
-
-    	.filters {
-    		display: flex;
-    		justify-content: space-between;
-    		.el-select {
-    			width: 48%;
-    		}
-    	}
 
     	.el-menu {
     		margin-top: 15px;

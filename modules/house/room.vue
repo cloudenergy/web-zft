@@ -2,7 +2,7 @@
     <div class="house-cell">
         <h3>{{room.name}}</h3>
         <p class="info">￥ 200</p>
-        <p>{{room.housetype.name}} {{room.housetype.area}} {{room.housetype.orientation}}</p>
+        <p>{{room.houseType.name}} {{room.houseType.area}} {{room.houseType.orientation}}</p>
         <p class="rentee">
             <span>小清新</span>
             <span>2017-10-10</span>
@@ -29,6 +29,8 @@
 
     	h3 {
     		margin-bottom: 10px;
+    		overflow: hidden;
+    		white-space: nowrap;
     	}
 
     	p {

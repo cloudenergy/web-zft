@@ -21,7 +21,8 @@ setup({
 });
 
 const apis = {
-	houses: makeResource('/houses')
+	houses: makeResource('/houses'),
+	communities: makeGet('/communities/{id}')
 };
 
 /**
