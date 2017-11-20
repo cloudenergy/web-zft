@@ -11,6 +11,7 @@ function start () {
 }
 function test() {
   docker rm -f test_deploy
+  docker rmi $(docker images -qf "before=registry.docker-cn.com/kpse/web-zft:$IMAGE_VERSION" -f=reference='registry.docker-cn.com/kpse/web-zft:v*')
   docker run -d --name test_deploy -p 8080:80 registry.docker-cn.com/kpse/web-zft:$IMAGE_VERSION
   test_curl
 }
