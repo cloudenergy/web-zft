@@ -11,8 +11,7 @@
 						<el-date-picker
 								v-model="contract.leaseStart"
 								type="date"
-								placeholder="起租时间"
-								:picker-options="startOptions">
+								placeholder="起租时间">
 						</el-date-picker>
 					</div>
 				</div>
@@ -52,51 +51,43 @@
 </template>
 
 <script>
+	import moment from 'moment'
+
 	export default {
 		props: {
 			contract: {
 				required: true
 			}
 		},
-		methods: {
-			startOptions: {
-				disabledDate(time) {
-					return time.getTime() < Date.now();
+		data() {
+			let contract = this.contract;
+			return {
+				endOptions: {
+					disabledDate(time) {
+						return time.getTime() < Date.now();
+					},
+					shortcuts: [{
+						text: '半年',
+						onClick(picker) {
+							picker.$emit('pick', moment(contract.leaseStart).add(6, 'months').calendar());
+						}
+					}, {
+						text: '一年',
+						onClick(picker) {
+							picker.$emit('pick', moment(contract.leaseStart).add(1, 'year').calendar());
+						}
+					}, {
+						text: '两年',
+						onClick(picker) {
+							picker.$emit('pick', moment(contract.leaseStart).add(2, 'years').calendar());
+						}
+					}, {
+						text: '三年',
+						onClick(picker) {
+							picker.$emit('pick', moment(contract.leaseStart).add(3, 'years').calendar());
+						}
+					}]
 				}
-			},
-			endOptions: {
-				disabledDate(time) {
-					return time.getTime() < Date.now();
-				},
-				shortcuts: [{
-					text: '半年',
-					onClick(picker) {
-						const date = new Date();
-						date.setTime(date.getTime() + 3600 * 1000 * 24 * 180);
-						picker.$emit('pick', date);
-					}
-				}, {
-					text: '一年',
-					onClick(picker) {
-						const date = new Date();
-						date.setTime(date.getTime() + 3600 * 1000 * 24 * 365);
-						picker.$emit('pick', date);
-					}
-				}, {
-					text: '两年',
-					onClick(picker) {
-						const date = new Date();
-						date.setTime(date.getTime() - 3600 * 1000 * 24 * 365 * 2);
-						picker.$emit('pick', date);
-					}
-				}, {
-					text: '三年',
-					onClick(picker) {
-						const date = new Date();
-						date.setTime(date.getTime() - 3600 * 1000 * 24 * 365 * 3);
-						picker.$emit('pick', date);
-					}
-				}]
 			}
 		}
 	}
@@ -105,7 +96,7 @@
 <style lang="less" scoped>
 
 	.lease-end-input {
-		margin-left: 10px;
+		margin-left: 20px;
 	}
 
 	.select-with-label {

@@ -23,8 +23,11 @@
 	import ContractDetail from './contract-detail'
 	import ExpenseSetting from './expense-setting'
 
+	import moment from 'moment'
+
 	export default {
 		data() {
+			console.log(moment().format('YYYY-MM-DD'));
 			return {
 				form: {
 					profile: {
@@ -41,10 +44,10 @@
 
 					},
 					contract: {
-						leaseStart: new Date().toISOString().slice(0, 10),
-						leaseEnd: new Date("2018-11-11").toISOString().slice(0, 10),
+						leaseStart: moment().format('YYYY-MM-DD'),
+						leaseEnd: moment().add(3, 'months').format('YYYY-MM-DD'),
 						contractNumber: '',
-						signUpDate: new Date().toISOString().slice(0, 10)
+						signUpDate: moment().format('YYYY-MM-DD')
 					},
 					expense: {
 						billPlan: '',
