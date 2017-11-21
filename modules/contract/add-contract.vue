@@ -35,7 +35,7 @@
 						phone: '',
 						gender: '',
 						idNumber: '',
-						idType: '1'
+						idType: 1
 					},
 					property: {
 						houseType: '1',
