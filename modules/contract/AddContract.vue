@@ -18,10 +18,10 @@
 </template>
 
 <script>
-	import UserProfile from './UserProfile'
-	import HouseProfile from './HouseProfile'
-	import ContractDetail from './ContractDetail'
-	import ExpenseSetting from './ExpenseSetting'
+	import UserProfile from './UserProfile.vue'
+	import HouseProfile from './HouseProfile.vue'
+	import ContractDetail from './ContractDetail.vue'
+	import ExpenseSetting from './ExpenseSetting.vue'
 
 	import moment from 'moment'
 
