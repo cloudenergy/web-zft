@@ -54,7 +54,8 @@
 </template>
 
 <script>
-	import ExpenseDisplay from './expense-display'
+	import ExpenseDisplay from './ExpenseDisplay'
+	import _ from 'lodash'
 
 	export default {
 		props: {

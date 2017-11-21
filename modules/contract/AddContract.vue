@@ -18,10 +18,10 @@
 </template>
 
 <script>
-	import UserProfile from './user-profile'
-	import HouseProfile from './house-profile'
-	import ContractDetail from './contract-detail'
-	import ExpenseSetting from './expense-setting'
+	import UserProfile from './UserProfile'
+	import HouseProfile from './HouseProfile'
+	import ContractDetail from './ContractDetail'
+	import ExpenseSetting from './ExpenseSetting'
 
 	import moment from 'moment'
 

@@ -1,6 +1,6 @@
-export {default as NewContract} from './add-contract';
-export {default as ExpenseDisplay} from './expense-display';
-export {default as UserProfile} from './user-profile';
-export {default as HouseProfile} from './house-profile';
-export {default as Contract} from './contract-detail';
-export {default as ExpenseSetting} from './expense-setting';
+export {default as NewContract} from './addContract';
+export {default as ExpenseDisplay} from './expenseDisplay';
+export {default as UserProfile} from './userProfile';
+export {default as HouseProfile} from './houseProfile';
+export {default as Contract} from './contractDetail';
+export {default as ExpenseSetting} from './expenseSetting';
