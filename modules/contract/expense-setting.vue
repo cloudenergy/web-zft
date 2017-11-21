@@ -15,7 +15,7 @@
 			</el-col>
 			<el-col :span="9">
 				<div class="select-with-label el-input-group">
-					<el-select v-model="expense.offset" class="bill-plan">
+					<el-select v-model="expense.offset" class="bill-plan-days">
 						<el-option v-for="item in dateRange(expense.billPlan)" :label="item.label" :value="item.value"
 								   :key="item.value"></el-option>
 					</el-select>
@@ -116,10 +116,9 @@
 		}
 		.bill-plan-input {
 			display: table-cell;
-			.el-input__inner {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
+		}
+		.bill-plan-days {
+			width: 100%;
 		}
 	}
 </style>
@@ -129,8 +128,16 @@
 	}
 
 	.select-with-label {
-		.bill-plan-input .el-input__inner {
-			border-radius: 0;
+		.bill-plan .el-input__inner {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		.bill-plan-days .el-input__inner {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+
 		}
 	}
+
+
 </style>

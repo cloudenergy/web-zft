@@ -118,5 +118,9 @@
 			border-bottom-left-radius: 0;
 			border-left: none;
 		}
+		.lease-start-input .el-input__inner {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
 	}
 </style>
