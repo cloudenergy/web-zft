@@ -49,7 +49,7 @@
 						signUpDate: moment().format('YYYY-MM-DD')
 					},
 					expense: {
-						billPlan: '',
+						billPlan: 1,
 						offset: '',
 						standard: {
 							id: 1,
