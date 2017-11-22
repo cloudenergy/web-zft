@@ -45,9 +45,13 @@
 		</el-row>
 		<el-row>
 			<el-col :span="8">
-				<el-input placeholder="男" v-model="profile.gender">
-					<template slot="prepend">性别</template>
-				</el-input>
+				<div class="select-with-label not-in-form-item el-input-group">
+					<span class="el-input-group__prepend">性别</span>
+					<el-select v-model="profile.gender" class="gender">
+						<el-option label="男" :value="1"></el-option>
+						<el-option label="女" :value="0"></el-option>
+					</el-select>
+				</div>
 			</el-col>
 			<el-col :span="5">
 				<el-select v-model="profile.idType" class="id-type">
@@ -74,7 +78,7 @@
 			profile: {
 				type: Object,
 				required: true,
-				validator: value => _.includes(_.range(1, 9), value.idType)
+				validator: value => _.includes(_.range(1, 9), value.idType) && _.includes([0, 1], value.gender)
 			}
 		},
 		data() {
@@ -115,6 +119,17 @@
 <style lang="less" scoped>
 	.form-input {
 		margin-left: -100px;
+	}
+	.select-with-label {
+		&.not-in-form-item {
+			margin-left: 0;
+		}
+		.house-type .el-input__inner {
+			border-radius: 0;
+		}
+		.inline-input .el-input-group__prepend {
+			/*margin-left: -100px;*/
+		}
 	}
 </style>
 

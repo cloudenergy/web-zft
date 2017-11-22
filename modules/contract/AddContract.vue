@@ -33,7 +33,7 @@
 						name: '',
 						account: '',
 						phone: '',
-						gender: '',
+						gender: 1,
 						idNumber: '',
 						idType: 1
 					},

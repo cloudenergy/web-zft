@@ -9,7 +9,7 @@ describe('UserProfile', () => {
 				name: 'aaa',
 				account: '',
 				phone: '',
-				gender: '',
+				gender: 1,
 				idNumber: '',
 				idType: 1
 			}
@@ -25,6 +25,11 @@ describe('UserProfile', () => {
 		expect(wrapper.html()).toContain('<el-option label="临时居住证" value="6"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="营业执照" value="7"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="其他证件" value="8"></el-option>')
+	})
+
+	it('should render gender options', () => {
+		expect(wrapper.html()).toContain('<el-option label="男" value="1"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="女" value="0"></el-option>')
 	})
 
 
