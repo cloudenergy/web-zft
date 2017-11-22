@@ -13,7 +13,7 @@ module.exports = {
 	type: 'pc',
 	framework: 'vue',
 	title: '租付通',
-	// "layout": { main: "~/views/app.vue" },
+	layout: { main: '~/components/app.vue' },
 	routes: {
 		// 'papers-details': "/:id"
 	},
@@ -29,10 +29,10 @@ module.exports = {
 	},
 	vendors: ['element-ui'],
 	/**
-     * 域名，公众号，公共配置地址，
-     * 只能为字符串的键值对
-     * @type {Object}
-     */
+	 * 域名，公众号，公共配置地址，
+	 * 只能为字符串的键值对
+	 * @type {Object}
+	 */
 	env: {
 		default: {}
 	}

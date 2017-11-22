@@ -9,7 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"blade-scripts": "^1.2.0",
+		"blade-scripts": "^1.2.3",
 		"element-ui": "^2.0.5",
 		"moment": "^2.19.2"
 	},
@@ -31,14 +31,10 @@
 	"babel": {
 		"env": {
 			"test": {
-				"presets": [
-					"env"
-				]
+				"presets": ["env"]
 			}
 		},
-		"presets": [
-			"env"
-		]
+		"presets": ["env"]
 	},
 	"jest": {
 		"collectCoverageFrom": [
@@ -46,12 +42,7 @@
 			"!**/node_modules/**",
 			"!**/vendor/**"
 		],
-		"moduleFileExtensions": [
-			"js",
-			"json",
-			"vue",
-			"less"
-		],
+		"moduleFileExtensions": ["js", "json", "vue", "less"],
 		"moduleNameMapper": {
 			"^~(.*)$": "<rootDir>/$1",
 			"^vue$": "vue/dist/vue.common.js"

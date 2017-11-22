@@ -1,28 +1,7 @@
 <template>
     <el-form :model="form" class="mini-form">
         <h3>房源信息</h3>
-        <div class="group">
-            <el-form-item label="方式">
-                <el-input v-model="form.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="编号">
-                <el-input v-model="form.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="管理">
-                <el-select v-model="form.region" placeholder="管理">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-            </el-form-item>
-        </div>
-        <div class="group">
-            <el-form-item label="城市">
-                <el-input v-model="form.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="区域">
-                <el-input v-model="form.name" auto-complete="off"></el-input>
-            </el-form-item>
-        </div>
+        <base-info></base-info>
         <div class="group">
             <el-form-item label="地址">
                 <el-input v-model="form.name" auto-complete="off"></el-input>
@@ -48,14 +27,19 @@
 </template>
 
 <script>
+    import BaseInfo from './base-info';
     export default {
     	data() {
     		return {
     			form: {
     				rentType: '',
-    				belongs: ''
+    				belongs: '',
+    				type: []
     			}
     		};
+    	},
+    	components: {
+    		BaseInfo
     	}
     };
 </script>
