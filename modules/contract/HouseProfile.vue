@@ -1,23 +1,32 @@
 <template>
 	<div class="house-profile">
 		<el-row>
-			<div class="select-with-label el-input-group">
-				<span class="el-input-group__prepend">承租房源</span>
-				<el-select v-model="property.houseType" class="house-type">
-					<el-option label="全部" value="1"></el-option>
-					<el-option label="整租" value="2"></el-option>
-					<el-option label="合租" value="3"></el-option>
-					<el-option label="独栋" value="4"></el-option>
-				</el-select>
-				<el-autocomplete
-						class="inline-input"
-						v-model="property.house"
-						:fetch-suggestions="querySearch"
-						placeholder="搜索房源编号、小区名称等关键字"
-						:trigger-on-focus="false"
-						@select="handleSelect">
-				</el-autocomplete>
-			</div>
+			<el-col :span="24">
+			<el-form-item
+					prop="property.house"
+					:rules="[
+      						{ required: true, message: '请选择房源', trigger: 'blur' }
+    					]">
+				<div class="select-with-label el-input-group">
+
+					<span class="el-input-group__prepend">承租房源</span>
+					<el-select v-model="property.houseType" class="house-type">
+						<el-option label="全部" value="1"></el-option>
+						<el-option label="整租" value="2"></el-option>
+						<el-option label="合租" value="3"></el-option>
+						<el-option label="独栋" value="4"></el-option>
+					</el-select>
+					<el-autocomplete
+							class="inline-input"
+							v-model="property.house"
+							:fetch-suggestions="querySearch"
+							placeholder="搜索房源编号、小区名称等关键字"
+							:trigger-on-focus="false"
+							@select="handleSelect">
+					</el-autocomplete>
+				</div>
+			</el-form-item>
+			</el-col>
 		</el-row>
 	</div>
 </template>
@@ -46,11 +55,12 @@
 
 <style lang="less" scoped>
 	.house-type {
-		display: block;
+		width: 85px;
 	}
 
 	.inline-input {
-		width: 70%;
+		width: 100%;
+		margin-left: 0;
 	}
 
 	.select-with-label {
@@ -71,8 +81,18 @@
 </style>
 <style lang="less">
 	.select-with-label {
+		margin-left: -100px;
 		.house-type .el-input__inner {
 			border-radius: 0;
 		}
+		.inline-input .el-input-group__prepend {
+			/*margin-left: -100px;*/
+		}
+	}
+</style>
+
+<style lang="less">
+	.house-profile .el-form-item__content {
+		width: 70%;
 	}
 </style>
