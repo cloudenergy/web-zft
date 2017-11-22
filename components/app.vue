@@ -1,4 +1,6 @@
 <script>
+    const defaultLayout = ['login', 'notFound'];
+
     export default {
     	data() {
     		return {
@@ -13,7 +15,7 @@
     			return <div class="page" v-loading="loading" />;
     		}
 
-    		if (last.name == 'login') {
+    		if (last.name && ~defaultLayout.indexOf(last.name)) {
     			return <router-view />;
     		}
 

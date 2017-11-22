@@ -10,8 +10,24 @@
                 <span slot="title">租务</span>
             </el-menu-item>
             <el-menu-item index="/bills">
-                <i class="el-icon-setting"></i>
+                <i class="el-icon-document"></i>
                 <span slot="title">账单</span>
+            </el-menu-item>
+            <el-menu-item index="/flow">
+                <i class="el-icon-tickets"></i>
+                <span slot="title">流水</span>
+            </el-menu-item>
+            <el-menu-item index="/reports">
+                <i class="el-icon-picture"></i>
+                <span slot="title">报表</span>
+            </el-menu-item>
+            <el-menu-item index="/devices">
+                <i class="el-icon-printer"></i>
+                <span slot="title">设备</span>
+            </el-menu-item>
+            <el-menu-item index="/settings">
+                <i class="el-icon-setting"></i>
+                <span slot="title">设置</span>
             </el-menu-item>
         </el-menu>
     </div>
