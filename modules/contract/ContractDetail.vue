@@ -35,7 +35,7 @@
 				</el-input>
 			</el-col>
 			<el-col :span="9">
-				<div class="select-with-label el-input-group">
+				<div class="select-with-label not-in-form-item el-input-group">
 					<span class="el-input-group__prepend">签约日期</span>
 					<div class="block lease-start-input">
 						<el-date-picker
@@ -101,9 +101,6 @@
 
 	.select-with-label {
 		display: inline-table;
-		&.not-in-form-item {
-			margin-left: 0;
-		}
 		.el-input__inner {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
@@ -112,18 +109,5 @@
 
 	.section-label {
 		margin-top: 3px;
-	}
-</style>
-<style lang="less">
-	.select-with-label {
-		.inline-input .el-input__inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-			border-left: none;
-		}
-		.lease-start-input .el-input__inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
 	}
 </style>

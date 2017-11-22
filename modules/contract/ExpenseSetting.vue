@@ -125,22 +125,3 @@
 		}
 	}
 </style>
-<style lang="less">
-	.modal.add-contract .el-row {
-		margin-top: 5px;
-	}
-
-	.select-with-label {
-		.bill-plan .el-input__inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-		.bill-plan-days .el-input__inner {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-
-		}
-	}
-
-
-</style>

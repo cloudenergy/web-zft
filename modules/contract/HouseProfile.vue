@@ -90,9 +90,3 @@
 		}
 	}
 </style>
-
-<style lang="less">
-	.house-profile .el-form-item__content {
-		width: 70%;
-	}
-</style>

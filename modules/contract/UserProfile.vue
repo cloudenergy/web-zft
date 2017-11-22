@@ -121,20 +121,11 @@
 		margin-left: -100px;
 	}
 	.select-with-label {
-		&.not-in-form-item {
-			margin-left: 0;
-		}
 		.house-type .el-input__inner {
 			border-radius: 0;
 		}
 		.inline-input .el-input-group__prepend {
 			/*margin-left: -100px;*/
 		}
-	}
-</style>
-
-<style lang="less">
-	.profile-form .el-form-item__content {
-		width: 100%;
 	}
 </style>
