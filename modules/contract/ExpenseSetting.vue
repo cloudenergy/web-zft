@@ -16,7 +16,7 @@
 			<el-col :span="9">
 				<div class="select-with-label el-input-group">
 					<el-select v-model="expense.offset" class="bill-plan-days">
-						<el-option v-for="item in dateRange(expense.billPlan)" :label="item.label" :value="item.value"
+						<el-option v-for="item in dateRange" :label="item.label" :value="item.value"
 								   :key="item.value"></el-option>
 					</el-select>
 					<span class="el-input-group__append">收租</span>
@@ -66,16 +66,18 @@
 		components: {
 			ExpenseDisplay
 		},
-		methods: {
-			dateRange(planId) {
+		computed: {
+			dateRange () {
 				return _.range(1, 31).map(i => ({
 					value: `${i}`,
-					label: `${i}${this.unitOfDate(planId)}`
+					label: `${i}${this.unitOfDate}`
 				}))
 			},
-			unitOfDate(planId) {
-				const plan = _.find(this.availablePlans, p => p.id === planId);
-				return _.get(plan, 'unit') || '天';
+			unitOfDate () {
+				return _.get(this.currentPlan, 'unit') || '天';
+			},
+			currentPlan() {
+				return _.find(this.availablePlans, p => p.id === this.expense.billPlan);
 			}
 		},
 		data() {

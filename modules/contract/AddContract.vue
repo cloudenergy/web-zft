@@ -50,7 +50,7 @@
 					},
 					expense: {
 						billPlan: 1,
-						offset: '',
+						offset: 2,
 						standard: {
 							id: 1,
 							name: '常规租金',

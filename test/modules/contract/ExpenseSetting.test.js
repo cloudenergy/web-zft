@@ -7,7 +7,7 @@ describe('ExpenseSetting', () => {
 		propsData: {
 			expense: {
 				billPlan: 1,
-				offset: '',
+				offset: 1,
 				standard: {
 					id: 1,
 					name: '常规租金',
@@ -49,5 +49,35 @@ describe('ExpenseSetting', () => {
 
 	it('should have a prepend label', () => {
 		expect(wrapper.contains('span.el-input-group__prepend')).toBe(true)
+	})
+
+	it('should calculate date unit base on bill plan 1', () => {
+		const billPlan1 = mount(ExpenseSetting, {
+			propsData: {
+				expense: {
+					billPlan: 1,
+					offset: 1,
+					standard: {},
+					extra: [],
+					bond: 0
+				}
+			}
+		});
+		expect(billPlan1.vm.unitOfDate).toBe('天')
+	})
+
+	it('should calculate date unit base other than bill plan 1', () => {
+		const billPlan2 = mount(ExpenseSetting, {
+			propsData: {
+				expense: {
+					billPlan: 2,
+					offset: 1,
+					standard: {},
+					extra: [],
+					bond: 0
+				}
+			}
+		});
+		expect(billPlan2.vm.unitOfDate).toBe('号')
 	})
 })
