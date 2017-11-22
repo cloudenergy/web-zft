@@ -12,7 +12,7 @@
 		</el-form>
 		<div class="dialog-footer">
 			<el-button @click="close()">取 消</el-button>
-			<el-button type="primary" @click="save(form)">创建租户</el-button>
+			<el-button type="primary" @click="submitForm(form)">创建租户</el-button>
 		</div>
 	</div>
 </template>
@@ -80,10 +80,17 @@
 			};
 		},
 		methods: {
-			save(form) {
-				//wait for close method
-				console.log(form);
-			}
+			submitForm(formName) {
+				console.log(formName);
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						alert('submit!');
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
 		},
 		components: {
 			UserProfile,

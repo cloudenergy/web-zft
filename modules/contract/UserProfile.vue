@@ -1,20 +1,46 @@
 <template>
-	<div class="profile">
+	<div class="profile profile-form">
 		<el-row>
 			<el-col :span="8">
-				<el-input placeholder="必填" v-model="profile.name">
-					<template slot="prepend">姓名</template>
-				</el-input>
+				<el-form-item
+						prop="profile.name"
+						:rules="[
+      						{ required: true, message: '请输入姓名', trigger: 'blur' }
+    					]">
+					<el-input
+							class="form-input"
+							placeholder="必填"
+							v-model="profile.name">
+						<template slot="prepend">姓名</template>
+					</el-input>
+				</el-form-item>
 			</el-col>
 			<el-col :span="8">
-				<el-input placeholder="必填(建议手机号)" v-model="profile.account">
-					<template slot="prepend">账号</template>
-				</el-input>
+				<el-form-item
+						prop="profile.account"
+						:rules="[
+      						{ required: true, message: '请输入账号', trigger: 'blur' }
+    					]">
+					<el-input
+							class="form-input"
+							placeholder="必填(建议手机号)"
+							v-model="profile.account">
+						<template slot="prepend">账号</template>
+					</el-input>
+				</el-form-item>
 			</el-col>
 			<el-col :span="8">
-				<el-input placeholder="选填" v-model="profile.phone">
-					<template slot="prepend">电话</template>
-				</el-input>
+				<el-form-item
+						prop="profile.phone"
+						:rules="[
+      						{ required: true, message: '请输入手机号', trigger: 'blur' }
+    					]">
+					<el-input class="form-input"
+							  placeholder="选填"
+							  v-model="profile.phone">
+						<template slot="prepend">电话</template>
+					</el-input>
+				</el-form-item>
 			</el-col>
 		</el-row>
 		<el-row>
@@ -85,3 +111,15 @@
 
 	}
 </script>
+
+<style lang="less" scoped>
+	.form-input {
+		margin-left: -100px;
+	}
+</style>
+
+<style lang="less">
+	.profile-form .el-form-item__content {
+		width: 100%;
+	}
+</style>
