@@ -22,7 +22,8 @@ setup({
 
 const apis = {
 	houses: makeResource('/houses'),
-	communities: makeGet('/communities/{id}')
+	communities: makeGet('/communities/{id}'),
+	contracts: makeResource('/contracts')
 };
 
 /**

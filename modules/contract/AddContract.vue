@@ -1,6 +1,6 @@
 <template>
 	<div class="modal add-contract">
-		<el-form :model="form" class="v-form">
+		<el-form :model="form" ref="form" class="v-form">
 			<h3>承租信息</h3>
 			<UserProfile :profile="form.profile"></UserProfile>
 			<HouseProfile :property="form.property"></HouseProfile>
@@ -12,7 +12,7 @@
 		</el-form>
 		<div class="dialog-footer">
 			<el-button @click="close()">取 消</el-button>
-			<el-button type="primary" @click="submitForm(form)">创建租户</el-button>
+			<el-button type="primary" @click="submitForm('form')">创建租户</el-button>
 		</div>
 	</div>
 </template>
