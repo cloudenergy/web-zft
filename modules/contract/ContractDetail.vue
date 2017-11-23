@@ -5,7 +5,7 @@
 				<div class="section-label">租期</div>
 			</el-col>
 			<el-col :span="10">
-				<div class="select-with-label not-in-form-item el-input-group">
+				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">范围</span>
 					<div class="block lease-start-input prepend-label">
 						<el-date-picker
@@ -35,7 +35,7 @@
 				</el-input>
 			</el-col>
 			<el-col :span="9">
-				<div class="select-with-label not-in-form-item el-input-group">
+				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">签约日期</span>
 					<div class="block lease-start-input prepend-label">
 						<el-date-picker
