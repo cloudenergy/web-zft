@@ -1,5 +1,13 @@
 /*eslint no-unused-vars: 0 */
-import { makeGet, makePost, setup, makeResource } from '@/api';
+import {
+	makeGet,
+	makePost,
+	setup,
+	makeResource,
+	decorateMaker,
+	makePut,
+	makeDelete
+} from '@/api';
 import { isFunc } from '~/utils';
 
 let baseURL = '/api/v1.0';
@@ -20,10 +28,28 @@ setup({
 	baseURL
 });
 
+const interceptor = function(res) {
+	return res;
+	// 显示错误
+	// return Promise.reject(res.message);
+};
+const [get, post, put, del] = [makeGet, makePost, makePut, makeDelete].map(
+	action => decorateMaker(action, interceptor)
+);
+
+const resource = (url, actions) => {
+	return makeResource(url, actions, {
+		GET: get,
+		POST: post,
+		PUT: put,
+		DELETE: del
+	});
+};
+
 const apis = {
-	houses: makeResource('/houses'),
-	communities: makeGet('/communities/{id}'),
-	contracts: makeResource('/contracts')
+	houses: resource('/houses'),
+	communities: get('/communities/{id}'),
+	contracts: resource('/contracts')
 };
 
 /**

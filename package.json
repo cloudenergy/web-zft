@@ -9,7 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"blade-scripts": "^1.2.3",
+		"blade-scripts": "^1.2.4",
 		"element-ui": "^2.0.5",
 		"moment": "^2.19.2"
 	},
