@@ -88,5 +88,7 @@
             border-left: none;
         }
     }
-
+    .house-profile .el-form-item--mini .el-form-item__error {
+        padding-left: 190px;
+    }
 </style>
