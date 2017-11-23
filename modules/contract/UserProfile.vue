@@ -117,15 +117,9 @@
 </script>
 
 <style lang="less" scoped>
-	.form-input {
-		margin-left: -100px;
-	}
 	.select-with-label {
 		.house-type .el-input__inner {
 			border-radius: 0;
-		}
-		.inline-input .el-input-group__prepend {
-			/*margin-left: -100px;*/
 		}
 	}
 </style>

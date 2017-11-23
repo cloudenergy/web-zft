@@ -81,12 +81,8 @@
 </style>
 <style lang="less">
 	.select-with-label {
-		margin-left: -100px;
 		.house-type .el-input__inner {
 			border-radius: 0;
-		}
-		.inline-input .el-input-group__prepend {
-			/*margin-left: -100px;*/
 		}
 	}
 </style>

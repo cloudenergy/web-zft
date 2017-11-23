@@ -1,6 +1,6 @@
 <template>
 	<div class="modal add-contract">
-		<el-form :model="form" class="v-form" label-width="100px">
+		<el-form :model="form" class="v-form">
 			<h3>承租信息</h3>
 			<UserProfile :profile="form.profile"></UserProfile>
 			<HouseProfile :property="form.property"></HouseProfile>
