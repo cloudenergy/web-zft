@@ -45,9 +45,9 @@
 		</el-row>
 		<el-row>
 			<el-col :span="8">
-				<div class="select-with-label not-in-form-item el-input-group">
+				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">性别</span>
-					<el-select v-model="profile.gender" class="gender">
+					<el-select v-model="profile.gender" class="gender prepend-label">
 						<el-option label="男" :value="1"></el-option>
 						<el-option label="女" :value="0"></el-option>
 					</el-select>
@@ -115,11 +115,3 @@
 
 	}
 </script>
-
-<style lang="less" scoped>
-	.select-with-label {
-		.house-type .el-input__inner {
-			border-radius: 0;
-		}
-	}
-</style>

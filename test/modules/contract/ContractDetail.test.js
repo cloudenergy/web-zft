@@ -16,7 +16,7 @@ describe('ContractDetail', () => {
 	});
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<div class="block lease-start-input"><el-date-picker type="date" placeholder="起租时间"></el-date-picker>')
+		expect(wrapper.html()).toContain('<div class="block lease-start-input prepend-label"><el-date-picker type="date" placeholder="起租时间"></el-date-picker>')
 		expect(wrapper.html()).toContain('<el-date-picker type="date" placeholder="选择日期"></el-date-picker>')
 	})
 

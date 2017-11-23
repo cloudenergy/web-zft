@@ -9,7 +9,7 @@
 			<el-col :span="12">
 				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">方式</span>
-					<el-select v-model="expense.paymentMethod" class="house-type">
+					<el-select v-model="expense.paymentMethod" class="prepend-label">
 						<el-option v-for="item in paymentMethods" :label="item.name" :value="item.id"
 								   :key="item.id"></el-option>
 					</el-select>
@@ -54,9 +54,3 @@
 		}
 	}
 </script>
-
-<style lang="less" scoped>
-	.select-with-label {
-		width: 100%;
-	}
-</style>

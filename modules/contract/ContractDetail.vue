@@ -7,7 +7,7 @@
 			<el-col :span="10">
 				<div class="select-with-label not-in-form-item el-input-group">
 					<span class="el-input-group__prepend">范围</span>
-					<div class="block lease-start-input">
+					<div class="block lease-start-input prepend-label">
 						<el-date-picker
 								v-model="contract.leaseStart"
 								type="date"
@@ -37,7 +37,7 @@
 			<el-col :span="9">
 				<div class="select-with-label not-in-form-item el-input-group">
 					<span class="el-input-group__prepend">签约日期</span>
-					<div class="block lease-start-input">
+					<div class="block lease-start-input prepend-label">
 						<el-date-picker
 								v-model="contract.signUpDate"
 								type="date"

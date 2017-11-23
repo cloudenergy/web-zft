@@ -7,7 +7,7 @@
 			<el-col :span="9">
 				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">账单</span>
-					<el-select v-model="expense.billPlan" class="bill-plan">
+					<el-select v-model="expense.billPlan" class="bill-plan prepend-label">
 						<el-option v-for="item in availablePlans" :label="item.name" :value="item.id"
 								   :key="item.id"></el-option>
 					</el-select>
@@ -123,5 +123,12 @@
 		.bill-plan-days {
 			width: 100%;
 		}
+	}
+</style>
+
+<style lang="less">
+	.bill-plan-days .el-input__inner {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 	}
 </style>
