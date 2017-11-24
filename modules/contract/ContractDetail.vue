@@ -41,71 +41,66 @@
 </template>
 
 <script>
-    import moment from 'moment';
+	import {addMonths, addYears, calendar} from 'date-fns';
 
-    export default {
-    	props: {
-    		contract: {
-    			required: true
-    		}
-    	},
-    	data() {
-    		let contract = this.contract;
-    		return {
-    			endOptions: {
-    				disabledDate(time) {
-    					return time.getTime() < Date.now();
-    				},
-    				shortcuts: [
-    					{
-    						text: '半年',
-    						onClick(picker) {
-    							picker.$emit(
-    								'pick',
-    								moment(contract.leaseStart)
-    									.add(6, 'months')
-    									.calendar()
-    							);
-    						}
-    					},
-    					{
-    						text: '一年',
-    						onClick(picker) {
-    							picker.$emit(
-    								'pick',
-    								moment(contract.leaseStart)
-    									.add(1, 'year')
-    									.calendar()
-    							);
-    						}
-    					},
-    					{
-    						text: '两年',
-    						onClick(picker) {
-    							picker.$emit(
-    								'pick',
-    								moment(contract.leaseStart)
-    									.add(2, 'years')
-    									.calendar()
-    							);
-    						}
-    					},
-    					{
-    						text: '三年',
-    						onClick(picker) {
-    							picker.$emit(
-    								'pick',
-    								moment(contract.leaseStart)
-    									.add(3, 'years')
-    									.calendar()
-    							);
-    						}
-    					}
-    				]
-    			}
-    		};
-    	}
-    };
+	export default {
+		props: {
+			contract: {
+				required: true
+			}
+		},
+		computed: {
+			sixMonthsLength() {
+				return addMonths(this.contract.leaseStart, 6).toString()
+			},
+			oneYearLength() {
+				return addYears(this.contract.leaseStart, 1).toString()
+			},
+			twoYearsLength() {
+				return addYears(this.contract.leaseStart, 2).toString()
+			},
+			threeYearsLength() {
+				return addYears(this.contract.leaseStart, 3).toString()
+			}
+		},
+		data() {
+			const vm = this;
+			return {
+				endOptions: {
+					disabledDate(time) {
+						return time.getTime() < Date.now();
+					},
+					shortcuts: [
+						{
+							text: '半年',
+							onClick(picker) {
+								console.log(this);
+								picker.$emit('pick', vm.sixMonthsLength);
+							}
+						},
+						{
+							text: '一年',
+							onClick(picker) {
+								picker.$emit('pick', vm.oneYearLength);
+							}
+						},
+						{
+							text: '两年',
+							onClick(picker) {
+								picker.$emit('pick', vm.twoYearsLength);
+							}
+						},
+						{
+							text: '三年',
+							onClick(picker) {
+								picker.$emit('pick', vm.threeYearsLength);
+							}
+						}
+					]
+				}
+			};
+		}
+	};
 </script>
 
 <style lang="less" scoped>
