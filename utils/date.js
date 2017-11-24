@@ -1,7 +1,9 @@
 import { convertToFP } from './helper';
 
-import addMonths from 'date-fns/addMonths';
-import format from 'date-fns/format';
+import _addMonths from 'date-fns/add_months';
+import _format from 'date-fns/format';
+import _addYears from 'date-fns/add_years';
+import _addDays from 'date-fns/add_days';
 
 /**
  * 时间操作
@@ -10,21 +12,11 @@ import format from 'date-fns/format';
  */
 const add = function(num, type) {};
 
-let dateUtils = {
-	format,
-	addMonths
+export const chain = function(task) {
+	return Promise.resolve(task);
 };
 
-const args = {
-	format: 2,
-	addMonths: 2
-};
-
-// Object.keys(dateUtils).forEach(item => {
-// 	const method = dateUtils[item];
-// 	dateUtils[item] = convertToFP(method, args[item]);
-// });
-
-dateUtils.add = add;
-
-export default dateUtils;
+export const format = convertToFP(_format, 2);
+export const addMonths = convertToFP(_addMonths, 2);
+export const addYears = convertToFP(_addYears, 2);
+export const addDays = convertToFP(_addDays, 2);

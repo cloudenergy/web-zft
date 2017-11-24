@@ -23,9 +23,7 @@
     import ContractDetail from './ContractDetail.vue';
     import ExpenseSetting from './ExpenseSetting.vue';
 
-    import { add_months, format } from 'date-fns';
-
-    const today = new Date();
+    import moment from 'moment';
 
     export default {
     	data() {
@@ -44,10 +42,12 @@
     					house: ''
     				},
     				contract: {
-    					leaseStart: format(today, 'YYYY-MM-DD'),
-    					leaseEnd: add_months(today, 3).format('YYYY-MM-DD'),
+    					leaseStart: moment().format('YYYY-MM-DD'),
+    					leaseEnd: moment()
+    						.add(3, 'months')
+    						.format('YYYY-MM-DD'),
     					contractNumber: '',
-    					signUpDate: format(today, 'YYYY-MM-DD')
+    					signUpDate: moment().format('YYYY-MM-DD')
     				},
     				expense: {
     					billPlan: 1,

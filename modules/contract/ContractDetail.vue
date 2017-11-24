@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { addMonths, addYears, calendar } from 'date-fns';
+    import moment from 'moment';
 
     export default {
     	props: {
@@ -51,7 +51,6 @@
     	},
     	data() {
     		let contract = this.contract;
-    		let date = new Date(contract.leaseStart);
     		return {
     			endOptions: {
     				disabledDate(time) {
@@ -61,25 +60,45 @@
     					{
     						text: '半年',
     						onClick(picker) {
-    							picker.$emit('pick', addMonths(date, 6).toString());
+    							picker.$emit(
+    								'pick',
+    								moment(contract.leaseStart)
+    									.add(6, 'months')
+    									.calendar()
+    							);
     						}
     					},
     					{
     						text: '一年',
     						onClick(picker) {
-    							picker.$emit('pick', addYears(data, 1).toString());
+    							picker.$emit(
+    								'pick',
+    								moment(contract.leaseStart)
+    									.add(1, 'year')
+    									.calendar()
+    							);
     						}
     					},
     					{
     						text: '两年',
     						onClick(picker) {
-    							picker.$emit('pick', addYears(data, 2).toString());
+    							picker.$emit(
+    								'pick',
+    								moment(contract.leaseStart)
+    									.add(2, 'years')
+    									.calendar()
+    							);
     						}
     					},
     					{
     						text: '三年',
     						onClick(picker) {
-    							picker.$emit('pick', addYears(data, 3).toString());
+    							picker.$emit(
+    								'pick',
+    								moment(contract.leaseStart)
+    									.add(3, 'years')
+    									.calendar()
+    							);
     						}
     					}
     				]

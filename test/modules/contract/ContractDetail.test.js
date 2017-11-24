@@ -1,21 +1,22 @@
 import { mount } from 'vue-test-utils';
 import ContractDetail from '../../../modules/contract/ContractDetail.vue';
-import { date } from '~/utils';
-const { addMonths, format } = date;
-import chain from 'lodash/chain';
+import { addMonths, format, chain } from '~/utils/date';
 
 describe('ContractDetail', () => {
 	const today = new Date();
+	let leaseEnd;
+	chain(today)
+		.then(addMonths(3))
+		.then(format('YYYY-MM-DD'))
+		.then(date => (leaseEnd = date));
 	// Now mount the component, and you have the wrapper.
 	const wrapper = mount(ContractDetail, {
 		propsData: {
 			contract: {
-				leaseStart: format(today, 'YYYY-MM-DD'),
-				leaseEnd: chain(today)
-					.addMonths(3)
-					.format('YYYY-MM-DD'),
+				leaseStart: format('YYYY-MM-DD')(today),
+				leaseEnd,
 				contractNumber: '',
-				signUpDate: format(today, 'YYYY-MM-DD')
+				signUpDate: format('YYYY-MM-DD')(today)
 			}
 		}
 	});
