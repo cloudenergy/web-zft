@@ -1,22 +1,16 @@
 import { mount } from 'vue-test-utils';
 import ContractDetail from '../../../modules/contract/ContractDetail.vue';
-import { addMonths, format, chain } from '~/utils/date';
+import { format } from '~/utils/date';
 
 describe('ContractDetail', () => {
-	const today = new Date();
-	let leaseEnd;
-	chain(today)
-		.then(addMonths(3))
-		.then(format('YYYY-MM-DD'))
-		.then(date => (leaseEnd = date));
 	// Now mount the component, and you have the wrapper.
 	const wrapper = mount(ContractDetail, {
 		propsData: {
 			contract: {
-				leaseStart: format('YYYY-MM-DD')(today),
-				leaseEnd,
+				leaseStart: '2017-11-11',
+				leaseEnd: '',
 				contractNumber: '',
-				signUpDate: format('YYYY-MM-DD')(today)
+				signUpDate: '2017-12-12'
 			}
 		}
 	});
@@ -32,5 +26,23 @@ describe('ContractDetail', () => {
 
 	it('should have a range label', () => {
 		expect(wrapper.contains('span.el-input-group__prepend')).toBe(true);
+	});
+
+	it('should compute different end contract spots base on leaseStart date', () => {
+		expect(format('YYYY-MM-DD')(wrapper.vm.sixMonthsLength)).toBe('2018-05-11');
+		expect(format('YYYY-MM-DD')(wrapper.vm.oneYearLength)).toBe('2018-11-11');
+		expect(format('YYYY-MM-DD')(wrapper.vm.twoYearsLength)).toBe('2019-11-11');
+		expect(format('YYYY-MM-DD')(wrapper.vm.threeYearsLength)).toBe('2020-11-11');
+	});
+
+	it('should compute one year end date on lease start option', () => {
+		wrapper.setProps({ contract: {
+			leaseStart: '2018-05-11',
+			leaseEnd: '',
+			contractNumber: '',
+			signUpDate: '2017-12-12'
+		} })
+
+		expect(format('YYYY-MM-DD')(wrapper.vm.oneYearLength)).toBe('2019-05-11');
 	});
 });

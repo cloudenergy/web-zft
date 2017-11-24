@@ -74,7 +74,6 @@
 						{
 							text: '半年',
 							onClick(picker) {
-								console.log(this);
 								picker.$emit('pick', vm.sixMonthsLength);
 							}
 						},
