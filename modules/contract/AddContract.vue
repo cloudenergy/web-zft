@@ -23,10 +23,11 @@
     import ContractDetail from './ContractDetail.vue';
     import ExpenseSetting from './ExpenseSetting.vue';
 
-    import moment from 'moment';
+	import {addYears, format} from 'date-fns';
 
-    export default {
+	export default {
     	data() {
+			const today = new Date();
     		return {
     			form: {
     				profile: {
@@ -42,12 +43,10 @@
     					house: ''
     				},
     				contract: {
-    					leaseStart: moment().format('YYYY-MM-DD'),
-    					leaseEnd: moment()
-    						.add(3, 'months')
-    						.format('YYYY-MM-DD'),
-    					contractNumber: '',
-    					signUpDate: moment().format('YYYY-MM-DD')
+						leaseStart: this.defaultStart(today),
+						leaseEnd: this.defaultEnd(today),
+						contractNumber: '',
+						signUpDate: this.defaultStart(today)
     				},
     				expense: {
     					billPlan: 1,
@@ -91,7 +90,13 @@
     					return false;
     				}
     			});
-    		}
+    		},
+			defaultStart(now) {
+				return format(now, 'YYYY-MM-DD');
+			},
+			defaultEnd(now) {
+				return format(addYears(now, 1), 'YYYY-MM-DD');
+			}
     	},
     	components: {
     		UserProfile,

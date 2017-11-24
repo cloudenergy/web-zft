@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import {addMonths, addYears, calendar} from 'date-fns';
+	import {addMonths, addYears} from 'date-fns';
 
 	export default {
 		props: {
