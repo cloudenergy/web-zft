@@ -10,8 +10,8 @@
 	},
 	"dependencies": {
 		"blade-scripts": "^1.2.4",
-		"element-ui": "^2.0.5",
-		"moment": "^2.19.2"
+		"date-fns": "^2.0.0-alpha.7",
+		"element-ui": "^2.0.5"
 	},
 	"devDependencies": {
 		"babel-jest": "^21.2.0",

@@ -15,3 +15,5 @@
 export { addClass, removeClass, hasClass, removeElement } from './dom';
 
 export { isFunc } from './helper';
+
+export { default as date } from './date';

@@ -1,12 +1,10 @@
 <template>
-    <app>
-        <div class="houses module">
-            <top-nav :links="links"></top-nav>
-            <div class="main-content">
-                <router-view></router-view>
-            </div>
+    <div class="houses module">
+        <top-nav :links="links"></top-nav>
+        <div class="main-content">
+            <router-view></router-view>
         </div>
-    </app>
+    </div>
 </template>
 
 <script>
