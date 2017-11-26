@@ -17,17 +17,9 @@
 </template>
 
 <script>
-    import { chain, addMonths, format } from '~/utils/date';
-
+    import { add, format } from '~/utils/date';
     export default {
-    	created() {
-    		let today = new Date();
-
-    		chain(today)
-    			.then(addMonths(3))
-    			.then(format('YYYY-MM-DD'))
-    			.then(date => console.log(date));
-    	},
+    	created() {},
     	data() {
     		return {
     			user: {}
