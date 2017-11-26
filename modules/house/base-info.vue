@@ -1,9 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="group">
-            <el-form-item label="方式">
-                <el-input v-model="form.name" auto-complete="off"></el-input>
-            </el-form-item>
+            <rent-type-select v-model="form.rentType"></rent-type-select>
             <el-form-item label="编号">
                 <el-input v-model="form.name" auto-complete="off"></el-input>
             </el-form-item>
@@ -17,12 +15,12 @@
         <div class="group">
             <el-form-item label="城市">
                 <el-select v-model="form.city" size="mini" clearable placeholder="请选择城市">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-option v-for="item in options.city" :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="区域">
                 <el-select v-model="form.city" size="mini" clearable placeholder="请选择区域">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-option v-for="item in options.area" :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
             </el-form-item>
             <slot />
@@ -36,13 +34,18 @@
     		form: {
     			type: Object,
     			default() {
-    				return {};
+    				return {
+    					rentType: '1'
+    				};
     			}
     		}
     	},
     	data() {
     		return {
-    			options: []
+    			options: {
+    				city: [],
+    				area: []
+    			}
     		};
     	}
     };
