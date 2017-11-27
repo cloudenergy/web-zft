@@ -31,6 +31,10 @@
         </div>
         <el-dialog title="房源信息" :visible.sync="modal.house">
             <add-modal ref="house" />
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="modal.house = false">取 消</el-button>
+                <el-button type="primary" @click="modal.house = false">确 定</el-button>
+            </div>
         </el-dialog>
         <el-dialog title="添加租户" :visible.sync="modal.contract">
             <new-contract ref="contract" />

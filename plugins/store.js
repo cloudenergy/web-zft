@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-20 23:08:44
+ * @Last Modified time: 2017-11-27 12:04:05
  */
 
 import api from '~/plugins/api';
@@ -12,11 +12,18 @@ export default {
 		user: {
 			id: '',
 			projectId: ''
-		}
+		},
+		city_area: {}
 	},
 	actions: {
-		getCommunities() {
+		GET_COMMUNITIES() {
 			return api('communities', null, { id: '123' });
+		},
+		GET_CITY_AREA({ commit, state }) {
+			if (Object.keys(state.city_area).length) {
+				return state.city_area;
+			}
+			return api('city_area');
 		}
 	}
 };

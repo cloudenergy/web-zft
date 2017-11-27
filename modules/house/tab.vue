@@ -33,7 +33,7 @@
     	},
     	created() {
     		this.$store
-    			.dispatch('getCommunities')
+    			.dispatch('GET_COMMUNITIES')
     			.then(data => (this.community = data));
     	},
     	methods: {

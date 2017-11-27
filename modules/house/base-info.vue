@@ -12,19 +12,7 @@
                 </el-select>
             </el-form-item>
         </div>
-        <div class="group">
-            <el-form-item label="城市">
-                <el-select v-model="form.city" size="mini" clearable placeholder="请选择城市">
-                    <el-option v-for="item in options.city" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="区域">
-                <el-select v-model="form.city" size="mini" clearable placeholder="请选择区域">
-                    <el-option v-for="item in options.area" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                </el-select>
-            </el-form-item>
-            <slot />
-        </div>
+        <city-area :isForm="true" class="group" />
     </div>
 </template>
 
