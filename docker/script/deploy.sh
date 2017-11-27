@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set -e
-
 IMAGE_VERSION=${1:-latest}
 docker pull registry.docker-cn.com/kpse/web-zft:$IMAGE_VERSION
 
