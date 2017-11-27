@@ -6,7 +6,7 @@ IMAGE_VERSION=${1:-latest}
 docker pull registry.docker-cn.com/kpse/web-zft:$IMAGE_VERSION
 
 function start () {
-  docker ps -aq | xargs docker rm -f
+  docker ps -aq -f=name='web' | xargs docker rm -f
   docker run -d -e ZFT_BACKEND_PROXY -p 80:80 --net=zft --name=web registry.docker-cn.com/kpse/web-zft:$IMAGE_VERSION
 }
 function test_deploy() {
