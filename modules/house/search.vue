@@ -29,14 +29,14 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
-        <el-dialog title="房源信息" :visible.sync="modal.house">
+        <el-dialog title="房源信息" :visible.sync="modal.house" :append-to-body="true">
             <add-modal ref="house" />
             <div slot="footer" class="dialog-footer">
                 <el-button @click="modal.house = false">取 消</el-button>
                 <el-button type="primary" @click="modal.house = false">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="添加租户" :visible.sync="modal.contract">
+        <el-dialog title="添加租户" :visible.sync="modal.contract" :append-to-body="true">
             <new-contract ref="contract" :closeDialog="closeContract" />
         </el-dialog>
     </div>
@@ -67,10 +67,10 @@
     		},
     		createContract() {
     			this.modal.contract = true;
-			},
-			closeContract() {
-				this.modal.contract = false;
-			}
+    		},
+    		closeContract() {
+    			this.modal.contract = false;
+    		}
     	}
     };
 </script>

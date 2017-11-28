@@ -1,6 +1,7 @@
 <template>
     <div class="rent module">
-        <top-nav :links="links"></top-nav>
+        <top-nav :links="links">
+        </top-nav>
         <div class="main-content">
             <router-view></router-view>
         </div>

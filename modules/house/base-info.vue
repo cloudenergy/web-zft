@@ -1,12 +1,12 @@
 <template>
     <div class="wrapper">
         <div class="group">
-            <rent-type-select v-model="form.rentType"></rent-type-select>
+            <rent-type-select v-model="model.rentType"></rent-type-select>
             <el-form-item label="编号">
-                <el-input v-model="form.name" auto-complete="off"></el-input>
+                <el-input v-model="model.name" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="管理">
-                <el-select v-model="form.region" placeholder="管理">
+                <el-select v-model="model.region" placeholder="管理">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
@@ -23,13 +23,25 @@
     			type: Object,
     			default() {
     				return {
-    					rentType: '1'
+    					rentType: 1
     				};
     			}
     		}
     	},
+    	watch: {
+    		model: {
+    			handler(val) {
+    				this.$emit('change', val);
+    			},
+    			deep: true
+    		}
+    	},
+    	created() {
+    		this.$set(this, 'model', this.form);
+    	},
     	data() {
     		return {
+    			model: {},
     			options: {
     				city: [],
     				area: []

@@ -10,6 +10,8 @@
                 <el-input v-model="form.name" auto-complete="off"></el-input>
             </el-form-item>
         </div>
+        <room-layout></room-layout>
+        <building-floor v-if="form.rentType==3"></building-floor>
         <h3>房源配置</h3>
         <house-facility class="checkboxes" v-model="form.facilities"></house-facility>
     </el-form>
@@ -21,7 +23,7 @@
     	data() {
     		return {
     			form: {
-    				rentType: '',
+    				rentType: 1,
     				belongs: '',
     				type: []
     			}
@@ -31,7 +33,9 @@
     		BaseInfo
     	},
     	methods: {
-    		mergeBaseInfo() {}
+    		mergeBaseInfo(val) {
+    			Object.assign(this.form, val);
+    		}
     	}
     };
 </script>

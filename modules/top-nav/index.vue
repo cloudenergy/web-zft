@@ -3,11 +3,12 @@
         <div class="logo">
             <img src="~/static/imgs/logo.png">
         </div>
-        <div class="links">
+        <div class="top-nav-content">
             <el-menu class="el-menu-demo" mode="horizontal" :router="true" :default-active="$route.path">
                 <el-menu-item :index="link.url" v-for="link in links" :key="link.url">{{link.text}}</el-menu-item>
             </el-menu>
         </div>
+        <slot />
     </div>
 </template> 
 <script>
@@ -26,7 +27,7 @@
     	flex-direction: row;
     	align-content: stretch;
     	align-items: stretch;
-    	justify-content: space-between;
+    	// justify-content: space-between;
     	height: 60px;
     	color: #fff;
     }
@@ -44,10 +45,6 @@
     	img {
     		max-width: 80%;
     	}
-    }
-
-    .links {
-    	flex: 1 1 auto;
     }
 
     .ceiling-main {
