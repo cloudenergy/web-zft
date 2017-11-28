@@ -36,6 +36,9 @@
 		},
 		"presets": ["env"]
 	},
+	"pre-push": {
+		"run": "test"
+	},
 	"jest": {
 		"collectCoverageFrom": [
 			"**/*.{js,jsx,vue}",
