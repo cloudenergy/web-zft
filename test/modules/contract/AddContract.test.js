@@ -1,10 +1,15 @@
-import { mount } from 'vue-test-utils';
+import {mount} from 'vue-test-utils';
 import AddContract from '../../../modules/contract/AddContract.vue';
-import { format } from 'date-fns';
+import {format} from 'date-fns';
 
 describe('AddContract', () => {
 	// Now mount the component, and you have the wrapper.
-	const wrapper = mount(AddContract);
+	const wrapper = mount(AddContract, {
+		propsData: {
+			closeDialog() {
+			}
+		}
+	});
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain(

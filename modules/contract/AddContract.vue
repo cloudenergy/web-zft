@@ -10,8 +10,8 @@
             <ExpenseSetting :expense="form.expense"></ExpenseSetting>
 
         </el-form>
-        <div class="dialog-footer">
-            <el-button @click="close()">取 消</el-button>
+		<div class="dialog-footer" slot="footer">
+			<el-button @click="closeDialog()">取 消</el-button>
             <el-button type="primary" @click="submitForm('form')">创建租户</el-button>
         </div>
     </div>
@@ -26,6 +26,12 @@
 	import {addYears, format} from 'date-fns';
 
 	export default {
+		props: {
+			closeDialog: {
+				type: Function,
+				required: true
+			}
+		},
     	data() {
 			const today = new Date();
     		return {
@@ -84,10 +90,11 @@
     			console.log(formName);
     			this.$refs[formName].validate(valid => {
     				if (valid) {
-    					alert('submit!');
-    				} else {
-    					console.log('error submit!!');
-    					return false;
+						console.log('submit!', this.form);
+						this.closeDialog();
+					} else {
+						console.log('error in submitting ...');
+						return false;
     				}
     			});
     		},

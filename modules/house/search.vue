@@ -37,7 +37,7 @@
             </div>
         </el-dialog>
         <el-dialog title="添加租户" :visible.sync="modal.contract">
-            <new-contract ref="contract" />
+            <new-contract ref="contract" :closeDialog="closeContract" />
         </el-dialog>
     </div>
 </template>
@@ -67,7 +67,10 @@
     		},
     		createContract() {
     			this.modal.contract = true;
-    		}
+			},
+			closeContract() {
+				this.modal.contract = false;
+			}
     	}
     };
 </script>
