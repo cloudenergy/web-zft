@@ -11,7 +11,6 @@ function start () {
 function test_deploy() {
   docker rm -f test_deploy  
   docker run -d --name test_deploy -p 8080:80 --net=zft registry.docker-cn.com/kpse/web-zft:$IMAGE_VERSION
-  test_curl
 }
 function test_curl() {
   response=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:8080)
@@ -22,4 +21,9 @@ function test_curl() {
   fi
 }
 
-test_deploy && start
+test_deploy
+
+sleep 3
+
+test_curl
+start

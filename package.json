@@ -6,7 +6,7 @@
 		"dev": "blade dev",
 		"build": "blade build",
 		"lint": "eslint . --ext .js,.vue",
-		"test": "jest"
+		"test": "npm run build && jest"
 	},
 	"dependencies": {
 		"blade-scripts": "^1.2.8",
