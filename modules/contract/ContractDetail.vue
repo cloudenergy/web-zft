@@ -118,4 +118,8 @@
     .section-label {
     	margin-top: 3px;
     }
+
+    .el-row {
+        margin-bottom: 18px;
+    }
 </style>

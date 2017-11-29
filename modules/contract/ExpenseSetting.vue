@@ -23,7 +23,7 @@
 				</div>
 			</el-col>
 		</el-row>
-		<el-row>
+		<el-row class="standard-rent-row">
 			<el-col :span="3">
 				<div class="section-label">租金</div>
 			</el-col>
@@ -31,16 +31,16 @@
 				<ExpenseDisplay :expense="expense.standard"></ExpenseDisplay>
 			</el-col>
 		</el-row>
-		<el-row>
+		<el-row class="extra-rent-row">
 			<el-col :span="3">
 				<div class="section-label">附加费用</div>
 				<el-button size="mini">+添加</el-button>
 			</el-col>
-			<el-col :span="21">
+			<el-col :span="21" class="extra-item">
 				<ExpenseDisplay v-for="item in expense.extra" :expense="item" :key="item.id"></ExpenseDisplay>
 			</el-col>
 		</el-row>
-		<el-row>
+		<el-row class="bond-row">
 			<el-col :span="3">
 				<div class="section-label">押金</div>
 			</el-col>
@@ -67,13 +67,13 @@
 			ExpenseDisplay
 		},
 		computed: {
-			dateRange () {
+			dateRange() {
 				return _.range(1, 31).map(i => ({
 					value: `${i}`,
 					label: `${i}${this.unitOfDate}`
 				}))
 			},
-			unitOfDate () {
+			unitOfDate() {
 				return _.get(this.currentPlan, 'unit') || '天';
 			},
 			currentPlan() {
@@ -108,7 +108,7 @@
 
 <style lang="less" scoped>
 	.section-label {
-		margin-top: 3px;
+		margin-top: 4px;
 	}
 
 	.select-with-label {
@@ -124,6 +124,12 @@
 			width: 100%;
 		}
 	}
+
+	.bond-row,
+	.standard-rent-row,
+	.extra-rent-row {
+		margin-top: 18px;
+	}
 </style>
 
 <style lang="less">
@@ -131,4 +137,8 @@
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
+
+	.extra-rent-row .el-row {
+		margin-bottom: 18px;
+	 }
 </style>

@@ -6,7 +6,7 @@
             <HouseProfile :property="form.property"></HouseProfile>
             <ContractDetail :contract="form.contract"></ContractDetail>
 
-            <h3>租费设置</h3>
+            <h3 class="section-2">租费设置</h3>
             <ExpenseSetting :expense="form.expense"></ExpenseSetting>
 
         </el-form>
@@ -117,5 +117,8 @@
 <style lang="less" scoped>
     .dialog-footer {
     	text-align: right;
+    }
+    .section-2 {
+        margin-top: 30px;
     }
 </style>

@@ -19,7 +19,7 @@ describe('AddContract', () => {
 			'<h3>承租信息</h3>'
 		);
 		expect(wrapper.html()).toContain(
-			'<h3>租费设置</h3>'
+			'<h3 class="section-2">租费设置</h3>'
 		);
 	});
 
