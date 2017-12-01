@@ -32,83 +32,91 @@
 				required: true
 			}
 		},
-    	data() {
+		data() {
 			const today = new Date();
-    		return {
-    			form: {
-    				user: {
-    					name: '',
-						accountName: '',
-    					mobile: '',
-    					gender: 'M',
-    					documentId: '',
-						documentType: 1
-    				},
-    				property: {
-    					houseType: '1',
-    					house: ''
-    				},
-    				contract: {
-						leaseStart: this.defaultStart(today),
-						leaseEnd: this.defaultEnd(today),
-						contractNumber: '',
-						signUpDate: this.defaultStart(today)
-    				},
-    				expense: {
-    					billPlan: 1,
-    					offset: 2,
-    					standard: {
-    						id: 1,
-    						name: '常规租金',
-    						type: '2',
-    						amount: 3600,
-    						paymentMethod: '一月一付'
-    					},
-    					extra: [
-    						{
-    							id: 2,
-    							name: '电费',
-    							type: '2',
-    							amount: 1.2,
-    							paymentMethod: '预付费'
-    						},
-    						{
-    							id: 3,
-    							name: '水费',
-    							type: 'water',
-    							amount: 20,
-    							paymentMethod: '随租金付'
-    						}
-    					],
-    					bond: 2600
-    				}
-    			}
-    		};
-    	},
-    	methods: {
-    		submitForm(formName) {
-    			console.log(formName);
-    			this.$refs[formName].validate((valid) => {
-    				if (valid) {
+			return {
+				form: this.newModel(today)
+			};
+		},
+		methods: {
+			submitForm(formName) {
+				console.log(formName);
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
 						console.log('submit: ', this.form);
 						this.$model('contracts').create(this.form).then((d) => {
 							console.log(d);
 							this.closeDialog();
-                        });
+							this.resetForm();
+						});
 
 					} else {
 						console.log('error in submitting ...');
+						this.resetForm();
 						return false;
-    				}
-    			});
-    		},
+					}
+				});
+			},
 			defaultStart(now) {
 				return format(now, 'YYYY-MM-DD');
 			},
 			defaultEnd(now) {
 				return format(addYears(now, 1), 'YYYY-MM-DD');
+			},
+			newModel(today) {
+				return {
+					user: {
+						name: '',
+						accountName: '',
+						mobile: '',
+						gender: 'M',
+						documentId: '',
+						documentType: 1
+					},
+					property: {
+						houseType: '1',
+						house: ''
+					},
+					contract: {
+						leaseStart: this.defaultStart(today),
+						leaseEnd: this.defaultEnd(today),
+						contractNumber: '',
+						signUpDate: this.defaultStart(today)
+					},
+					expense: {
+						billPlan: 1,
+						offset: 2,
+						standard: {
+							id: 1,
+							name: '常规租金',
+							type: '2',
+							amount: 3600,
+							paymentMethod: '一月一付'
+						},
+						extra: [
+							{
+								id: 2,
+								name: '电费',
+								type: '2',
+								amount: 1.2,
+								paymentMethod: '预付费'
+							},
+							{
+								id: 3,
+								name: '水费',
+								type: 'water',
+								amount: 20,
+								paymentMethod: '随租金付'
+							}
+						],
+						bond: 2600
+					}
+				}
+			},
+			resetForm() {
+				this.form = this.newModel(new Date());
 			}
-    	},
+		},
     	components: {
     		UserProfile,
     		HouseProfile,
