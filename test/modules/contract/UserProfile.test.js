@@ -5,13 +5,13 @@ describe('UserProfile', () => {
 	// Now mount the component, and you have the wrapper.
 	const wrapper = mount(UserProfile, {
 		propsData: {
-			profile: {
+			user: {
 				name: 'aaa',
-				account: '',
+				accountName: '',
 				phone: '',
-				gender: 1,
-				idNumber: '',
-				idType: 1
+				gender: 'F',
+				documentId: '',
+				documentType: 1
 			}
 		}
 	});
@@ -28,8 +28,8 @@ describe('UserProfile', () => {
 	})
 
 	it('should render gender options', () => {
-		expect(wrapper.html()).toContain('<el-option label="男" value="1"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="女" value="0"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="男" value="M"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="女" value="F"></el-option>')
 	})
 
 

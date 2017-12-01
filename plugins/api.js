@@ -25,7 +25,10 @@ switch (process.env.NODE_ENV) {
 }
 
 setup({
-	baseURL
+	baseURL,
+	headers: {
+		"content-type": "application/json"
+	}
 });
 
 const interceptor = function(res) {

@@ -2,7 +2,7 @@
     <div class="modal add-contract">
         <el-form :model="form" ref="form" class="v-form">
             <h3>承租信息</h3>
-            <UserProfile :profile="form.profile"></UserProfile>
+            <UserProfile :user="form.user"></UserProfile>
             <HouseProfile :property="form.property"></HouseProfile>
             <ContractDetail :contract="form.contract"></ContractDetail>
 
@@ -36,13 +36,13 @@
 			const today = new Date();
     		return {
     			form: {
-    				profile: {
+    				user: {
     					name: '',
-    					account: '',
-    					phone: '',
-    					gender: 1,
-    					idNumber: '',
-    					idType: 1
+						accountName: '',
+    					mobile: '',
+    					gender: 'M',
+    					documentId: '',
+						documentType: 1
     				},
     				property: {
     					houseType: '1',
@@ -88,10 +88,14 @@
     	methods: {
     		submitForm(formName) {
     			console.log(formName);
-    			this.$refs[formName].validate(valid => {
+    			this.$refs[formName].validate((valid) => {
     				if (valid) {
-						console.log('submit!', this.form);
-						this.closeDialog();
+						console.log('submit: ', this.form);
+						this.$model('contracts').create(this.form).then((d) => {
+							console.log(d);
+							this.closeDialog();
+                        });
+
 					} else {
 						console.log('error in submitting ...');
 						return false;

@@ -3,41 +3,41 @@
 		<el-row>
 			<el-col :span="8">
 				<el-form-item
-						prop="profile.name"
+						prop="user.name"
 						:rules="[
       						{ required: true, message: '请输入姓名', trigger: 'blur' }
     					]">
 					<el-input
 							class="form-input"
 							placeholder="必填"
-							v-model="profile.name">
+							v-model="user.name">
 						<template slot="prepend">姓名</template>
 					</el-input>
 				</el-form-item>
 			</el-col>
 			<el-col :span="8">
 				<el-form-item
-						prop="profile.account"
+						prop="user.accountName"
 						:rules="[
       						{ required: true, message: '请输入账号', trigger: 'blur' }
     					]">
 					<el-input
 							class="form-input"
 							placeholder="必填(建议手机号)"
-							v-model="profile.account">
+							v-model="user.accountName">
 						<template slot="prepend">账号</template>
 					</el-input>
 				</el-form-item>
 			</el-col>
 			<el-col :span="8">
 				<el-form-item
-						prop="profile.phone"
+						prop="user.mobile"
 						:rules="[
       						{ required: true, message: '请输入手机号', trigger: 'blur' }
     					]">
 					<el-input class="form-input"
 							  placeholder="选填"
-							  v-model="profile.phone">
+							  v-model="user.mobile">
 						<template slot="prepend">电话</template>
 					</el-input>
 				</el-form-item>
@@ -47,14 +47,14 @@
 			<el-col :span="8">
 				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">性别</span>
-					<el-select v-model="profile.gender" class="gender prepend-label">
-						<el-option label="男" :value="1"></el-option>
-						<el-option label="女" :value="0"></el-option>
+					<el-select v-model="user.gender" class="gender prepend-label">
+						<el-option label="男" value="M"></el-option>
+						<el-option label="女" value="F"></el-option>
 					</el-select>
 				</div>
 			</el-col>
 			<el-col :span="5">
-				<el-select v-model="profile.idType" class="id-type">
+				<el-select v-model="user.documentType" class="id-type">
 					<el-option
 							v-for="t in idTypes"
 							:label="t.name"
@@ -63,7 +63,7 @@
 				</el-select>
 			</el-col>
 			<el-col :span="11">
-				<el-input placeholder="证件号(选填)" v-model="profile.idNumber">
+				<el-input placeholder="证件号(选填)" v-model="user.documentId">
 				</el-input>
 			</el-col>
 		</el-row>
@@ -75,10 +75,10 @@
 
 	export default {
 		props: {
-			profile: {
+			user: {
 				type: Object,
 				required: true,
-				validator: value => _.includes(_.range(1, 9), value.idType) && _.includes([0, 1], value.gender)
+				validator: value => _.includes(_.range(1, 9), value.documentType) && _.includes(['M', 'F'], value.gender)
 			}
 		},
 		data() {
