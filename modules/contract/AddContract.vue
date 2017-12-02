@@ -44,7 +44,7 @@
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						console.log('submit: ', this.form);
-						this.$model('contracts').create(this.form).then((d) => {
+						this.$model('contracts').create(this.translate(this.form)).then((d) => {
 							console.log(d);
 							this.closeDialog();
 							this.resetForm();
@@ -115,6 +115,18 @@
 			},
 			resetForm() {
 				this.form = this.newModel(new Date());
+			},
+			translate(form) {
+				return {
+					user: form.user,
+					"roomId": 23,
+					"from": 1000,
+					"to": 2000,
+					"strategy": "strategy",
+					"expenses": "expenses",
+					"paymentPlan": "F03",
+					"signUpTime": 3000
+				}
 			}
 		},
     	components: {
