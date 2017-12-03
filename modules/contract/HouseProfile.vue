@@ -41,12 +41,12 @@
 		methods: {
 			handleSelect(item) {
 				console.log(item);
-				return {};
+				this.property.roomId = item.id
 			},
 			querySearch(queryString, cb) {
 				cb([
-					{value: "房子1"},
-					{value: "房子2"}
+					{value: '房子1', id: '10001'},
+					{value: '房子2', id: '10002'}
 				]);
 			}
 		}

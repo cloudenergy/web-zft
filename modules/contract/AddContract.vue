@@ -23,7 +23,7 @@
     import ContractDetail from './ContractDetail.vue';
     import ExpenseSetting from './ExpenseSetting.vue';
 
-	import {addYears, format} from 'date-fns';
+	import {addYears, format, getTime} from 'date-fns';
 
 	export default {
 		props: {
@@ -40,19 +40,16 @@
 		},
 		methods: {
 			submitForm(formName) {
-				console.log(formName);
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						console.log('submit: ', this.form);
-						this.$model('contracts').create(this.form).then((d) => {
+						console.log('submit: ', this.translate(this.form));
+						this.$model('contracts').create(this.translate(this.form)).then((d) => {
 							console.log(d);
 							this.closeDialog();
 							this.resetForm();
 						});
-
 					} else {
 						console.log('error in submitting ...');
-						this.resetForm();
 						return false;
 					}
 				});
@@ -84,7 +81,7 @@
 						signUpDate: this.defaultStart(today)
 					},
 					expense: {
-						billPlan: 1,
+						billPlan: 'F',
 						offset: 2,
 						standard: {
 							id: 1,
@@ -115,6 +112,18 @@
 			},
 			resetForm() {
 				this.form = this.newModel(new Date());
+			},
+			translate(form) {
+				return {
+					user: form.user,
+					"roomId": form.property.roomId,
+					"from": getTime(form.contract.leaseStart) / 1000,
+					"to": getTime(form.contract.leaseEnd) / 1000,
+					"strategy": "strategy",
+					"expenses": "expenses",
+					"paymentPlan": `${form.expense.billPlan}${form.expense.offset}`,
+					"signUpTime": getTime(form.contract.signUpDate) / 1000
+				}
 			}
 		},
     	components: {

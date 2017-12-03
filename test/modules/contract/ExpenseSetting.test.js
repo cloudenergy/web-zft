@@ -6,7 +6,7 @@ describe('ExpenseSetting', () => {
 	const wrapper = mount(ExpenseSetting, {
 		propsData: {
 			expense: {
-				billPlan: 1,
+				billPlan: '-',
 				offset: 1,
 				standard: {
 					id: 1,
@@ -37,12 +37,12 @@ describe('ExpenseSetting', () => {
 	});
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<el-option label="1天" value="1">')
+		expect(wrapper.html()).toContain('<el-option label="1天" value="01">')
 		expect(wrapper.html()).toContain('<el-option label="30天" value="30">')
-		expect(wrapper.html()).toContain('<el-option label="开始前提前" value="1"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="开始后固定" value="2"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="开始前固定" value="3"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="开始前一个月固定" value="4"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="开始前提前" value="-"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="开始后固定" value="+"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="开始前固定" value="F"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="开始前一个月固定" value="M"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="一年一付" value="6">')
 	})
 
@@ -55,7 +55,7 @@ describe('ExpenseSetting', () => {
 		const billPlan1 = mount(ExpenseSetting, {
 			propsData: {
 				expense: {
-					billPlan: 1,
+					billPlan: '-',
 					offset: 1,
 					standard: {},
 					extra: [],
@@ -70,7 +70,7 @@ describe('ExpenseSetting', () => {
 		const billPlan2 = mount(ExpenseSetting, {
 			propsData: {
 				expense: {
-					billPlan: 2,
+					billPlan: 'F',
 					offset: 1,
 					standard: {},
 					extra: [],
