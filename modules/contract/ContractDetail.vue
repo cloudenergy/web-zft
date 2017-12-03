@@ -1,43 +1,65 @@
 <template>
-    <div class="house-contract">
-        <el-row>
-            <el-col :span="3">
-                <div class="section-label">租期</div>
-            </el-col>
-            <el-col :span="10">
-                <div class="select-with-label el-input-group">
-                    <span class="el-input-group__prepend">范围</span>
-                    <div class="block lease-start-input prepend-label">
-                        <el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间">
-                        </el-date-picker>
-                    </div>
-                </div>
-            </el-col>
-            <el-col :span="10" class="lease-end-input">
-                <el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间" :picker-options="endOptions">
-                </el-date-picker>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div class="section-label">合同描述</div>
-            </el-col>
-            <el-col :span="9">
-                <el-input placeholder="JG4133" v-model="contract.contractNumber">
-                    <template slot="prepend">合同编号</template>
-                </el-input>
-            </el-col>
-            <el-col :span="9">
-                <div class="select-with-label el-input-group">
-                    <span class="el-input-group__prepend">签约日期</span>
-                    <div class="block lease-start-input prepend-label">
-                        <el-date-picker v-model="contract.signUpDate" type="date" placeholder="选择日期">
-                        </el-date-picker>
-                    </div>
-                </div>
-            </el-col>
-        </el-row>
-    </div>
+	<div class="house-contract">
+		<el-row>
+			<el-col :span="3">
+				<div class="section-label">租期</div>
+			</el-col>
+			<el-col :span="10">
+				<el-form-item
+						prop="contract.leaseStart"
+						:rules="[
+      						{ required: true, message: '请输入租期开始时间', trigger: 'blur' }
+    					]">
+					<div class="select-with-label el-input-group">
+						<span class="el-input-group__prepend">范围</span>
+						<div class="block lease-start-input prepend-label">
+							<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间">
+							</el-date-picker>
+						</div>
+					</div>
+				</el-form-item>
+			</el-col>
+			<el-col :span="10" class="lease-end-input">
+				<el-form-item
+						prop="contract.leaseEnd"
+						:rules="[
+      						{ required: true, message: '请输入租期结束时间', trigger: 'blur' }
+    					]">
+					<el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间"
+									:picker-options="endOptions">
+					</el-date-picker>
+				</el-form-item>
+			</el-col>
+		</el-row>
+		<el-row>
+			<el-form-item
+					prop="contract.contractNumber">
+				<el-col :span="3">
+					<div class="section-label">合同描述</div>
+				</el-col>
+				<el-col :span="9">
+					<el-input placeholder="选填" v-model="contract.contractNumber">
+						<template slot="prepend">合同编号</template>
+					</el-input>
+				</el-col>
+				<el-col :span="9">
+					<el-form-item
+							prop="contract.signUpDate"
+							:rules="[
+							{ required: true, message: '请输入签约时间', trigger: 'blur' }
+    					]">
+						<div class="select-with-label el-input-group">
+							<span class="el-input-group__prepend">签约日期</span>
+							<div class="block lease-start-input prepend-label">
+								<el-date-picker v-model="contract.signUpDate" type="date" placeholder="选择日期">
+								</el-date-picker>
+							</div>
+						</div>
+					</el-form-item>
+				</el-col>
+			</el-form-item>
+		</el-row>
+	</div>
 </template>
 
 <script>
@@ -103,23 +125,23 @@
 </script>
 
 <style lang="less" scoped>
-    .lease-end-input {
-    	margin-left: 20px;
-    }
+	.lease-end-input {
+		margin-left: 20px;
+	}
 
-    .select-with-label {
-    	display: inline-table;
-    	.el-input__inner {
-    		border-top-left-radius: 0;
-    		border-bottom-left-radius: 0;
-    	}
-    }
+	.select-with-label {
+		display: inline-table;
+		.el-input__inner {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+	}
 
-    .section-label {
-    	margin-top: 3px;
-    }
+	.section-label {
+		margin-top: 3px;
+	}
 
-    .el-row {
-        margin-bottom: 18px;
-    }
+	.el-row {
+		margin-bottom: 18px;
+	}
 </style>
