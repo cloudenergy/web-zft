@@ -55,10 +55,10 @@
 				});
 			},
 			defaultStart(now) {
-				return format(now, 'YYYY-MM-DD');
+				return now;
 			},
 			defaultEnd(now) {
-				return format(addYears(now, 1), 'YYYY-MM-DD');
+				return addYears(now, 1);
 			},
 			newModel(today) {
 				return {
@@ -88,7 +88,7 @@
 							name: '常规租金',
 							type: '2',
 							amount: 3600,
-							paymentMethod: '一月一付'
+							paymentMethod: 'perMonth'
 						},
 						extra: [
 							{
@@ -96,14 +96,14 @@
 								name: '电费',
 								type: '2',
 								amount: 1.2,
-								paymentMethod: '预付费'
+								paymentMethod: 'prepaid'
 							},
 							{
 								id: 3,
 								name: '水费',
 								type: 'water',
 								amount: 20,
-								paymentMethod: '随租金付'
+								paymentMethod: 'perMonth'
 							}
 						],
 						bond: 2600
@@ -119,11 +119,46 @@
 					"roomId": form.property.roomId,
 					"from": getTime(form.contract.leaseStart) / 1000,
 					"to": getTime(form.contract.leaseEnd) / 1000,
-					"strategy": "strategy",
-					"expenses": "expenses",
-					"paymentPlan": `${form.expense.billPlan}${form.expense.offset}`,
+					"strategy": this.createStrategy(form),
+					"expenses": this.createExpense(form),
+					"paymentPlan": this.createPaymentPlan(form.expense),
 					"signUpTime": getTime(form.contract.signUpDate) / 1000
 				}
+			},
+			createPaymentPlan(expense) {
+				return `${expense.billPlan}${expense.offset}`;
+			},
+			createStrategy(form) {
+				return {
+					"daily": {
+						"amount": 10000
+					},
+					"monthly": {
+						"once": 0,
+						"freq": {
+							"interval": "1/2/3/6/12",
+							"amount": 10000
+						},
+						"customer": [
+							{
+								"from": 1509976830,
+								"to": 1509976830,
+								"forFree": "0不免租金/1免租金",
+								"amount": 10000,
+								"interval": "1/2/3/6/12"
+							}
+						]
+					}
+				}
+			},
+			createExpense(form) {
+				return [
+					{
+						"cfgId": "1/2/3...",
+						"amount": 10000,
+						"interval": "1/2/3/6/12"
+					}
+				]
 			}
 		},
     	components: {
