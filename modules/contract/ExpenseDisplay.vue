@@ -10,8 +10,8 @@
 				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">方式</span>
 					<el-select v-model="expense.paymentMethod" class="prepend-label">
-						<el-option v-for="item in paymentMethods" :label="item.name" :value="item.id"
-								   :key="item.id"></el-option>
+						<el-option v-for="item in paymentMethods" :label="item.name" :value="item.key"
+								   :key="item.key"></el-option>
 					</el-select>
 				</div>
 			</el-col>
@@ -29,26 +29,26 @@
 		data() {
 			return {
 				paymentMethods: [{
-					id: 1,
-					name: '预付费'
+					name: '预付费',
+					key: 'prepaid'
 				}, {
-					id: 2,
-					name: '一月一付'
+					name: '一月一付',
+					key: 'perMonth'
 				}, {
-					id: 3,
-					name: '两月一付'
+					name: '两月一付',
+					key: 'twoMonth'
 				}, {
-					id: 4,
-					name: '三月一付'
+					name: '三月一付',
+					key: 'threeMonth'
 				}, {
-					id: 5,
-					name: '半年一付'
+					name: '半年一付',
+					key: 'sixMonth'
 				}, {
-					id: 6,
-					name: '一年一付'
+					name: '一年一付',
+					key: 'perYear'
 				}, {
-					id: 7,
-					name: '一次付清'
+					name: '一次付清',
+					key: 'once'
 				}]
 			}
 		}

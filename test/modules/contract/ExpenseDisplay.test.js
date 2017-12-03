@@ -13,7 +13,7 @@ describe('ExpenseDisplay', () => {
 					name: '常规租金',
 					type: '2',
 					amount: 3600,
-					paymentMethod: '一月一付',
+					paymentMethod: 'perMonth',
 				},
 				extra: [
 					{
@@ -21,7 +21,7 @@ describe('ExpenseDisplay', () => {
 						name: '电费',
 						type: '2',
 						amount: 1.20,
-						paymentMethod: '预付费',
+						paymentMethod: 'prepaid',
 					},
 					{
 						id: 3,
@@ -37,8 +37,8 @@ describe('ExpenseDisplay', () => {
 	});
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<el-option label="预付费" value="1">')
-		expect(wrapper.html()).toContain('<el-option label="一月一付" value="2">')
+		expect(wrapper.html()).toContain('<el-option label="预付费" value="prepaid">')
+		expect(wrapper.html()).toContain('<el-option label="一月一付" value="perMonth">')
 	})
 
 

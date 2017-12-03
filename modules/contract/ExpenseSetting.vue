@@ -68,7 +68,9 @@
 		},
 		computed: {
 			dateRange() {
-				return _.range(1, 31).map(i => ({
+				const rangeStart = _.get(this.currentPlan, 'min', 0);
+				const rangeEnd = _.get(this.currentPlan, 'max', 31);
+				return _.range(rangeStart, rangeEnd).map(i => ({
 					value: `0${i}`.slice(-2),
 					label: `${i}${this.unitOfDate}`
 				}))
@@ -87,19 +89,27 @@
 					{
 						name: '开始前提前',
 						unit: '天',
-						plan: '-'
+						plan: '-',
+						min: 0,
+						max: 31
 					}, {
 						name: '开始后固定',
 						unit: '号',
-						plan: '+'
+						plan: '+',
+						min: 1,
+						max: 31
 					}, {
 						name: '开始前固定',
 						unit: '号',
-						plan: 'F'
+						plan: 'F',
+						min: 1,
+						max: 31
 					}, {
 						name: '开始前一个月固定',
 						unit: '号',
-						plan: 'M'
+						plan: 'M',
+						min: 1,
+						max: 30
 					},
 				]
 			}
