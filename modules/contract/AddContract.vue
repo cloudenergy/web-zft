@@ -1,27 +1,27 @@
 <template>
-    <div class="modal add-contract">
-        <el-form :model="form" ref="form" class="v-form">
-            <h3>承租信息</h3>
-            <UserProfile :user="form.user"></UserProfile>
-            <HouseProfile :property="form.property"></HouseProfile>
-            <ContractDetail :contract="form.contract"></ContractDetail>
+	<div class="modal add-contract">
+		<el-form :model="form" ref="form" class="v-form">
+			<h3>承租信息</h3>
+			<UserProfile :user="form.user"></UserProfile>
+			<HouseProfile :property="form.property"></HouseProfile>
+			<ContractDetail :contract="form.contract"></ContractDetail>
 
-            <h3 class="section-2">租费设置</h3>
-            <ExpenseSetting :expense="form.expense"></ExpenseSetting>
+			<h3 class="section-2">租费设置</h3>
+			<ExpenseSetting :expense="form.expense"></ExpenseSetting>
 
-        </el-form>
+		</el-form>
 		<div class="dialog-footer" slot="footer">
 			<el-button @click="closeDialog()">取 消</el-button>
-            <el-button type="primary" @click="submitForm('form')">创建租户</el-button>
-        </div>
-    </div>
+			<el-button type="primary" @click="submitForm('form')">创建租户</el-button>
+		</div>
+	</div>
 </template>
 
 <script>
-    import UserProfile from './UserProfile.vue';
-    import HouseProfile from './HouseProfile.vue';
-    import ContractDetail from './ContractDetail.vue';
-    import ExpenseSetting from './ExpenseSetting.vue';
+	import UserProfile from './UserProfile.vue';
+	import HouseProfile from './HouseProfile.vue';
+	import ContractDetail from './ContractDetail.vue';
+	import ExpenseSetting from './ExpenseSetting.vue';
 
 	import {addYears, format, getTime} from 'date-fns';
 
@@ -154,25 +154,26 @@
 					}
 				]
 			},
-            closeDialog() {
+			closeDialog() {
 				this.$refs['form'].resetFields();
 				this.$modal.$emit('dismiss');
-            }
+			}
 		},
-    	components: {
-    		UserProfile,
-    		HouseProfile,
-    		ContractDetail,
-    		ExpenseSetting
-    	}
-    };
+		components: {
+			UserProfile,
+			HouseProfile,
+			ContractDetail,
+			ExpenseSetting
+		}
+	};
 </script>
 
 <style lang="less" scoped>
-    .dialog-footer {
-    	text-align: right;
-    }
-    .section-2 {
-        margin-top: 30px;
-    }
+	.dialog-footer {
+		text-align: right;
+	}
+
+	.section-2 {
+		margin-top: 30px;
+	}
 </style>
