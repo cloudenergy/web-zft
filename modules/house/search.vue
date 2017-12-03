@@ -29,16 +29,6 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
-        <el-dialog title="房源信息" :visible.sync="modal.house" :append-to-body="true">
-            <add-modal ref="house" />
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="modal.house = false">取 消</el-button>
-                <el-button type="primary" @click="modal.house = false">确 定</el-button>
-            </div>
-        </el-dialog>
-        <el-dialog title="添加租户" :visible.sync="modal.contract" :append-to-body="true">
-            <new-contract ref="contract" :closeDialog="closeContract" />
-        </el-dialog>
     </div>
 </template>
 
@@ -64,10 +54,17 @@
     	methods: {
     		create(type) {
     			// this.modal.house = true;
-    			this.$modal.$emit('open', 'test');
+    			this.$modal.$emit('open', {
+    				comp: AddModal,
+    				title: '新增房源'
+    			});
     		},
     		createContract() {
     			this.modal.contract = true;
+    			this.$modal.$emit('open', {
+    				comp: NewContract,
+    				title: '新增合约'
+    			});
     		},
     		closeContract() {
     			this.modal.contract = false;

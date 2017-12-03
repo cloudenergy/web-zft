@@ -1,6 +1,6 @@
 <template>
-    <el-dialog :visible.sync="visible">
-        test
+    <el-dialog :visible.sync="visible" :title="title">
+        <div :is="body" ref="body"></div>
     </el-dialog>
 </template>
 
@@ -8,7 +8,9 @@
     export default {
     	data() {
     		return {
-    			visible: false
+    			visible: false,
+    			body: null,
+    			title: ''
     		};
     	},
     	created() {
@@ -20,9 +22,13 @@
     		dismiss: function() {
     			this.visible = false;
     		},
-    		open(comp) {
+    		submit() {
+    			this.$refs.body.$emit('submit');
+    		},
+    		open({ comp, title }) {
     			this.visible = true;
-    			console.log('comp: ', comp);
+    			this.body = comp;
+    			this.title = title;
     		}
     	}
     };
