@@ -10,8 +10,8 @@
             <ExpenseSetting :expense="form.expense"></ExpenseSetting>
 
         </el-form>
-		<div class="dialog-footer" slot="footer">
-			<el-button @click="closeDialog()">取 消</el-button>
+        <div class="dialog-footer" slot="footer">
+            <el-button @click="closeDialog()">取 消</el-button>
             <el-button type="primary" @click="submitForm('form')">创建租户</el-button>
         </div>
     </div>
@@ -23,109 +23,108 @@
     import ContractDetail from './ContractDetail.vue';
     import ExpenseSetting from './ExpenseSetting.vue';
 
-	import {addYears, format, getTime} from 'date-fns';
+    import { addYears, format, getTime } from 'date-fns';
 
-	export default {
-		props: {
-			closeDialog: {
-				type: Function,
-				required: true
-			}
-		},
-		data() {
-			const today = new Date();
-			return {
-				form: this.newModel(today)
-			};
-		},
-		methods: {
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						console.log('submit: ', this.translate(this.form));
-						this.$model('contracts').create(this.translate(this.form)).then((d) => {
-							console.log(d);
-							this.closeDialog();
-							this.resetForm();
-						});
-					} else {
-						console.log('error in submitting ...');
-						return false;
-					}
-				});
-			},
-			defaultStart(now) {
-				return format(now, 'YYYY-MM-DD');
-			},
-			defaultEnd(now) {
-				return format(addYears(now, 1), 'YYYY-MM-DD');
-			},
-			newModel(today) {
-				return {
-					user: {
-						name: '',
-						accountName: '',
-						mobile: '',
-						gender: 'M',
-						documentId: '',
-						documentType: 1
-					},
-					property: {
-						houseType: '1',
-						house: ''
-					},
-					contract: {
-						leaseStart: this.defaultStart(today),
-						leaseEnd: this.defaultEnd(today),
-						contractNumber: '',
-						signUpDate: this.defaultStart(today)
-					},
-					expense: {
-						billPlan: 'F',
-						offset: 2,
-						standard: {
-							id: 1,
-							name: '常规租金',
-							type: '2',
-							amount: 3600,
-							paymentMethod: '一月一付'
-						},
-						extra: [
-							{
-								id: 2,
-								name: '电费',
-								type: '2',
-								amount: 1.2,
-								paymentMethod: '预付费'
-							},
-							{
-								id: 3,
-								name: '水费',
-								type: 'water',
-								amount: 20,
-								paymentMethod: '随租金付'
-							}
-						],
-						bond: 2600
-					}
-				}
-			},
-			resetForm() {
-				this.form = this.newModel(new Date());
-			},
-			translate(form) {
-				return {
-					user: form.user,
-					"roomId": form.property.roomId,
-					"from": getTime(form.contract.leaseStart) / 1000,
-					"to": getTime(form.contract.leaseEnd) / 1000,
-					"strategy": "strategy",
-					"expenses": "expenses",
-					"paymentPlan": `${form.expense.billPlan}${form.expense.offset}`,
-					"signUpTime": getTime(form.contract.signUpDate) / 1000
-				}
-			}
-		},
+    export default {
+    	data() {
+    		const today = new Date();
+    		return {
+    			form: this.newModel(today)
+    		};
+    	},
+    	methods: {
+    		submitForm(formName) {
+    			this.$refs[formName].validate(valid => {
+    				if (valid) {
+    					console.log('submit: ', this.translate(this.form));
+    					this.$model('contracts')
+    						.create(this.translate(this.form))
+    						.then(d => {
+    							console.log(d);
+    							this.closeDialog();
+    							this.resetForm();
+    						});
+    				} else {
+    					console.log('error in submitting ...');
+    					return false;
+    				}
+    			});
+    		},
+    		closeDialog() {
+    			this.$modal.$emit('dismiss');
+    		},
+    		defaultStart(now) {
+    			return format(now, 'YYYY-MM-DD');
+    		},
+    		defaultEnd(now) {
+    			return format(addYears(now, 1), 'YYYY-MM-DD');
+    		},
+    		newModel(today) {
+    			return {
+    				user: {
+    					name: '',
+    					accountName: '',
+    					mobile: '',
+    					gender: 'M',
+    					documentId: '',
+    					documentType: 1
+    				},
+    				property: {
+    					houseType: '1',
+    					house: ''
+    				},
+    				contract: {
+    					leaseStart: this.defaultStart(today),
+    					leaseEnd: this.defaultEnd(today),
+    					contractNumber: '',
+    					signUpDate: this.defaultStart(today)
+    				},
+    				expense: {
+    					billPlan: 'F',
+    					offset: 2,
+    					standard: {
+    						id: 1,
+    						name: '常规租金',
+    						type: '2',
+    						amount: 3600,
+    						paymentMethod: '一月一付'
+    					},
+    					extra: [
+    						{
+    							id: 2,
+    							name: '电费',
+    							type: '2',
+    							amount: 1.2,
+    							paymentMethod: '预付费'
+    						},
+    						{
+    							id: 3,
+    							name: '水费',
+    							type: 'water',
+    							amount: 20,
+    							paymentMethod: '随租金付'
+    						}
+    					],
+    					bond: 2600
+    				}
+    			};
+    		},
+    		resetForm() {
+    			this.form = this.newModel(new Date());
+    		},
+    		translate(form) {
+    			return {
+    				user: form.user,
+    				roomId: form.property.roomId,
+    				from: getTime(form.contract.leaseStart) / 1000,
+    				to: getTime(form.contract.leaseEnd) / 1000,
+    				strategy: 'strategy',
+    				expenses: 'expenses',
+    				paymentPlan: `${form.expense.billPlan}${form.expense.offset}`,
+    				signUpTime: getTime(form.contract.signUpDate) / 1000
+    			};
+    		}
+    	},
     	components: {
     		UserProfile,
     		HouseProfile,
@@ -140,6 +139,6 @@
     	text-align: right;
     }
     .section-2 {
-        margin-top: 30px;
+    	margin-top: 30px;
     }
 </style>
