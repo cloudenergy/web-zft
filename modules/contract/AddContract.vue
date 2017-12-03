@@ -26,12 +26,6 @@
 	import {addYears, format, getTime} from 'date-fns';
 
 	export default {
-		props: {
-			closeDialog: {
-				type: Function,
-				required: true
-			}
-		},
 		data() {
 			const today = new Date();
 			return {
@@ -159,7 +153,11 @@
 						"interval": "1/2/3/6/12"
 					}
 				]
-			}
+			},
+            closeDialog() {
+				this.$refs['form'].resetFields();
+				this.$modal.$emit('dismiss');
+            }
 		},
     	components: {
     		UserProfile,

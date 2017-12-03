@@ -4,12 +4,7 @@ import {format} from 'date-fns';
 
 describe('AddContract', () => {
 	// Now mount the component, and you have the wrapper.
-	const wrapper = mount(AddContract, {
-		propsData: {
-			closeDialog() {
-			}
-		}
-	});
+	const wrapper = mount(AddContract);
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain(
