@@ -8,8 +8,8 @@
 				<div class="select-with-label el-input-group">
 					<span class="el-input-group__prepend">账单</span>
 					<el-select v-model="expense.billPlan" class="bill-plan prepend-label">
-						<el-option v-for="item in availablePlans" :label="item.name" :value="item.id"
-								   :key="item.id"></el-option>
+						<el-option v-for="item in availablePlans" :label="item.name" :value="item.plan"
+								   :key="item.plan"></el-option>
 					</el-select>
 				</div>
 			</el-col>
@@ -69,7 +69,7 @@
 		computed: {
 			dateRange() {
 				return _.range(1, 31).map(i => ({
-					value: `${i}`,
+					value: `0${i}`.slice(-2),
 					label: `${i}${this.unitOfDate}`
 				}))
 			},
@@ -77,28 +77,29 @@
 				return _.get(this.currentPlan, 'unit') || '天';
 			},
 			currentPlan() {
-				return _.find(this.availablePlans, p => p.id === this.expense.billPlan);
+				return _.find(this.availablePlans, p => p.plan === this.expense.billPlan);
 			}
 		},
 		data() {
 			return {
+				// (账单提前-02/账单固定+02/账单前一个月固定F03)
 				availablePlans: [
 					{
-						id: 1,
 						name: '开始前提前',
-						unit: '天'
+						unit: '天',
+						plan: '-'
 					}, {
-						id: 2,
 						name: '开始后固定',
-						unit: '号'
+						unit: '号',
+						plan: '+'
 					}, {
-						id: 3,
 						name: '开始前固定',
-						unit: '号'
+						unit: '号',
+						plan: 'F'
 					}, {
-						id: 4,
 						name: '开始前一个月固定',
-						unit: '号'
+						unit: '号',
+						plan: 'M'
 					},
 				]
 			}

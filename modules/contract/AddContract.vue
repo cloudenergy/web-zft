@@ -40,10 +40,9 @@
 		},
 		methods: {
 			submitForm(formName) {
-				console.log(formName);
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						console.log('submit: ', this.form);
+						console.log('submit: ', this.translate(this.form));
 						this.$model('contracts').create(this.translate(this.form)).then((d) => {
 							console.log(d);
 							this.closeDialog();
@@ -84,7 +83,7 @@
 						signUpDate: this.defaultStart(today)
 					},
 					expense: {
-						billPlan: 1,
+						billPlan: 'F',
 						offset: 2,
 						standard: {
 							id: 1,
@@ -124,7 +123,7 @@
 					"to": 2000,
 					"strategy": "strategy",
 					"expenses": "expenses",
-					"paymentPlan": "F03",
+					"paymentPlan": `${form.expense.billPlan}${form.expense.offset}`,
 					"signUpTime": 3000
 				}
 			}
