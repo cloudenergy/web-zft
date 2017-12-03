@@ -48,10 +48,8 @@
 							this.closeDialog();
 							this.resetForm();
 						});
-
 					} else {
 						console.log('error in submitting ...');
-						this.resetForm();
 						return false;
 					}
 				});
@@ -74,7 +72,7 @@
 					},
 					property: {
 						houseType: '1',
-						roomId: ''
+						house: ''
 					},
 					contract: {
 						leaseStart: this.defaultStart(today),
@@ -118,7 +116,7 @@
 			translate(form) {
 				return {
 					user: form.user,
-					"roomId": 23,
+					"roomId": form.property.roomId,
 					"from": getTime(form.contract.leaseStart) / 1000,
 					"to": getTime(form.contract.leaseEnd) / 1000,
 					"strategy": "strategy",
