@@ -23,7 +23,7 @@
     import ContractDetail from './ContractDetail.vue';
     import ExpenseSetting from './ExpenseSetting.vue';
 
-	import {addYears, format} from 'date-fns';
+	import {addYears, format, getTime} from 'date-fns';
 
 	export default {
 		props: {
@@ -74,7 +74,7 @@
 					},
 					property: {
 						houseType: '1',
-						house: ''
+						roomId: ''
 					},
 					contract: {
 						leaseStart: this.defaultStart(today),
@@ -119,12 +119,12 @@
 				return {
 					user: form.user,
 					"roomId": 23,
-					"from": 1000,
-					"to": 2000,
+					"from": getTime(form.contract.leaseStart) / 1000,
+					"to": getTime(form.contract.leaseEnd) / 1000,
 					"strategy": "strategy",
 					"expenses": "expenses",
 					"paymentPlan": `${form.expense.billPlan}${form.expense.offset}`,
-					"signUpTime": 3000
+					"signUpTime": getTime(form.contract.signUpDate) / 1000
 				}
 			}
 		},
