@@ -8,7 +8,7 @@
 				<el-form-item
 						prop="contract.leaseStart"
 						:rules="[
-      						{ required: true, message: '请输入租期开始时间', trigger: 'blur' }
+      						{ required: true, message: '请输入租期开始时间', trigger: 'blur', type: 'date' }
     					]">
 					<div class="select-with-label el-input-group">
 						<span class="el-input-group__prepend">范围</span>
@@ -23,7 +23,7 @@
 				<el-form-item
 						prop="contract.leaseEnd"
 						:rules="[
-      						{ required: true, message: '请输入租期结束时间', trigger: 'blur' }
+      						{ required: true, message: '请输入租期结束时间', trigger: 'blur', type: 'date' }
     					]">
 					<el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间"
 									:picker-options="endOptions">
@@ -46,7 +46,7 @@
 					<el-form-item
 							prop="contract.signUpDate"
 							:rules="[
-							{ required: true, message: '请输入签约时间', trigger: 'blur' }
+								{ required: true, message: '请输入签约时间', trigger: 'blur', type: 'date' }
     					]">
 						<div class="select-with-label el-input-group">
 							<span class="el-input-group__prepend">签约日期</span>
@@ -135,13 +135,5 @@
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
-	}
-
-	.section-label {
-		margin-top: 3px;
-	}
-
-	.el-row {
-		margin-bottom: 18px;
 	}
 </style>
