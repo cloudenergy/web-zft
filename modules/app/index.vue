@@ -6,6 +6,7 @@
         <div class="main">
             <slot />
         </div>
+        <app-modal ref="modal"></app-modal>
     </div>
 </template>
 <script>

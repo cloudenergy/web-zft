@@ -11,7 +11,7 @@
     export default {
     	data() {
     		return {
-    			links: [{ url: '/devices', text: '设备' }]
+    			links: [{ url: '/devices', text: '仪表管理' }]
     		};
     	}
     };

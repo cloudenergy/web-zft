@@ -1,5 +1,5 @@
 <template>
-    <div class="page flow">
+    <div class="page reports">
         <el-table :data="tableData" style="width: 100%" border>
             <el-table-column prop="date" label="日期" width="180"></el-table-column>
             <el-table-column prop="date" label="日期" width="180"></el-table-column>

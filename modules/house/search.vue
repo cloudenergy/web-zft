@@ -63,7 +63,8 @@
     	},
     	methods: {
     		create(type) {
-    			this.modal.house = true;
+    			// this.modal.house = true;
+    			this.$modal.$emit('open', 'test');
     		},
     		createContract() {
     			this.modal.contract = true;
