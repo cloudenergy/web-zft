@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-14 09:54:50 
  * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-14 14:26:44
+ * @Last Modified time: 2017-12-04 12:27:27
  * 
  * globla mixins
  */
@@ -52,10 +52,10 @@ function makeGetterFn(body) {
 
 export default function(vue) {
 	/**
-   * 添加简单的 keypath 获取 实例值方法
-   * @param  {string} key vue实例中data 属性的 keypath - 'a.b.c', 暂不支持以 [] 开头的表达式
-   * @return {string|object}
-   */
+	 * 添加简单的 keypath 获取 实例值方法
+	 * @param  {string} key vue实例中data 属性的 keypath - 'a.b.c', 暂不支持以 [] 开头的表达式
+	 * @return {string|object}
+	 */
 	vue.prototype.$get = function(key) {
 		// 解析表达式，并返回一个包含get方法的对象。
 		var res = parseExpression(key);

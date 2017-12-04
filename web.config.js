@@ -2,7 +2,8 @@ module.exports = {
 	proxy: {
 		'/api': {
 			target:
-			process.env['ZFT_BACKEND_PROXY'] || 'http://mock.doctorwork.com/mock/5a0e40653dea15470360bc0b/zft',
+				process.env['ZFT_BACKEND_PROXY'] ||
+				'https://www.easy-mock.com/mock/5a24e0bf3e6a031cd2836bd0/zft',
 			pathRewrite: {
 				'^/api': ''
 			},
