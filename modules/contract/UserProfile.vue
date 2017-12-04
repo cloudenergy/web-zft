@@ -31,10 +31,7 @@
 			</el-col>
 			<el-col :span="8">
 				<el-form-item
-						prop="user.mobile"
-						:rules="[
-      						{ required: true, message: '请输入手机号', trigger: 'blur' }
-    					]">
+						prop="user.mobile">
 					<el-input class="form-input"
 							  placeholder="选填"
 							  v-model="user.mobile">

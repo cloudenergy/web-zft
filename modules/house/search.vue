@@ -65,9 +65,6 @@
     				comp: NewContract,
     				title: '新增合约'
     			});
-    		},
-    		closeContract() {
-    			this.modal.contract = false;
     		}
     	}
     };
