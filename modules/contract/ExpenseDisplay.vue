@@ -2,7 +2,9 @@
 	<div class="expense-display wrapper">
 		<el-row>
 			<el-col :span="12">
-				<el-input placeholder="" v-model="expense.amount">
+				<el-input placeholder=""
+						  v-model="expense.amount"
+						  prefix-icon="el-icon-rank">
 					<template slot="prepend">{{expense.name}}</template>
 				</el-input>
 			</el-col>

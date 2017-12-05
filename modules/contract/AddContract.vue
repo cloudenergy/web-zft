@@ -177,3 +177,11 @@
 		margin-top: 30px;
 	}
 </style>
+
+<style lang="less">
+	.add-contract.modal {
+		.el-input-group__prepend {
+			min-width: 88px;
+		}
+	}
+</style>
