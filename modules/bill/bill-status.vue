@@ -1,7 +1,7 @@
 <template>
 	<div class="top-nav">
 		<div class="links">
-			<el-menu class="el-menu-status" mode="horizontal" default-active="progressing" @select="handleSelect">
+			<el-menu class="el-menu-status bill-menu" mode="horizontal" default-active="progressing" @select="handleSelect">
 				<el-menu-item index="progressing">未完成</el-menu-item>
 				<el-menu-item index="finished">已完成</el-menu-item>
 			</el-menu>
@@ -22,5 +22,8 @@
 </script>
 
 <style lang="less" scoped>
-
+	.bill-menu>li{
+		height:40px;
+		line-height:40px;
+	}
 </style>

@@ -1,0 +1,311 @@
+<template>
+	<div>
+		<el-table :data="tableData" style="width: 100%">
+			<el-table-column label="姓名" width="120">
+				<template slot-scope="scope">
+					<div slot="reference" class="name-wrapper">
+						<span size="medium">{{ scope.row.name }}
+							<el-popover trigger="hover" placement="top">
+								<p>{{ scope.row.phone }}</p>
+								<span slot="reference" class="name-wrapper">
+									<i class="el-icon-phone"></i>
+								</span>
+						</el-popover>
+						</span>
+						<p style="margin-left: 10px">{{ scope.row.phone }}</p>
+					</div>
+				</template>
+			</el-table-column>
+			<el-table-column label="房源/租期">
+				<template slot-scope="scope">
+					<el-popover trigger="hover" placement="top">
+						<p>Name: {{ scope.row.name }}</p>
+						<p>Addr: {{ scope.row.address }}</p>
+						<div slot="reference" class="name-wrapper">
+							<el-tag size="medium">{{ scope.row.address }}</el-tag>
+						</div>
+					</el-popover>
+				</template>
+			</el-table-column>
+			<el-table-column label="租金" width="240">
+				<template slot-scope="scope">
+					<div class="flexcenter">
+						<div class="name-wrapper">
+							<span>￥{{ scope.row.rentalMounthMoney }}元/月&nbsp;×&nbsp;</span>
+							<span>{{ scope.row.rentalYear }}年</span>
+							<div class="rent-bottom">
+								<span>￥{{ scope.row.rentcash }}/押</span>
+								<span>&nbsp;&nbsp;{{scope.row.rentakMounthpay}}月一付</span>
+							</div>
+						</div>
+						<div class="rentMoneyshow">
+							<el-dropdown>
+								<span class="el-dropdown-link cursorp">
+									查看<i class="el-icon-caret-bottom el-icon--right"></i>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item v-for="item in list1" :key="item.value" @click.native="rentuser(scope.$index,item.value)">{{item.showlist}}</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>&nbsp;|&nbsp;
+							<el-dropdown>
+								<span class="el-dropdown-link cursorp">
+									续租<i class="el-icon-caret-bottom el-icon--right"></i>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item v-for="item in list2" :key="item.value">{{item.showlist}}</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
+						</div>
+					</div>
+				</template>
+			</el-table-column>
+			<el-table-column label="账号/余额(¥)" width="110">
+				<template slot-scope="scope">
+					<div class="flexcenter" v-if="scope.row.rent!=0">
+						<p style="margin-left: 10px">{{ scope.row.rent }}</p>
+						<el-dropdown>
+							<span class="el-dropdown-link cursorp">
+							查看<i class="el-icon-caret-bottom el-icon--right"></i>
+						</span>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item>催交</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+					</div>
+
+				</template>
+			</el-table-column>
+		</el-table>
+		<el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" :before-close="handleClose" class="">
+			<div class="flexc rgbc">
+				<div class="setborder">
+					<div class="flexdirection botborder">
+						<img src="" alt="" style="width:100px;height:100px;">
+						<p>{{userinfo.id}}</p>
+						<p>{{userinfo.money}}</p>
+					</div>
+					<div class="userinfobot">
+						<div>
+							<p>姓名</p>
+							<p>{{userinfo.name}}</p>
+						</div>
+						<div>
+							<p>性别</p>
+							<p>{{userinfo.sex}}</p>
+						</div>
+						<div>
+							<p>身份证号</p>
+							<p>{{userinfo.idcardnum}}</p>
+						</div>
+						<div>
+							<p>手机号</p>
+							<p>{{userinfo.phonenum}}</p>
+						</div>
+						<div class="others"></div>
+					</div>
+				</div>
+				<div style="width:100%;margin-left:30px;">
+					<div class="flexc dialog">
+						<div @click="changeuserinfo(1)" class="cursorp">租户详情</div>
+						<div @click="changeuserinfo(2)" class="cursorp">租约信息</div>
+						<div class="menu-right">
+							<div class="flexcenter">
+								<span @click="changeuserinfo(3)" class="cursorp">费用清单</span>
+								<div v-if="showinf==3" class="flexc menu-rightthree cursorpoin">
+									<div @click="changeuseri(1)">仪表代扣</div>
+									<div @click="changeuseri(2)">租约扣费</div>
+									<div @click="changeuseri(3)">充值扣费</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<Rentinfo v-if="showinf==1" />
+					<Rentmessasge v-if="showinf==2" />
+					<Rentmoney v-if="showinf==3&&showmoney==1" />
+					<Rentlease v-if="showinf==3&&showmoney==2" />
+					<Rentsendmoney v-if="showinf==3&&showmoney==3" />
+				</div>
+			</div>
+			<span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+            </span>
+		</el-dialog>
+	</div>
+</template>
+
+<script>
+	import {
+		Rentinfo,
+		Rentlease,
+		Rentmessasge,
+		Rentmoney,
+		Rentsendmoney
+	} from '../userinfo';
+	export default {
+		components: {
+			Rentinfo,
+			Rentlease,
+			Rentmessasge,
+			Rentmoney,
+			Rentsendmoney
+		},
+		data() {
+			return {
+				dialogVisible: false,
+				dialogTitle: '详细信息',
+				showinf: '1',
+				showmoney: '1',
+				list1: [{
+						showlist: '租户详情',
+						value: 1
+					},
+					{
+						showlist: '租约信息',
+						value: 2
+					},
+					{
+						showlist: '费用清单',
+						value: 3
+					}
+				],
+				list2: [{
+						showlist: '续租',
+						value: 1
+					},
+					{
+						showlist: '删除',
+						value: 2
+					},
+					{
+						showlist: '预览',
+						value: 3
+					}
+				],
+				userinfo: {
+					id:110,
+					money: 119,
+					name:'zhangsan',
+					sex:'1',
+					idcardnum:'8769876987689768796',
+					phonenum:868768768
+				},
+				tableData: [{
+						overdue: '逾期63天',
+						date: '2016-05-03',
+						name: '郭德纲',
+						rent: 0,
+						phone: '1300000001',
+						rentDesc: '租金6期',
+						address: '朝晖三区·2栋2单元201室·B2017-07-01 → 2017-07-31',
+						rentalMounthMoney: '2000',
+						rentalYear: '2',
+						rentcash: '2000',
+						rentakMounthpay: '3'
+					},
+					{
+						overdue: '逾期62天',
+						date: '2016-05-02',
+						name: '老刘',
+						rent: 122,
+						rentDesc: '押金',
+						phone: '1300000002',
+						address: '龙湖滟澜山·8栋2单元203室·G2017-08-01 → 2017-08-20',
+						rentalMounthMoney: '2000',
+						rentalYear: '2',
+						rentcash: '2000',
+						rentakMounthpay: '3'
+					},
+					{
+						overdue: '逾期61天',
+						date: '2016-05-04',
+						name: '冰儿',
+						rent: 2200,
+						rentDesc: '租金11期',
+						phone: '1300000003',
+						address: '朝晖三区·3栋3单元301室·改哎的名字2017-08-22 → 2017-11-21',
+						rentalMounthMoney: '2000',
+						rentalYear: '2',
+						rentcash: '2000',
+						rentakMounthpay: '3'
+					},
+					{
+						overdue: '',
+						date: '2016-05-01',
+						name: '不是整天 ',
+						rent: 200,
+						rentDesc: '押金',
+						phone: '1300000004',
+						address: '保利香槟国际·2栋2单元2室·这个名字很长啊这个字啊这个名字很长啊这个名字很长啊这个名字很长啊2017-10-12 → 2018-04-11',
+						rentalMounthMoney: '2000',
+						rentalYear: '2',
+						rentcash: '2000',
+						rentakMounthpay: '3'
+					}
+				]
+			};
+		},
+		methods: {
+			handleClose(done) {
+				this.$confirm('Are you sure to close this dialog?')
+					.then(() => {
+						done();
+					})
+					.catch(() => {});
+			},
+			rentuser() {
+				this.dialogVisible = true;
+			},
+			changeuserinfo(data) {
+				this.showinf = data;
+				console.log(this.showinf)
+			},
+			changeuseri(data) {
+				this.showmoney = data;
+				console.log(this.showmoney)
+			}
+		}
+	};
+</script>
+
+
+<style lang="less" scoped>
+	.rent-bottom {
+		color: #aaa
+	}
+
+	.rentMoneyshow {
+		font-size: 12px;
+		i.el-icon--right {
+			margin-left: 0;
+		}
+	}
+
+	.dialog>div {
+		margin-right: 50px;
+	}
+
+	.menu-right {
+		flex: 1
+	}
+
+	.menu-rightthree div {
+		margin-left: 15px;
+	}
+	// .textcenter{
+	// 	text-aline: center;
+	// }
+	.setborder{
+		border:1px solid #ddd;
+		width:200px;
+		.botborder{
+			border-bottom:1px solid #ddd;
+		}
+		.others{
+			height:100px;
+		}
+	}
+	.userinfobot>div:first-child{
+		margin-top:16px;
+	}
+</style>

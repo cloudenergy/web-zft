@@ -41,6 +41,7 @@
 							console.log(d);
 							this.closeDialog();
 							this.resetForm();
+							this.successmessage();
 						});
 					} else {
 						console.log('error in submitting ...');
@@ -157,6 +158,12 @@
 			closeDialog() {
 				this.$refs['form'].resetFields();
 				this.$modal.$emit('dismiss');
+			},
+			successmessage() {
+				this.$message({
+          		message: '恭喜你，这是一条成功消息',
+          		type: 'success'
+        		});
 			}
 		},
 		components: {

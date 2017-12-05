@@ -6,7 +6,7 @@
 			</div>
 		</el-aside>
 		<el-container>
-			<el-header>
+			<el-header style="height:auto">
 				<div class="ops-bills">
 					<BillStatus class="status"/>
 					<BillType class="bill-type"/>
@@ -64,7 +64,7 @@
 	}
 
 	.ops-bills {
-		margin-bottom: 20px;
+		// margin-bottom: 20px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -78,11 +78,11 @@
 	}
 
 	.actions {
-		margin-top: 10px;
+		// margin-top: 10px;
 		margin-left: 10px;
 	}
 
-	.result-info {
-		padding-top: 10px;
+	.el-select.select{
+		margin-top: 0;
 	}
 </style>

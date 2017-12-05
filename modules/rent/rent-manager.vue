@@ -1,5 +1,5 @@
 <template>
-	<el-select v-model="billType" size="mini" filterable placeholder="类型" class="select">
+	<el-select v-model="manager" size="mini" filterable placeholder="管理" class="select">
 		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 		</el-option>
 	</el-select>
@@ -10,19 +10,19 @@
 			return {
 				options: [
 					{
-						value: 'all',
-						label: '全部'
+						value: 'laojiang',
+						label: '老蒋'
 					},
 					{
-						value: 'prepaid',
-						label: '租约'
+						value: 'laowang',
+						label: '老王'
 					},
 					{
-						value: 'postpaid',
-						label: '记账'
+						value: 'laozhang',
+						label: '老张'
 					}
 				],
-				billType: 'all'
+				manager: 'laojiang'
 			};
 		}
 	};
@@ -30,7 +30,7 @@
 
 <style lang="less" scoped>
 	.select {
-		margin-left: 10px;
+		margin-left: 30px;
 		// margin-top: 10px;
 	}
 </style>
