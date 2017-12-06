@@ -1,11 +1,11 @@
 <template>
     <div class="userinfoi" style="font-size:12px">
-        <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
+        <el-form ref="form" :model="form" label-width="88px" :label-position="labelPosition">
             <el-form-item label="姓名" style="font-size:12px" class="test" label-fontSize="12px">
-                <el-input v-model="form.name" class="inputuser"></el-input>
+                <el-input v-model="userrentinfo.name" class="inputuser"></el-input>
             </el-form-item>
             <el-form-item label="电话" style="font-size:12px">
-                <el-input v-model="form.phonenum" class="inputuser"></el-input>
+                <el-input v-model="userrentinfo.phone" class="inputuser"></el-input>
             </el-form-item>
             <el-form-item label="性别" style="font-size:12px">
                 <el-row>
@@ -24,16 +24,21 @@
                     <el-option v-for="t in idTypes" :label="t.name" :value="t.id" :key="t.id"></el-option>
                 </el-select>
             </el-col>
-            <el-input v-model="form.idcard" class="inputuser"></el-input>
+            <el-input v-model="userrentinfo.rentcash" class="inputuser"></el-input>
         </el-form>
+        <el-button type="primary" @click="updateuser()" style="margin-top:15px;margin-left:116px;">更改</el-button>
     </div>
 </template>
 
 <script>
-    import {
-        Userprofile
-    } from './index.js';
+    import { Userprofile } from './index.js';
+
     export default {
+        props:{
+            userrentinfo:{
+                type:Object
+            }
+        },
         components: {
             Userprofile
         },
@@ -77,6 +82,9 @@
         methods: {
             onSubmit() {
                 console.log('submit!');
+            },
+            updateuser(){
+                console.log(this.userrentinfo)
             }
         }
     }
