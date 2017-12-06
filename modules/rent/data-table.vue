@@ -52,7 +52,7 @@
 									续租<i class="el-icon-caret-bottom el-icon--right"></i>
 								</span>
 								<el-dropdown-menu slot="dropdown">
-									<el-dropdown-item v-for="item in list2" :key="item.value">{{item.showlist}}</el-dropdown-item>
+									<el-dropdown-item v-for="item in list2" :key="item.value" @click.native="rentuser2(scope.$index,item.value)">{{item.showlist}}</el-dropdown-item>
 								</el-dropdown-menu>
 							</el-dropdown>
 						</div>
@@ -65,10 +65,11 @@
 						<p style="margin-left: 10px">{{ scope.row.rent }}</p>
 						<el-dropdown>
 							<span class="el-dropdown-link cursorp">
-							查看<i class="el-icon-caret-bottom el-icon--right"></i>
+							充值<i class="el-icon-caret-bottom el-icon--right"></i>
 						</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item>催交</el-dropdown-item>
+								<el-dropdown-item>充值</el-dropdown-item>
+								<el-dropdown-item @click.native="callmo()">催交</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
@@ -76,7 +77,9 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" :before-close="handleClose" class="">
+		<!-- 租户详情信息清单 -->
+		<el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="65%" :before-close="handleClose" class="">
+			<div></div>
 			<div class="flexc rgbc">
 				<div class="setborder">
 					<div class="flexdirection botborder">
@@ -105,12 +108,12 @@
 					</div>
 				</div>
 				<div style="width:100%;margin-left:30px;">
-					<div class="flexc dialog">
-						<div @click="changeuserinfo(1)" class="cursorp">租户详情</div>
-						<div @click="changeuserinfo(2)" class="cursorp">租约信息</div>
+					<div class="flexc dialog" style="color:#aaa">
+						<div @click="changeuserinfo(1)" class="cursorp" v-bind:class="{'active':'showinf===1'}">租户详情</div>
+						<div @click="changeuserinfo(2)" class="cursorp" :class="{'active':'showinf===2'}">租约信息</div>
 						<div class="menu-right">
 							<div class="flexcenter">
-								<span @click="changeuserinfo(3)" class="cursorp">费用清单</span>
+								<span @click="changeuserinfo(3)" class="cursorp" :class="{'active':'showinf==3'}">费用清单</span>
 								<div v-if="showinf==3" class="flexc menu-rightthree cursorpoin">
 									<div @click="changeuseri(1)">仪表代扣</div>
 									<div @click="changeuseri(2)">租约扣费</div>
@@ -119,6 +122,9 @@
 							</div>
 						</div>
 					</div>
+					<div v-if="showinf==1" class="triangle cursorfir">基本信息</div>
+					<div v-if="showinf==2" class="triangle cursorsec">合同信息</div>
+					<div v-if="showinf==3" class="triangle cursorthi">账单信息</div>
 					<Rentinfo v-if="showinf==1" />
 					<Rentmessasge v-if="showinf==2" />
 					<Rentmoney v-if="showinf==3&&showmoney==1" />
@@ -127,9 +133,16 @@
 				</div>
 			</div>
 			<span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+                <el-button @click="dialogVisible = false;showinf=showmoney=1">取消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确定</el-button>
             </span>
+		</el-dialog>
+		<!-- 用户信息预览 -->
+		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%" :before-close="handleClose">
+			<Showrent/>
+			<div style="height:30px">
+				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button> 
+			</div>
 		</el-dialog>
 	</div>
 </template>
@@ -140,7 +153,9 @@
 		Rentlease,
 		Rentmessasge,
 		Rentmoney,
-		Rentsendmoney
+		Rentsendmoney,
+		Relet,
+		Showrent
 	} from '../userinfo';
 	export default {
 		components: {
@@ -148,12 +163,18 @@
 			Rentlease,
 			Rentmessasge,
 			Rentmoney,
-			Rentsendmoney
+			Rentsendmoney,
+			Relet,
+			Showrent
 		},
 		data() {
 			return {
 				dialogVisible: false,
 				dialogTitle: '详细信息',
+				dialogVisible2: false,
+				dialogTitle2: '用户续租',
+				dialogVisible3: false,
+				dialogTitle3: '预览租客合同',
 				showinf: '1',
 				showmoney: '1',
 				list1: [{
@@ -253,16 +274,61 @@
 					})
 					.catch(() => {});
 			},
-			rentuser() {
+			rentuser(index,value) {
 				this.dialogVisible = true;
+				this.showinf = value;
+			},
+			rentuser2(index,value){
+				if(value==1){
+					// 打开续租页面
+					this.$modal.$emit('open', {
+    				comp: Relet,
+    				title: '新增房源'
+				});
+				// 删除租户
+				}else if(value==2){
+					this.$confirm('此操作将删除该租户, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+					}).then(() => {
+					this.$message({
+						type: 'success',
+						message: '删除成功!'
+						});
+					}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+						});          
+					});
+				}else{
+					this.dialogVisible3 = true;
+				}
 			},
 			changeuserinfo(data) {
 				this.showinf = data;
-				console.log(this.showinf)
 			},
 			changeuseri(data) {
 				this.showmoney = data;
-				console.log(this.showmoney)
+			},
+			callmo(){
+				console.log(1)
+				this.$confirm('将要使用短信t通知租户, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+					}).then(() => {
+					this.$message({
+						type: 'success',
+						message: '提醒成功!'
+						});
+					}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '取消提醒'
+						});          
+					});
 			}
 		}
 	};
@@ -307,5 +373,44 @@
 	}
 	.userinfobot>div:first-child{
 		margin-top:16px;
+	}
+	.triangle{
+		line-height: 40px;
+		background-color: #f5f7fa;
+		margin: 10px 0;
+		position: relative;
+	}
+	.triangle:before{
+		content:'';
+		width: 20px;
+		height: 40px;
+		background-color: #f5f7fa;
+		display: inline-block;
+		position: absolute;
+		top:0;
+		left: -20px;
+	}
+	.triangle:after{
+		content:'';
+		width: 0;
+		height: 0;
+		border-right: 12px solid transparent;
+		border-bottom: 12px solid #f5f7fa;
+		border-left: 12px solid transparent;
+		display: block;
+		position: absolute;
+		top:-12px;
+	}
+	// .triangle:nth-child(1):after{
+	// 	left:10px;
+	// }
+	.cursorfir:after{
+		left:14px
+	}
+	.cursorsec:after{
+		left:120px
+	}
+	.cursorthi:after{
+		left:226px
 	}
 </style>

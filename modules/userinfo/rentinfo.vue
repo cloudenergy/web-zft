@@ -1,13 +1,13 @@
 <template>
-    <div class="userinfoi">
+    <div class="userinfoi" style="font-size:12px">
         <el-form ref="form" :model="form" label-width="80px" :label-position="labelPosition">
-            <el-form-item label="姓名">
+            <el-form-item label="姓名" style="font-size:12px" class="test" label-fontSize="12px">
                 <el-input v-model="form.name" class="inputuser"></el-input>
             </el-form-item>
-            <el-form-item label="电话">
+            <el-form-item label="电话" style="font-size:12px">
                 <el-input v-model="form.phonenum" class="inputuser"></el-input>
             </el-form-item>
-            <el-form-item label="xingbie">
+            <el-form-item label="性别" style="font-size:12px">
                 <el-row>
                     <el-col :span="8">
                         <div class="select-with-label el-input-group">
@@ -91,6 +91,9 @@
     }
 
     .userinfoi {
-        margin-top: 20px;
+        margin-top: 5px;
+    }
+    .test>label{
+        font-size: 12px;
     }
 </style>
