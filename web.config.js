@@ -3,7 +3,7 @@ module.exports = {
 		'/api': {
 			target:
 				process.env['ZFT_BACKEND_PROXY'] ||
-				'https://www.easy-mock.com/mock/5a24e0bf3e6a031cd2836bd0/zft',
+				'http://testzft.cloudenergy.me/api',
 			pathRewrite: {
 				'^/api': ''
 			},

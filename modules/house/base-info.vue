@@ -23,7 +23,8 @@
     			type: Object,
     			default() {
     				return {
-    					rentType: 1
+    					rentType: 'sole',
+    					code: ''
     				};
     			}
     		}

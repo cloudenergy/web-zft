@@ -5,6 +5,7 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     export default {
     	data() {
     		return {
@@ -22,12 +23,14 @@
     		dismiss: function() {
     			this.visible = false;
     		},
-    		submit() {
-    			this.$refs.body.$emit('submit');
-    		},
-    		open({ comp, title }) {
+    		open({ comp, title, data }) {
+    			const Comp = comp;
+    			this.body = {
+    				render(h) {
+    					return <Comp {...{ props: data }} />;
+    				}
+    			};
     			this.visible = true;
-    			this.body = comp;
     			this.title = title;
     		}
     	}
