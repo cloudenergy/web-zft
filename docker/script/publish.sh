@@ -9,5 +9,6 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-docker build . -t $REPO:$1 && \
+npm run build -- --env=production && \
+docker build -f docker/Dockerfile . -t $REPO:$1 && \
 docker push $REPO:$1
