@@ -2,11 +2,12 @@
 
 set -e
 
+REPO=registry.cn-hangzhou.aliyuncs.com/em_test/web-zft
+
 if [ $# -lt 1 ]; then
   echo "Usage: ./publish.sh <docker image version>"
   exit 1
 fi
 
-npm run build -- --env=production && \
-docker build -f docker/Dockerfile . -t kpse/web-zft:$1 && \
-docker push kpse/web-zft:$1
+docker build . -t $REPO:$1 && \
+docker push $REPO:$1

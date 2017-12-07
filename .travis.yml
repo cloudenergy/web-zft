@@ -27,6 +27,6 @@ addons:
 deploy:
   provider: script
   skip_cleanup: true
-  script: chmod 600 $KEY_PATH && ssh -o StrictHostKeyChecking=no -i $KEY_PATH $DEPLOY_USER@$HOST "./deploy.sh v$TRAVIS_BUILD_NUMBER"
+  script: chmod 600 $KEY_PATH && ssh -o StrictHostKeyChecking=no -i $KEY_PATH $DEPLOY_USER@$HOST "docker login -u $DOCKER_USER -p $DOCKER_PASS registry.cn-hangzhou.aliyuncs.com && ./deploy.sh v$TRAVIS_BUILD_NUMBER"
   on:
     branch: develop
