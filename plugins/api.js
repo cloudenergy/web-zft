@@ -27,7 +27,7 @@ switch (process.env.NODE_ENV) {
 setup({
 	baseURL,
 	headers: {
-		"content-type": "application/json"
+		'content-type': 'application/json'
 	}
 });
 
@@ -36,9 +36,12 @@ const interceptor = function(res) {
 	// 显示错误
 	// return Promise.reject(res.message);
 };
-const [get, post, put, del] = [makeGet, makePost, makePut, makeDelete].map(
-	action => decorateMaker(action, interceptor)
-);
+const [get, post, put, del] = [
+	makeGet,
+	makePost,
+	makePut,
+	makeDelete
+].map(action => decorateMaker(action, interceptor));
 
 const resource = (url, actions) => {
 	return makeResource(url, actions, {

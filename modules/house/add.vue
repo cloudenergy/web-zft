@@ -11,7 +11,7 @@
                     <el-input v-model="form.name" auto-complete="off"></el-input>
                 </el-form-item>
             </div>
-            <room-layout></room-layout>
+            <room-layout v-model="form.houseType[0]"></room-layout>
             <building-floor v-if="form.rentType==3"></building-floor>
             <h3>房源配置</h3>
             <house-facility class="checkboxes" v-model="form.facilities"></house-facility>
@@ -26,17 +26,29 @@
 <script>
     import BaseInfo from './base-info';
     export default {
+    	props: {
+    		item: {
+    			type: Object
+    		}
+    	},
     	data() {
     		return {
     			form: {
+    				address: '',
+    				name: '',
     				rentType: 1,
     				belongs: '',
-    				type: []
+    				type: [],
+    				houseType: [{}]
     			}
     		};
     	},
     	components: {
     		BaseInfo
+    	},
+    	created() {
+    		Object.assign(this.form, this.item);
+    		console.log('form: ', this.form);
     	},
     	methods: {
     		mergeBaseInfo(val) {
@@ -46,7 +58,12 @@
     			this.$modal.$emit('dismiss');
     		},
     		save() {
-    			this.$modal.$emit('dismiss');
+    			const data = {
+    				projectId: this.$store.state.user.projectId,
+    				...this.form
+    			};
+    			console.log('this form : ', data);
+    			// this.$modal.$emit('dismiss');
     		}
     	}
     };

@@ -53,9 +53,13 @@
     	},
     	methods: {
     		create(type) {
-    			// this.modal.house = true;
     			this.$modal.$emit('open', {
     				comp: AddModal,
+    				data: {
+    					item: {
+    						name: 'test'
+    					}
+    				},
     				title: '新增房源'
     			});
     		},

@@ -2,13 +2,13 @@
     <div class="group">
         <el-form-item label="户型">
             <div class="inputs">
-                <el-input v-model="form.r">
+                <el-input v-model="houseType.bedRoom">
                     <template slot="append">室</template>
                 </el-input>
-                <el-input v-model="form.l">
+                <el-input v-model="houseType.livingRoom">
                     <template slot="append">厅</template>
                 </el-input>
-                <el-input v-model="form.b">
+                <el-input v-model="houseType.bathRoom">
                     <template slot="append">卫</template>
                 </el-input>
             </div>
@@ -22,18 +22,22 @@
     		rentType: {
     			type: Number,
     			default: 1
-    		}
-    	},
-    	computed: {
-    		form() {
-    			return this.rentType > 1
-    				? { r: 1, l: 1, b: 1 }
-    				: { r: 2, l: 1, b: 1 };
+    		},
+    		houseType: {
+    			type: Object,
+    			default() {
+    				return {
+    					bedRoom: 2,
+    					livingRoom: 1,
+    					bathRoom: 1
+    				};
+    			}
     		}
     	},
     	watch: {
     		form(val) {
     			this.$emit('input', val);
+    			console.log('val: ', val);
     		}
     	}
     };

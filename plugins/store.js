@@ -11,7 +11,7 @@ export default {
 	state: {
 		user: {
 			id: '',
-			projectId: ''
+			projectId: '980488f9adfasdf'
 		},
 		city_area: {}
 	},
