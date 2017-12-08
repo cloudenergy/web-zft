@@ -2,7 +2,13 @@
     <div>
         <div class="block">
             <span class="demonstration">起租/退租</span>
-            <el-date-picker disabled v-model="value3" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" class="startEND">
+            <el-date-picker 
+            disabled v-model="value3" 
+            type="datetimerange" 
+            range-separator="至" 
+            start-placeholder="开始日期" 
+            end-placeholder="结束日期" 
+            class="startEND">
             </el-date-picker>
         </div>
         <el-form ref="form" :model="form" label-width="120px" :label-position="labelPosition">
@@ -34,10 +40,15 @@
 
 <script>
     export default {
+        // props: {
+        //     form: {
+        //         type: Object
+        //     }
+        // },
         data() {
             return {
                 labelPosition: 'left',
-                value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+                value3: [new Date(1510326577), new Date(1510326577)],
                 form: {
                     name: '123元/月',
                     timemoney: '账单开始前',

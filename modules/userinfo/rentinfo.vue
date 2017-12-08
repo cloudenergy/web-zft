@@ -2,16 +2,16 @@
     <div class="userinfoi" style="font-size:12px">
         <el-form ref="form" :model="form" label-width="88px" :label-position="labelPosition">
             <el-form-item label="姓名" style="font-size:12px" class="test" label-fontSize="12px">
-                <el-input v-model="userrentinfo.name" class="inputuser"></el-input>
+                <el-input v-model="form.user.name" class="inputuser"></el-input>
             </el-form-item>
             <el-form-item label="电话" style="font-size:12px">
-                <el-input v-model="userrentinfo.phone" class="inputuser"></el-input>
+                <el-input v-model="form.user.mobile" class="inputuser"></el-input>
             </el-form-item>
             <el-form-item label="性别" style="font-size:12px">
                 <el-row>
                     <el-col :span="8">
                         <div class="select-with-label el-input-group">
-                            <el-select v-model="form.gender" class="gender prepend-label">
+                            <el-select v-model="form.user.gender" class="gender prepend-label">
                                 <el-option label="男" value="M"></el-option>
                                 <el-option label="女" value="F"></el-option>
                             </el-select>
@@ -20,23 +20,25 @@
                 </el-row>
             </el-form-item>
             <el-col :span="3">
-                <el-select v-model="form.documentType" class="id-type">
+                <el-select v-model="form.user.documentType" class="id-type">
                     <el-option v-for="t in idTypes" :label="t.name" :value="t.id" :key="t.id"></el-option>
                 </el-select>
             </el-col>
-            <el-input v-model="userrentinfo.rentcash" class="inputuser"></el-input>
+            <el-input v-model="form.user.documentId" class="inputuser"></el-input>
         </el-form>
         <el-button type="primary" @click="updateuser()" style="margin-top:15px;margin-left:116px;">更改</el-button>
     </div>
 </template>
 
 <script>
-    import { Userprofile } from './index.js';
+    import {
+        Userprofile
+    } from './index.js';
 
     export default {
-        props:{
-            userrentinfo:{
-                type:Object
+        props: {
+            form: {
+                type: Object
             }
         },
         components: {
@@ -45,13 +47,6 @@
         data() {
             return {
                 labelPosition: 'left',
-                form: {
-                    name: 'zz',
-                    gender: 'M',
-                    phonenum: '110',
-                    documentType:'身份证',
-                    idcard: '119'
-                },
                 idTypes: [{
                     id: 1,
                     name: '身份证',
@@ -79,12 +74,16 @@
                 }]
             }
         },
+        mounted(){
+            console.log(this.form)
+             
+        },
         methods: {
             onSubmit() {
                 console.log('submit!');
             },
-            updateuser(){
-                console.log(this.userrentinfo)
+            updateuser() {
+                console.log(JSON.stringify(this.form))
             }
         }
     }
@@ -101,7 +100,8 @@
     .userinfoi {
         margin-top: 5px;
     }
-    .test>label{
+
+    .test>label {
         font-size: 12px;
     }
 </style>

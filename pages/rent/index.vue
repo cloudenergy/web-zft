@@ -1,10 +1,8 @@
 <template>
 	<el-container>
-		<el-aside class="page-bill-index">
-			<div>
-				<Tab/>
-			</div>
-		</el-aside>
+		<div>
+			<Tab/>
+		</div>
 		<el-container>
 			<el-header style="height:auto">
 				<div class="ops-bills">

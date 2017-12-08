@@ -10,7 +10,7 @@
 								<span slot="reference" class="name-wrapper">
 									<i class="el-icon-phone"></i>
 								</span>
-						</el-popover>
+							</el-popover>
 						</span>
 						<p style="margin-left: 10px">{{ scope.row.phone }}</p>
 					</div>
@@ -44,7 +44,8 @@
 						<div class="rentMoneyshow">
 							<el-dropdown>
 								<span class="el-dropdown-link cursorp">
-									查看<i class="el-icon-caret-bottom el-icon--right"></i>
+									查看
+									<i class="el-icon-caret-bottom el-icon--right"></i>
 								</span>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item v-for="item in list1" :key="item.value" @click.native="rentuser(scope.$index,item.value,scope.row)">{{item.showlist}}</el-dropdown-item>
@@ -52,10 +53,11 @@
 							</el-dropdown>&nbsp;|&nbsp;
 							<el-dropdown>
 								<span class="el-dropdown-link cursorp">
-									续租<i class="el-icon-caret-bottom el-icon--right"></i>
+									续租
+									<i class="el-icon-caret-bottom el-icon--right"></i>
 								</span>
 								<el-dropdown-menu slot="dropdown">
-									<el-dropdown-item v-for="item in list2" :key="item.value" @click.native="rentuser2(scope.$index,item.value)">{{item.showlist}}</el-dropdown-item>
+									<el-dropdown-item v-for="item in list2" :key="item.value" @click.native="rentuser2(scope.row,item.value)">{{item.showlist}}</el-dropdown-item>
 								</el-dropdown-menu>
 							</el-dropdown>
 						</div>
@@ -68,8 +70,9 @@
 						<p style="margin-left: 10px" :class="{islosem:scope.row.rent<0}">{{ scope.row.rent }}</p>
 						<el-dropdown>
 							<span class="el-dropdown-link cursorp">
-							充值<i class="el-icon-caret-bottom el-icon--right"></i>
-						</span>
+								充值
+								<i class="el-icon-caret-bottom el-icon--right"></i>
+							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item @click.native="paym(scope.row)">充值</el-dropdown-item>
 								<el-dropdown-item @click.native="callmo()">催交</el-dropdown-item>
@@ -87,25 +90,25 @@
 				<div class="setborder">
 					<div class="flexdirection botborder">
 						<img src="" alt="" style="width:100px;height:100px;">
-						<p>{{updateData.rentcash}}</p>
-						<p>{{updateData.phone}}</p>
+						<p>{{updateData.user.name}}</p>
+						<p>{{updateData.user.mobile}}</p>
 					</div>
 					<div class="userinfobot">
 						<div>
 							<p>姓名</p>
-							<p>{{updateData.name}}</p>
+							<p>{{updateData.user.name}}</p>
 						</div>
 						<div>
 							<p>性别</p>
-							<p>{{userinfo.sex}}</p>
+							<p>{{updateData.user.gender}}</p>
 						</div>
 						<div>
 							<p>身份证号</p>
-							<p>{{userinfo.idcardnum}}</p>
+							<p>{{updateData.user.documentId}}</p>
 						</div>
 						<div>
 							<p>手机号</p>
-							<p>{{userinfo.phonenum}}</p>
+							<p>{{updateData.user.mobile}}</p>
 						</div>
 						<div class="others"></div>
 					</div>
@@ -128,22 +131,22 @@
 					<div v-if="showinf==1" class="triangle cursorfir">基本信息</div>
 					<div v-if="showinf==2" class="triangle cursorsec">合同信息</div>
 					<div v-if="showinf==3" class="triangle cursorthi">账单信息</div>
-					<Rentinfo v-if="showinf==1" :userrentinfo="updateData"/>
-					<Rentmessasge v-if="showinf==2" />
-					<Rentmoney v-if="showinf==3&&showmoney==1" />
-					<Rentlease v-if="showinf==3&&showmoney==2" />
-					<Rentsendmoney v-if="showinf==3&&showmoney==3" />
+					<Rentinfo v-if="showinf==1" :form="updateData" />
+					<Rentmessasge v-if="showinf==2" :form="updateData"/>
+					<Rentmoney v-if="showinf==3&&showmoney==1" :form="updateData"/>
+					<Rentlease v-if="showinf==3&&showmoney==2" :form="updateData"/>
+					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData"/>
 				</div>
 			</div>
 			<span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false;showinf=showmoney=1" type="primary" >确定</el-button>
-            </span>
+				<el-button @click="dialogVisible = false;showinf=showmoney=1" type="primary">确定</el-button>
+			</span>
 		</el-dialog>
 		<!-- 用户信息预览 -->
 		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%" :before-close="handleClose">
 			<Showrent/>
 			<div style="height:30px">
-				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button> 
+				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
 			</div>
 		</el-dialog>
 	</div>
@@ -173,7 +176,7 @@
 		},
 		data() {
 			return {
-				updateData:{},
+				updateData: {},
 				dialogVisible: false,
 				dialogTitle: '详细信息',
 				dialogVisible2: false,
@@ -209,12 +212,12 @@
 					}
 				],
 				userinfo: {
-					id:110,
+					id: 110,
 					money: 119,
-					name:'zhangsan',
-					sex:'1',
-					idcardnum:'8769876987689768796',
-					phonenum:868768768
+					name: 'zhangsan',
+					sex: '1',
+					idcardnum: '8769876987689768796',
+					phonenum: 868768768
 				},
 				tableData: [{
 						overdue: '逾期63天',
@@ -224,7 +227,7 @@
 						phone: '1300000001',
 						rentDesc: '租金6期',
 						address: '朝晖三区·2栋2单元201室·B',
-						rentdate:'2017-07-01 → 2017-07-31',
+						rentdate: '2017-07-01 → 2017-07-31',
 						rentalMounthMoney: '2000',
 						rentalYear: '2',
 						rentcash: '2000',
@@ -238,7 +241,7 @@
 						rentDesc: '押金',
 						phone: '1300000002',
 						address: '龙湖滟澜山·8栋2单元203室·G',
-						rentdate:'2017-08-01 → 2017-08-20',
+						rentdate: '2017-08-01 → 2017-08-20',
 						rentalMounthMoney: '2000',
 						rentalYear: '2',
 						rentcash: '2000',
@@ -252,7 +255,7 @@
 						rentDesc: '租金11期',
 						phone: '1300000003',
 						address: '朝晖三区·3栋3单元301室·改哎的名字',
-						rentdate:'2017-08-22 → 2017-11-21',
+						rentdate: '2017-08-22 → 2017-11-21',
 						rentalMounthMoney: '2000',
 						rentalYear: '2',
 						rentcash: '2000',
@@ -272,8 +275,53 @@
 						rentcash: '2000',
 						rentakMounthpay: '3'
 					}
-				]
+				],
+				userdatainfo: {
+					"contractId": 1,
+					"roomId": 430000,
+					"user": {
+						"id": 4234948878,
+						"accountName": "accountName",
+						"name": "username",
+						"mobile": "13897656479",
+						"documentId": "330109198007085678X",
+						"documentType": 1,
+						"gender": "M"
+					},
+					"from": 1510326577,
+					"to": 1510326577,
+					"strategy": {
+						"daily": {
+							"rent": 10000
+						},
+						"monthly": {
+							"once": 0,
+							"freq": {
+								"interval": "1/2/3/6/12",
+								"rent": 10000,
+								"pattern": "BILL/PREPAY"
+							},
+							"customer": [{
+								"from": 1509976830,
+								"to": 1509976830,
+								"forFree": "0不免租金/1免租金",
+								"rent": 10000,
+								"interval": "1/2/3/6/12"
+							}]
+						}
+					},
+					"expenses": [{
+						"configId": "1/2/3...",
+						"rent": 10000,
+						"interval": "1/2/3/6/12"
+					}],
+					"paymentPlan": "F10",
+					"signUpTime": 1510326577
+				}
 			};
+		},
+		created(){
+			this.updateData = this.userdatainfo
 		},
 		methods: {
 			handleClose(done) {
@@ -283,71 +331,75 @@
 					})
 					.catch(() => {});
 			},
-			rentuser(index,value,item) {
+			rentuser(index, value, item) {
 				this.dialogVisible = true;
 				this.showinf = value;
 				this.updateData = item;
+				this.updateData = this.userdatainfo;
 			},
-			rentuser2(index,value){
-				if(value==1){
+			rentuser2(data, value) {
+				var that = this;
+				if (value == 1) {
 					// 打开续租页面
 					this.$modal.$emit('open', {
-    				comp: Relet,
-    				title: '新增房源'
-				});
-				// 删除租户
-				}else if(value==2){
+						comp: Relet,
+						data: {
+							item: this.userdatainfo
+						},
+						title: '新增房源'
+					});
+
+				} else if (value == 2) {
+					// 删除租户
 					this.$confirm('此操作将删除该租户, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
 					}).then(() => {
-					this.$message({
-						type: 'success',
-						message: '删除成功!'
+						this.$message({
+							type: 'success',
+							message: '删除成功!'
 						});
 					}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消删除'
-						});          
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						});
 					});
-				}else{
+				} else {
 					this.dialogVisible3 = true;
 				}
 			},
 			changeuserinfo(data) {
 				this.showinf = data;
-				console.log(this.showinf==1)
 			},
 			changeuseri(data) {
 				this.showmoney = data;
 			},
-			callmo(){
+			callmo() {
 				console.log(1)
 				this.$confirm('将要使用短信t通知租户, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
-					}).then(() => {
+				}).then(() => {
 					this.$message({
 						type: 'success',
 						message: '提醒成功!'
-						});
-					}).catch(() => {
+					});
+				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '取消提醒'
-						});          
 					});
+				});
 			},
 			// 除了电子支付其余的手段
-			paym(date){
+			paym(date) {
 				console.log(1)
-				this.updateData = date;
 				this.$modal.$emit('open', {
-    				comp: Paym,
-    				title: '充值'
+					comp: Paym,
+					title: '充值'
 				})
 			}
 		}
@@ -377,41 +429,44 @@
 
 	.menu-rightthree div {
 		margin-left: 15px;
-	}
-	// .textcenter{
+	} // .textcenter{
 	// 	text-aline: center;
 	// }
-	.setborder{
-		border:1px solid #ddd;
-		width:200px;
-		.botborder{
-			border-bottom:1px solid #ddd;
+	.setborder {
+		border: 1px solid #ddd;
+		width: 225px;
+		.botborder {
+			border-bottom: 1px solid #ddd;
 		}
-		.others{
-			height:100px;
+		.others {
+			height: 100px;
 		}
 	}
-	.userinfobot>div:first-child{
-		margin-top:16px;
+
+	.userinfobot>div:first-child {
+		margin-top: 16px;
 	}
-	.triangle{
+
+	.triangle {
 		line-height: 40px;
 		background-color: #f5f7fa;
 		margin: 10px 0;
 		position: relative;
 	}
-	.triangle:before{
-		content:'';
+
+	.triangle:before {
+		content: '';
 		width: 20px;
 		height: 40px;
 		background-color: #f5f7fa;
 		display: inline-block;
 		position: absolute;
-		top:0;
+		top: 0;
 		left: -20px;
 	}
-	.triangle:after{
-		content:'';
+
+	.triangle:after {
+		content: '';
 		width: 0;
 		height: 0;
 		border-right: 12px solid transparent;
@@ -419,24 +474,28 @@
 		border-left: 12px solid transparent;
 		display: block;
 		position: absolute;
-		top:-12px;
-	}
-	// .triangle:nth-child(1):after{
+		top: -12px;
+	} // .triangle:nth-child(1):after{
 	// 	left:10px;
 	// }
-	.cursorfir:after{
-		left:14px
+	.cursorfir:after {
+		left: 14px
 	}
-	.cursorsec:after{
-		left:120px
+
+	.cursorsec:after {
+		left: 120px
 	}
-	.cursorthi:after{
-		left:226px
+
+	.cursorthi:after {
+		left: 226px
 	}
-	div.activerent,span.activerent{
+
+	div.activerent,
+	span.activerent {
 		color: #000
 	}
-	.islosem{
-		color:#F03D53
+
+	.islosem {
+		color: #F03D53
 	}
 </style>

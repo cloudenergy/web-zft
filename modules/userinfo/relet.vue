@@ -1,5 +1,5 @@
 <template>
-	<div class="modal add-contract">
+	<div class="modal add-contract" v-on:useralldata="onselect">
 		<el-form :model="form" ref="form" class="v-form">
 			<h3>续租</h3>
 			<UserProfile :user="form.user"></UserProfile>
@@ -8,12 +8,12 @@
 
 			<h3 class="section-2">租费设置</h3>
 			<ExpenseSetting :expense="form.expense"></ExpenseSetting>
-
 		</el-form>
 		<div class="dialog-footer" slot="footer">
 			<el-button @click="closeDialog()">取 消</el-button>
 			<el-button type="primary" @click="submitForm('form')">续租</el-button>
 		</div>
+		
 	</div>
 </template>
 
@@ -26,13 +26,27 @@
 	import {addYears, format, getTime} from 'date-fns';
 
 	export default {
+		props: {
+            item: {
+                type: Object
+            }
+        },
 		data() {
 			const today = new Date();
 			return {
-				form: this.newModel(today)
+				form: this.newModel(today),
+				changeuserdata: ''
 			};
 		},
+		mounted(){
+			console.log(this.form)
+		},
 		methods: {
+			onselect(userdata){
+				console.log(1)
+				this.changeuserdata = userdata
+				console.log(this.changeuserdata)
+			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
@@ -58,11 +72,11 @@
 			newModel(today) {
 				return {
 					user: {
-						name: '',
-						accountName: '',
-						mobile: '',
-						gender: 'M',
-						documentId: '',
+						name: this.item.user.name,
+						accountName: this.item.user.accountName,
+						mobile: this.item.user.mobile,
+						gender: this.item.user.gender,
+						documentId: this.item.user.documentId,
 						documentType: 1
 					},
 					property: {
