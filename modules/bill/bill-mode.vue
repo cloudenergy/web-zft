@@ -1,13 +1,15 @@
+
 <template>
 <el-col :span="2">
-	<el-select v-model="billType" size="mini" filterable placeholder="类型" class="select">
+	<el-select v-model="billMode" size="mini" filterable placeholder="方式" class="select">
 		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 		</el-option>
 	</el-select>
-	</el-col>
+    </el-col>
 </template>
 <script>
 	export default {
+        name:'bill-mode',
 		data() {
 			return {
 				options: [
@@ -16,19 +18,15 @@
 						label: '全部'
 					},
 					{
-						value: 'lease',
-						label: '租约'
+						value: 'collection',
+						label: '收款'
 					},
 					{
-						value: 'bookkeeping',
-						label: '记账'
-					},
-					{
-						value: 'refunds',
-						label: '退款'
-					},
+						value: 'payment',
+						label: '付款'
+					}
 				],
-				billType: 'all'
+				billMode: 'all'
 			};
 		}
 	};

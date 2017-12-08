@@ -1,6 +1,6 @@
 <template>
 	<el-container>
-		<el-aside class="page-bill-index">
+		<el-aside class="page-bill-index" width="auto">
 			<div>
 				<Tab/>
 			</div>
@@ -9,9 +9,11 @@
 			<el-header style="height:auto">
 				<div class="ops-bills">
 					<BillStatus class="status"/>
+					<BillMode class="bill-mode"/>
 					<BillType class="bill-type"/>
 					<ReportPeriod class="period"/>
 					<BillManager class="manager"/>
+					<BillSearch class="bill-search"/>
 					<span class="result-info">32项结果</span>
 					<div class="actions">
 						<el-button type="warning" size="mini">
@@ -37,7 +39,9 @@
 		BillType,
 		ReportPeriod,
 		DataTable,
-		BillManager
+		BillManager,
+		BillMode,
+		BillSearch
 	} from '~/modules/bill';
 
 	export default {
@@ -47,7 +51,9 @@
 			BillType,
 			ReportPeriod,
 			BillManager,
-			DataTable
+			DataTable,
+			BillMode,
+			BillSearch
 		},
 		data() {
 			return {
@@ -60,7 +66,7 @@
 <style lang="less" scoped>
 	.page-bill-index {
 		display: flex;
-		min-width: 275px;
+		// min-width: 275px;
 	}
 
 	.ops-bills {

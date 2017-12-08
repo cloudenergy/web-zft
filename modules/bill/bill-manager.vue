@@ -1,8 +1,10 @@
 <template>
+<el-col :span="2">
 	<el-select v-model="manager" size="mini" filterable placeholder="管理" class="select">
 		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 		</el-option>
 	</el-select>
+	</el-col>
 </template>
 <script>
 	export default {
@@ -30,7 +32,7 @@
 
 <style lang="less" scoped>
 	.select {
-		margin-left: 10px;
+		// margin-left: 10px;
 		// margin-top: 10px;
 	}
 </style>
