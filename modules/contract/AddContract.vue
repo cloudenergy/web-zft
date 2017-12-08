@@ -41,9 +41,9 @@
 						console.log('submit: ', this.translate(this.form));
 						this.$model('contracts').create(this.translate(this.form)).then((d) => {
 							console.log(d);
-//							this.closeDialog();
-//							this.resetForm();
-//							this.successMessage();
+							this.closeDialog();
+							this.resetForm();
+							this.successMessage();
 						});
 					} else {
 						console.log('error in submitting ...');

@@ -12,23 +12,23 @@ describe('ExpenseSetting', () => {
 					id: 1,
 					name: '常规租金',
 					type: '2',
-					amount: 3600,
-					paymentMethod: 'perMonth',
+					rent: 3600,
+					pattern: '6',
 				},
 				extra: [
 					{
 						id: 2,
 						name: '电费',
 						type: '2',
-						amount: 1.20,
-						paymentMethod: 'prepaid',
+						rent: 1.20,
+						pattern: 'prepaid',
 					},
 					{
 						id: 3,
 						name: '水费',
 						type: 'water',
-						amount: 20,
-						paymentMethod: 'perMonth',
+						rent: 20,
+						pattern: '1',
 					}
 				],
 				bond: 2600
@@ -43,7 +43,9 @@ describe('ExpenseSetting', () => {
 		expect(wrapper.html()).toContain('<el-option label="开始后固定" value="+"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="开始前固定" value="F"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="开始前一个月固定" value="M"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="一年一付" value="perYear">')
+		expect(wrapper.html()).toContain('<el-option label="一年一付" value="12">')
+		expect(wrapper.html()).toContain('<el-option label="预付费" value="prepaid">')
+		expect(wrapper.html()).toContain('<el-option label="一次付清" value="paidOff">')
 	})
 
 

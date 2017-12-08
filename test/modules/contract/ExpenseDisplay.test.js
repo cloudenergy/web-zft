@@ -9,26 +9,23 @@ describe('ExpenseDisplay', () => {
 				billPlan: 1,
 				offset: '',
 				standard: {
-					id: 1,
+					configId: 1,
 					name: '常规租金',
-					type: '2',
-					amount: 3600,
-					paymentMethod: 'perMonth',
+					rent: 3600,
+					pattern: '1',
 				},
 				extra: [
 					{
-						id: 2,
+						configId: 2,
 						name: '电费',
-						type: '2',
-						amount: 1.20,
-						paymentMethod: 'prepaid',
+						rent: 1.20,
+						pattern: 'prepaid',
 					},
 					{
-						id: 3,
+						configId: 3,
 						name: '水费',
-						type: 'water',
-						amount: 20,
-						paymentMethod: '随租金付',
+						rent: 20,
+						pattern: 'withRent',
 					}
 				],
 				bond: 2600
@@ -38,7 +35,7 @@ describe('ExpenseDisplay', () => {
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain('<el-option label="预付费" value="prepaid">')
-		expect(wrapper.html()).toContain('<el-option label="一月一付" value="perMonth">')
+		expect(wrapper.html()).toContain('<el-option label="一月一付" value="1">')
 	})
 
 
