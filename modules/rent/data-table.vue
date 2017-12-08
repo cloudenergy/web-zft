@@ -16,7 +16,7 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="房源/租期">
+			<el-table-column label="房源/租期" min-width="480" max-width="600">
 				<template slot-scope="scope">
 					<el-popover trigger="hover" placement="top">
 						<p>Name: {{ scope.row.name }}</p>
@@ -30,7 +30,7 @@
 					</el-popover>
 				</template>
 			</el-table-column>
-			<el-table-column label="租金" width="240">
+			<el-table-column label="租金" min-width="258">
 				<template slot-scope="scope">
 					<div class="flexcenter">
 						<div class="name-wrapper">

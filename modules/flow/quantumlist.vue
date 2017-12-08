@@ -48,7 +48,8 @@
         </el-table-column>
         <el-table-column
             label="房源"
-            prop="houseresource">
+            prop="houseresource"
+            min-width="200">
         </el-table-column>
         <el-table-column
             label="费用类型"
