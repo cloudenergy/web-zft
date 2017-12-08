@@ -1,10 +1,10 @@
 <template>
-	<el-container>
+	<el-container style="height:100%">
 		<!-- <div>
 			<Tab/>
 		</div> -->
-		<el-container>
-			<el-header style="height:auto">
+		<el-container style="height:100%">
+			<el-header style="height:100%">
 				<flowm/>
 			</el-header>
 			<el-main>

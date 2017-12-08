@@ -1,21 +1,8 @@
 <template>
   <div>
-    <div class="block">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
-          <div style="position:relative;display:inline-block;">
-            <span class="marsp">范围</span>
-            <el-date-picker
-              v-model="value3"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              style="width:200px;padding:3px"
-              class="datach">
-            </el-date-picker>
-            <span style="position: absolute;" class="shabi">至</span>
-          </div>
-          
+    <div class="block" style="margin-bottom:10px">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">   
+          <goend/>
           <span class="marsp marspa ">流水来源</span>
           <el-form-item label="" style="margin:0">
             <el-select v-model="formInline.region" placeholder="流水来源" class="minisel">
@@ -61,20 +48,25 @@
           </div>
           
         </el-form>
+        
       </div>
+      <quantumlist />
   </div>
   
 </template>
 
 <script>
   import {RentSearch} from '../rent'
+  import quantumlist from './quantumlist.vue';
+  import goend from './goend.vue';
   export default {
     components: {
-			RentSearch
+      RentSearch,
+      quantumlist,
+      goend
 		},
     data() {
       return {  
-        value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
         formInline: {
           user: '',
           region: '',
@@ -99,14 +91,6 @@
   }
   .minisel{
     width: 100px;
-  }
-
-  .shabi{
-    left: 128px;
-    top: 5px;
-    display: inline-block;
-    line-height: 18px;
-    background-color: #fff;
   }
   .importres{
     flex:1;
