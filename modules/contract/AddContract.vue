@@ -24,6 +24,8 @@
 	import ExpenseSetting from './ExpenseSetting.vue';
 
 	import {addYears, format, getTime} from 'date-fns';
+	import _ from 'lodash';
+	import fp from 'lodash/fp';
 
 	export default {
 		data() {
@@ -41,7 +43,7 @@
 							console.log(d);
 							this.closeDialog();
 							this.resetForm();
-							this.sendmess();
+							this.successMessage();
 						});
 					} else {
 						console.log('error in submitting ...');
@@ -79,26 +81,24 @@
 						billPlan: 'F',
 						offset: 2,
 						standard: {
-							id: 1,
 							name: '常规租金',
-							type: '2',
-							amount: 3600,
-							paymentMethod: 'perMonth'
+							rent: 3600,
+							pattern: '6'
 						},
 						extra: [
 							{
-								id: 2,
+								configId: 2,
 								name: '电费',
-								type: '2',
-								amount: 1.2,
-								paymentMethod: 'prepaid'
+								type: 'extra',
+								rent: 1.2,
+								pattern: 'prepaid'
 							},
 							{
-								id: 3,
+								configId: 3,
 								name: '水费',
-								type: 'water',
-								amount: 20,
-								paymentMethod: 'perMonth'
+								type: 'extra',
+								rent: 20,
+								pattern: '1'
 							}
 						],
 						bond: 2600
@@ -125,44 +125,25 @@
 			},
 			createStrategy(form) {
 				return {
-					"daily": {
-						"amount": 10000
-					},
-					"monthly": {
-						"once": 0,
-						"freq": {
-							"interval": "1/2/3/6/12",
-							"amount": 10000
-						},
-						"customer": [
-							{
-								"from": 1509976830,
-								"to": 1509976830,
-								"forFree": "0不免租金/1免租金",
-								"amount": 10000,
-								"interval": "1/2/3/6/12"
-							}
-						]
-					}
+					freq: _.pick(form.expense.standard, ['rent', 'pattern'])
 				}
 			},
 			createExpense(form) {
-				return [
-					{
-						"cfgId": "1/2/3...",
-						"amount": 10000,
-						"interval": "1/2/3/6/12"
-					}
-				]
+				let extraExpense = fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra);
+				return _.concat(extraExpense, [{
+					configId: 111,
+					rent: form.expense.bond,
+					pattern: 'paidOff'
+				}])
 			},
 			closeDialog() {
 				this.$refs['form'].resetFields();
 				this.$modal.$emit('dismiss');
 			},
-			sendmess() {
+			successMessage() {
 				this.$message({
-          		message: '恭喜你,提交成功',
-          		type: 'success'
+					message: '恭喜你,提交成功',
+					type: 'success'
         		});
 			}
 		},

@@ -28,7 +28,7 @@
 				<div class="section-label">租金</div>
 			</el-col>
 			<el-col :span="21">
-				<ExpenseDisplay :expense="expense.standard"></ExpenseDisplay>
+				<ExpenseDisplay :expense="expense.standard" :allowPayWithRent="false"></ExpenseDisplay>
 			</el-col>
 		</el-row>
 		<el-row class="extra-rent-row">
