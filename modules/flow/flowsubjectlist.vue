@@ -34,39 +34,43 @@
             </template>
         </el-table-column>
         <el-table-column
-            label="时间"
+            label="小区/房源"
             prop="datetime">
         </el-table-column>
         <el-table-column
-            label="金额"
-            prop="folwm"
-            width="80px">
+            label="押金收入"
+            prop="folwm">
         </el-table-column>
         <el-table-column
-            label="姓名"
-            prop="username"
-            min-width="100">
+            label="押金支出"
+            prop="username">
         </el-table-column>
         <el-table-column
-            label="房源"
-            prop="houseresource"
-            min-width="130"
-            max-width="200">
+            label="押金结余"
+            prop="houseresource">
         </el-table-column>
         <el-table-column
-            label="费用类型"
+            label="租金收入"
             prop="waym">
         </el-table-column>
         <el-table-column
-            label="支付方式"
+            label="租金支出"
             prop="payway">
         </el-table-column>
         <el-table-column
-            label="操作人"
+            label="租金结余"
             prop="handlem">
         </el-table-column>
         <el-table-column
-            label="备注"
+            label="预付费收入"
+            prop="remark">
+        </el-table-column>
+        <el-table-column
+            label="预付费支出"
+            prop="remark">
+        </el-table-column>
+        <el-table-column
+            label="预付费结余"
             prop="remark">
         </el-table-column>
     </el-table>
@@ -79,56 +83,56 @@ export default {
             upflowi:0,
             tableData5: [{
                 id: 11110,
-                datetime: '2017-01-01 17:05',
+                datetime: '88888',
                 folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
+                category: '88888',
+                username: '99999',
+                address: '00000',
+                shop: '11111',
                 shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101',
+                houseresource: '22222',
                 payway: '支付宝',
                 waym: '缴费',
                 handlem: '老王',
                 remark: '3年没有缴费了'
             }, {
                 id: 11111,
-                datetime: '2017-01-01 17:05',
+                datetime: '88888',
                 folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
+                category: '88888',
+                username: '99999',
+                address: '00000',
+                shop: '11111',
                 shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101',
+                houseresource: '22222',
                 payway: '微信',
                 waym: '缴费',
                 handlem: '',
                 remark: '3年没有缴费了'
             }, {
                 id: 11112,
-                datetime: '2017-01-01 17:05',
+                datetime: '88888',
                 folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
+                category: '88888',
+                username: '99999',
+                address: '00000',
+                shop: '11111',
                 shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101撒地方士大夫士大夫撒旦法第三方',
+                houseresource: '22222',
                 payway: '现金',
                 waym: '结余',
                 handlem: '老王',
                 remark: '3年没有缴费了'
             }, {
                 id: 11113,
-                datetime: '2017-01-01 17:05',
+                datetime: '88888',
                 folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
+                category: '88888',
+                username: '99999',
+                address: '00000',
+                shop: '11111',
                 shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101',
+                houseresource: '22222',
                 payway: '银行卡',
                 waym: '缴费',
                 handlem: '老王',
@@ -147,7 +151,7 @@ export default {
         // 在这里你想初始化的时候展开哪一行都可以了
         // this.$refs.tableData5.toggleRowExpansion(this.tableData5[0]) // 選中第二個
         // 選中 value = 1 那行
-        // this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == 2017-01-01 17:056))
+        // this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == 888886))
     },
     methods:{
         handleRowHandle(row){

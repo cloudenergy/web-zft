@@ -59,49 +59,91 @@
 
 <!-- 收款 -->
 
-<el-dialog :title='dialogTitle' :visible.sync="dialog_collection">
-	<P>应支付日:{{ tableData.data }} </P><P>金额:{{ tableData.rent }}</P>
+<el-dialog :title='dialogTitle' :visible.sync="dialog_collection" width="80%" class="dialog_collection">
+	<!-- <P><span>应支付日:{{ tableData.data }}</span> <span>金额:{{ tableData.rent }}</span></P> -->
 
-<table>
+
+<!-- <table>
 	<thead>
 		<tr>
-			<td>111ßßßßß帐单类型</td>
+			<td>帐单类型</td>
 			<td>费用周期</td>
 			<td>单价</td>
 			<td>应收(元)</td>
 			<td>待收(元)</td>
-			<td>待收(元)</td>
 			<td>实收(元)</td>
 			<td>余额(元)</td>
-			<td>123(元)</td>
-			<td>123(元)</td>
-			
 		</tr>
 	</thead>
-	<!-- <tr v-for='itme in table_collection'>
-		<td>{{itme.bill_type}}</td>
-		<td>{{itme.bill_cycle}}</td>
-		<td>{{itme.bill_unit}}</td>
-		<td>{{itme.bill_receivable}}</td>
-		<td>{{itme.bill_dueIn}}</td>
-		<td>{{itme.bill_ealPrice}}</td>
-		<td>wqe</td> -->
-		<!-- <td>{{key}}</td> -->
-	</tr>
-</table>
+	<tbody>
+		<tr v-for='item in table_collection'>
+			<td>{{item.bill_type}}</td>
+			<td>{{item.bill_cycle}}</td>
+			<td>{{item.bill_receivable}}</td>
+			<td>{{item.bill_dueIn}}</td>
+			<td>{{item.bill_dueIn-bill_ealPrice}}</td>
+			<td><input type="number" v-model='bill_ealPrice' v-on:input='ealOrice(item.bill_dueIn,bill_ealPrice)'></td>
+			<td>余{{bill_balance}}</td>
+			
+		</tr>
+	</tbody>
+</table> -->
 
-  <!-- <el-table :data="table_collection"> -->
+
+  <el-table :data="table_collection">
 	  						
 
-    <!-- <el-table-column property="bill_type" label="帐单类型"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期"></el-table-column>
+    <el-table-column property="bill_type" label="帐单类型"></el-table-column>
+    <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
     <el-table-column property="bill_unit" label="单价"></el-table-column>
     <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
     <el-table-column property="bill_dueIn" label="待收(元)" width="200"></el-table-column>
     <el-table-column property="bill_ealPrice" label="实收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_balance" label="c" width="200"></el-table-column> -->
+    <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
 	
-  <!-- </el-table> -->
+  </el-table>
+
+<el-table :data="table_collection2" class="table_collection2">
+	<el-table-column property='table_collection2_data'  label="实际支付时间"></el-table-column>
+    <el-table-column property="bill_cycle" label="支付方式">
+		<template slot-scope="scope">
+			<el-select v-model="table_collection2_pay_val" placeholder="请选择">
+    <el-option
+      v-for="item in table_collection2.table_collection2_pay"
+      :key="item"
+      :label="item"
+      :value="item">
+    </el-option>
+  </el-select>
+		</template>
+	</el-table-column>
+    <el-table-column property="bill_unit" label="经办人">
+		<template slot-scope="scope">
+			<el-select v-model="table_collection2_name_val" placeholder="请选择">
+    <el-option
+      v-for="item2 in table_collection2.table_collection2_name"
+      :key="item2"
+      :label="item2"
+      :value="item2">
+    </el-option>
+  </el-select>
+		</template>
+	</el-table-column>
+    <el-table-column property="bill_balance" label="备注">
+		<template slot-scope="scope">
+		<el-input type='textarea'></el-input>
+		</template>
+	</el-table-column>
+</el-table>
+<el-input placeholder="请输入内容" v-model="input3" class="input3">
+    <template slot="prepend">
+		账单备注
+	</template>
+  </el-input>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialog_collection = false">取 消</el-button>
+    <el-button type="primary" @click="dialog_collection = false">确 定</el-button>
+  </span>
 </el-dialog>
 	<!-- 编辑 -->
 <el-dialog :title='dialogTitle' :visible.sync="dialog_edit">
@@ -109,7 +151,7 @@
   <el-table :data="table_collection">
 	  						
 
-    <el-table-column property="bill_type" label="帐单类型" width="150"></el-table-column>
+    <el-table-column property="bill_type" label="帐单22类型" width="150"></el-table-column>
     <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
     <el-table-column property="bill_unit" label="单价"></el-table-column>
     <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
@@ -118,40 +160,43 @@
     <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
 	
   </el-table>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialog_edit = false">取 消</el-button>
+    <el-button type="primary" @click="dialog_edit = false">确 定</el-button>
+  </span>
 </el-dialog>
 
 	<!-- 备注 -->
-<el-dialog :title='dialogTitle' :visible.sync="dialog_remark">
+<el-dialog :title='dialogTitle' :visible.sync="dialog_remark" width='30%'>
 	<!-- <P>应支付日:{{ dataT.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
-  <el-table :data="table_collection">
-	  						
-
-    <el-table-column property="bill_type" label="帐单类型" width="150"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
-    <el-table-column property="bill_unit" label="单价"></el-table-column>
-    <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_dueIn" label="待收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_ealPrice" label="实收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
-	
-  </el-table>
+  <el-form>
+	  <el-input
+  type="textarea"
+  :rows="2"
+  placeholder="请输入内容"
+  v-model="billTextarea">
+</el-input>
+	  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialog_remark = false">取 消</el-button>
+    <el-button type="primary" @click="dialog_remark = false">确 定</el-button>
+  </span>
 </el-dialog>
 
 	<!-- 改期 -->
-<el-dialog :title='dialogTitle' :visible.sync="dialog_take_a_rain_check">
+<el-dialog :title='dialogTitle' :visible.sync="dialog_take_a_rain_check" width='20%'>
 	<!-- <P>应支付日:{{ scope.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
-  <el-table :data="table_collection">
-	  						
-
-    <el-table-column property="bill_type" label="帐单类型" width="150"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
-    <el-table-column property="bill_unit" label="单价"></el-table-column>
-    <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_dueIn" label="待收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_ealPrice" label="实收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
-	
-  </el-table>
+	<el-form>
+  <el-date-picker
+      v-model="billData"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+	</el-form>
+	<span slot="footer" class="dialog-footer">
+    <el-button @click="dialog_take_a_rain_check = false">取 消</el-button>
+    <el-button type="primary" @click="dialog_take_a_rain_check = false">确 定</el-button>
+  </span>
 </el-dialog>
 
 	</div>
@@ -208,36 +253,60 @@ export default {
 					bill_type: '常规押金',
 					bill_cycle: '2017-07-01 至 2017-12-31',
 					bill_unit: '-',
-					bill_receivable: '1,000.00',
-					bill_dueIn: '1,000.00',
-					bill_ealPrice: '1,000.00',
-					// bill_balance: '暂无余额'
-				},
-				{
-
-					bill_type: '常规押金',
-					bill_cycle: '2018-07-01 至 2018-12-31',
-					bill_unit: '-',
-					bill_receivable: '1,000.00',
-					bill_dueIn: '1,000.00',
-					bill_ealPrice: '2,000.00',
-					// bill_balance: '暂无余额'
+					bill_receivable: '1000',
+					bill_dueIn: '1000',
+					bill_ealPrice: '1000',
+					bill_balance: '暂无余额'
 				}
 			],
-			dialog_collection:false,
-			dialog_edit:false,
-			dialog_remark:false,
-			dialog_take_a_rain_check:false,
+			dialog_collection: false,
+			dialog_edit: false,
+			dialog_remark: false,
+			dialog_take_a_rain_check: false,
+			// 余额
+			bill_balance: '',
+			// 待收
+			bill_dueIn: '',
+			// 实收
+			bill_ealPrice: '',
+			// 改期
+			billData: '',
+			// 备注
+			billTextarea: '',
+			table_collection2: [
+				{
+					table_collection2_data: '2017-12-09 14:54:21',
+					table_collection2_pay: ['现金','转账','微信','支付宝','刷卡','其他',],
+					table_collection2_name: ['x','h'],
+					
+				}
+			],
+			table_collection2_name_val:'',
+			table_collection2_pay_val:'',
+			input3:''
 		};
 	},
 	methods: {
+		/**@augments
+		 * max 传入实收最大的值
+		 * num 实收的值
+		 */
+
+		ealOrice(max, num) {
+			if (this.bill_ealPrice > max) {
+				this.bill_ealPrice = max;
+			}
+			console.log(this.bill_ealPrice);
+			console.log(max);
+			return (this.bill_ealPrice = num);
+		},
 		handleEdit(index, row) {
-			this.dialog_collection = true;
+			this.dialog_edit = true;
 			this.dialogTitle = '编辑账单';
 			console.log(index, row);
 		},
 		handleReceive(index, row) {
-			this.dialog_edit= true;
+			this.dialog_collection = true;
 			this.dialogTitle = '处理账单';
 			console.log(index, row);
 		},
@@ -248,7 +317,7 @@ export default {
 		},
 		changeDate(index, row) {
 			this.dialog_take_a_rain_check = true;
-			this.dialogTitle = '账单改期';
+			this.dialogTitle = '修改应支付日';
 			console.log(index, row);
 		},
 		handleClose(done) {
@@ -261,3 +330,21 @@ export default {
 	}
 };
 </script>
+<<style>
+.table_collection2{
+	margin-top:20px;
+}
+.input3{
+	margin-top:20px;
+}
+/* .dialog_collection table{
+width:80%;
+border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.dialog_collection table  td{
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	text-align: center;
+} */
+</style>
