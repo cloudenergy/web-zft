@@ -25,6 +25,7 @@
 
 <script>
     import BaseInfo from './base-info';
+    import { mapState } from 'vuex';
     export default {
     	props: {
     		item: {

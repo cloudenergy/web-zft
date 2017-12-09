@@ -1,4 +1,38 @@
 <script>
+    const city = [
+    	{
+    		label: '北京',
+    		value: 20100
+    	},
+    	{
+    		label: '杭州',
+    		value: 30100
+    	}
+    ];
+
+    const area = [
+    	{
+    		label: '北京',
+    		parent: 20100,
+    		value: 20101
+    	},
+    	{
+    		value: '杭州',
+    		parent: 30100,
+    		value: 30101
+    	}
+    ];
+    const filters = {
+    	city,
+    	area
+    };
+
+    function isCity(city) {
+    	return function(item) {
+    		return city ? item.parent == city : true;
+    	};
+    }
+
     export default {
     	render() {
     		let city = (
@@ -9,7 +43,7 @@
     				clearable
     				placeholder="请选择城市"
     			>
-    				{this.filters.city.map(item => {
+    				{filters.city.map(item => {
     					return (
     						<el-option
     							key={item.value}
@@ -28,7 +62,7 @@
     				on-change={() => this.$emit('change', { area: this.area })}
     				placeholder="请选择区域"
     			>
-    				{this.filters.area.map(item => {
+    				{filters.area.filter(isCity(this.city)).map(item => {
     					<el-option
     						key={item.value}
     						label={item.label}
@@ -56,18 +90,10 @@
     	data() {
     		return {
     			city: '',
-    			area: '',
-    			filters: {
-    				city: [],
-    				area: []
-    			}
+    			area: ''
     		};
     	},
-    	created() {
-    		this.$store
-    			.dispatch('GET_CITY_AREA')
-    			.then(val => this.$set(this.filters, val));
-    	},
+    	created() {},
     	props: {
     		isForm: {
     			type: Boolean,

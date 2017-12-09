@@ -5,9 +5,7 @@
             <el-select v-model="filters.city" clearable placeholder="房源状态">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-select v-model="filters.city" clearable placeholder="居室">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
+            <rooms-select v-model="filters.rooms"></rooms-select>
             <el-select v-model="filters.city" clearable placeholder="管理">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
