@@ -7,8 +7,8 @@ describe('BillType', () => {
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain('<el-option label="全部" value="all"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="租约" value="prepaid"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="记账" value="postpaid"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="租约" value="lease"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="记账" value="bookkeeping"></el-option>')
 	})
 
 
