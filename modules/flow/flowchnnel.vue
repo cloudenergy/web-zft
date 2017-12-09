@@ -27,10 +27,12 @@
 <script>
 import goend from './goend.vue'
 import flowchnnellist from './flowchnnellist.vue'
+import ofpayments from './ofpayments.vue'
 export default {
   components: {
       flowchnnellist,
-      goend
+      goend,
+      ofpayments
   },
   data(){
     return{
