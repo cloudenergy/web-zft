@@ -22,14 +22,10 @@
 <script>
 import flowsubjectlist from './flowsubjectlist.vue'
 import goend from './goend.vue'
-import mounth from './mounth.vue'
-import ofpayments from './ofpayments.vue'
 export default {
   components: {
       flowsubjectlist,
       goend,
-      ofpayments,
-      mounth
   },
   data() {
     return {
