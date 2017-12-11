@@ -5,13 +5,18 @@
             <Search />
             <div class="houses">
                 <div class="room" v-for="house in houses">
-                    <p>{{house.name}}</p>
+                    <div>{{house.name}}
+                        <span class="badge pull-right">2</span>
+                    </div>
                     <div class="cells">
-                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" />
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" @click.native="viewRoom = true" />
                     </div>
                 </div>
             </div>
         </div>
+        <drawer-panel :open.sync="viewRoom">
+            <div v-if="viewRoom" class="drawer">test</div>
+        </drawer-panel>
     </div>
 </template>
 
@@ -21,7 +26,8 @@
     	components: { Tab, Room, Search },
     	data() {
     		return {
-    			houses: []
+    			houses: [],
+    			viewRoom: false
     		};
     	},
     	created() {
@@ -47,7 +53,7 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 20px;
+    		margin-left: 40px;
     	}
 
     	.room + .room {
@@ -71,5 +77,8 @@
     			}
     		}
     	}
+    }
+    .drawer {
+    	padding: 30px;
     }
 </style>

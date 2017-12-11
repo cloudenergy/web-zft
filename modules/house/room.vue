@@ -1,11 +1,12 @@
 <template>
     <div class="house-cell" :class="{out: out}">
         <h3>{{room.name}}</h3>
-        <p>{{room.houseType.name}} </p>
-        <p>{{room.houseType.area}} {{room.houseType.orientation}}</p>
+        <p>{{room.houseType.name}} {{room.houseType.area}} {{room.houseType.orientation}}</p>
+        <p>￥ 200</p>
         <p class="rentee">
-            <span>￥ 200</span>
-            <span>小清新</span>
+            <span>
+                <icon type="user" />小清新</span>
+            <span>退: 2018-10-1</span>
         </p>
     </div>
 </template>
