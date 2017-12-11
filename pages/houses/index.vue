@@ -9,7 +9,7 @@
                         <span class="badge pull-right">2</span>
                     </div>
                     <div class="cells">
-                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" @click.native="viewRoom = true" />
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" @view="showDrawer" />
                     </div>
                 </div>
             </div>
@@ -42,6 +42,10 @@
     			this.$model('houses')
     				.query()
     				.then(data => this.$set(this, 'houses', data));
+    		},
+    		showDrawer(id) {
+    			console.log('id: ', id);
+    			this.viewRoom = true;
     		}
     	}
     };
