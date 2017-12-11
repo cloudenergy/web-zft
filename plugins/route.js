@@ -4,6 +4,12 @@
  * @Last Modified by: insane.luojie
  * @Last Modified time: 2017-11-16 09:29:50
  */
+function updateHeader(comp) {
+	const { meta } = comp;
+	if (meta && meta.title) {
+		document.title = meta.title;
+	}
+}
 
 const noopData = () => ({});
 

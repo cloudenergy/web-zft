@@ -35,6 +35,9 @@
     			model: this.value
     		};
     	},
+    	created() {
+    		console.log('types: ', this.houseTypes);
+    	},
     	props: {
     		value: [String, Number],
     		all: {

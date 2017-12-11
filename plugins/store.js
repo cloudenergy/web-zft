@@ -14,7 +14,7 @@ export default {
 			projectId: '980488f9adfasdf'
 		},
 		city_area: {},
-		houseType: {
+		houseTypes: {
 			SOLE: ['sole', '整租'],
 			SHARE: ['share', '合租'],
 			ENTIRE: ['entire', '整栋']
