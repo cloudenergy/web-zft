@@ -6,10 +6,10 @@ describe('DataTable', () => {
 	const wrapper = mount(DataTable)
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<el-table-column label="最后缴费日期" width="180"></el-table-column>')
+		expect(wrapper.html()).toContain('<el-table-column label="应支付日" width="180"></el-table-column>')
 		expect(wrapper.html()).toContain('<el-table-column label="房源/租期"></el-table-column>')
-		expect(wrapper.html()).toContain('<el-table-column label="账号/余额(¥)" width="120"></el-table-column>')
-		expect(wrapper.html()).toContain('<el-table-column label="Operations" width="120"></el-table-column>')
+		expect(wrapper.html()).toContain('<el-table-column label="金额(¥)/账期" width="120"></el-table-column>')
+		expect(wrapper.html()).toContain('<el-table-column label="操作" width="120"></el-table-column>')
 
 	})
 

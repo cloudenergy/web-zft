@@ -50,7 +50,7 @@
         <el-table-column
             label="房源"
             prop="houseresource"
-            min-width="130"
+            min-width="180"
             max-width="200">
         </el-table-column>
         <el-table-column
