@@ -15,15 +15,17 @@
             </div>
         </div>
         <drawer-panel :open.sync="viewRoom">
-            <div v-if="viewRoom" class="drawer">test</div>
+            <div v-if="viewRoom" class="drawer">
+                <Preview />
+            </div>
         </drawer-panel>
     </div>
 </template>
 
 <script>
-    import { Tab, Room, Search } from '~/modules/house';
+    import { Tab, Room, Search, Preview } from '~/modules/house';
     export default {
-    	components: { Tab, Room, Search },
+    	components: { Tab, Room, Search, Preview },
     	data() {
     		return {
     			houses: [],
@@ -44,7 +46,6 @@
     				.then(data => this.$set(this, 'houses', data));
     		},
     		showDrawer(id) {
-    			console.log('id: ', id);
     			this.viewRoom = true;
     		}
     	}

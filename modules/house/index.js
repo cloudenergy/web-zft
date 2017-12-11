@@ -9,3 +9,4 @@ export { default as Tab } from './tab';
 export { default as Room } from './room';
 export { default as Search } from './search';
 export { default as Add } from './add';
+export { default as Preview } from './preview';

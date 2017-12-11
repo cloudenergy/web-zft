@@ -1,6 +1,6 @@
 <template>
-    <div class="house-cell" :class="{out: out}">
-        <div>
+    <div class="house-cell" :class="{leased: out}">
+        <div class="cell">
             <h3>{{room.name}}</h3>
             <p>{{room.houseType.name}} {{room.houseType.area}} {{room.houseType.orientation}}</p>
             <p>￥ 200</p>
@@ -51,6 +51,7 @@
 
 <style lang="less" scoped>
     .house-cell {
+    	position: relative;
     	padding: 10px;
     	width: 180px;
     	height: 116px;
@@ -59,34 +60,52 @@
     	border-left: 4px solid @success;
     	cursor: pointer;
 
-    	&.out {
-    		border-left-color: @primary;
+    	&.leased {
+    		border-left-color: @light;
     	}
 
-    	h3 {
-    		margin-bottom: 10px;
-    		overflow: hidden;
-    		white-space: nowrap;
-    	}
+    	.cell {
+    		h3 {
+    			margin-bottom: 10px;
+    			overflow: hidden;
+    			white-space: nowrap;
+    		}
 
-    	p {
-    		margin-top: 10px;
-    		color: @gray;
-    		overflow: hidden;
-    		white-space: nowrap;
-    	}
+    		p {
+    			margin-top: 10px;
+    			color: @gray;
+    			overflow: hidden;
+    			white-space: nowrap;
+    		}
 
-    	.rentee {
-    		border-top: 1px solid @light;
-    		padding-top: 12px;
-    		margin-top: 8px;
+    		.rentee {
+    			border-top: 1px solid @light;
+    			padding-top: 12px;
+    			margin-top: 8px;
 
-    		display: flex;
-    		justify-content: space-between;
+    			display: flex;
+    			justify-content: space-between;
+    		}
     	}
 
     	.actions {
+    		position: absolute;
+    		bottom: -14px;
+    		background: #fff;
     		display: none;
+    		text-align: center;
+    		border: 1px solid #ddd;
+    		border-radius: 2px;
+    		left: 50%;
+    		margin-left: -36px;
+    		p {
+    			padding: 5px;
+    			display: inline-block;
+    		}
+
+    		p + p {
+    			border-left: 1px solid #ddd;
+    		}
     	}
 
     	&:hover {
