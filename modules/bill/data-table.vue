@@ -146,18 +146,33 @@
   </span>
 </el-dialog>
 	<!-- 编辑 -->
-<el-dialog :title='dialogTitle' :visible.sync="dialog_edit">
+<el-dialog :title='dialogTitle' :visible.sync="dialog_edit" width='80%'>
 	<!-- <P>应支付日:{{ scope.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
   <el-table :data="table_collection">
 	  						
 
-    <el-table-column property="bill_type" label="帐单22类型" width="150"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
+    <el-table-column property="bill_type" label="帐单22类型"></el-table-column>
+    <el-table-column property="bill_cycle" label="费用周期"></el-table-column>
     <el-table-column property="bill_unit" label="单价"></el-table-column>
-    <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_dueIn" label="待收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_ealPrice" label="实收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
+    <el-table-column property="bill_receivable" label="应收(元)"></el-table-column>
+    <el-table-column property="bill_dueIn" label="待收(元)"></el-table-column>
+    <el-table-column property="bill_ealPrice" label="实收(元)"></el-table-column>
+    <el-table-column label="余额(元)">
+		<template slot-scope="scope">
+			<el-input
+			v-model="dialog_edit_v"
+			placeholder='请输入要收取的金额'
+			clearable
+			@input="editInput(scope.row.bill_dueIn)">
+			</el-input>
+			<span>{{edit_msg}}</span>
+		</template>
+	</el-table-column>
+    <el-table-column label="操作">
+		<template slot-scope="scope">
+		<el-button @click='openMsg(scope.$index)'>x</el-button>
+		</template>
+	</el-table-column>
 	
   </el-table>
   <span slot="footer" class="dialog-footer">
@@ -250,12 +265,22 @@ export default {
 			],
 			table_collection: [
 				{
+					index:0,
 					bill_type: '常规押金',
 					bill_cycle: '2017-07-01 至 2017-12-31',
 					bill_unit: '-',
 					bill_receivable: '1000',
 					bill_dueIn: '1000',
 					bill_ealPrice: '1000',
+					bill_balance: '暂无余额'
+				},{
+					index:1,
+					bill_type: '常规押金',
+					bill_cycle: '2017-07-01 至 2017-12-31',
+					bill_unit: '-',
+					bill_receivable: '1100',
+					bill_dueIn: '1100',
+					bill_ealPrice: '1100',
 					bill_balance: '暂无余额'
 				}
 			],
@@ -283,7 +308,9 @@ export default {
 			],
 			table_collection2_name_val:'',
 			table_collection2_pay_val:'',
-			input3:''
+			input3:'',
+			dialog_edit_v:'',
+			edit_msg:''
 		};
 	},
 	methods: {
@@ -326,7 +353,42 @@ export default {
 					done();
 				})
 				.catch(() => {});
-		}
+		},
+		editInput(rowNub){
+			let edit_v=parseFloat(this.dialog_edit_v);
+			let row_nub=parseFloat(rowNub)
+			if(edit_v>row_nub){
+				this.edit_msg='加收'+(edit_v-row_nub)
+			}else if(edit_v<row_nub){
+this.edit_msg='减免'+(row_nub-edit_v)
+			}else{
+				this.edit_msg=''
+			}
+		// console.log(i)	
+		},
+		edit_remove(index){
+			this.table_collection.splice(index,1)
+		},
+		openMsg(index) {
+        this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+			this.edit_remove();
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+
+		// console.log(this.$message)
+      }
 	}
 };
 </script>

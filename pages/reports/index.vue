@@ -1,43 +1,65 @@
 <template>
-    <div class="page reports">
-        <el-table :data="tableData" style="width: 100%" border>
-            <el-table-column prop="date" label="日期" width="180"></el-table-column>
-            <el-table-column prop="date" label="日期" width="180"></el-table-column>
-            <el-table-column prop="date" label="日期" width="180"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-        </el-table>
-    </div>
+<div>
+<div class="block">
+    <span class="demonstration">默认</span>
+    <el-date-picker
+      v-model="value3"
+      type="datetimerange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期">
+    </el-date-picker>
+  </div>
+  <div class="block">
+    <span class="demonstration">带快捷选项</span>
+    <el-date-picker
+      v-model="value4"
+      type="datetimerange"
+      :picker-options="pickerOptions2"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      align="right">
+    </el-date-picker>
+  </div>
+</div>
+  
 </template>
 
 <script>
-    export default {
-    	data() {
-    		return {
-    			tableData: [
-    				{
-    					date: '2016-05-02',
-    					name: '王小虎',
-    					address: '上海市普陀区金沙江路 1518 弄'
-    				},
-    				{
-    					date: '2016-05-04',
-    					name: '王小虎',
-    					address: '上海市普陀区金沙江路 1517 弄'
-    				},
-    				{
-    					date: '2016-05-01',
-    					name: '王小虎',
-    					address: '上海市普陀区金沙江路 1519 弄'
-    				},
-    				{
-    					date: '2016-05-03',
-    					name: '王小虎',
-    					address: '上海市普陀区金沙江路 1516 弄'
-    				}
-    			]
-    		};
-    	}
-    };
+  export default {
+    data() {
+      return {
+        pickerOptions2: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        value3: [new Date(1512972948), new Date(2000, 10, 11, 10, 10)],
+        value4: ''
+      };
+    }
+  };
 </script>
