@@ -11,19 +11,25 @@
         </div>
         <div class="devices section">
             <h4>智能设备</h4>
-            <div class="list">
-                <p v-for="device in room.devcies">【门锁】 {{device}} 1021室</p>
-            </div>
+            <el-table :data="room.devcies" stripe>
+                <el-table-column prop="id" label="ID" width="150">
+                </el-table-column>
+                <el-table-column prop="part" label="设备">
+                </el-table-column>
+                <el-table-column prop="room" label="房间">
+                </el-table-column>
+            </el-table>
         </div>
         <div class="bills section">
             <h4>租费设置</h4>
-            <div class="list">
-                <p v-for="bill in room.bills">
-                    <span>{{bill}}: </span>
-                    <span>1500/月 </span>
-                    <span>一月一付</span>
-                </p>
-            </div>
+            <el-table :data="room.bills" stripe>
+                <el-table-column prop="name" label="名称" width="150">
+                </el-table-column>
+                <el-table-column prop="amount" label="金额">
+                </el-table-column>
+                <el-table-column prop="period" label="周期">
+                </el-table-column>
+            </el-table>
         </div>
     </div>
 </template>
@@ -36,8 +42,8 @@
     			default() {
     				return {
     					houseType: {},
-    					devcies: [100121, 121231],
-    					bills: ['租金', '水费', '电费']
+    					devcies: [{ part: '门锁', ro0m: '1021', id: '12132013' }],
+    					bills: [{ name: '租金', amount: '1400', period: '一月一付' }]
     				};
     			}
     		}
