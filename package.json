@@ -32,10 +32,14 @@
 	"babel": {
 		"env": {
 			"test": {
-				"presets": ["env"]
+				"presets": [
+					"env"
+				]
 			}
 		},
-		"presets": ["env"]
+		"presets": [
+			"env"
+		]
 	},
 	"pre-push": {
 		"run": "test"
@@ -46,7 +50,12 @@
 			"!**/node_modules/**",
 			"!**/vendor/**"
 		],
-		"moduleFileExtensions": ["js", "json", "vue", "less"],
+		"moduleFileExtensions": [
+			"js",
+			"json",
+			"vue",
+			"less"
+		],
 		"moduleNameMapper": {
 			"^~(.*)$": "<rootDir>/$1",
 			"^vue$": "vue/dist/vue.common.js"
