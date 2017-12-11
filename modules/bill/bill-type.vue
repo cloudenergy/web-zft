@@ -1,42 +1,21 @@
 <template>
-<el-col :span="2">
-	<el-select v-model="billType" size="mini" filterable placeholder="类型" class="select">
-		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-		</el-option>
-	</el-select>
-	</el-col>
+    <el-col :span="2">
+        <bill-type v-model="billType" />
+    </el-col>
 </template>
 <script>
-	export default {
-		data() {
-			return {
-				options: [
-					{
-						value: 'all',
-						label: '全部'
-					},
-					{
-						value: 'lease',
-						label: '租约'
-					},
-					{
-						value: 'bookkeeping',
-						label: '记账'
-					},
-					{
-						value: 'refunds',
-						label: '退款'
-					},
-				],
-				billType: 'all'
-			};
-		}
-	};
+    export default {
+    	data() {
+    		return {
+    			billType: 'all'
+    		};
+    	}
+    };
 </script>
 
 <style lang="less" scoped>
-	.select {
-		// margin-left: 10px;
-		// margin-top: 10px;
-	}
+    .select {
+    	// margin-left: 10px;
+    	// margin-top: 10px;
+    }
 </style>
