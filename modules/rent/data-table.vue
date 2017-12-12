@@ -1,44 +1,48 @@
 <template>
 	<div id="rentinfo">
-		<el-table :data="tableData" style="width: 100%">
+		<el-table :data="housesrent" style="width: 100%">
 			<el-table-column label="姓名" width="120">
 				<template slot-scope="scope">
 					<div slot="reference" class="name-wrapper">
-						<span size="medium">{{ scope.row.name }}
+						<span size="medium">{{ scope.row.user.name }}
 							<el-popover trigger="hover" placement="top">
-								<p>{{ scope.row.phone }}</p>
+								<p>{{ scope.row.user.mobile }}</p>
 								<span slot="reference" class="name-wrapper">
 									<i class="el-icon-phone"></i>
 								</span>
 							</el-popover>
 						</span>
-						<p style="margin-left: 10px">{{ scope.row.phone }}</p>
+						<p style="margin-left: 10px">{{ scope.row.user.mobile }}</p>
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="房源/租期" min-width="480" max-width="600">
 				<template slot-scope="scope">
-					<el-popover trigger="hover" placement="top">
-						<p>Name: {{ scope.row.name }}</p>
-						<p>Addr: {{ scope.row.address }}</p>
 						<div slot="reference" class="name-wrapper">
-							<div>{{ scope.row.address }}</div>
+							<!-- 地址没有返回，用时间代替 -->
+							<div>{{ scope.row.from }}{{ scope.row.to }}</div>
 							<div class="rent-bottom">
-								<span>￥{{ scope.row.rentdate }}</span>
+								<span>￥{{ scope.row.from }}{{ scope.row.to }}</span>
 							</div>
 						</div>
-					</el-popover>
 				</template>
 			</el-table-column>
 			<el-table-column label="租金" min-width="258">
 				<template slot-scope="scope">
 					<div class="flexcenter">
 						<div class="name-wrapper">
-							<span>￥{{ scope.row.rentalMounthMoney }}元/月&nbsp;×&nbsp;</span>
+							<span>￥{{ scope.row.strategy.freq.rent }}元/月&nbsp;×&nbsp;</span>
 							<span>{{ scope.row.rentalYear }}年</span>
 							<div class="rent-bottom">
-								<span>￥{{ scope.row.rentcash }}/押</span>
-								<span>&nbsp;&nbsp;{{scope.row.rentakMounthpay}}月一付</span>
+								<span>￥{{ scope.row.expenses[2].rent }}/押</span>
+								<span v-if="scope.row.strategy.freq.pattern==1">&nbsp;&nbsp;一月一付</span>
+								<span v-if="scope.row.strategy.freq.pattern==2">&nbsp;&nbsp;二月一付</span>
+								<span v-if="scope.row.strategy.freq.pattern==3">&nbsp;&nbsp;三月一付</span>
+								<span v-if="scope.row.strategy.freq.pattern==6">&nbsp;&nbsp;半年一付</span>
+								<span v-if="scope.row.strategy.freq.pattern==12">&nbsp;&nbsp;一年一付</span>
+								<span v-if="scope.row.strategy.freq.pattern=='paidOff'">&nbsp;&nbsp;一次付清</span>
+								<span v-if="scope.row.strategy.freq.pattern=='prepaid'">预付费</span>
+								<span v-if="scope.row.strategy.freq.pattern=='withRent'">&nbsp;&nbsp;随租金付</span>
 							</div>
 						</div>
 						<div class="rentMoneyshow">
@@ -84,7 +88,7 @@
 			</el-table-column>
 		</el-table>
 		<!-- 租户详情信息清单 -->
-		<el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="65%" :before-close="handleClose" class="">
+		<el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="65%" class="">
 			<div></div>
 			<div class="flexc rgbc">
 				<div class="setborder">
@@ -100,7 +104,8 @@
 						</div>
 						<div>
 							<p>性别</p>
-							<p>{{updateData.user.gender}}</p>
+							<p v-if="updateData.user.gender=='M'">男</p>
+							<p v-if="updateData.user.gender=='F'">女</p>
 						</div>
 						<div>
 							<p>身份证号</p>
@@ -143,7 +148,7 @@
 			</span>
 		</el-dialog>
 		<!-- 用户信息预览 -->
-		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%" :before-close="handleClose">
+		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%">
 			<Showrent/>
 			<div style="height:30px">
 				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
@@ -185,6 +190,7 @@
 				dialogTitle3: '预览租客合同',
 				showinf: 1,
 				showmoney: 1,
+				housesrent: [],
 				list1: [{
 						showlist: '租户详情',
 						value: 1
@@ -211,71 +217,6 @@
 						value: 3
 					}
 				],
-				userinfo: {
-					id: 110,
-					money: 119,
-					name: 'zhangsan',
-					sex: '1',
-					idcardnum: '8769876987689768796',
-					phonenum: 868768768
-				},
-				tableData: [{
-						overdue: '逾期63天',
-						date: '2016-05-03',
-						name: '郭德纲',
-						rent: 0,
-						phone: '1300000001',
-						rentDesc: '租金6期',
-						address: '朝晖三区·2栋2单元201室·B',
-						rentdate: '2017-07-01 → 2017-07-31',
-						rentalMounthMoney: '2000',
-						rentalYear: '2',
-						rentcash: '2000',
-						rentakMounthpay: '3'
-					},
-					{
-						overdue: '逾期62天',
-						date: '2016-05-02',
-						name: '老刘',
-						rent: -122,
-						rentDesc: '押金',
-						phone: '1300000002',
-						address: '龙湖滟澜山·8栋2单元203室·G',
-						rentdate: '2017-08-01 → 2017-08-20',
-						rentalMounthMoney: '2000',
-						rentalYear: '2',
-						rentcash: '2000',
-						rentakMounthpay: '3'
-					},
-					{
-						overdue: '逾期61天',
-						date: '2016-05-04',
-						name: '冰儿',
-						rent: 2200,
-						rentDesc: '租金11期',
-						phone: '1300000003',
-						address: '朝晖三区·3栋3单元301室·改哎的名字',
-						rentdate: '2017-08-22 → 2017-11-21',
-						rentalMounthMoney: '2000',
-						rentalYear: '2',
-						rentcash: '2000',
-						rentakMounthpay: '3'
-					},
-					{
-						overdue: '',
-						date: '2016-05-01',
-						name: '不是整天 ',
-						rent: 200,
-						rentDesc: '押金',
-						phone: '1300000004',
-						address: '保利香槟国际·2栋2单元2室·这个名字很长啊这个字啊这个名字名字很长啊',
-						rentdate: '2017-10-12 → 2018-04-11',
-						rentalMounthMoney: '2000',
-						rentalYear: '2',
-						rentcash: '2000',
-						rentakMounthpay: '3'
-					}
-				],
 				userdatainfo: {
 					"contractId": 1,
 					"roomId": 430000,
@@ -287,55 +228,25 @@
 						"documentId": "330109198007085678X",
 						"documentType": 1,
 						"gender": "M"
-					},
-					"from": 1510326577,
-					"to": 1510326577,
-					"strategy": {
-						"daily": {
-							"rent": 10000
-						},
-						"monthly": {
-							"once": 0,
-							"freq": {
-								"interval": "1/2/3/6/12",
-								"rent": 10000,
-								"pattern": "BILL/PREPAY"
-							},
-							"customer": [{
-								"from": 1509976830,
-								"to": 1509976830,
-								"forFree": "0不免租金/1免租金",
-								"rent": 10000,
-								"interval": "1/2/3/6/12"
-							}]
-						}
-					},
-					"expenses": [{
-						"configId": "1/2/3...",
-						"rent": 10000,
-						"interval": "1/2/3/6/12"
-					}],
-					"paymentPlan": "F10",
-					"signUpTime": 1510326577
+					}
 				}
 			};
 		},
 		created(){
-			this.updateData = this.userdatainfo
+			this.query()
+			this.updateData = this.userdatainfo;
 		},
 		methods: {
-			handleClose(done) {
-				this.$confirm('Are you sure to close this dialog?')
-					.then(() => {
-						done();
-					})
-					.catch(() => {});
+			query(){
+				this.$model('contracts')
+				.query()
+				.then((data) =>
+				this.$set(this, 'housesrent', data));
 			},
 			rentuser(index, value, item) {
 				this.dialogVisible = true;
 				this.showinf = value;
 				this.updateData = item;
-				this.updateData = this.userdatainfo;
 			},
 			rentuser2(data, value) {
 				var that = this;
@@ -346,7 +257,7 @@
 						data: {
 							item: this.userdatainfo
 						},
-						title: '新增房源'
+						title: '续租'
 					});
 
 				} else if (value == 2) {

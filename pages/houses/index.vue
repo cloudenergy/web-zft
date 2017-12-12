@@ -5,23 +5,31 @@
             <Search />
             <div class="houses">
                 <div class="room" v-for="house in houses">
-                    <p>{{house.name}}</p>
+                    <div>{{house.name}}
+                        <span class="badge pull-right">2</span>
+                    </div>
                     <div class="cells">
-                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" />
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" @view="showDrawer" />
                     </div>
                 </div>
             </div>
         </div>
+        <drawer-panel :open.sync="viewRoom">
+            <div v-if="viewRoom" class="drawer">
+                <Preview />
+            </div>
+        </drawer-panel>
     </div>
 </template>
 
 <script>
-    import { Tab, Room, Search } from '~/modules/house';
+    import { Tab, Room, Search, Preview } from '~/modules/house';
     export default {
-    	components: { Tab, Room, Search },
+    	components: { Tab, Room, Search, Preview },
     	data() {
     		return {
-    			houses: []
+    			houses: [],
+    			viewRoom: false
     		};
     	},
     	created() {
@@ -36,6 +44,9 @@
     			this.$model('houses')
     				.query()
     				.then(data => this.$set(this, 'houses', data));
+    		},
+    		showDrawer(id) {
+    			this.viewRoom = true;
     		}
     	}
     };
@@ -47,7 +58,7 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 20px;
+    		margin-left: 40px;
     	}
 
     	.room + .room {
@@ -71,5 +82,8 @@
     			}
     		}
     	}
+    }
+    .drawer {
+    	padding: 30px;
     }
 </style>

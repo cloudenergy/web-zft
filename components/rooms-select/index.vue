@@ -1,9 +1,9 @@
 <script>
     const rooms = [
-    	{ val: 1, label: '1室' },
-    	{ val: 2, label: '2室' },
-    	{ val: 3, label: '3室' },
-    	{ val: 4, label: '4室' }
+    	{ val: 1, label: '一室' },
+    	{ val: 2, label: '两室' },
+    	{ val: 3, label: '三室' },
+    	{ val: 4, label: '四室' }
     ];
     export default {
     	props: ['value'],
@@ -16,7 +16,7 @@
     				value={this.value}
     			>
     				{rooms.map(item => {
-    					return <el-option value={item.val} label="{item.label}" />;
+    					return <el-option value={item.val} label={item.label} />;
     				})}
     			</el-select>
     		);

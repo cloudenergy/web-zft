@@ -13,12 +13,13 @@ export default {
 			id: '',
 			projectId: '980488f9adfasdf'
 		},
-		city_area: {},
+		cityArea: {},
 		houseTypes: {
 			SOLE: ['sole', '整租'],
 			SHARE: ['share', '合租'],
 			ENTIRE: ['entire', '整栋']
-		}
+		},
+		defaultHouseType: 'sole'
 	},
 	actions: {
 		GET_COMMUNITIES() {
