@@ -147,7 +147,7 @@
                 <el-table-column property="bill_ealPrice" label="实收(元)"></el-table-column>
                 <el-table-column label="余额(元)">
                     <template slot-scope="scope">
-                        <el-input v-model="dialog_edit_v" placeholder='请输入要收取的金额' clearable @input="editInput(scope.row.bill_dueIn)">
+                        <el-input v-model="dialog_edit_v" placeholder='请输入要收取的金额' type="number"clearable @input="editInput(scope.row.bill_dueIn)">
                         </el-input>
                         <span>{{edit_msg}}</span>
                     </template>
@@ -157,30 +157,6 @@
                         <el-button @click='openMsg(scope.$index)'>x</el-button>
                     </template>
                 </el-table-column>
-
-    <el-table-column property="bill_type" label="帐单22类型"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期"></el-table-column>
-    <el-table-column property="bill_unit" label="单价"></el-table-column>
-    <el-table-column property="bill_receivable" label="应收(元)"></el-table-column>
-    <el-table-column property="bill_dueIn" label="待收(元)"></el-table-column>
-    <el-table-column property="bill_ealPrice" label="实收(元)"></el-table-column>
-    <el-table-column label="余额(元)">
-		<template slot-scope="scope">
-			<el-input
-			v-model="dialog_edit_v"
-			placeholder='请输入要收取的金额'
-			clearable
-			type="number"
-			@input="editInput(scope.row.bill_dueIn)">
-			</el-input>
-			<span>{{edit_msg}}</span>
-		</template>
-	</el-table-column>
-    <el-table-column label="操作">
-		<template slot-scope="scope">
-		<el-button @click='openMsg(scope.$index)'>x</el-button>
-		</template>
-	</el-table-column>
 	
   </el-table>
   <span slot="footer" class="dialog-footer">
@@ -365,7 +341,6 @@ export default {
 			} else {
 				this.edit_msg = '';
 			}
-			console.log(typeof edit_v)
 		},
 		edit_remove(index) {
 			this.table_collection.splice(index, 1);
