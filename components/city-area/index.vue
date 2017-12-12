@@ -3,7 +3,7 @@
 
     function isCity(city) {
     	return function(item) {
-    		return city ? item.parent == city : true;
+    		return city ? item.parent == city : false;
     	};
     }
 

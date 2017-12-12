@@ -111,13 +111,14 @@
 			translate(form) {
 				return {
 					user: form.user,
-					"roomId": form.property.roomId,
-					"from": getTime(form.contract.leaseStart) / 1000,
-					"to": getTime(form.contract.leaseEnd) / 1000,
-					"strategy": this.createStrategy(form),
-					"expenses": this.createExpense(form),
-					"paymentPlan": this.createPaymentPlan(form.expense),
-					"signUpTime": getTime(form.contract.signUpDate) / 1000
+					roomId: form.property.roomId,
+					from: getTime(form.contract.leaseStart) / 1000,
+					to: getTime(form.contract.leaseEnd) / 1000,
+					contractNumber: _.get(form, 'contract.contractNumber', ''),
+					strategy: this.createStrategy(form),
+					expenses: this.createExpense(form),
+					paymentPlan: this.createPaymentPlan(form.expense),
+					signUpTime: getTime(form.contract.signUpDate) / 1000
 				}
 			},
 			createPaymentPlan(expense) {

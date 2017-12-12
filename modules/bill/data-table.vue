@@ -1,55 +1,55 @@
 <template>
-	<div>
-		<el-table :data="tableData" style="width: 100%">
-			<el-table-column label="应支付日" width="180">
-				<template slot-scope="scope">
-					<p style="margin-left: 10px;color:red">{{ scope.row.overdue }}</p>
-					<p style="margin-left: 10px">{{ scope.row.date }}</p>
-				</template>
-			</el-table-column>
-			<el-table-column label="住户姓名/帐号" width="120">
-				<template slot-scope="scope">
-					<div slot="reference" class="name-wrapper">
-						 <i class="el-icon-phone"></i>
+    <div>
+        <el-table :data="tableData" style="width: 100%">
+            <el-table-column label="应支付日" width="180">
+                <template slot-scope="scope">
+                    <p style="margin-left: 10px;color:red">{{ scope.row.overdue }}</p>
+                    <p style="margin-left: 10px">{{ scope.row.date }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column label="住户姓名/帐号" width="120">
+                <template slot-scope="scope">
+                    <div slot="reference" class="name-wrapper">
+                        <i class="el-icon-phone"></i>
                         <span size="medium">{{ scope.row.name }}</span>
-						<p style="margin-left: 10px">{{ scope.row.phone }}</p>
-					</div>
-				</template>
-			</el-table-column>
-			<el-table-column label="房源/租期">
-				<template slot-scope="scope">
-					<el-popover trigger="hover" placement="top">
-						<p>Name: {{ scope.row.name }}</p>
-						<p>Addr: {{ scope.row.address }}</p>
-						<div slot="reference" class="name-wrapper">
-							<el-tag size="medium">{{ scope.row.address }}</el-tag>
-						</div>
-					</el-popover>
-				</template>
-			</el-table-column>
-			<el-table-column label="金额(¥)/账期" width="120">
-				<template slot-scope="scope">
-					<p style="margin-left: 10px">{{ scope.row.rent }}</p>
-					<p style="margin-left: 10px;color:grey">{{ scope.row.rentDesc }}</p>
-				</template>
-			</el-table-column>
-			<el-table-column label="操作" width="120">
-				<template slot-scope="scope">
-					<el-dropdown>
-						<el-button type="primary" size="mini" @click.native="handleReceive(scope.$index, scope.row)">
-							收款
-							<i class="el-icon-arrow-down el-icon--right"></i>
-						</el-button>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item @click.native="handleEdit(scope.$index, scope.row)">编辑</el-dropdown-item>
-							<el-dropdown-item @click.native="addComment(scope.$index, scope.row)">备注</el-dropdown-item>
-							<el-dropdown-item @click.native="changeDate(scope.$index, scope.row)">改期</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
-				</template>
-			</el-table-column>
-		</el-table>
-		<!-- <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+                        <p style="margin-left: 10px">{{ scope.row.phone }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column label="房源/租期">
+                <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                        <p>Name: {{ scope.row.name }}</p>
+                        <p>Addr: {{ scope.row.address }}</p>
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.address }}</el-tag>
+                        </div>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column label="金额(¥)/账期" width="120">
+                <template slot-scope="scope">
+                    <p style="margin-left: 10px">{{ scope.row.rent }}</p>
+                    <p style="margin-left: 10px;color:grey">{{ scope.row.rentDesc }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="120">
+                <template slot-scope="scope">
+                    <el-dropdown>
+                        <el-button type="primary" size="mini" @click.native="handleReceive(scope.$index, scope.row)">
+                            收款
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item @click.native="handleEdit(scope.$index, scope.row)">编辑</el-dropdown-item>
+                            <el-dropdown-item @click.native="addComment(scope.$index, scope.row)">备注</el-dropdown-item>
+                            <el-dropdown-item @click.native="changeDate(scope.$index, scope.row)">改期</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </template>
+            </el-table-column>
+        </el-table>
+        <!-- <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
 			<span>This is a message</span>
 			<span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -57,13 +57,12 @@
             </span>
 		</el-dialog> -->
 
-<!-- 收款 -->
+        <!-- 收款 -->
 
-<el-dialog :title='dialogTitle' :visible.sync="dialog_collection" width="80%" class="dialog_collection">
-	<!-- <P><span>应支付日:{{ tableData.data }}</span> <span>金额:{{ tableData.rent }}</span></P> -->
+        <el-dialog :title='dialogTitle' :visible.sync="dialog_collection" width="80%" class="dialog_collection">
+            <!-- <P><span>应支付日:{{ tableData.data }}</span> <span>金额:{{ tableData.rent }}</span></P> -->
 
-
-<!-- <table>
+            <!-- <table>
 	<thead>
 		<tr>
 			<td>帐单类型</td>
@@ -89,90 +88,75 @@
 	</tbody>
 </table> -->
 
+            <el-table :data="table_collection">
 
-  <el-table :data="table_collection">
-	  						
+                <el-table-column property="bill_type" label="帐单类型"></el-table-column>
+                <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
+                <el-table-column property="bill_unit" label="单价"></el-table-column>
+                <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
+                <el-table-column property="bill_dueIn" label="待收(元)" width="200"></el-table-column>
+                <el-table-column property="bill_ealPrice" label="实收(元)" width="200"></el-table-column>
+                <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
 
-    <el-table-column property="bill_type" label="帐单类型"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期" width="200"></el-table-column>
-    <el-table-column property="bill_unit" label="单价"></el-table-column>
-    <el-table-column property="bill_receivable" label="应收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_dueIn" label="待收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_ealPrice" label="实收(元)" width="200"></el-table-column>
-    <el-table-column property="bill_balance" label="余额(元)" width="200"></el-table-column>
-	
-  </el-table>
+            </el-table>
 
-<el-table :data="table_collection2" class="table_collection2">
-	<el-table-column property='table_collection2_data'  label="实际支付时间"></el-table-column>
-    <el-table-column property="bill_cycle" label="支付方式">
-		<template slot-scope="scope">
-			<el-select v-model="table_collection2_pay_val" placeholder="请选择">
-    <el-option
-      v-for="item in table_collection2.table_collection2_pay"
-      :key="item"
-      :label="item"
-      :value="item">
-    </el-option>
-  </el-select>
-		</template>
-	</el-table-column>
-    <el-table-column property="bill_unit" label="经办人">
-		<template slot-scope="scope">
-			<el-select v-model="table_collection2_name_val" placeholder="请选择">
-    <el-option
-      v-for="item2 in table_collection2.table_collection2_name"
-      :key="item2"
-      :label="item2"
-      :value="item2">
-    </el-option>
-  </el-select>
-		</template>
-	</el-table-column>
-    <el-table-column property="bill_balance" label="备注">
-		<template slot-scope="scope">
-		<el-input type='textarea'></el-input>
-		</template>
-	</el-table-column>
-</el-table>
-<el-input placeholder="请输入内容" v-model="input3" class="input3">
-    <template slot="prepend">
-		账单备注
-	</template>
-  </el-input>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialog_collection = false">取 消</el-button>
-    <el-button type="primary" @click="dialog_collection = false">确 定</el-button>
-  </span>
-</el-dialog>
-	<!-- 编辑 -->
-<el-dialog :title='dialogTitle' :visible.sync="dialog_edit" width='80%'>
-	<!-- <P>应支付日:{{ scope.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
-  <el-table :data="table_collection">
-	  						
+            <el-table :data="table_collection2" class="table_collection2">
+                <el-table-column property='table_collection2_data' label="实际支付时间"></el-table-column>
+                <el-table-column property="bill_cycle" label="支付方式">
+                    <template slot-scope="scope">
+                        <el-select v-model="table_collection2_pay_val" placeholder="请选择">
+                            <el-option v-for="item in table_collection2.table_collection2_pay" :key="item" :label="item" :value="item">
+                            </el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column property="bill_unit" label="经办人">
+                    <template slot-scope="scope">
+                        <el-select v-model="table_collection2_name_val" placeholder="请选择">
+                            <el-option v-for="item2 in table_collection2.table_collection2_name" :key="item2" :label="item2" :value="item2">
+                            </el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column property="bill_balance" label="备注">
+                    <template slot-scope="scope">
+                        <el-input type='textarea'></el-input>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-input placeholder="请输入内容" v-model="input3" class="input3">
+                <template slot="prepend">
+                    账单备注
+                </template>
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialog_collection = false">取 消</el-button>
+                <el-button type="primary" @click="dialog_collection = false">确 定</el-button>
+            </span>
+        </el-dialog>
+        <!-- 编辑 -->
+        <el-dialog :title='dialogTitle' :visible.sync="dialog_edit" width='80%'>
+            <!-- <P>应支付日:{{ scope.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
+            <el-table :data="table_collection">
 
-    <el-table-column property="bill_type" label="帐单22类型"></el-table-column>
-    <el-table-column property="bill_cycle" label="费用周期"></el-table-column>
-    <el-table-column property="bill_unit" label="单价"></el-table-column>
-    <el-table-column property="bill_receivable" label="应收(元)"></el-table-column>
-    <el-table-column property="bill_dueIn" label="待收(元)"></el-table-column>
-    <el-table-column property="bill_ealPrice" label="实收(元)"></el-table-column>
-    <el-table-column label="余额(元)">
-		<template slot-scope="scope">
-			<el-input
-			v-model="dialog_edit_v"
-			placeholder='请输入要收取的金额'
-			clearable
-			@input="editInput(scope.row.bill_dueIn)">
-			</el-input>
-			<span>{{edit_msg}}</span>
-		</template>
-	</el-table-column>
-    <el-table-column label="操作">
-		<template slot-scope="scope">
-		<el-button @click='openMsg(scope.$index)'>x</el-button>
-		</template>
-	</el-table-column>
+                <el-table-column property="bill_type" label="帐单22类型"></el-table-column>
+                <el-table-column property="bill_cycle" label="费用周期"></el-table-column>
+                <el-table-column property="bill_unit" label="单价"></el-table-column>
+                <el-table-column property="bill_receivable" label="应收(元)"></el-table-column>
+                <el-table-column property="bill_dueIn" label="待收(元)"></el-table-column>
+                <el-table-column property="bill_ealPrice" label="实收(元)"></el-table-column>
+                <el-table-column label="余额(元)">
+                    <template slot-scope="scope">
+                        <el-input v-model="dialog_edit_v" placeholder='请输入要收取的金额' type="number"clearable @input="editInput(scope.row.bill_dueIn)">
+                        </el-input>
+                        <span>{{edit_msg}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作">
+                    <template slot-scope="scope">
+                        <el-button @click='openMsg(scope.$index)'>x</el-button>
+                    </template>
+                </el-table-column>
 	
   </el-table>
   <span slot="footer" class="dialog-footer">
@@ -181,40 +165,33 @@
   </span>
 </el-dialog>
 
-	<!-- 备注 -->
-<el-dialog :title='dialogTitle' :visible.sync="dialog_remark" width='30%'>
-	<!-- <P>应支付日:{{ dataT.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
-  <el-form>
-	  <el-input
-  type="textarea"
-  :rows="2"
-  placeholder="请输入内容"
-  v-model="billTextarea">
-</el-input>
-	  </el-form>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialog_remark = false">取 消</el-button>
-    <el-button type="primary" @click="dialog_remark = false">确 定</el-button>
-  </span>
-</el-dialog>
+        <!-- 备注 -->
+        <el-dialog :title='dialogTitle' :visible.sync="dialog_remark" width='30%'>
+            <!-- <P>应支付日:{{ dataT.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
+            <el-form>
+                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="billTextarea">
+                </el-input>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialog_remark = false">取 消</el-button>
+                <el-button type="primary" @click="dialog_remark = false">确 定</el-button>
+            </span>
+        </el-dialog>
 
-	<!-- 改期 -->
-<el-dialog :title='dialogTitle' :visible.sync="dialog_take_a_rain_check" width='20%'>
-	<!-- <P>应支付日:{{ scope.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
-	<el-form>
-  <el-date-picker
-      v-model="billData"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-	</el-form>
-	<span slot="footer" class="dialog-footer">
-    <el-button @click="dialog_take_a_rain_check = false">取 消</el-button>
-    <el-button type="primary" @click="dialog_take_a_rain_check = false">确 定</el-button>
-  </span>
-</el-dialog>
+        <!-- 改期 -->
+        <el-dialog :title='dialogTitle' :visible.sync="dialog_take_a_rain_check" width='20%'>
+            <!-- <P>应支付日:{{ scope.row.date }} </P><P>金额:{{ scope.row.rent }}</P> -->
+            <el-form>
+                <el-date-picker v-model="billData" type="date" placeholder="选择日期">
+                </el-date-picker>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialog_take_a_rain_check = false">取 消</el-button>
+                <el-button type="primary" @click="dialog_take_a_rain_check = false">确 定</el-button>
+            </span>
+        </el-dialog>
 
-	</div>
+    </div>
 </template>
 
 <script>
@@ -265,22 +242,13 @@ export default {
 			],
 			table_collection: [
 				{
-					index:0,
+					index: 0,
 					bill_type: '常规押金',
 					bill_cycle: '2017-07-01 至 2017-12-31',
 					bill_unit: '-',
 					bill_receivable: '1000',
 					bill_dueIn: '1000',
 					bill_ealPrice: '1000',
-					bill_balance: '暂无余额'
-				},{
-					index:1,
-					bill_type: '常规押金',
-					bill_cycle: '2017-07-01 至 2017-12-31',
-					bill_unit: '-',
-					bill_receivable: '1100',
-					bill_dueIn: '1100',
-					bill_ealPrice: '1100',
 					bill_balance: '暂无余额'
 				}
 			],
@@ -301,16 +269,22 @@ export default {
 			table_collection2: [
 				{
 					table_collection2_data: '2017-12-09 14:54:21',
-					table_collection2_pay: ['现金','转账','微信','支付宝','刷卡','其他',],
-					table_collection2_name: ['x','h'],
-					
+					table_collection2_pay: [
+						'现金',
+						'转账',
+						'微信',
+						'支付宝',
+						'刷卡',
+						'其他'
+					],
+					table_collection2_name: ['x', 'h']
 				}
 			],
-			table_collection2_name_val:'',
-			table_collection2_pay_val:'',
-			input3:'',
-			dialog_edit_v:'',
-			edit_msg:''
+			table_collection2_name_val: '',
+			table_collection2_pay_val: '',
+			input3: '',
+			dialog_edit_v: '',
+			edit_msg: ''
 		};
 	},
 	methods: {
@@ -354,59 +328,63 @@ export default {
 				})
 				.catch(() => {});
 		},
-		editInput(rowNub){
-			let edit_v=parseFloat(this.dialog_edit_v);
-			let row_nub=parseFloat(rowNub)
-			if(edit_v>row_nub){
-				this.edit_msg='加收'+(edit_v-row_nub)
-			}else if(edit_v<row_nub){
-this.edit_msg='减免'+(row_nub-edit_v)
-			}else{
-				this.edit_msg=''
+		editInput(rowNub) {
+			let edit_v = parseFloat(this.dialog_edit_v);
+			let row_nub = parseFloat(rowNub);
+
+	
+
+			if (edit_v > row_nub) {
+				this.edit_msg = '加收' + (edit_v - row_nub);
+			} else if (edit_v < row_nub) {
+				this.edit_msg = '减免' + (row_nub - edit_v);
+			} else {
+				this.edit_msg = '';
 			}
-		// console.log(i)	
 		},
-		edit_remove(index){
-			this.table_collection.splice(index,1)
+		edit_remove(index) {
+			this.table_collection.splice(index, 1);
 		},
 		openMsg(index) {
-        this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-			this.edit_remove();
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
+			this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.edit_remove();
+					this.$message({
+						type: 'success',
+						message: '删除成功!'
+					});
+				})
+				.catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});
+				});
 
-		// console.log(this.$message)
-      }
+			// console.log(this.$message)
+		}
 	}
 };
 </script>
-<<style>
-.table_collection2{
-	margin-top:20px;
-}
-.input3{
-	margin-top:20px;
-}
-/* .dialog_collection table{
-width:80%;
-border-right: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-}
-.dialog_collection table  td{
-	border-left: 1px solid #ccc;
-	border-top: 1px solid #ccc;
-	text-align: center;
-} */
+<style>
+    .table_collection2 {
+    	margin-top: 20px;
+    }
+    .input3 {
+    	margin-top: 20px;
+    }
+    /* .dialog_collection table{
+    width:80%;
+    border-right: 1px solid #ccc;
+    	border-bottom: 1px solid #ccc;
+    }
+    .dialog_collection table  td{
+    	border-left: 1px solid #ccc;
+    	border-top: 1px solid #ccc;
+    	text-align: center;
+    } */
 </style>

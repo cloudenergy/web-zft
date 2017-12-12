@@ -1,6 +1,7 @@
 @base: 1px;
 
 /* 颜色定义 */
+
 @primary: #409eff;
 @dark: #2d2f33;
 @grey: #5a5e66;
@@ -8,62 +9,77 @@
 @light: #edf2fc;
 
 /* 状态色 */
+
 @success: #67c23a;
 @warning: #eb9e05;
 @danger: #fa5555;
 @info: #878d99;
-
 .Font-PF (@type: Light) {
-	font-family: ~'PingFangSC-@{type}', 'Microsoft YaHei', '微软雅黑', serif;
+    font-family:~'PingFangSC-@{type}',
+    'Microsoft YaHei',
+    '微软雅黑',
+    serif;
 }
 
 .Font-SFC (@type: Light) {
-	font-family: SFNSDisplay, ~'PingFangSC-@{type}', 'Microsoft YaHei', '微软雅黑',
-		serif;
+    font-family: SFNSDisplay,
+    ~'PingFangSC-@{type}',
+    'Microsoft YaHei',
+    '微软雅黑',
+    serif;
 }
 
 .Font-DIN (@type: Regular) {
-	font-family: ~'DINAlternate-@{type}', ~'DINCondensed-@{type}',
-		'Microsoft YaHei', '微软雅黑';
+    font-family:~'DINAlternate-@{type}',
+    ~'DINCondensed-@{type}',
+    'Microsoft YaHei',
+    '微软雅黑';
 }
 
 //正方形 覆盖箭头
 .arrow(@direction: 90px, @size: 14px, @stroke: 1px, @bgcolor: #999) {
-	width: @size;
-	height: @size;
-	margin: @size/2;
-	transform: rotate((@direction + 45) * 1deg);
-
-	&:after {
-		content: '';
-		position: absolute;
-		left: @stroke;
-		top: @stroke;
-		width: @size;
-		height: @size;
-		background: @bgcolor;
-	}
+    width: @size;
+    height: @size;
+    margin: @size/2;
+    transform: rotate((@direction + 45) * 1deg);
+    &:after {
+        content: '';
+        position: absolute;
+        left: @stroke;
+        top: @stroke;
+        width: @size;
+        height: @size;
+        background: @bgcolor;
+    }
 }
 
 .clearfix() {
-	zoom: 1;
-	&:before {
-		content: ' ';
-		display: block;
-	}
-	&:after {
-		content: ' ';
-		display: table;
-		clear: both;
-	}
+    zoom: 1;
+    &:before {
+        content: ' ';
+        display: block;
+    }
+    &:after {
+        content: ' ';
+        display: table;
+        clear: both;
+    }
 }
 
 .size(@width) {
-	width: @width;
-	height: @width;
+    width: @width;
+    height: @width;
 }
 
 .size(@width, @height) {
-	width: @width;
-	height: @height;
+    width: @width;
+    height: @height;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
 }

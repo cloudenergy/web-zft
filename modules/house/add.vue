@@ -49,7 +49,6 @@
     	},
     	created() {
     		Object.assign(this.form, this.item);
-    		console.log('form: ', this.form);
     	},
     	methods: {
     		mergeBaseInfo(val) {

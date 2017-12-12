@@ -1,9 +1,7 @@
 <template>
     <div class="secondary-side">
         <el-tabs v-model="type" @tab-click="change">
-            <el-tab-pane label="合租" name="1"></el-tab-pane>
-            <el-tab-pane label="整租" name="2"></el-tab-pane>
-            <el-tab-pane label="整幢" name="3"></el-tab-pane>
+            <el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
         </el-tabs>
         <city-area />
         <el-menu default-active="0">
@@ -19,10 +17,17 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
     export default {
+    	computed: {
+    		...mapState({
+    			houseTypes: state => state.houseTypes,
+    			defaultHouseTypes: state => state.defaultHouseTypes
+    		})
+    	},
     	data() {
     		return {
-    			type: '1',
+    			type: 'sole',
     			filters: {
     				city: '',
     				area: ''
