@@ -73,16 +73,16 @@
 		},
 		computed: {
 			sixMonthsLength() {
-				return addMonths(this.contract.leaseStart, 6).toString()
+				return addMonths(this.contract.leaseStart, 6)
 			},
 			oneYearLength() {
-				return addYears(this.contract.leaseStart, 1).toString()
+				return addYears(this.contract.leaseStart, 1)
 			},
 			twoYearsLength() {
-				return addYears(this.contract.leaseStart, 2).toString()
+				return addYears(this.contract.leaseStart, 2)
 			},
 			threeYearsLength() {
-				return addYears(this.contract.leaseStart, 3).toString()
+				return addYears(this.contract.leaseStart, 3)
 			}
 		},
 		data() {
