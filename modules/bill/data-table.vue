@@ -163,6 +163,7 @@
 			v-model="dialog_edit_v"
 			placeholder='请输入要收取的金额'
 			clearable
+			type="number"
 			@input="editInput(scope.row.bill_dueIn)">
 			</el-input>
 			<span>{{edit_msg}}</span>
@@ -265,22 +266,13 @@ export default {
 			],
 			table_collection: [
 				{
-					index:0,
+					index: 0,
 					bill_type: '常规押金',
 					bill_cycle: '2017-07-01 至 2017-12-31',
 					bill_unit: '-',
 					bill_receivable: '1000',
 					bill_dueIn: '1000',
 					bill_ealPrice: '1000',
-					bill_balance: '暂无余额'
-				},{
-					index:1,
-					bill_type: '常规押金',
-					bill_cycle: '2017-07-01 至 2017-12-31',
-					bill_unit: '-',
-					bill_receivable: '1100',
-					bill_dueIn: '1100',
-					bill_ealPrice: '1100',
 					bill_balance: '暂无余额'
 				}
 			],
@@ -301,16 +293,22 @@ export default {
 			table_collection2: [
 				{
 					table_collection2_data: '2017-12-09 14:54:21',
-					table_collection2_pay: ['现金','转账','微信','支付宝','刷卡','其他',],
-					table_collection2_name: ['x','h'],
-					
+					table_collection2_pay: [
+						'现金',
+						'转账',
+						'微信',
+						'支付宝',
+						'刷卡',
+						'其他'
+					],
+					table_collection2_name: ['x', 'h']
 				}
 			],
-			table_collection2_name_val:'',
-			table_collection2_pay_val:'',
-			input3:'',
-			dialog_edit_v:'',
-			edit_msg:''
+			table_collection2_name_val: '',
+			table_collection2_pay_val: '',
+			input3: '',
+			dialog_edit_v: '',
+			edit_msg: ''
 		};
 	},
 	methods: {
@@ -354,41 +352,46 @@ export default {
 				})
 				.catch(() => {});
 		},
-		editInput(rowNub){
-			let edit_v=parseFloat(this.dialog_edit_v);
-			let row_nub=parseFloat(rowNub)
-			if(edit_v>row_nub){
-				this.edit_msg='加收'+(edit_v-row_nub)
-			}else if(edit_v<row_nub){
-this.edit_msg='减免'+(row_nub-edit_v)
-			}else{
-				this.edit_msg=''
+		editInput(rowNub) {
+			let edit_v = parseFloat(this.dialog_edit_v);
+			let row_nub = parseFloat(rowNub);
+
+	
+
+			if (edit_v > row_nub) {
+				this.edit_msg = '加收' + (edit_v - row_nub);
+			} else if (edit_v < row_nub) {
+				this.edit_msg = '减免' + (row_nub - edit_v);
+			} else {
+				this.edit_msg = '';
 			}
-		// console.log(i)	
+			console.log(typeof edit_v)
 		},
-		edit_remove(index){
-			this.table_collection.splice(index,1)
+		edit_remove(index) {
+			this.table_collection.splice(index, 1);
 		},
 		openMsg(index) {
-        this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-			this.edit_remove();
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
+			this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.edit_remove();
+					this.$message({
+						type: 'success',
+						message: '删除成功!'
+					});
+				})
+				.catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});
+				});
 
-		// console.log(this.$message)
-      }
+			// console.log(this.$message)
+		}
 	}
 };
 </script>
