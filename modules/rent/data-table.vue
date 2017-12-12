@@ -6,7 +6,8 @@
 					<div slot="reference" class="name-wrapper">
 						<span size="medium">{{ scope.row.user.name }}
 							<el-popover trigger="hover" placement="top">
-								<p>{{ scope.row.user.mobile }}</p>
+								<p v-if="scope.row.user.mobile!=''">{{ scope.row.user.mobile }}</p>
+								<p v-if="scope.row.user.mobile==''">暂无信息</p>
 								<span slot="reference" class="name-wrapper">
 									<i class="el-icon-phone"></i>
 								</span>
@@ -19,10 +20,10 @@
 			<el-table-column label="房源/租期" min-width="480" max-width="600">
 				<template slot-scope="scope">
 						<div slot="reference" class="name-wrapper">
-							<!-- 地址没有返回，用时间代替 -->
-							<div>{{ scope.row.from }}{{ scope.row.to }}</div>
+							<!-- @@@地址没有返回，用时间代替 -->
+							<div>{{ scope.row.From }}{{ scope.row.To }}</div>
 							<div class="rent-bottom">
-								<span>￥{{ scope.row.from }}{{ scope.row.to }}</span>
+								<span>{{ scope.row.From }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.To }}</span>
 							</div>
 						</div>
 				</template>
@@ -240,8 +241,13 @@
 			query(){
 				this.$model('contracts')
 				.query()
-				.then((data) =>
-				this.$set(this, 'housesrent', data));
+				.then((data) =>{
+					data.forEach(element => {
+						element.To = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+						element.From = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+					});
+					this.$set(this, 'housesrent', data);
+				})
 			},
 			rentuser(index, value, item) {
 				this.dialogVisible = true;

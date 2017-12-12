@@ -4,7 +4,7 @@
 			<h3>续租</h3>
 			<UserProfile :user="form.user"></UserProfile>
 			<HouseProfile :property="form.property"></HouseProfile>
-			<ContractDetail :contract="form.contract"></ContractDetail>
+			<Contract :contract="form.contract"></Contract>
 
 			<h3 class="section-2">租费设置</h3>
 			<ExpenseSetting :expense="form.expense"></ExpenseSetting>
@@ -19,9 +19,7 @@
 
 <script>
 	import UserProfile from '../relet/UserProfile.vue';
-	import HouseProfile from '../relet/HouseProfile.vue';
-	import ContractDetail from '../relet/ContractDetail.vue';
-	import ExpenseSetting from '../relet/ExpenseSetting.vue';
+	import {HouseProfile,Contract,ExpenseSetting} from '../contract'
 
 	import {addYears, format, getTime} from 'date-fns';
 
@@ -183,7 +181,7 @@
 		components: {
 			UserProfile,
 			HouseProfile,
-			ContractDetail,
+			Contract,
 			ExpenseSetting
 		}
 	};
