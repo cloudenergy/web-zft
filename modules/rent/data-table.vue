@@ -169,7 +169,7 @@
 		Showrent,
 		Paym
 	} from '../userinfo';
-	import {chineseHuman} from '../../utils/date.js'
+	import {readableDuration} from '../../utils/date.js'
 	export default {
 		components: {
 			Rentinfo,
@@ -246,7 +246,7 @@
 					data.map(element => {
 						element.To = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.From = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.allM=chineseHuman(30000000)
+						element.allM = readableDuration(30000000)
 					});
 					this.$set(this, 'housesrent', data);
 				})
