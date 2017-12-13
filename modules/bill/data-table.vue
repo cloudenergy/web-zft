@@ -22,7 +22,7 @@
                         <p>Name: {{ scope.row.name }}</p>
                         <p>Addr: {{ scope.row.address }}</p>
                         <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">{{ scope.row.address }}</el-tag>
+                            <p>{{ scope.row.address }}</p>
                         </div>
                     </el-popover>
                 </template>
