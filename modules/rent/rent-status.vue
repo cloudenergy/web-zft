@@ -1,6 +1,6 @@
 <template>
 	<div class="top-nav">
-		<div class="links">
+		<div class="links" style="display:inline-block">
 			<el-menu class="el-menu-status rent-menu" mode="horizontal" default-active="rent-all" @select="handleSelect">
 				<el-menu-item index="rent-all">全部</el-menu-item>
 				<el-menu-item index="rent-lessee">再租17</el-menu-item>

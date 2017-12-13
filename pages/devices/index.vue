@@ -1,42 +1,163 @@
 <template>
-	<div class="page flow">
-		<el-table :data="tableData" style="width: 100%" border>
-			<el-table-column prop="date" label="日期" width="180"></el-table-column>
-			<el-table-column prop="date" label="日期" width="180"></el-table-column>
-			<el-table-column prop="date" label="日期" width="180"></el-table-column>
-			<el-table-column prop="name" label="姓名" width="180"></el-table-column>
-			<el-table-column prop="address" label="地址"></el-table-column>
-			<el-table-column prop="address" label="地址"></el-table-column>
-		</el-table>
-	</div>
+	<el-container>
+		<el-aside class="page-bill-index" width="auto">
+			<div>
+				<Tab/>
+			</div>
+		</el-aside>
+		<el-container>
+			<el-header style="height:auto">
+				<div class="ops-bills">
+					<div class="flexcenter">
+						<deviceModules @showthat="showwhat" :form="devicesstatus" />
+						<deviceModules @showthat="showelec" v-if="devicesstate=='all1'" :form="electricitystatus" />
+						<deviceModules @showthat="showcold" v-if="devicesstate=='all2'" :form="coldwater" />
+						<deviceModules @showthat="showhotw" v-if="devicesstate=='all3'" :form="hotwater" />
+						<deviceModules @showthat="shownatu" v-if="devicesstate=='all4'" :form="naturalgas" />
+						<RentSearch @childinfo="showmessage" />
+					</div>
+					<div class="flexcenter">
+						<span class="result-info">32项结果</span>
+						<div class="actions">
+							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
+								导出
+								<i class="el-icon-sort"></i>
+							</el-button>
+						</div>
+					</div>
+				</div>
+			</el-header>
+			<el-main>
+				<electricit v-if="devicesstate=='all1'"/>
+				<coldwater v-if="devicesstate=='all2'"/>
+			</el-main>
+		</el-container>
+	</el-container>
 </template>
 
 <script>
+	import {
+		Tab
+	} from '~/modules/house';
+	import {
+		deviceModules,
+		electricit,
+		coldwater
+	} from '../../modules/devices'
+	import {
+		RentSearch
+	} from '../../modules/rent'
 	export default {
+		components: {
+			Tab,
+			deviceModules,
+			RentSearch,
+			electricit,
+			coldwater
+		},
 		data() {
 			return {
-				tableData: [{
-						date: '2016-05-02',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄'
+				devicesstate:'all1',
+				devicesstatus: [{
+						index: 'all1',
+						text: '电'
 					},
 					{
-						date: '2016-05-04',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1517 弄'
+						index: 'all2',
+						text: '冷水'
 					},
 					{
-						date: '2016-05-01',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1519 弄'
+						index: 'all3',
+						text: '热水'
 					},
 					{
-						date: '2016-05-03',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1516 弄'
+						index: 'all4',
+						text: '气'
 					}
+				],
+				electricitystatus: [{
+						index: '1',
+						text: '全部'
+					},
+					{
+						index: '2',
+						text: '已配置'
+					},
+					{
+						index: '3',
+						text: '未配置'
+					}
+				],
+				coldwater: [{
+						index: '1',
+						text: '全部'
+					},
+					{
+						index: '2',
+						text: '已超'
+					},
+					{
+						index: '3',
+						text: '本月未抄'
+					},
+				],
+				hotwater: [{
+						index: '1',
+						text: '全部'
+					},
+					{
+						index: '2',
+						text: '已超'
+					},
+					{
+						index: '3',
+						text: '本月未抄'
+					},
+				],
+				naturalgas: [{
+						index: '1',
+						text: '全部'
+					},
+					{
+						index: '2',
+						text: '已超'
+					},
+					{
+						index: '3',
+						text: '本月未抄'
+					},
 				]
 			};
+		},
+		methods:{
+			showwhat(data){
+				this.devicesstate = data;
+			},
+			showelec(data){
+				console.log(data)
+			},
+			showcold(data){
+				console.log(data)
+			},
+			showhotw(data){
+				console.log(data)
+			},
+			shownatu(data){
+				console.log(data)
+			},
+			showmessage(data){
+				console.log(data)
+			}
 		}
 	};
 </script>
+ <style lang="less" scoped>
+	.ops-bills {
+		// margin-bottom: 20px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+ </style>
+ 

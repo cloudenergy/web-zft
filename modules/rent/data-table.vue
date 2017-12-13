@@ -28,13 +28,12 @@
 						</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="租金" min-width="258">
+			<el-table-column label="租金" min-width="300">
 				<template slot-scope="scope">
 					<div class="flexcenter">
 						<div class="name-wrapper">
 							<span>￥{{ scope.row.strategy.freq.rent }}元/月&nbsp;×&nbsp;</span>
-							<span v-if="scope.row.allY!=0">{{ scope.row.allY }}年</span>
-							<span v-if="scope.row.allM!=0">{{ scope.row.allM }}月</span>
+							<span>{{ scope.row.allM }}</span>
 							<div class="rent-bottom">
 								<span>￥{{ scope.row.expenses[2].rent }}/押</span>
 								<span v-if="scope.row.strategy.freq.pattern==1">&nbsp;&nbsp;一月一付</span>
@@ -170,7 +169,7 @@
 		Showrent,
 		Paym
 	} from '../userinfo';
-	import {timeDifferenceInText} from '../../utils/date.js'
+	import {chineseHuman} from '../../utils/date.js'
 	export default {
 		components: {
 			Rentinfo,
@@ -247,10 +246,7 @@
 					data.map(element => {
 						element.To = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.From = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.allM = timeDifferenceInText((element.to)*1000,(element.from)*1000)
-						element.allM=parseInt(element.allM)
-						element.allY = Math.floor(element.allM/12)
-						element.allM = element.allM%12
+						element.allM=chineseHuman(30000000)
 					});
 					this.$set(this, 'housesrent', data);
 				})

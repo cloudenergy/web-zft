@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div style="margin-left: 20px;">
-			<el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
+			<el-input placeholder="请输入小区/门牌号" v-model="input5" class="input-with-select">
 				<el-button slot="append" icon="el-icon-search" @click="searchrent()"></el-button>
 			</el-input>
 		</div>

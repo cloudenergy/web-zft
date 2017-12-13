@@ -23,7 +23,7 @@
             </el-menu-item>
             <el-menu-item index="/devices">
                 <i class="el-icon-printer"></i>
-                <span slot="title">设备</span>
+                <span slot="title">抄表</span>
             </el-menu-item>
             <el-menu-item index="/settings">
                 <i class="el-icon-setting"></i>

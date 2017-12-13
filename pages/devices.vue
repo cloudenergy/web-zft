@@ -11,7 +11,10 @@
     export default {
     	data() {
     		return {
-    			links: [{ url: '/devices', text: '仪表管理' }]
+    			links: [
+                    { url: '/devices', text: '仪表管理' },
+                    { url: '/devices/unitprice', text: '单价设置' }    
+                ]
     		};
     	}
     };
