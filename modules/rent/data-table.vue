@@ -169,7 +169,7 @@
 		Showrent,
 		Paym
 	} from '../userinfo';
-	import {chineseHuman} from '../../utils/date.js'
+	import {readableDuration} from '../../utils/date.js'
 	export default {
 		components: {
 			Rentinfo,

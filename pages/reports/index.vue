@@ -1,65 +1,61 @@
 <template>
-<div>
-<div class="block">
-    <span class="demonstration">默认</span>
-    <el-date-picker
-      v-model="value3"
-      type="datetimerange"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期">
-    </el-date-picker>
-  </div>
-  <div class="block">
-    <span class="demonstration">带快捷选项</span>
-    <el-date-picker
-      v-model="value4"
-      type="datetimerange"
-      :picker-options="pickerOptions2"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      align="right">
-    </el-date-picker>
-  </div>
-</div>
-  
+  <ReportsNav :tab-name='tabName'/>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        pickerOptions2: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
-        value3: [new Date(1512972948), new Date(2000, 10, 11, 10, 10)],
-        value4: ''
-      };
-    }
-  };
+import ReportsNav from '../../modules/reports/reports-nav';
+export default {
+	components: {
+		ReportsNav
+	},
+	data() {
+		return {
+      tabName: [
+		{ label: '运营数据',name:"1" },
+		{ label: '业务出房',name:"2" },
+		{ label: '业务收支',name:"3" },
+		{ label: '收房出房',name:"4" }
+	],
+			pickerOptions2: {
+				shortcuts: [
+					{
+						text: '最近一周',
+						onClick(picker) {
+							const end = new Date();
+							const start = new Date();
+							start.setTime(
+								start.getTime() - 3600 * 1000 * 24 * 7
+							);
+							picker.$emit('pick', [start, end]);
+						}
+					},
+					{
+						text: '最近一个月',
+						onClick(picker) {
+							const end = new Date();
+							const start = new Date();
+							start.setTime(
+								start.getTime() - 3600 * 1000 * 24 * 30
+							);
+							picker.$emit('pick', [start, end]);
+						}
+					},
+					{
+						text: '最近三个月',
+						onClick(picker) {
+							const end = new Date();
+							const start = new Date();
+							start.setTime(
+								start.getTime() - 3600 * 1000 * 24 * 90
+							);
+							picker.$emit('pick', [start, end]);
+						}
+					}
+				]
+			},
+			value3: [new Date(1512972948), new Date(2000, 10, 11, 10, 10)],
+			value4: ''
+		};
+	}
+};
 </script>

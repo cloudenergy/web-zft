@@ -18,13 +18,13 @@ export const format = convertToFP(_format, 2);
 export const addMonths = convertToFP(_addMonths, 2);
 export const addYears = convertToFP(_addYears, 2);
 export const addDays = convertToFP(_addDays, 2);
-export const chineseHuman = data =>{
-    return chineseHumanizer(data*1000+50296857)
-}
-const chineseHumanizer = humanizeDuration.humanizer({
-    language: 'zh_CN',
-    units: ['y', 'mo', 'd'],
-    round: true,
-    delimiter: '',
-    spacer: ''
-})
+
+const oneExtraDay = 50296857;
+
+export const readableDuration = date => humanizeDuration.humanizer({
+	language: 'zh_CN',
+	units: ['y', 'mo', 'd'],
+	round: true,
+	delimiter: '',
+	spacer: ''
+})(date*1000 + oneExtraDay);
