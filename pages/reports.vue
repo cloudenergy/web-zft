@@ -11,7 +11,12 @@
     export default {
     	data() {
     		return {
-    			links: [{ url: '/reports', text: '报表' }]
+    			links: [
+                    { url: '/reports', text: '营业总表' },
+                    { url: '/reports/reports/profits', text: '利润报表' },
+                    { url: '/reports/reports/rent', text: '合同报表' },
+                    { url: '/reports/reports/bills', text: '账单报表' },
+                    ]
     		};
     	}
     };
