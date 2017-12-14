@@ -251,7 +251,7 @@
 					data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.allM=chineseHuman(30000000)
+						element.allM = readableDuration(element.to - element.from)
 					});
 					this.$set(this, 'housesrent', data);
 				})
