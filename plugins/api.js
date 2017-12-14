@@ -54,8 +54,8 @@ const resource = (url, actions) => {
 
 const apis = {
 	houses: resource('/houses'),
-	communities: get('/communities/{id}'),
-	contracts: resource('/contracts'),
+	communities: get('/projects/{projectId}/communities'),
+	contracts: resource('/projects/{projectId}/contracts'),
 	city_area: get('/houses')
 };
 

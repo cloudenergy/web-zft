@@ -22,7 +22,7 @@
     	computed: {
     		...mapState({
     			houseTypes: state => state.houseTypes,
-    			defaultHouseTypes: state => state.defaultHouseTypes
+    			defaultHouseType: state => state.defaultHouseType
     		})
     	},
     	data() {

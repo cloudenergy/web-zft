@@ -29,6 +29,13 @@
                 type: Object
             }
         },
+		computed: {
+			computed: {
+				projectId() {
+					return this.$store.state.user.projectId;
+				}
+			},
+		},
 		data() {
 			const today = new Date();
 			return {
@@ -49,12 +56,13 @@
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						console.log('submit: ', this.translate(this.form));
-						this.$model('contracts').create(this.translate(this.form)).then((d) => {
-							console.log(d);
-							this.closeDialog();
-							this.resetForm();
-							this.successmessage();
-						});
+						this.$model('contracts')
+							.create(this.translate(this.form), {projectId: this.projectId})
+							.then( () => {
+								this.closeDialog();
+								this.resetForm();
+								this.successMessage();
+							});
 					} else {
 						console.log('error in submitting ...');
 						return false;
