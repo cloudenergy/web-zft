@@ -2,7 +2,7 @@
     <div class="house-cell" :class="{leased: out}">
         <div class="cell">
             <h3>{{room.name}}</h3>
-            <p>{{room.houseType.name}} {{room.houseType.area}} {{room.houseType.orientation}}</p>
+            <p>{{room.roomType.name}} {{room.roomType.area}} {{room.roomType.orientation}}</p>
             <p>￥ 200</p>
             <p class="rentee">
                 <span>

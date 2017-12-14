@@ -246,7 +246,7 @@
 		methods: {
 			query(){
 				this.$model('contracts')
-				.query({projectId: this.projectId})
+				.query({}, {projectId: this.projectId})
 				.then((data) =>{
 					data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
