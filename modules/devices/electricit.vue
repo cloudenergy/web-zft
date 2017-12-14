@@ -11,12 +11,12 @@
             </el-table-column>
             <el-table-column label="归属账单" min-width="120">
                 <template slot-scope="scope">
-                    <el-select v-model="scope.row.currentuser" placeholder="请选择">
+                    <el-select v-model="scope.row.currentuser" placeholder="请选择" class="no-border">
                         <el-option v-for="item in scope.row.user" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                     <br>
-                    <span>{{ scope.row.userid }}</span>
+                    <span style="margin-left: 2px">{{ scope.row.userid }}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -30,14 +30,14 @@
             </el-table-column>
             <el-table-column label="往次抄表" min-width="140">
                 <template slot-scope="scope">
-                    <el-select v-model="scope.row.lastnum" placeholder="请选择" popper-class="fsadfas">
+                    <el-select v-model="scope.row.lastnum" placeholder="请选择" popper-class="fsadfas" class="no-border">
                         <el-option v-for="item in scope.row.lastdateall" :key="item.value" :label="item.label" :value="item.value" width="180">
                             <span style="float: left">{{ item.label }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
                         </el-option>
                     </el-select>
                     <br>
-                    <span style="margin-left: 16px">{{ scope.row.lastnum }}</span>
+                    <span style="margin-left: 2px">{{ scope.row.lastnum }}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -226,3 +226,11 @@
         border:1px solid transparent;
     }
 </style>
+<style>
+    .no-border>.el-input>.el-input__inner{
+        border: 1px solid transparent;
+        padding: 0;
+        background-color: none;
+    }
+</style>
+

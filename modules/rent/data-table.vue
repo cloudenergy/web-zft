@@ -17,18 +17,18 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="房源/租期" min-width="480" max-width="600">
+			<el-table-column label="房源/租期" min-width="450" max-width="600">
 				<template slot-scope="scope">
 						<div slot="reference" class="name-wrapper">
 							<!-- @@@地址没有返回，用时间代替 -->
-							<div>{{ scope.row.From }}{{ scope.row.To }}</div>
+							<div>{{ scope.row.fromDate }}{{ scope.row.toDate }}</div>
 							<div class="rent-bottom">
-								<span>{{ scope.row.From }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.To }}</span>
+								<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>
 							</div>
 						</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="租金" min-width="300">
+			<el-table-column label="租金" min-width="290">
 				<template slot-scope="scope">
 					<div class="flexcenter">
 						<div class="name-wrapper">
@@ -80,7 +80,7 @@
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item @click.native="paym(scope.row)">充值</el-dropdown-item>
-								<el-dropdown-item @click.native="callmo()">催交</el-dropdown-item>
+								<el-dropdown-item @click.native="callMobilebile()">催交</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
@@ -121,15 +121,15 @@
 				</div>
 				<div style="width:100%;margin-left:30px;">
 					<div class="flexc dialog" style="color:#aaa">
-						<div @click="changeuserinfo(1)" class="cursorp" :class="{activerent:showinf==1}">租户详情</div>
-						<div @click="changeuserinfo(2)" class="cursorp" :class="{activerent:showinf==2}">租约信息</div>
+						<div @click="changeUserInfo(1)" class="cursorp" :class="{activerent:showinf==1}">租户详情</div>
+						<div @click="changeUserInfo(2)" class="cursorp" :class="{activerent:showinf==2}">租约信息</div>
 						<div class="menu-right">
 							<div class="flexcenter">
-								<span @click="changeuserinfo(3)" class="cursorp" :class="{activerent:showinf==3}">费用清单</span>
+								<span @click="changeUserInfo(3)" class="cursorp" :class="{activerent:showinf==3}">费用清单</span>
 								<div v-if="showinf==3" class="flexc menu-rightthree cursorpoin">
-									<div @click="changeuseri(1)" :class="{activerent:showmoney==1}">仪表代扣</div>
-									<div @click="changeuseri(2)" :class="{activerent:showmoney==2}">租约扣费</div>
-									<div @click="changeuseri(3)" :class="{activerent:showmoney==3}">充值扣费</div>
+									<div @click="rentPay(1)" :class="{activerent:showmoney==1}">仪表代扣</div>
+									<div @click="rentPay(2)" :class="{activerent:showmoney==2}">租约扣费</div>
+									<div @click="rentPay(3)" :class="{activerent:showmoney==3}">充值扣费</div>
 								</div>
 							</div>
 						</div>
@@ -243,9 +243,9 @@
 				this.$model('contracts')
 				.query()
 				.then((data) =>{
-					data.map(element => {
-						element.To = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.From = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+					data.forEach(element => {
+						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.allM=chineseHuman(30000000)
 					});
 					this.$set(this, 'housesrent', data);
@@ -289,13 +289,13 @@
 					this.dialogVisible3 = true;
 				}
 			},
-			changeuserinfo(data) {
+			changeUserInfo(data) {
 				this.showinf = data;
 			},
-			changeuseri(data) {
+			rentPay(data) {
 				this.showmoney = data;
 			},
-			callmo() {
+			callMobile() {
 				console.log(1)
 				this.$confirm('将要使用短信t通知租户, 是否继续?', '提示', {
 					confirmButtonText: '确定',
