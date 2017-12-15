@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model='activeName' @tab-click="handleClick">
     <el-tab-pane v-for='item in tabName' :label='item.label' :name='item.name' :key="item.id">
-			<!-- {{item}} -->
+			<!-- {{tab1}} -->
 			<ReportsSearch />
-        <ChildTable :table-data="tab1"/>
+        <ChildTable :table-data="tabpage"/>
     </el-tab-pane>
   </el-tabs>
 
@@ -14,6 +14,7 @@ import ReportsSearch from './reports_search';
 export default {
 	
 	props: {
+		tabpage:String,
 		tabName: Array
 	},
 	components: {
