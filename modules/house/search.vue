@@ -53,11 +53,6 @@
     		create(type) {
     			this.$modal.$emit('open', {
     				comp: AddModal,
-    				data: {
-    					item: {
-    						name: 'test'
-    					}
-    				},
     				title: '新增房源'
     			});
     		},

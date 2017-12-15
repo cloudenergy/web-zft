@@ -6,13 +6,17 @@
             <p>￥ 200</p>
             <p class="rentee">
                 <span>
-                    <icon type="user" />小清新</span>
+                    <icon type="yuangong" />小清新</span>
                 <span>退: 2018-10-1</span>
             </p>
         </div>
         <div class="actions">
-            <p @click="edit()">编辑</p>
-            <p @click="view()">查看</p>
+            <p @click="edit()">
+                <i class="el-icon-edit-outline" />
+            </p>
+            <p @click="view()">
+                <i class="el-icon-view" />
+            </p>
         </div>
     </div>
 </template>

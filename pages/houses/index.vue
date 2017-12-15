@@ -42,7 +42,20 @@
     		},
     		query() {
     			this.$model('houses')
-    				.query()
+    				.query(
+    					{
+    						entireId: 6344766578961289000,
+    						houseFormat: 'SOLE',
+    						q: 'string',
+    						status: 0,
+    						bedRooms: 0,
+    						floor: 0,
+    						layoutId: 0,
+    						index: 0,
+    						size: 0
+    					},
+    					{ projectId: '980488f9adfasdf' }
+    				)
     				.then(data => this.$set(this, 'houses', data));
     		},
     		showDrawer(id) {

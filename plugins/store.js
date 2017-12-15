@@ -23,9 +23,10 @@ export default {
 	},
 	actions: {
 		GET_COMMUNITIES({ commit, state }) {
-			return api('communities',
-				{houseFormat: state.defaultHouseType},
-				{projectId: state.user.projectId});
+			return api('communities').query(
+				{ houseFormat: state.defaultHouseType },
+				{ projectId: state.user.projectId }
+			);
 		},
 		GET_CITY_AREA({ commit, state }) {
 			if (Object.keys(state.city_area).length) {
