@@ -1,6 +1,6 @@
 <template>
   <el-table
-    :data="tableData"
+    :data="form"
     stripe
     style="width: 2017-01-01%">
     <el-table-column
@@ -9,21 +9,23 @@
       width="80">
     </el-table-column>
     <el-table-column
-      prop="alltime"
       label="账期"
       width="240">
+      <template slot-scope="scope">
+        <span>{{scope.row.startDate}}</span>至<span>{{scope.row.endDate}}</span>
+      </template>
     </el-table-column>
     <el-table-column
-      prop="agoread"
+      prop="dueAmount"
       label="金额"
       width="80">
     </el-table-column>
     <el-table-column
-      prop="paytime"
+      prop="dueDate"
       label="时间">
     </el-table-column>
     <el-table-column
-      prop="stype"
+      prop="createdAt"
       label="状态"
       width="80">
     </el-table-column>
@@ -32,6 +34,11 @@
 
 <script>
   export default {
+    props: {
+            form: {
+                type: Array
+          }
+    },
     data() {
       return {
         tableData: [{

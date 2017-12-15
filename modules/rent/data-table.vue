@@ -140,7 +140,7 @@
 					<Rentinfo v-if="showinf==1" :form="updateData" />
 					<Rentmessasge v-if="showinf==2" :form="updateData"/>
 					<Rentmoney v-if="showinf==3&&showmoney==1" :form="updateData"/>
-					<Rentlease v-if="showinf==3&&showmoney==2" :form="updateData"/>
+					<Rentlease v-if="showinf==3&&showmoney==2" :form="contractbill"/>
 					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData"/>
 				</div>
 			</div>
@@ -188,6 +188,7 @@
 		},
 		data() {
 			return {
+				contractbill: '',
 				updateData: {},
 				dialogVisible: false,
 				dialogTitle: '详细信息',
@@ -260,6 +261,9 @@
 				this.dialogVisible = true;
 				this.showinf = value;
 				this.updateData = item;
+				this.$model('contractbill')
+				.query({},{projectId: this.projectId,id:1})
+				.then(data=> this.$set(this,'contractbill',data))
 			},
 			rentuser2(data, value) {
 				var that = this;
@@ -297,8 +301,8 @@
 			changeUserInfo(data) {
 				this.showinf = data;
 			},
-			rentPay(data) {
-				this.showmoney = data;
+			rentPay(datanum) {
+				this.showmoney = datanum;
 			},
 			callMobile() {
 				console.log(1)
