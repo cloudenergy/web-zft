@@ -1,9 +1,7 @@
 <template>
-<!-- <span>
-    {{tableData}}
-</span> -->
+<!-- <p>{{tableTab}}</p> -->
   <el-table
-    :data="tableData"
+    :data="tableTab"
     style="width: 100%">
     <el-table-column type="expand">
       <template slot-scope="props">
@@ -32,14 +30,6 @@
       prop="d">
     </el-table-column>
   </el-table> 
-  <!-- <el-p>{{tableData}}</el-p> -->
-  <!-- <el-table :data='tableData'>
-      <el-table-column prop="name" label="name"></el-table-column>
-      <el-table-column prop="a" label="a"></el-table-column>
-      <el-table-column prop="b" label="b"></el-table-column>
-      <el-table-column prop="c" label="c"></el-table-column>
-      <el-table-column prop="d" label="d"></el-table-column>
-  </el-table> -->
 </template>
 
 <style>
@@ -55,19 +45,139 @@
 	margin-bottom: 0;
 	width: 50%;
 }
-.el-table__expanded-cell[class*=cell]{
-    padding:0 inherit;
+.el-table__expanded-cell[class*='cell'] {
+	padding: 0 inherit;
 }
 </style>
 
 <script>
 export default {
-    props:{
-        tableData:Array
-    },
+	props: {
+		tableData: String 
+	},
 	data() {
 		return {
-            
+			tableTab: Array,
+			tableTab1: [
+				{
+					name: 'index',
+					a: 'index',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'index',
+					a: 'index',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'index',
+					a: 'index',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'index',
+					a: 'index',
+					b: '2',
+					c: '3',
+					d: '4'
+				}
+			],
+			tableTab2: [
+				{
+					name: 'bill',
+					a: 'bill',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'bill',
+					a: 'bill',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'bill',
+					a: 'bill',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'bill',
+					a: 'bill',
+					b: '2',
+					c: '3',
+					d: '4'
+				}
+			],
+			tableTab3: [
+				{
+					name: 'reports',
+					a: 'reports',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'reports',
+					a: 'reports',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'reports',
+					a: 'reports',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'reports',
+					a: 'reports',
+					b: '2',
+					c: '3',
+					d: '4'
+				}
+			],
+			tableTab4: [
+				{
+					name: 'rent',
+					a: 'rent',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'rent',
+					a: 'rent',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'rent',
+					a: 'rent',
+					b: '2',
+					c: '3',
+					d: '4'
+				},
+				{
+					name: 'rent',
+					a: 'rent',
+					b: '2',
+					c: '3',
+					d: '4'
+				}
+			],
 			tableData5: [
 				{
 					id: '12987122',
@@ -105,74 +215,60 @@ export default {
 					shop: '王小虎夫妻店',
 					shopId: '10333'
 				}
-			],
-			tableData1: [
-				{
-					date: '2016-05-02',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1518 弄'
-				},
-				{
-					date: '2016-05-04',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1517 弄'
-				},
-				{
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				},
-				{
-					date: '2016-05-03',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1516 弄'
-				}
-			],
-			tableData2: [
-				{
-					date: '2016-05-02',
-					name: '王小虎22',
-					address: '上海市普陀区金沙江路 1518 弄'
-				},
-				{
-					date: '2016-05-04',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1517 弄'
-				},
-				{
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				},
-				{
-					date: '2016-05-03',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1516 弄'
-				}
-			],
-			tableData3: [
-				{
-					date: '2016-05-02',
-					name: '王小虎33',
-					address: '上海市普陀区金沙江路 1518 弄'
-				},
-				{
-					date: '2016-05-04',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1517 弄'
-				},
-				{
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄'
-				},
-				{
-					date: '2016-05-03',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1516 弄'
-				}
 			]
 		};
+	},
+	methods: {
+		ta() {
+			console.log(typeof this.tableData);
+			console.log(typeof 'index');
+
+			if (this.tableData === 'index') {
+				alert(12);
+			}
+
+			switch (this.tableData) {
+				case 'index':
+					this.tableTab = this.tableTab1;
+					console.log(1);
+					break;
+				case 'bill':
+					this.tableTab = this.tableTab2;
+					console.log(2);
+					break;
+				case 'reports':
+					this.tableTab = this.tableTab3;
+					console.log(3);
+					break;
+				case 'rent':
+					this.tableTab = this.tableTab4;
+					console.log(4);
+					break;
+			}
+		}
+	},
+	created() {
+		switch (this.tableData) {
+				case 'index':
+					this.tableTab = this.tableTab1;
+					console.log(1);
+					break;
+				case 'bill':
+					this.tableTab = this.tableTab2;
+					console.log(2);
+					break;
+				case 'profits':
+					this.tableTab = this.tableTab3;
+					console.log(3);
+					break;
+				case 'rent':
+					this.tableTab = this.tableTab4;
+					console.log(4);
+					break;
+			}
+	},
+	mounted:function(){
+		// fa()
 	}
 };
 </script>

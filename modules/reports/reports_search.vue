@@ -48,31 +48,27 @@
   </el-form-item>
 
 
-<!-- <el-form-item>
-    <el-cascader 
-    :props="por"
+<!-- <el-form-item proop='por'>
+    <el-cascader
     :options="cascader"
-    v-model="cascaderVal"
+    v-model="selectedOptions"
     @change="handleChange">
   </el-cascader>
+  </el-cascader>
   </el-form-item> -->
-
-
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit">查询</el-button>
-  </el-form-item>
 </el-form>
 </template>
 <script>
 export default {
 	data() {
 		return {
-			por: [{props:''},{value:''}],
+			por: [{ type: 'array', required: true }
+],
 			formInline: {
 				user: '',
 				region: ''
-            },
-            value:'',
+			},
+			value: '',
 			cityVal: '',
 			data: '',
 			communityVal: '',
@@ -107,18 +103,18 @@ export default {
 				{
 					value: 'hz',
 					label: '杭州',
-					children: [
-						{ value: 'hzxq1', label: '杭州小区1' },
-						{ value: 'hzxq1', label: '杭州小区2' }
-					]
+					// children: [
+					// 	{ value: 'hzxq1', label: '杭州小区1' },
+					// 	{ value: 'hzxq1', label: '杭州小区2' }
+					// ]
 				},
-				{
-					value: 'yh',
-					label: '余杭',
-					children: [{ value: 'yhxq1', label: '余杭小区1' }]
-				}
+				// {
+				// 	value: 'yh',
+				// 	label: '余杭',
+				// 	children: [{ value: 'yhxq1', label: '余杭小区1' }]
+				// }
 			],
-			cascaderVal: '',
+			selectedOptions: '',
 			options: [
 				{
 					id: 143828,

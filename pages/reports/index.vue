@@ -1,5 +1,5 @@
 <template>
-  <ReportsNav :tab-name='tabName'/>
+  <ReportsNav :tab-name='tabName' :tabpage='page'/>
 </template>
 
 <script>
@@ -10,6 +10,7 @@ export default {
 	},
 	data() {
 		return {
+			page:"index",
       tabName: [
 		{ label: '运营数据',name:"1" },
 		{ label: '业务出房',name:"2" },
