@@ -8,8 +8,8 @@ export default (options, config = {}) => {
 						this.$emit('input', val);
 					}}
 					size="mini"
+					placeholder={config.placeholder}
 					{...config}
-					placeholder="类型"
 					class="select"
 				>
 					{options.map(item => {

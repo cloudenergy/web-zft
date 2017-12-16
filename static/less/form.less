@@ -2,18 +2,15 @@
 	.group {
 		display: flex;
 	}
-
 	.el-form-item__label {
 		background: fade(@primary, 10);
 		border-radius: 4px 0 0 4px;
 		padding-left: 10px;
 		margin-top: 2px;
 	}
-
 	.el-form-item + .el-form-item {
 		margin-left: 20px;
 	}
-
 	.el-form-item__content {
 		float: left;
 	}
@@ -35,7 +32,22 @@
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 	}
-	.el-input-group__prepend, .el-input-group__append {
+	.el-input-group__prepend,
+	.el-input-group__append {
 		font-size: 12px;
+	}
+}
+
+.group {
+	padding-bottom: 20px;
+	.el-input:not(.full) {
+		width: auto;
+	}
+	.el-input + .el-input {
+		margin-left: 20px;
+	}
+	.el-form-item,
+	.el-form-item.el-form-item--mini {
+		margin-bottom: 0px;
 	}
 }

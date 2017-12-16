@@ -8,5 +8,5 @@
     	{ value: 4, label: '四室' }
     ];
 
-    export default modelSelect(rooms);
+    export default modelSelect(rooms, { placeholder: '房型' });
 </script>

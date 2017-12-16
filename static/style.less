@@ -1,75 +1,78 @@
 @import (reference) './less/base';
 @import './less/form.less';
-
 html,
 body {
-	height: 100%;
+    height: 100%;
 }
 
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	font-size: 12px;
-	width: 100%;
-	font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
-		'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+    font-size: 12px;
+    width: 100%;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .clearfix {
-	.clearfix();
+    .clearfix();
 }
 
 .module {
-	height: 100%;
-	position: relative;
-	.main-content {
-		padding: 15px;
-		position: absolute;
-		left: 120px;
-		bottom: 0px;
-		right: 0px;
-		top: 60px;
-		background-color: @light;
-		overflow-y: scroll;
-	}
+    height: 100%;
+    position: relative;
+    .main-content {
+        padding: 15px;
+        position: absolute;
+        left: 120px;
+        bottom: 0px;
+        right: 0px;
+        top: 60px;
+        background-color: @light;
+        overflow-y: scroll;
+    }
 }
 
 .nofound {
-	height: 100%;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 60px;
-	color: @gray;
-	font-weight: 100;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: @gray;
+    font-weight: 100;
 }
+
 // 生成各种颜色类
 // flex
-.flexc{
-	display: flex;
+.flexc {
+    display: flex;
 }
-.flexcenter{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+
+.flexcenter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.flexdirection{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-around;
+
+.flexdirection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
+
 // 改变指针
-.cursorp{
-	cursor: pointer;
+.cursorp {
+    cursor: pointer;
 }
-.cursorpoin>div{
-	cursor:pointer;
+
+.cursorpoin>div {
+    cursor: pointer;
 }

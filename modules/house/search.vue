@@ -2,9 +2,7 @@
     <div class="search-wrapper">
         <div class="filter">
             <el-input placeholder="搜索小区/门牌/电话" prefix-icon="el-icon-search"></el-input>
-            <el-select v-model="filters.city" clearable placeholder="房源状态">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
+            <house-status v-model="filters.status" />
             <rooms-select v-model="filters.rooms"></rooms-select>
             <el-select v-model="filters.city" clearable placeholder="管理">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>

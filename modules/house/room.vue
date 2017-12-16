@@ -62,7 +62,6 @@
     	border-radius: 4px;
     	border: 1px solid @light;
     	border-left: 4px solid @success;
-    	cursor: pointer;
 
     	&.leased {
     		border-left-color: @light;
