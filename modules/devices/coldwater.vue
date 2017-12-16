@@ -77,11 +77,11 @@
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: '1',
+                                value: 'asdf',
                                 label: '赵世浩'
                             },
                             {
-                                value: '0',
+                                value: 'asdfsadf',
                                 label: '未分配'
                             },
                         ],
@@ -90,19 +90,19 @@
                         instrument: '仪表001',
                         instrumentid: '000000000021',
                         lastdateall: [{
-                                value: '111111',
+                                value: '12312fsd',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '1asdf',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '2',
+                                value: '212',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '3',
+                                value: '3324423',
                                 label: '2016-05-02'
                             }
                         ],
@@ -119,11 +119,11 @@
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: '1',
+                                value: '1234324',
                                 label: '赵世浩'
                             },
                             {
-                                value: '0',
+                                value: '0234234',
                                 label: '未分配'
                             },
                         ],
@@ -136,15 +136,15 @@
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '1sdf',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: 'asfd1',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: 'asdfaf1',
                                 label: '2016-05-02'
                             }
                         ],
@@ -161,11 +161,11 @@
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: '1',
+                                value: '1sadfasf',
                                 label: '赵世浩'
                             },
                             {
-                                value: '0',
+                                value: '0asdfsaf',
                                 label: '未分配'
                             },
                         ],
@@ -178,15 +178,15 @@
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '1asdfsdf',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '1fknklkl',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '1asdfk',
                                 label: '2016-05-02'
                             }
                         ],
