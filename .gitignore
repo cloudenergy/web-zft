@@ -4,3 +4,4 @@ dist
 .blade
 coverage/
 package-lock.json
+.idea

@@ -2,17 +2,34 @@
     <div class="add-house-form">
         <el-form :model="form" class="mini-form">
             <h3>房源信息</h3>
-            <base-info @change="mergeBaseInfo"></base-info>
+            <base-info @change="mergeBaseInfo">
+            </base-info>
             <div class="group">
-                <el-form-item label="地址">
-                    <el-input v-model="form.address" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="名称">
-                    <el-input v-model="form.name" auto-complete="off"></el-input>
-                </el-form-item>
+                <el-input v-model="form.community" class="full" auto-complete="off">
+                    <template slot="prepend">小区</template>
+                </el-input>
+            </div>
+            <div class="group">
+                <el-input v-model="form.address" auto-complete="off">
+                    <template slot="prepend">地址</template>
+                </el-input>
+                <el-input v-model="form.name" auto-complete="off">
+                    <template slot="prepend">名称</template>
+                </el-input>
             </div>
             <room-layout v-model="form.houseType[0]"></room-layout>
             <building-floor v-if="form.rentType==3"></building-floor>
+            <div class="group">
+                <el-form-item label="面积">
+                    <el-input v-model="form.size" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="层高">
+                    <el-input v-model="form.floor" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="form.height" auto-complete="off" placeholder="总层数"></el-input>
+                </el-form-item>
+            </div>
             <h3>房源配置</h3>
             <house-facility class="checkboxes" v-model="form.facilities"></house-facility>
         </el-form>

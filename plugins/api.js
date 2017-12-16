@@ -31,17 +31,16 @@ setup({
 	}
 });
 
-const interceptor = function(res) {
-	return res;
-	// 显示错误
-	// return Promise.reject(res.message);
+const interceptor = function(data) {
+	const { code, message } = data;
+	if (code && code !== 0) {
+		return Promise.reject(message);
+	}
+	return data;
 };
-const [get, post, put, del] = [
-	makeGet,
-	makePost,
-	makePut,
-	makeDelete
-].map(action => decorateMaker(action, interceptor));
+const [get, post, put, del] = [makeGet, makePost, makePut, makeDelete].map(
+	action => decorateMaker(action, interceptor)
+);
 
 const resource = (url, actions) => {
 	return makeResource(url, actions, {
@@ -53,8 +52,8 @@ const resource = (url, actions) => {
 };
 
 const apis = {
-	houses: resource('/houses'),
-	communities: get('/projects/{projectId}/communities'),
+	houses: resource('/projects/{projectId}/houses'),
+	communities: resource('/projects/{projectId}/communities'),
 	contracts: resource('/projects/{projectId}/contracts'),
 	city_area: get('/houses'),
 	contractbill: resource('/projects/{projectId}/bills')
