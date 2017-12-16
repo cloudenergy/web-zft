@@ -102,15 +102,15 @@
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '11111',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '2',
+                                value: '22222',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '3',
+                                value: '33333',
                                 label: '2016-05-02'
                             }
                         ],
@@ -127,11 +127,11 @@
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: '1',
+                                value: 'asdf',
                                 label: '赵世浩'
                             },
                             {
-                                value: '0',
+                                value: 'asdfasdf',
                                 label: '未分配'
                             },
                         ],
@@ -144,15 +144,15 @@
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: 'asdfsadf',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: 'asdfasdf',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: 'asdfsadfasdf',
                                 label: '2016-05-02'
                             }
                         ],
@@ -186,15 +186,15 @@
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '333',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '454',
                                 label: '2016-05-02'
                             },
                             {
-                                value: '1',
+                                value: '44444',
                                 label: '2016-05-02'
                             }
                         ],

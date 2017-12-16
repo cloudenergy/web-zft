@@ -76,54 +76,54 @@
 					}
 				],
 				electricitystatus: [{
-						index: '1',
+						index: '11',
 						text: '全部'
 					},
 					{
-						index: '2',
+						index: '22',
 						text: '已配置'
 					},
 					{
-						index: '3',
+						index: '33',
 						text: '未配置'
 					}
 				],
 				coldwater: [{
-						index: '1',
+						index: '111',
 						text: '全部'
 					},
 					{
-						index: '2',
+						index: '222',
 						text: '已超'
 					},
 					{
-						index: '3',
+						index: '333',
 						text: '本月未抄'
 					},
 				],
 				hotwater: [{
-						index: '1',
+						index: '1111',
 						text: '全部'
 					},
 					{
-						index: '2',
+						index: '2222',
 						text: '已超'
 					},
 					{
-						index: '3',
+						index: '3333',
 						text: '本月未抄'
 					},
 				],
 				naturalgas: [{
-						index: '1',
+						index: '11111',
 						text: '全部'
 					},
 					{
-						index: '2',
+						index: '22222',
 						text: '已超'
 					},
 					{
-						index: '3',
+						index: '33333',
 						text: '本月未抄'
 					},
 				]

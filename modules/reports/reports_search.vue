@@ -26,7 +26,7 @@
 
 
   <el-form-item>
-      <el-select v-model="cityVal"  placeholder="请选择">
+      <el-select v-model="cityVal"  placeholder="城市">
     <el-option
       v-for="city1 in city"
       :key="city1.value"
@@ -37,7 +37,7 @@
   </el-form-item>
 
   <el-form-item>
-      <el-select v-model="communityVal"  placeholder="请选择">
+      <el-select v-model="communityVal"  placeholder="小区">
     <el-option
       v-for="community1 in community"
       :key="community1.value"
@@ -48,22 +48,21 @@
   </el-form-item>
 
 
-<!-- <el-form-item proop='por'>
+<!-- <el-form-item>
     <el-cascader
     :options="cascader"
     v-model="selectedOptions"
-    @change="handleChange">
-  </el-cascader>
+    @change="handleChange"
+	:props="props">
   </el-cascader>
   </el-form-item> -->
+
 </el-form>
 </template>
 <script>
 export default {
 	data() {
 		return {
-			por: [{ type: 'array', required: true }
-],
 			formInline: {
 				user: '',
 				region: ''
@@ -73,7 +72,7 @@ export default {
 			data: '',
 			communityVal: '',
 			community: '',
-			props: '',
+			props:{ value: 'value', label: 'label', children: 'children' },
 			compact: [
 				{ value: 'all', label: '全部' },
 				{ value: 'h', label: '合租' },
@@ -103,16 +102,16 @@ export default {
 				{
 					value: 'hz',
 					label: '杭州',
-					// children: [
-					// 	{ value: 'hzxq1', label: '杭州小区1' },
-					// 	{ value: 'hzxq1', label: '杭州小区2' }
-					// ]
+					children: [
+						{ value: 'hzxq1', label: '杭州小区1' },
+						{ value: 'hzxq2', label: '杭州小区2' }
+					]
 				},
-				// {
-				// 	value: 'yh',
-				// 	label: '余杭',
-				// 	children: [{ value: 'yhxq1', label: '余杭小区1' }]
-				// }
+				{
+					value: 'yh',
+					label: '余杭',
+					children: [{ value: 'yhxq1', label: '余杭小区1' }]
+				}
 			],
 			selectedOptions: '',
 			options: [
