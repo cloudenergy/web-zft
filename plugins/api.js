@@ -9,6 +9,7 @@ import {
 	makeDelete
 } from '@/api';
 import { isFunc } from '~/utils';
+import { Message } from 'element-ui';
 
 let baseURL = '/api/v1.0';
 
@@ -32,9 +33,14 @@ setup({
 });
 
 const interceptor = function(data) {
-	const { code, message } = data;
-	if (code && code !== 0) {
-		return Promise.reject(message);
+	const { code, message, errmsg } = data;
+	if ((code && code !== 0) || errmsg) {
+		Message({
+			message: message || errmsg,
+			type: 'error'
+		});
+
+		return Promise.reject(message || errmsg);
 	}
 	return data;
 };

@@ -11,7 +11,7 @@ export default {
 	state: {
 		user: {
 			id: '',
-			projectId: '980488114'
+			projectId: 92182103
 		},
 		cityArea: {},
 		houseTypes: {

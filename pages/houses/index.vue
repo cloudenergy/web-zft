@@ -54,7 +54,7 @@
     						index: 0,
     						size: 0
     					},
-    					{ projectId: '980488f9adfasdf' }
+    					{ projectId: '918238213' }
     				)
     				.then(data => this.$set(this, 'houses', data));
     		},
