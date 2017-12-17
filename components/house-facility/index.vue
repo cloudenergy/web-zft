@@ -1,12 +1,12 @@
 <script>
     const facilities = [
-    	{ value: 'WIFI', label: 'WIFI' },
-    	{ value: '油烟机', label: '油烟机' },
-    	{ value: '停车位', label: '停车位' },
-    	{ value: '空调', label: '空调' },
-    	{ value: '阳台', label: '阳台' },
-    	{ value: '煤气', label: '煤气' },
-    	{ value: '游泳池', label: '游泳池' }
+    	{ value: 1, label: 'WIFI' },
+    	{ value: 2, label: '油烟机' },
+    	{ value: 3, label: '停车位' },
+    	{ value: 4, label: '空调' },
+    	{ value: 5, label: '阳台' },
+    	{ value: 6, label: '煤气' },
+    	{ value: 7, label: '游泳池' }
     ];
 
     const names = facilities.map(item => item.value);

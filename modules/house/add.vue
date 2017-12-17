@@ -2,7 +2,7 @@
     <div class="add-house-form">
         <el-form :model="form" class="mini-form">
             <h3>房源信息</h3>
-            <base-info @change="mergeBaseInfo">
+            <base-info @change="mergeBaseInfo" :form="form">
             </base-info>
             <div class="group">
                 <el-input v-model="form.community" class="full" auto-complete="off">
@@ -10,28 +10,28 @@
                 </el-input>
             </div>
             <div class="group">
-                <el-input v-model="form.address" auto-complete="off">
+                <el-input v-model="form.location.address" auto-complete="off">
                     <template slot="prepend">地址</template>
                 </el-input>
-                <el-input v-model="form.name" auto-complete="off">
+                <el-input v-model="form.layout.name" auto-complete="off">
                     <template slot="prepend">名称</template>
                 </el-input>
             </div>
-            <room-layout v-model="form.houseType[0]"></room-layout>
-            <building-floor v-if="form.rentType==3"></building-floor>
+            <room-layout v-model="form.layout"></room-layout>
+            <building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]"></building-floor>
             <div class="group">
                 <el-form-item label="面积">
-                    <el-input v-model="form.size" auto-complete="off"></el-input>
+                    <el-input v-model.number="form.layout.roomArea" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="层高">
-                    <el-input v-model="form.floor" auto-complete="off"></el-input>
+                    <el-input v-model.number="form.currentFloor" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="form.height" auto-complete="off" placeholder="总层数"></el-input>
+                    <el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数"></el-input>
                 </el-form-item>
             </div>
             <h3>房源配置</h3>
-            <house-facility class="checkboxes" v-model="form.facilities"></house-facility>
+            <house-facility class="checkboxes" v-model="form.config"></house-facility>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dismiss()">取 消</el-button>
@@ -49,15 +49,30 @@
     			type: Object
     		}
     	},
+    	computed: {
+    		...mapState(['houseTypes', 'user'])
+    	},
     	data() {
     		return {
+    			layouts: [],
     			form: {
-    				address: '',
-    				name: '',
-    				rentType: 1,
-    				belongs: '',
-    				type: [],
-    				houseType: [{}]
+    				group: '一期/君临阁',
+    				building: '一幢',
+    				unit: '1单元',
+    				roomNumber: 2301,
+    				location: {
+    					id: 'B0FFFM44SM',
+    					divisionId: 330102,
+    					name: '新帝朗郡',
+    					district: '浙江省杭州市西湖区',
+    					address: '钱江路555号',
+    					latitude: 120.195213,
+    					longitude: 30.235099
+    				},
+    				layout: {
+    					name: ''
+    				},
+    				houseFormat: 'share'
     			}
     		};
     	},
@@ -81,6 +96,9 @@
     			};
     			console.log('this form : ', data);
     			// this.$modal.$emit('dismiss');
+    			this.$model('houses').create(data, {
+    				projectId: this.user.projectId
+    			});
     		}
     	}
     };

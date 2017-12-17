@@ -45,7 +45,7 @@
     				.query(
     					{
     						entireId: 6344766578961289000,
-    						houseFormat: 'SOLE',
+    						houseFormat: 'sole',
     						q: 'string',
     						status: 0,
     						bedRooms: 0,
