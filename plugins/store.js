@@ -15,11 +15,11 @@ export default {
 		},
 		cityArea: {},
 		houseTypes: {
-			SOLE: ['sole', '整租'],
-			SHARE: ['share', '合租'],
-			ENTIRE: ['entire', '整栋']
+			SOLE: ['SOLE', '整租'],
+			SHARE: ['SHARE', '合租'],
+			ENTIRE: ['ENTIRE', '整栋']
 		},
-		defaultHouseType: 'sole'
+		defaultHouseType: 'SOLE'
 	},
 	actions: {
 		GET_COMMUNITIES({ commit, state }) {

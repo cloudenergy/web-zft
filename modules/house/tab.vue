@@ -20,14 +20,12 @@
     import { mapState } from 'vuex';
     export default {
     	computed: {
-    		...mapState({
-    			houseTypes: state => state.houseTypes,
-    			defaultHouseType: state => state.defaultHouseType
-    		})
+    		...mapState(['houseTypes', 'defaultHouseType'])
     	},
+    	props: ['selected'],
     	data() {
     		return {
-    			type: 'sole',
+    			type: 'SOLE',
     			filters: {
     				city: '',
     				area: ''
@@ -37,13 +35,14 @@
     		};
     	},
     	created() {
+    		this.type = this.selected || this.defaultHouseType;
     		this.$store
     			.dispatch('GET_COMMUNITIES')
     			.then(data => (this.community = data));
     	},
     	methods: {
-    		change(key) {
-    			this.$emit('change', key);
+    		change(tab, event) {
+    			this.$emit('change', tab.name);
     		}
     	}
     };

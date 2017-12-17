@@ -72,7 +72,7 @@
     				layout: {
     					name: ''
     				},
-    				houseFormat: 'share'
+    				houseFormat: 'SHARE'
     			}
     		};
     	},

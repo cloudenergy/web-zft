@@ -29,32 +29,25 @@
     	data() {
     		return {
     			houses: [],
-    			viewRoom: false
+    			viewRoom: false,
+    			houseFormat: 'SHARE'
     		};
     	},
     	created() {
     		this.query();
     	},
     	methods: {
-    		refresh(id) {
-    			this.house = id;
+    		refresh(type) {
+    			this.houseFormat = type;
     			this.query();
     		},
     		query() {
     			this.$model('houses')
     				.query(
     					{
-    						entireId: 6344766578961289000,
-    						houseFormat: 'sole',
-    						q: 'string',
-    						status: 0,
-    						bedRooms: 0,
-    						floor: 0,
-    						layoutId: 0,
-    						index: 0,
-    						size: 0
+    						houseFormat: this.houseFormat
     					},
-    					{ projectId: '918238213' }
+    					{ projectId: '92182103' }
     				)
     				.then(data => this.$set(this, 'houses', data));
     		},

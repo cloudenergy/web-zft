@@ -1,3 +1,4 @@
+const port = process.env.ZFT_BLADE_PORT || 8080;
 module.exports = {
 	proxy: {
 		'/api': {
@@ -18,6 +19,7 @@ module.exports = {
 	routes: {
 		// 'papers-details': "/:id"
 	},
+	port,
 	// 全局 import less
 	resources: 'static/less/base.less',
 	plugins: {

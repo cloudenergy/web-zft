@@ -23,7 +23,7 @@
     			type: Object,
     			default() {
     				return {
-    					houseFormat: 'sole',
+    					houseFormat: 'SOLE',
     					code: ''
     				};
     			}

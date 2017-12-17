@@ -11,8 +11,12 @@
             <el-input v-model="form.bathRoom">
                 <template slot="append">卫</template>
             </el-input>
-            <el-input v-model="form.orientation" placeholder="方位">
-            </el-input>
+            <el-select v-model="form.orientation" placeholder="方位">
+                <el-option value="E" label="东">东</el-option>
+                <el-option value="S" label="南">南</el-option>
+                <el-option value="W" label="西">西</el-option>
+                <el-option value="N" label="北">北</el-option>
+            </el-select>
         </div>
     </div>
 </template>
@@ -29,7 +33,8 @@
     				return {
     					bedRoom: 2,
     					livingRoom: 1,
-    					bathRoom: 1
+    					bathRoom: 1,
+    					orientation: 'N'
     				};
     			}
     		}
