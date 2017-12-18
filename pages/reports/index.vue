@@ -1,5 +1,5 @@
 <template>
-  <ReportsNav :tab-name='tabName' :tabpage='page'/>
+  <ReportsNav :tab-name='tabName' :tabpage='page' />
 </template>
 
 <script>
@@ -10,12 +10,12 @@ export default {
 	},
 	data() {
 		return {
-			page:"index",
+			page:"运营数据",
       tabName: [
-		{ label: '运营数据',name:"1" },
-		{ label: '业务出房',name:"2" },
-		{ label: '业务收支',name:"3" },
-		{ label: '收房出房',name:"4" }
+		{ label: '运营数据',name:"运营数据" },
+		{ label: '业务出房',name:"业务出房" },
+		{ label: '业务收支',name:"业务收支" },
+		{ label: '收房出房',name:"收房出房" }
 	],
 			pickerOptions2: {
 				shortcuts: [
@@ -55,7 +55,8 @@ export default {
 				]
 			},
 			value3: [new Date(1512972948), new Date(2000, 10, 11, 10, 10)],
-			value4: ''
+			value4: '',
+			// searchTab:['房源','时间','城市','小区','房源归属']
 		};
 	}
 };

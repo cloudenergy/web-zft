@@ -72,7 +72,7 @@
 					},
 					{
 						index: 'all4',
-						text: '气'
+						text: '燃气'
 					}
 				],
 				electricitystatus: [{

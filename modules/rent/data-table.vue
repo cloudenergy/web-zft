@@ -127,9 +127,9 @@
 							<div class="flexcenter">
 								<span @click="changeUserInfo(3)" class="cursorp" :class="{activerent:showinf==3}">费用清单</span>
 								<div v-if="showinf==3" class="flexc menu-rightthree cursorpoin">
-									<div @click="rentPay(1)" :class="{activerent:showmoney==1}">仪表代扣</div>
+									<div @click="rentPay(1)" :class="{activerent:showmoney==1}">仪表扣费</div>
 									<div @click="rentPay(2)" :class="{activerent:showmoney==2}">租约扣费</div>
-									<div @click="rentPay(3)" :class="{activerent:showmoney==3}">充值扣费</div>
+									<div @click="rentPay(3)" :class="{activerent:showmoney==3}">充值记录</div>
 								</div>
 							</div>
 						</div>
@@ -262,7 +262,7 @@
 				this.showinf = value;
 				this.updateData = item;
 				this.$model('contractbill')
-				.query({},{projectId: this.projectId,id:1})
+				.query({},{projectId: this.projectId,id:item.id})
 				.then(data=> this.$set(this,'contractbill',data))
 			},
 			rentuser2(data, value) {

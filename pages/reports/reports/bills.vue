@@ -1,5 +1,5 @@
 <template>
-  <ReportsNav :tab-name='tabName' :tabpage='page'/>
+  <ReportsNav :tab-name='tabName' :tabpage='page' />
 </template>
 
 <script>
@@ -11,12 +11,12 @@ export default {
 	},
 	data() {
 		return {
-			page: 'bill',
+			page: '待收账单',
 			tabName: [
-				{ label: '待收账单', name: '1' },
-				{ label: '待付账单', name: '2' },
-				{ label: '已完成收入', name: '3' },
-				{ label: '已完成支出', name: '4' }
+				{ label: '待收账单', name: '待收账单' },
+				{ label: '待付账单', name: '待付账单' },
+				{ label: '已完成收入', name: '已完成收入' },
+				{ label: '已完成支出', name: '已完成支出' }
 			]
 		};
 	}

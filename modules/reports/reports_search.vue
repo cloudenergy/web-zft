@@ -1,6 +1,6 @@
 <template>
 <el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item>
+  <el-form-item v-if="isShow.indexOf('房源')!=-1">
 <el-select v-model="value" placeholder="房源">
     <el-option
       v-for="compact1 in compact"
@@ -12,8 +12,8 @@
   </el-form-item>
 
 
-<el-form-item>
-      <div class="block">
+<el-form-item v-if="isShow.indexOf('时间')!=-1">
+      <!-- <div class="block"> -->
     <el-date-picker
       v-model="data"
       type="daterange"
@@ -21,11 +21,11 @@
       start-placeholder="开始日期"
       end-placeholder="结束日期">
     </el-date-picker>
-  </div>
+  <!-- </div> -->
   </el-form-item>
 
 
-  <el-form-item>
+  <el-form-item v-if="isShow.indexOf('城市')!=-1">
       <el-select v-model="cityVal"  placeholder="城市">
     <el-option
       v-for="city1 in city"
@@ -36,7 +36,7 @@
   </el-select>
   </el-form-item>
 
-  <el-form-item>
+  <el-form-item v-if="isShow.indexOf('小区')!=-1">
       <el-select v-model="communityVal"  placeholder="小区">
     <el-option
       v-for="community1 in community"
@@ -47,20 +47,98 @@
   </el-select>
   </el-form-item>
 
+ <el-form-item v-if="isShow.indexOf('角色')!=-1">
+      <el-select v-model="cityVal"  placeholder="角色">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
 
-<!-- <el-form-item>
-    <el-cascader
+   <el-form-item v-if="isShow.indexOf('员工')!=-1">
+      <el-select v-model="cityVal"  placeholder="员工">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
+
+   <el-form-item v-if="isShow.indexOf('结余')!=-1">
+      <el-select v-model="cityVal"  placeholder="结余">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
+
+
+<el-form-item v-if="isShow.indexOf('显示')!=-1">
+      <el-select v-model="cityVal"  placeholder="显示">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
+
+  <el-form-item v-if="isShow.indexOf('流水')!=-1">
+      <el-select v-model="cityVal"  placeholder="流水来源">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
+
+  <el-form-item v-if="isShow.indexOf('状态')!=-1">
+      <el-select v-model="cityVal"  placeholder="状态">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
+
+<el-form-item v-if="isShow.indexOf('签约人')!=-1">
+      <el-select v-model="cityVal"  placeholder="签约人">
+    <el-option
+      v-for="city1 in city"
+      :key="city1.value"
+      :label="city1.label"
+      :value="city1.value">
+    </el-option>
+  </el-select>
+  </el-form-item>
+
+<el-form-item v-if="isShow.indexOf('归属')!=-1">
+	 <el-cascader
+	 placeholder="房源归属"
     :options="cascader"
     v-model="selectedOptions"
-    @change="handleChange"
-	:props="props">
+    @change="handleChange">
   </el-cascader>
-  </el-form-item> -->
+</el-form-item>
 
 </el-form>
 </template>
 <script>
 export default {
+	props: { isShow: Array },
 	data() {
 		return {
 			formInline: {
@@ -72,7 +150,7 @@ export default {
 			data: '',
 			communityVal: '',
 			community: '',
-			props:{ value: 'value', label: 'label', children: 'children' },
+			props: { value: 'value', label: 'label', children: 'children' },
 			compact: [
 				{ value: 'all', label: '全部' },
 				{ value: 'h', label: '合租' },
@@ -113,7 +191,7 @@ export default {
 					children: [{ value: 'yhxq1', label: '余杭小区1' }]
 				}
 			],
-			selectedOptions: '',
+			selectedOptions: [],
 			options: [
 				{
 					id: 143828,
@@ -355,3 +433,11 @@ export default {
 	}
 };
 </script>
+<style>
+.el-range-editor--mini.el-input__inner {
+	width: 250px;
+}
+.el-range-editor--mini .el-range-separator {
+	min-width: 20px;
+}
+</style>

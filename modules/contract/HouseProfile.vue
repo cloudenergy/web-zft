@@ -11,10 +11,9 @@
 
                         <span class="el-input-group__prepend">承租房源</span>
                         <el-select v-model="property.houseType" class="house-type">
-                            <el-option label="全部" value="1"></el-option>
-                            <el-option label="整租" value="2"></el-option>
-                            <el-option label="合租" value="3"></el-option>
-                            <el-option label="独栋" value="4"></el-option>
+                            <el-option label="整租" value="SOLE"></el-option>
+                            <el-option label="合租" value="SHARE"></el-option>
+                            <el-option label="整栋" value="ENTIRE"></el-option>
                         </el-select>
                         <el-autocomplete
                                 class="inline-input prepend-label"
@@ -22,7 +21,8 @@
                                 :fetch-suggestions="querySearch"
                                 placeholder="搜索房源编号、小区名称等关键字"
                                 :trigger-on-focus="false"
-                                @select="handleSelect">
+                                @select="handleSelect"
+                                valueKey="name">
                         </el-autocomplete>
                     </div>
                 </el-form-item>
@@ -32,10 +32,16 @@
 </template>
 
 <script>
+    import _ from 'lodash'
 	export default {
 		props: {
 			property: {
 				required: true
+			}
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
 			}
 		},
 		methods: {
@@ -43,11 +49,14 @@
 				console.log(item);
 				this.property.roomId = item.id
 			},
-			querySearch(queryString, cb) {
-				cb([
-					{value: '房子1', id: '10001'},
-					{value: '房子2', id: '10002'}
-				]);
+			querySearch(q, cb) {
+				const projectId = this.projectId;
+				this.$model('houses').query({houseFormat: this.property.houseType, q}, {projectId})
+                    .then( data => {
+						const houses = _.get(data, 'results', []);
+						const rooms = _(houses).map('rooms').flattenDeep().value();
+						cb(rooms)
+                    })
 			}
 		}
 	}
