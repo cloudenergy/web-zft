@@ -17,18 +17,18 @@
                     <template slot="prepend">名称</template>
                 </el-input>
             </div>
-            <room-layout v-model="form.layout"></room-layout>
+            <room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
             <building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]"></building-floor>
             <div class="group">
-                <el-form-item label="面积">
-                    <el-input v-model.number="form.layout.roomArea" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="层高">
-                    <el-input v-model.number="form.currentFloor" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数"></el-input>
-                </el-form-item>
+                <el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
+                    <template slot="prepend">面积</template>
+                </el-input>
+                <el-input v-model.number="form.currentFloor" auto-complete="off" placeholder="层高">
+                    <template slot="prepend">层高</template>
+                </el-input>
+                <el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数">
+                    <template slot="prepend">总层数</template>
+                </el-input>
             </div>
             <h3>房源配置</h3>
             <house-facility class="checkboxes" v-model="form.config"></house-facility>
