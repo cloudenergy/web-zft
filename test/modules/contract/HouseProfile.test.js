@@ -13,7 +13,9 @@ describe('HouseProfile', () => {
 	});
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<el-option label="全部" value="1"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="整租" value="SOLE"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="整栋" value="ENTIRE"></el-option>')
+		expect(wrapper.html()).toContain('<el-option label="合租" value="SHARE"></el-option>')
 	})
 
 

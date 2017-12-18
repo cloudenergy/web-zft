@@ -75,7 +75,7 @@
 						documentType: 1
 					},
 					property: {
-						houseType: '1',
+						houseType: 'SOLE',
 						house: ''
 					},
 					contract: {
