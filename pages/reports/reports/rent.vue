@@ -1,5 +1,5 @@
 <template>
-  <ReportsNav :tab-name='tabName' :tabpage='page'/>
+  <ReportsNav :tab-name='tabName' :tabpage='page' />
 </template>
 
 <script>
@@ -9,10 +9,10 @@ export default {
 		ReportsNav
 	},
 	data() {
-		return {page:"rent",
+		return {page:"租客",
 			tabName: [
-				{ label: '租客', name: '1' },
-				{ label: '业主', name: '2' },
+				{ label: '租客', name: '租客' },
+				{ label: '业主', name: '业主' },
 			]
 		};
 	}
