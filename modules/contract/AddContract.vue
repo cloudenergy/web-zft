@@ -133,16 +133,17 @@
 			},
 			createStrategy(form) {
 				return {
-					freq: _.pick(form.expense.standard, ['rent', 'pattern'])
+					freq: this.unitAsCent(_.pick(form.expense.standard, ['rent', 'pattern']))
 				}
 			},
 			createExpense(form) {
-				let extraExpense = fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra);
-				return _.concat(extraExpense, [{
+				const extraExpense = fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra);
+				const allExpense = _.concat(extraExpense, [{
 					configId: 111,
 					rent: form.expense.bond,
 					pattern: 'paidOff'
-				}])
+				}]);
+				return fp.map(this.unitAsCent)(allExpense);
 			},
 			closeDialog() {
 				this.$refs['form'].resetFields();
@@ -153,6 +154,10 @@
 					message: '恭喜你,提交成功',
 					type: 'success'
         		});
+			},
+			unitAsCent(obj) {
+				const rent = obj.rent * 100;
+				return fp.defaults(obj, {rent});
 			}
 		},
 		components: {
