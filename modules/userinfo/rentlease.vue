@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="hideMenu">
-          <div style="vertical-align:top">
+          <div style="vertical-align:top" @click="test()">
             支付记录
           </div>
           <div>
@@ -43,15 +43,15 @@
     </el-table-column>
     <el-table-column label="账期" width="240">
       <template slot-scope="scope">
-        <span>{{scope.row.startDate}}</span>至
-        <span>{{scope.row.endDate}}</span>
+        <span>{{scope.row.startDateNew}}</span>至
+        <span>{{scope.row.endDateNew}}</span>
       </template>
     </el-table-column>
     <el-table-column prop="dueAmount" label="金额" width="80">
     </el-table-column>
-    <el-table-column prop="dueDate" label="时间">
+    <el-table-column prop="dueDateNew" label="时间">
     </el-table-column>
-    <el-table-column prop="createdAt" label="状态" width="120">
+    <el-table-column prop="createdAtNew" label="状态" width="120">
     </el-table-column>
   </el-table>
 </template>
@@ -65,23 +65,21 @@
     },
     computed: {
       billItem: function(){
+        console.log(this.form)
         return this.form.map(function(item){
+          item.startDateNew = new Date(parseInt(item.startDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           // console.log(item.startDate)
-          item.startDate = new Date(parseInt(item.startDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
-          // console.log(item.startDate)
-          item.endDate = new Date(parseInt(item.endDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
-          item.dueDate = new Date(parseInt(item.dueDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
-          item.createdAt = new Date(parseInt(item.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
+          item.endDateNew = new Date(parseInt(item.endDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
+          item.dueDateNew = new Date(parseInt(item.dueDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
+          item.createdAtNew = new Date(parseInt(item.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           item.billItems.map(function(newitem){
             newitem.createdAtTime=new Date(parseInt(newitem.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
             return newitem
           })
-          // console.log(item)
+          console.log(item)
           return item
-          
         })
-
-      } 
+      }
     },
     data() {
       return {
@@ -100,6 +98,9 @@
       },
       toggle(flowi) {
         this.$refs.tableData.toggleRowExpansion(this.form.find(d => d.id == flowi))
+      },
+      test(){
+        console.log(this.form,this.billItem)
       }
     }
   }

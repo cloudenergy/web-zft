@@ -35,7 +35,7 @@
                 </div>
             </template>
         </el-table-column>
-        <el-table-column label="气">
+        <el-table-column label="燃气">
             <template slot-scope="scope">
                 <div class="showicon">
                     <myIconZujin />

@@ -28,16 +28,12 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="往次抄表" min-width="140">
+             <el-table-column label="往次抄表" min-width="140">
                 <template slot-scope="scope">
-                    <el-select v-model="scope.row.lastnum" placeholder="请选择" popper-class="fsadfas" class="no-border">
-                        <el-option v-for="item in scope.row.lastdateall" :key="item.value" :label="item.label" :value="item.value" width="180">
-                            <span style="float: left">{{ item.label }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
-                        </el-option>
-                    </el-select>
-                    <br>
-                    <span style="margin-left: 2px">{{ scope.row.lastnum }}</span>
+                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:130px"
+                        @change="test">
+                    </el-date-picker><br/>
+                    <span style="margin-left: 16px">{{ scope.row.lastnum }}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -46,17 +42,18 @@
                     <span>{{ scope.row.thisdata }}</span>
                     <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" v-if="scope.row.thisdata==''" style="width:130px"
                         @change="test">
-                    </el-date-picker>
-                    <span style="opacity:0">1</span>
+                    </el-date-picker><br>
+                    <span>{{ scope.row.thisnum }}</span>
+                    <el-input v-model="scope.row.readnum" v-if="scope.row.thisnum==''"></el-input>
                 </template>
             </el-table-column>
-            <el-table-column label="仪表读数">
+            <!-- <el-table-column label="仪表读数">
                 <template slot-scope="scope">
                     <span>{{ scope.row.thisnum }}</span>
                     <el-input v-model="scope.row.readnum" v-if="scope.row.thisnum==''"></el-input>
                     <span style="opacity:0">1</span>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="差值">
                 <template slot-scope="scope">
                     <span>{{ scope.row.differentnum }}</span>

@@ -1,8 +1,8 @@
 /*
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
- * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-27 12:04:05
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2017-12-18 16:14:24
  */
 
 import api from '~/plugins/api';
@@ -11,7 +11,7 @@ export default {
 	state: {
 		user: {
 			id: '',
-			projectId: 92182103
+			projectId: 980488114
 		},
 		cityArea: {},
 		houseTypes: {

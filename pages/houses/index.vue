@@ -47,7 +47,7 @@
     					{
     						houseFormat: this.houseFormat
     					},
-    					{ projectId: '92182103' }
+    					{ projectId: '980488114' }
     				)
     				.then(data => this.$set(this, 'houses', data));
     		},
