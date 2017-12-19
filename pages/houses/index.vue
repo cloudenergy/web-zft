@@ -49,7 +49,9 @@
     					},
     					{ projectId: '980488114' }
     				)
-    				.then(data => this.$set(this, 'houses', data));
+    				.then(data => {
+    					this.$set(this, 'houses', data.result);
+    				});
     		},
     		showDrawer(id) {
     			this.viewRoom = true;

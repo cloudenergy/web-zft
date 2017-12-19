@@ -5,7 +5,7 @@
             <el-form-item label="编号">
                 <el-input v-model="model.code" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="管理">
+            <el-form-item>
                 <el-select v-model="model.houseKeeper" placeholder="管理员">
                     <el-option label="root" value="212231"></el-option>
                     <el-option label="admin" value="858494"></el-option>

@@ -31,7 +31,7 @@
     			type: Object,
     			default() {
     				return {
-    					bedRoom: 2,
+    					bedRoom: 1,
     					livingRoom: 1,
     					bathRoom: 1,
     					orientation: 'N'
@@ -50,6 +50,11 @@
     	watch: {
     		form(val) {
     			this.$emit('input', val);
+    		},
+    		rentType(val) {
+    			if (val == 'SHARE') {
+    				this.form.bedRoom = 2;
+    			}
     		}
     	}
     };
