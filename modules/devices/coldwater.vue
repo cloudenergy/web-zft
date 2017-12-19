@@ -36,7 +36,7 @@
                         @change="test">
                     </el-date-picker><br>
                     <span>{{ scope.row.thisnum }}</span>
-                    <el-input v-model="scope.row.readnum" v-if="scope.row.thisnum==''"></el-input>
+                    <el-input v-model="scope.row.readnum" v-if="scope.row.thisnum==''" style="width:130px"></el-input>
                 </template>
             </el-table-column>
             <!-- <el-table-column label="仪表读数">

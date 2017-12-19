@@ -12,8 +12,10 @@
     	data() {
     		return {
     			links: [
-                    { url: '/devices', text: '仪表管理' },
-                    { url: '/devices/unitprice', text: '单价设置' }    
+                    { url: '/devices', text: '自动抄表' },
+                    { url: '/devices/manualreading', text: '手动抄表' },
+                    { url: '/devices/unitprice', text: '单价设置' },
+                    { url: '/devices/equipment', text: '设备管理' },
                 ]
     		};
     	}

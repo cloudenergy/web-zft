@@ -261,7 +261,7 @@
 				this.dialogVisible = true;
 				this.showinf = value;
 				this.updateData = item;
-				this.$model('contractbill')
+				this.$model('contract_bill')
 				.query({},{projectId: this.projectId,id:item.id})
 				.then(data=> this.$set(this,'contractbill',data))
 			},

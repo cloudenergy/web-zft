@@ -9,12 +9,10 @@
 			<el-header style="height:auto">
 				<div class="ops-bills">
 					<div class="flexcenter">
-						<deviceModules @showthat="showwhat" :form="devicesstatus" />
-						<deviceModules @showthat="showelec" v-if="devicesstate=='all1'" :form="electricitystatus" />
-						<deviceModules @showthat="showcold" v-if="devicesstate=='all2'" :form="coldwater" />
-						<deviceModules @showthat="showhotw" v-if="devicesstate=='all3'" :form="hotwater" />
-						<deviceModules @showthat="shownatu" v-if="devicesstate=='all4'" :form="naturalgas" />
-						<RentSearch @childinfo="showmessage" />
+						<div style="margin-left:-20px">
+							<RentSearch @childinfo="showmessage" />
+						</div>
+						
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">32项结果</span>
@@ -28,8 +26,7 @@
 				</div>
 			</el-header>
 			<el-main>
-				<electricit v-if="devicesstate=='all1'"/>
-				<coldwater v-if="devicesstate=='all2'"/>
+				<electricit/>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -57,94 +54,10 @@
 		},
 		data() {
 			return {
-				devicesstate:'all1',
-				devicesstatus: [{
-						index: 'all1',
-						text: '电'
-					},
-					{
-						index: 'all2',
-						text: '冷水'
-					},
-					{
-						index: 'all3',
-						text: '热水'
-					},
-					{
-						index: 'all4',
-						text: '燃气'
-					}
-				],
-				electricitystatus: [{
-						index: '11',
-						text: '全部'
-					},
-					{
-						index: '22',
-						text: '已配置'
-					},
-					{
-						index: '33',
-						text: '未配置'
-					}
-				],
-				coldwater: [{
-						index: '111',
-						text: '全部'
-					},
-					{
-						index: '222',
-						text: '已超'
-					},
-					{
-						index: '333',
-						text: '本月未抄'
-					},
-				],
-				hotwater: [{
-						index: '1111',
-						text: '全部'
-					},
-					{
-						index: '2222',
-						text: '已超'
-					},
-					{
-						index: '3333',
-						text: '本月未抄'
-					},
-				],
-				naturalgas: [{
-						index: '11111',
-						text: '全部'
-					},
-					{
-						index: '22222',
-						text: '已超'
-					},
-					{
-						index: '33333',
-						text: '本月未抄'
-					},
-				]
+				
 			};
 		},
 		methods:{
-			showwhat(data){
-				this.devicesstate = data;
-			},
-			showelec(data){
-				console.log(data)
-			},
-			showcold(data){
-				console.log(data)
-			},
-			showhotw(data){
-				console.log(data)
-			},
-			shownatu(data){
-				console.log(data)
-			},
 			showmessage(data){
 				console.log(data)
 			}

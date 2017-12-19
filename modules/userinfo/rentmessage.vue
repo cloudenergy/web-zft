@@ -74,45 +74,32 @@
         mounted() {
             this.changetime(this.form.signUpTime,this.form.from,this.form.to)
             this.strt(this.form.paymentPlan)
-            // 暂时不考虑
-            // this.test()
         },
         methods: {
-            // 暂时不考虑
-            // test(){
-            //     isIdCard(123).then(()=>{
-            //         console.log(res)
-            //     })
-            // },
             changetime(tm,tm1,tm2) {
-                this.tt=new Date(parseInt(tm) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ") 
-                this.tt1=new Date(parseInt(tm1) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ") 
-                this.tt2=new Date(parseInt(tm2) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ") 
+                this.tt=this.set(tm)
+                this.tt1=this.set(tm1)
+                this.tt2=this.set(tm2)
+            },
+            set(time){
+                return new Date(parseInt(time) * 1000).toLocaleString().replace(/\//g, "-")
             },
             strt(payment){
                 if(/-/g.test(payment)){
-                    console.log('提前n天')
                     this.form.paymentP=11
                     this.form.paymentPlan=this.form.paymentPlan.replace(/-/g,'')
-                    console.log(this.form.paymentPlan)
                 }
                 if(/\+/g.test(payment)){
-                    console.log('提后n天')
                     this.form.paymentP=22
                     this.form.paymentPlan=this.form.paymentPlan.replace(/\+/g,'')
-                    console.log(this.form.paymentPlan)
                 }
                 if(/F/g.test(payment)){
-                    console.log('开始前n天')
                     this.form.paymentP=33
                     this.form.paymentPlan=this.form.paymentPlan.replace(/F/g,'')
-                    console.log(this.form.paymentPlan)
                 }
                 if(/M/g.test(payment)){
-                    console.log('固定n天')
                     this.form.paymentP=44
                     this.form.paymentPlan=this.form.paymentPlan.replace(/M/g,'')
-                    console.log(this.form.paymentPlan)
                 }
             }
         }

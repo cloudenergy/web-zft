@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="hideMenu">
-          <div style="vertical-align:top" @click="test()">
+          <div style="vertical-align:top">
             支付记录
           </div>
           <div>
@@ -65,7 +65,7 @@
     },
     computed: {
       billItem: function(){
-        console.log(this.form)
+        console.log(this)
         return this.form.map(function(item){
           item.startDateNew = new Date(parseInt(item.startDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           // console.log(item.startDate)
@@ -99,9 +99,9 @@
       toggle(flowi) {
         this.$refs.tableData.toggleRowExpansion(this.form.find(d => d.id == flowi))
       },
-      test(){
-        console.log(this.form,this.billItem)
-      }
+      set(time){
+        return new Date(parseInt(time) * 1000).toLocaleString().replace(/\//g, "-")
+      },
     }
   }
 </script>
