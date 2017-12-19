@@ -5,7 +5,7 @@
             <Search />
             <div class="houses">
                 <div class="room" v-for="house in houses">
-                    <div>{{house.name}}
+                    <div>{{house.group}} {{house.building}} {{house.unit}}
                         <span class="badge pull-right">2</span>
                     </div>
                     <div class="cells">
@@ -49,8 +49,9 @@
     					},
     					{ projectId: '980488114' }
     				)
-    				.then(data => {
-    					this.$set(this, 'houses', data.result);
+    				.then(res => {
+    					// console.log('data: ', data);
+    					this.$set(this, 'houses', res.data || []);
     				});
     		},
     		showDrawer(id) {

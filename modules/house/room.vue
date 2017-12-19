@@ -2,7 +2,7 @@
     <div class="house-cell" :class="{leased: out}">
         <div class="cell">
             <h3>{{room.name}}</h3>
-            <p>{{room.roomType.name}} {{room.roomType.area}} {{room.roomType.orientation}}</p>
+            <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
             <p>￥ 200</p>
             <p class="rentee">
                 <span>
@@ -23,10 +23,21 @@
 
 <script>
     import AddModal from './add';
+    const orientations = {
+    	N: '北',
+    	S: '南',
+    	E: '东',
+    	W: '西'
+    };
 
     export default {
     	props: {
     		room: Object
+    	},
+    	filters: {
+    		orientation(val) {
+    			return orientations[val] || '';
+    		}
     	},
     	data() {
     		return {
