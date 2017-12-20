@@ -40,9 +40,6 @@
             <el-button @click="onclose('form')">取消</el-button>
             <el-button type="primary" @click="onSubmit('form')">立即缴费</el-button>
         </div>
-
-
-
     </div>
 </template>
 

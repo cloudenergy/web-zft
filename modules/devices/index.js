@@ -1,3 +1,3 @@
 export {default as deviceModules} from './devicemodules';
 export {default as electricit} from './electricit';
-export {default as coldwater} from './coldwater';
+export {default as electrictwater} from './electrictwater';
