@@ -61,6 +61,7 @@ const apis = {
 	houses: resource('/projects/{projectId}/houses'),
 	communities: resource('/projects/{projectId}/communities'),
 	contracts: resource('/projects/{projectId}/contracts'),
+	rooms: resource('/projects/{projectId}/rooms'),
 	locations: get('/locations/{action}'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills')
 };

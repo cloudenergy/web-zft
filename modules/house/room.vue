@@ -51,14 +51,14 @@
     				comp: AddModal,
     				data: {
     					item: {
-    						name: 'test'
+    						...this.room
     					}
     				},
-    				title: '新增房源'
+    				title: '房源信息'
     			});
     		},
     		view() {
-    			this.$emit('view', this.room.id);
+    			this.$emit('view', this.room);
     		}
     	}
     };
@@ -103,6 +103,7 @@
     	}
 
     	.actions {
+    		cursor: pointer;
     		position: absolute;
     		bottom: -14px;
     		background: #fff;

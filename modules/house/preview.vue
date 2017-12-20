@@ -46,7 +46,11 @@
     					bills: [{ name: '租金', amount: '1400', period: '一月一付' }]
     				};
     			}
-    		}
+    		},
+    		id: null
+    	},
+    	created() {
+    		// 获取房间数据
     	}
     };
 </script>

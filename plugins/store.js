@@ -22,9 +22,9 @@ export default {
 		defaultHouseType: 'SOLE'
 	},
 	actions: {
-		GET_COMMUNITIES({ commit, state }) {
+		GET_COMMUNITIES({ commit, state }, { houseType }) {
 			return api('communities').query(
-				{ houseFormat: state.defaultHouseType },
+				{ houseFormat: houseType },
 				{ projectId: state.user.projectId }
 			);
 		},

@@ -1,11 +1,11 @@
 <template>
     <div class="page-house-index">
-        <Tab @change="refresh" />
+        <Tab @change="refresh" :selected="houseFormat" />
         <div class="main-container">
             <Search />
             <div class="houses">
                 <div class="room" v-for="house in houses">
-                    <div>{{house.group}} {{house.building}} {{house.unit}}
+                    <div>{{house.group}} {{house.building}} {{house.unit}} {{house.roomNumber}}
                         <span class="badge pull-right">2</span>
                     </div>
                     <div class="cells">
@@ -16,7 +16,7 @@
         </div>
         <drawer-panel :open.sync="viewRoom">
             <div v-if="viewRoom" class="drawer">
-                <Preview />
+                <Preview :id="currentRoom" />
             </div>
         </drawer-panel>
     </div>
@@ -29,6 +29,7 @@
     	data() {
     		return {
     			houses: [],
+    			currentRoom: null,
     			viewRoom: false,
     			houseFormat: 'SHARE'
     		};
@@ -54,7 +55,8 @@
     					this.$set(this, 'houses', res.data || []);
     				});
     		},
-    		showDrawer(id) {
+    		showDrawer(room) {
+    			this.currentRoom = room;
     			this.viewRoom = true;
     		}
     	}

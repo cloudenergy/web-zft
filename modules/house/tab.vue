@@ -22,7 +22,9 @@
     	computed: {
     		...mapState(['houseTypes', 'defaultHouseType'])
     	},
-    	props: ['selected'],
+    	props: {
+    		selected: null
+    	},
     	data() {
     		return {
     			type: 'SOLE',
@@ -37,7 +39,7 @@
     	created() {
     		this.type = this.selected || this.defaultHouseType;
     		this.$store
-    			.dispatch('GET_COMMUNITIES')
+    			.dispatch('GET_COMMUNITIES', { houseType: this.type })
     			.then(data => (this.community = data));
     	},
     	methods: {
