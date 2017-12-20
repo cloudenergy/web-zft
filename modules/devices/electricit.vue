@@ -37,7 +37,7 @@
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>
             </el-table-column>
-             <el-table-column label="往次抄表" min-width="140">
+             <el-table-column label="往次抄表" min-width="180">
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
                         @change="oldTime(scope.row)">
@@ -46,7 +46,7 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="本次抄表" min-width="150">
+            <el-table-column label="本次抄表" min-width="180">
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
                         @change="newTime(scope.row)">

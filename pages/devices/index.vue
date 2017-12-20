@@ -39,7 +39,6 @@
 	import {
 		deviceModules,
 		electricit,
-		coldwater
 	} from '../../modules/devices'
 	import {
 		RentSearch
@@ -49,8 +48,7 @@
 			Tab,
 			deviceModules,
 			RentSearch,
-			electricit,
-			coldwater
+			electricit
 		},
 		data() {
 			return {
