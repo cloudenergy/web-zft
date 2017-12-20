@@ -52,7 +52,7 @@
               </el-form-item>
 
               <el-form-item label="身份证照片">
-                <el-button type="danger" style="margin-left:10px">上传图片</el-button>
+                <el-button type="danger" style="margin-left:10px" @click='upIDCard'>上传图片</el-button>
               </el-form-item>
 
               <el-form-item>
@@ -117,7 +117,7 @@
 
             <el-form-item label="营业执照照片">
               <el-col :span="10">
-                <el-button>点击上传图片</el-button>
+                <el-button @click="upLicense">点击上传图片</el-button>
               </el-col>
             </el-form-item>
 
@@ -142,28 +142,23 @@
 
             <el-form-item label="房源样图(6张)">
               <el-col :span="10">
-                <el-button>点击上传图片</el-button>
+                <el-button @click="upDrawing">点击上传图片</el-button>
               </el-col>
             </el-form-item>
 
             <el-form-item label="认证后提交推广审核">
               <el-col :span="10">
-                <el-button>自动提交</el-button>
+                <el-checkbox v-model="checked">自动提交</el-checkbox>
               </el-col>
             </el-form-item>
 
-            <el-form-item label="房源样图(6张)">
-              <el-col :span="10">
-                <el-button>提交认证</el-button>
-              </el-col>
-            </el-form-item>
  <el-form-item>
                 <el-button type="primary" @click="onSubmit" class="tabForm_btn">提交认证</el-button>
               </el-form-item>
         </el-form>
       </el-tab-pane>
     </el-tabs>    
-<UploadImg :is-show='isShow' :title='title' :action='action' :multiple='multiple'/>
+<UploadImg :is-show='isShow' :title='title' :action='action' :multiple='multiple' :limit='limit' v-on:listenIsShow="uploadClose"/>
   </div>
 </template>
 
@@ -186,13 +181,16 @@ UploadImg
 				desc: ''
 			},
 			apartmentBrand: '未来住客',
-      activeName: 'enterprise',
+      activeName: 'personal',
       city:[{value:'杭州',label:'hz'}],
       value:'',
       isShow:false,
             title:'',
             action:'',
-            multiple:false
+            multiple:false,
+            limit:1,
+            checked: true
+
 		};
 	},
 	methods: {
@@ -204,10 +202,39 @@ UploadImg
     },
     upLogo(){
       this.isShow=true;
-      this.title="logo";
+      this.title="请上传logo";
       this.action='';
       this.multiple=false;
-    }
+      this.limit=1;
+      
+      
+    }, upLicense(){
+      this.isShow=true;
+      this.title="请上传营业执照照片";
+      this.action='';
+      this.multiple=false;
+      this.limit=1;
+    },
+  upIDCard(){
+      this.isShow=true;
+      this.title="身份证照片(正反面共2张)";
+      this.action='';
+      this.multiple=true;
+      this.limit=2;
+    },
+    upDrawing(){
+      this.isShow=true;
+      this.title="请上传房源样图(6张)";
+      this.action='';
+      this.multiple=true;
+      this.limit=6;
+    },
+
+
+            uploadClose(data){
+              this.isShow=data;
+              console.log(data)
+            }    
 	}
 };
 </script>

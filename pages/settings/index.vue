@@ -4,7 +4,7 @@
 <el-col :span="2">
   <el-menu
       class="el-menu-vertical-demo"
-	  default-active='profile'
+	  default-active='Profile'
 	  @select='toggleComponents'
 	  >
       <el-menu-item index="Profile">

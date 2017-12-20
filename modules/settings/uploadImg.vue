@@ -1,7 +1,7 @@
 <template>
  <el-dialog
   :title="title"
-  :visible.sync="dialogVisible"
+  :visible.sync="isShow"
   width="30%"
   :before-close="handleClose">
 
@@ -9,6 +9,9 @@
   <el-upload
   class="upload-demo"
   drag
+  :on-success='upSuc'
+  :on-error='upErr'
+  :limit='limit'
   :action="action"
   :multiple='multiple'>
   <i class="el-icon-upload"></i>
@@ -30,11 +33,11 @@ export default {
             isShow:Boolean,
             title:String,
             action:String,
-            multiple:Boolean
+            multiple:Boolean,
+            limit:Number
         },
 	data() {
 		return {
-			dialogVisible: ''
 		};
 	},
 	components: {},
@@ -46,15 +49,17 @@ export default {
 				})
 				.catch(_ => {});
         },
+        
         close(){
-this.dialogVisible=false;
-// this.isShow=false;
-        }
+            this.$emit("listenIsShow",false);
+        },upSuc(){
+   this.$success.error('上传成功');
+},
+upErr(){
+  this.$message.error('上传失败');
+}
     },
-    created(){
-        this.dialogVisible=this.isShow;
-        // this.isShow='';
-    }
+
 };
 </script>
 
