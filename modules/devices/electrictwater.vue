@@ -9,34 +9,49 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="归属账单" min-width="120">
+            <el-table-column label="归属账单" min-width="180">
                 <template slot-scope="scope">
-                    <el-select v-model="scope.row.currentuser" placeholder="请选择">
-                        <el-option v-for="item in scope.row.user" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-dropdown style="width:90%" @command="handleCommand">
+                    <span class="el-dropdown-link devicesuser">
+                        {{scope.row.user[0].label}}userId<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <!-- @@@需要返还userId -->
+                        <el-dropdown-item v-for="item in scope.row.user" :key="item.value" :command="item.value">
+                            {{item.label}} {{item.value}}
+                            <br>
+                            {{item.from}}至{{item.to}}
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                    </el-dropdown>
                     <br>
-                    <span>{{ scope.row.userid }}</span>
-                    <br>
+                    <!-- @@@时间，等数据传回来 -->
+                    <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="往次抄表" min-width="140">
+            <el-table-column label="上次抄表" min-width="140">
                 <template slot-scope="scope">
-                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:130px"
-                        @change="test">
-                    </el-date-picker><br/>
-                    <span style="margin-left: 16px">{{ scope.row.lastnum }}</span>
+                    <p>{{scope.row.setdata}}</p>
+                    <span>{{ scope.row.lastnum }}</span>
                     <br>
                 </template>
             </el-table-column>
             <el-table-column label="本次抄表" min-width="150">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.thisdata }}</span>
-                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" v-if="scope.row.thisdata==''" style="width:130px"
-                        @change="test">
-                    </el-date-picker><br>
-                    <span>{{ scope.row.thisnum }}</span>
-                    <el-input v-model="scope.row.readnum" v-if="scope.row.thisnum==''" style="width:130px"></el-input>
+                        <el-date-picker
+                            v-model="scope.row.setdata"
+                            type="date"
+                            placeholder="选择日期"
+                            style="width:130px"
+                            :picker-options="scope.row.pickerOptions"
+                            @change="test">
+                        </el-date-picker>
+                    <br>
+                </template>
+            </el-table-column>
+            <el-table-column label="本次抄表" min-width="150">
+                <template slot-scope="scope">
+                    <el-input v-model="scope.row.readnum" style="width:130px"></el-input>
                 </template>
             </el-table-column>
             <!-- <el-table-column label="仪表读数">
@@ -74,12 +89,16 @@
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: 'asdf',
-                                label: '赵世浩'
+                                value: '1',
+                                label: '赵世浩',
+                                from:'2017-01-01',
+                                to:'2018-01-01'
                             },
                             {
-                                value: 'asdfsadf',
-                                label: '未分配'
+                                value: '0',
+                                label: '未分配',
+                                from:'2017-01-01',
+                                to:'2018-01-01'
                             },
                         ],
                         currentuser: '0',
@@ -105,23 +124,33 @@
                         ],
                         lastnum: '000000',
                         thisdata: '2016-05-10',
-                        setdata: '',
+                        setdata: '1513737093',
                         thisnum: '111',
                         readnum: '',
                         differentnum: '111111',
                         unitprice: '2',
-                        bill: '1200'
+                        bill: '1200',
+                        create_start_date:'1480867200000',
+                        pickerOptions: {
+                            disabledDate:(time)=> {
+                                return time.getTime() > Date.now() || time.getTime() < this.tableData[0].create_start_date;
+                            }
+                        },
                     },
                     {
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: '1234324',
-                                label: '赵世浩'
+                                value: '1',
+                                label: '赵世浩',
+                                from:'2017-01-01',
+                                to:'2018-01-01'
                             },
                             {
-                                value: '0234234',
-                                label: '未分配'
+                                value: '0',
+                                label: '未分配',
+                                from:'2017-01-01',
+                                to:'2018-01-01'
                             },
                         ],
                         currentuser: '1',
@@ -147,23 +176,32 @@
                         ],
                         lastnum: '111111',
                         thisdata: '',
-                        setdata: '',
+                        setdata: '1513737093',
                         thisnum: '',
                         readnum: '',
                         differentnum: '111111',
                         unitprice: '2',
-                        bill: '1200'
+                        bill: '1200',
+                        pickerOptions: {
+                            disabledDate:(time)=> {
+                                return time.getTime() > Date.now() || time.getTime() < this.create_start_date;
+                            }
+                        },
                     },
                     {
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
                         user: [{
-                                value: '1sadfasf',
-                                label: '赵世浩'
+                                value: '1',
+                                label: '赵世浩',
+                                from:'2017-01-01',
+                                to:'2018-01-01'
                             },
                             {
-                                value: '0asdfsaf',
-                                label: '未分配'
+                                value: '0',
+                                label: '未分配',
+                                from:'2017-01-01',
+                                to:'2018-01-01'
                             },
                         ],
                         currentuser: '1',
@@ -189,15 +227,28 @@
                         ],
                         lastnum: '000000',
                         thisdata: '2016-05-10',
-                        setdata: '',
+                        setdata: '2016/05/10',
                         thisnum: '111111',
                         readnum: '',
                         differentnum: '111111',
                         unitprice: '2',
-                        bill: '1200'
+                        bill: '1200',
+                        create_start_date:'1480867200000',
+                        // pickerOptions: {
+                        //     disabledDate:(time)=> {
+                        //         return time.getTime() > Date.now() || time.getTime() < this.tableData[2].create_start_date;
+                        //     }
+                        // },
                     }
                 ]
             }
+        },
+        mounted () {
+            this.tableData[2].pickerOptions =   {
+                            disabledDate:(time)=> {
+                                return time.getTime() > Date.now() || time.getTime() < this.tableData[2].create_start_date;
+                            }
+                        }
         },
         methods: {
             test(date) {
@@ -205,11 +256,20 @@
             },
             savech() {
                 console.log(this.tableData)
-            }
+            },
+            handleCommand(command){
+                console.log(command)
+            },
         }
     }
 </script>
 
 <style lang="less" scoped>
-
+.devicesuser{
+        display: inline-block;
+        width: 100%;
+        i{
+            float:right;
+        }
+    }
 </style>
