@@ -127,8 +127,8 @@
 							<div class="flexcenter">
 								<span @click="changeUserInfo(3)" class="cursorp" :class="{activerent:showinf==3}">费用清单</span>
 								<div v-if="showinf==3" class="flexc menu-rightthree cursorpoin">
-									<div @click="rentPay(1)" :class="{activerent:showmoney==1}">仪表扣费</div>
-									<div @click="rentPay(2)" :class="{activerent:showmoney==2}">租约扣费</div>
+									<div @click="rentPay(1)" :class="{activerent:showmoney==1}">预付费扣费</div>
+									<div @click="rentPay(2)" :class="{activerent:showmoney==2}">账单扣费</div>
 									<div @click="rentPay(3)" :class="{activerent:showmoney==3}">充值记录</div>
 								</div>
 							</div>
@@ -267,12 +267,13 @@
 			},
 			rentuser2(data, value) {
 				var that = this;
+				console.log(data,value)
 				if (value == 1) {
 					// 打开续租页面
 					this.$modal.$emit('open', {
 						comp: Relet,
 						data: {
-							item: this.userdatainfo
+							item: data
 						},
 						title: '续租'
 					});

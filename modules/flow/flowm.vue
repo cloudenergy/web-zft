@@ -1,7 +1,7 @@
 <template>
 	<div class="top-nav">
 
-		  <el-tabs v-model="activeName" @tab-click="handleClick" style="height:100%">
+		  <el-tabs v-model="activeName" @tab-click="handleClick">
         <div v-loading="loading">
             <el-tab-pane label="按科目" name="second"><flowsubject/></el-tab-pane>
             <el-tab-pane label="按时间" name="first"><quantum/></el-tab-pane>

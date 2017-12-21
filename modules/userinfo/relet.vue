@@ -30,10 +30,8 @@
             }
         },
 		computed: {
-			computed: {
 				projectId() {
 					return this.$store.state.user.projectId;
-				}
 			},
 		},
 		data() {
@@ -76,6 +74,7 @@
 				return addYears(now, 1);
 			},
 			newModel(today) {
+				console.log(this.item)
 				return {
 					user: {
 						name: this.item.user.name,
@@ -99,26 +98,24 @@
 						billPlan: 'F',
 						offset: 2,
 						standard: {
-							id: 1,
 							name: '常规租金',
-							type: '2',
-							amount: 3600,
-							paymentMethod: 'perMonth'
+							rent: 3600,
+							pattern: '6'
 						},
 						extra: [
 							{
-								id: 2,
+								configId: 2,
 								name: '电费',
-								type: '2',
-								amount: 1.2,
-								paymentMethod: 'prepaid'
+								type: 'extra',
+								rent: 1.2,
+								pattern: 'prepaid'
 							},
 							{
-								id: 3,
+								configId: 3,
 								name: '水费',
-								type: 'water',
-								amount: 20,
-								paymentMethod: 'perMonth'
+								type: 'extra',
+								rent: 20,
+								pattern: '1'
 							}
 						],
 						bond: 2600

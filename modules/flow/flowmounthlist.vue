@@ -1,8 +1,7 @@
 <template>
   <el-table
     :data="tableData"
-    stripe
-    style="width: 100%">
+    stripe>
     <el-table-column
       prop="data"
       label="小区/公寓"

@@ -4,8 +4,7 @@
         :row-key="getRowKeys"
         :expand-row-keys="expands"
         @row-click='handleRowHandle'
-        ref="tableData5"
-        style="width: 100%">
+        ref="tableData5">
         <el-table-column type="expand">
             <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
