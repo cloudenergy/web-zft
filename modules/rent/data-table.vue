@@ -102,19 +102,23 @@
 						<div>
 							<p>姓名</p>
 							<p>{{updateData.user.name}}</p>
+							<p v-if="updateData.user.name==''">暂无信息</p>
 						</div>
 						<div>
 							<p>性别</p>
 							<p v-if="updateData.user.gender=='M'">男</p>
 							<p v-if="updateData.user.gender=='F'">女</p>
+							<p v-if="updateData.user.gender==''">暂无信息</p>
 						</div>
 						<div>
 							<p>身份证号</p>
 							<p>{{updateData.user.documentId}}</p>
+							<p v-if="updateData.user.documentId==''">暂无信息</p>
 						</div>
 						<div>
 							<p>手机号</p>
 							<p>{{updateData.user.mobile}}</p>
+							<p v-if="updateData.user.mobile==''">暂无信息</p>
 						</div>
 						<div class="others"></div>
 					</div>
@@ -372,9 +376,15 @@
 			height: 100px;
 		}
 	}
-
-	.userinfobot>div:first-child {
-		margin-top: 16px;
+	.userinfobot{
+		margin-left: 5px;
+		color:#888;
+		>div:first-child{
+			margin-top: 16px;
+		}
+		>div>p:nth-child(1){
+			color:#000;
+		}
 	}
 
 	.triangle {

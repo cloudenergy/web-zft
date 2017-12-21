@@ -1,6 +1,6 @@
 <template>
     <div class="userinfoi" style="font-size:12px">
-        <el-form ref="form" :model="form" label-width="88px" :label-position="labelPosition">
+        <el-form ref="form" :model="form" label-width="130px" :label-position="labelPosition">
             <el-form-item label="姓名" style="font-size:12px" class="test" label-fontSize="12px">
                 <el-input v-model="form.user.name" class="inputuser"></el-input>
             </el-form-item>
@@ -11,7 +11,7 @@
                 <el-row>
                     <el-col :span="8">
                         <div class="select-with-label el-input-group">
-                            <el-select v-model="form.user.gender" class="gender prepend-label">
+                            <el-select v-model="form.user.gender" class="gender prepend-label" style="width:200px">
                                 <el-option label="男" value="M"></el-option>
                                 <el-option label="女" value="F"></el-option>
                             </el-select>
@@ -19,11 +19,11 @@
                     </el-col>
                 </el-row>
             </el-form-item>
-            <el-col :span="3">
-                <el-select v-model="form.user.documentType" class="id-type">
-                    <el-option v-for="t in idTypes" :label="t.name" :value="t.id" :key="t.id"></el-option>
-                </el-select>
-            </el-col>
+            
+            <el-select v-model="form.user.documentType" class="id-type" style="width:120px;margin-right:10px">
+                <el-option v-for="t in idTypes" :label="t.name" :value="t.id" :key="t.id"></el-option>
+            </el-select>
+        
             <el-input v-model="form.user.documentId" class="inputuser"></el-input>
         </el-form>
         <el-button type="primary" @click="updateuser()" style="margin-top:15px;margin-left:116px;">更改</el-button>

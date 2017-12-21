@@ -11,11 +11,11 @@
 					<div class="flexcenter">
 						<div class="flexcenter">
 							<deviceModules @showthat="showwhat" :form="devicesstatus" />
-              <deviceModules @showthat="showelec" v-if="devicesstate=='all1'" :form="electricitystatus" />
-              <deviceModules @showthat="showcold" v-if="devicesstate=='all2'" :form="coldwater" />
-              <deviceModules @showthat="showhotw" v-if="devicesstate=='all3'" :form="hotwater" />
-              <deviceModules @showthat="shownatu" v-if="devicesstate=='all4'" :form="naturalgas" />
-              <RentSearch @childinfo="showmessage" />
+							<deviceModules @showthat="showelec" v-if="devicesstate=='all1'" :form="electricitystatus" />
+							<deviceModules @showthat="showcold" v-if="devicesstate=='all2'" :form="coldwater" />
+							<deviceModules @showthat="showhotw" v-if="devicesstate=='all3'" :form="hotwater" />
+							<deviceModules @showthat="shownatu" v-if="devicesstate=='all4'" :form="naturalgas" />
+							<RentSearch @childinfo="showmessage" />
 						</div>
 						
 					</div>
