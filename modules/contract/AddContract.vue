@@ -133,17 +133,13 @@
 			},
 			createStrategy(form) {
 				return {
-					freq: this.unitAsCent(_.pick(form.expense.standard, ['rent', 'pattern']))
+					freq: this.unitAsCent(_.pick(form.expense.standard, ['rent', 'pattern'])),
+					bond: this.unitAsCent(form.expense.bond)
 				}
 			},
 			createExpense(form) {
 				const extraExpense = fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra);
-				const allExpense = _.concat(extraExpense, [{
-					configId: 111,
-					rent: form.expense.bond,
-					pattern: 'paidOff'
-				}]);
-				return fp.map(this.unitAsCent)(allExpense);
+				return fp.map(this.unitAsCent)(extraExpense);
 			},
 			closeDialog() {
 				this.$refs['form'].resetFields();
