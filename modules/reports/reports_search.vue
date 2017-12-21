@@ -433,7 +433,7 @@ export default {
 	}
 };
 </script>
-<style>
+<style scoped>
 .el-range-editor--mini.el-input__inner {
 	width: 250px;
 }

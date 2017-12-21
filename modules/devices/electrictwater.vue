@@ -29,7 +29,7 @@
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="上次抄表" min-width="140">
+            <el-table-column label="往次抄表" min-width="140">
                 <template slot-scope="scope">
                     <p>{{scope.row.setdata}}</p>
                     <span>{{ scope.row.lastnum }}</span>

@@ -150,7 +150,7 @@
 		</el-dialog>
 		<!-- 用户信息预览 -->
 		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%">
-			<Showrent/>
+			<Rentmessasge :form="updateData"/>
 			<div style="height:30px">
 				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
 			</div>
@@ -268,6 +268,7 @@
 			rentuser2(data, value) {
 				var that = this;
 				console.log(data,value)
+				this.updateData = data;
 				if (value == 1) {
 					// 打开续租页面
 					this.$modal.$emit('open', {
