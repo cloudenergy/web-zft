@@ -53,7 +53,7 @@
 				const projectId = this.projectId;
 				this.$model('houses').query({houseFormat: this.property.houseType, q}, {projectId})
                     .then( data => {
-						const houses = _.get(data, 'results', []);
+						const houses = _.get(data, 'data', []);
 						const rooms = _(houses).map('rooms').flattenDeep().value();
 						cb(rooms)
                     })
