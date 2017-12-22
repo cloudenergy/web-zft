@@ -296,7 +296,7 @@
 						console.log(this.projectId)
 						console.log(data.id)
 						this.$model('contract_del')
-						.delete({},{projectId: this.projectId,id:data.id})
+						.delete({},{projectId: this.projectId,id:'100'})
 						.then(data=> {
 							console.log(data)
 							if(data.code==204){
@@ -304,6 +304,7 @@
 								type: 'success',
 								message: '删除成功!'
 							});
+							this.query()
 							}else{
 								this.mistake('删除失败')
 							}
