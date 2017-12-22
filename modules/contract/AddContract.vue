@@ -135,7 +135,7 @@
 			createStrategy(form) {
 				return {
 					freq: this.unitAsCent(_.pick(form.expense.standard, ['rent', 'pattern'])),
-					bond: this.unitAsCent(form.expense.bond)
+					bond: form.expense.bond * 100
 				}
 			},
 			createExpense(form) {
