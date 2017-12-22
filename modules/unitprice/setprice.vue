@@ -25,7 +25,12 @@ export default {
     },
     methods: {
         sendchange(){
-            console.log(this.item)
+            // console.log(/^\d$/g.test(this.input))
+            if(!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(this.input)){
+                this.$emit('notclose')
+            }else{
+                this.$emit('notclose',this.item)
+            }
         }
     }
 }

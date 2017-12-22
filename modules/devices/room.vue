@@ -11,11 +11,12 @@
                 <span>解绑</span>
             </p>
             <p @click="view()">
-                <i class="el-icon-view" />
+                <i class="el-icon-view"/>
                 <span>换表</span>
             </p>
-            <p>
+            <p class="setswitch">
                 <el-switch
+                    :width="num"
                     v-model="conversions"
                     active-color="#13ce66"
                     inactive-color="#ff4949">
@@ -27,7 +28,7 @@
             title="换表"
             :visible.sync="dialogVisible"
             width="40%">
-            <conversion/>
+            <conversion ref="aaa"/>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="choosechange()">确 定</el-button>
@@ -49,7 +50,8 @@
     		return {
                 out: Math.random() > 0.5,
                 conversions:true,
-                dialogVisible: false
+                dialogVisible: false,
+                num: 30
     		};
     	},
     	methods: {
@@ -70,6 +72,7 @@
 							message: '更换成功!'
 						});
                         this.dialogVisible = false
+                        this.$refs.aaa.log()
 					}).catch(() => {
 						this.$message({
 							type: 'info',
@@ -124,7 +127,7 @@
             margin-right: 28px;
             p:last-child{
                 position: absolute;
-                top:-1px;
+                top:-5px;
             }
     		p {
                 height: 21px;
@@ -133,23 +136,25 @@
                 width: 32px;
                 span{
                     position: absolute;
-                    top:25px;
+                    top:18px;
                     left: 4px;
                     display: none;
                 }
+                
                 &:hover span{
                     display: block;
                     color:lightblue
                 }
-                i{
-                    font-size: 20px;
+                // i{
+                //     font-size: 20px;
+                // }
+            }
+            p.setswitch{
+                span{
+                    top: 23px
                 }
             }
-            
-
         }
-        
-
     	&:hover {
     		.actions {
     			display: block;
@@ -157,3 +162,16 @@
     	}
     }
 </style>
+
+<style>
+    .setswitch>div>span{
+        height: 14px;
+        width: 30px;
+    }
+    .setswitch>div>span.el-switch__core>span.el-switch__button{
+        height: 10px;
+        width: 10px;
+        left:4px
+    }
+</style>
+

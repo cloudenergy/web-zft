@@ -47,7 +47,7 @@
 		methods: {
 			handleSelect(item) {
 				console.log(item);
-				this.property.roomId = item.id
+				this.property.roomId = 6349069673488846849
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;

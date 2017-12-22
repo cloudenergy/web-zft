@@ -51,12 +51,12 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="stype" label="操作">
-            </el-table-column>
+            <!-- <el-table-column prop="stype" label="操作"> -->
+            <!-- </el-table-column> -->
         </el-table>
         <el-button type="primary" plain @click="batchchange" :disabled="disabledshow" style="margin-top:15px">批量修改</el-button>
         <el-dialog title="xiugai" :visible.sync="dialogVisible" width="30%">
-            <set-price :item='homeinfo' ref="childinput"/>
+            <set-price :item='homeinfo' ref="childinput" @notclose='notclose'/>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="hidden()">取 消</el-button>
                 <el-button type="primary" @click="notify()">确 定</el-button>
@@ -143,7 +143,13 @@
             // }
             notify(){
                 this.$refs.childinput.sendchange()
-                this.hidden()
+            },
+            notclose(data){
+                if(data==undefined){
+                    alert('输入价格为空或者不是数字，请重新输入')
+                }else{
+                    this.hidden()
+                }
             },
             hidden(){
                 this.dialogVisible = false

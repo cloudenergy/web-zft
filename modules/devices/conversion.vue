@@ -4,11 +4,11 @@
             <RentSearch style="width:300px" class="clearmargin"/>
             <p>106个未绑定的仪表</p>
         </div>
-        <div class="newchoose">
+        <div class="newchoose prevent">
             <div v-for="list in item" :key="list.index">
                 <el-radio v-model="radio" :label="list.id" style="width:100%;"><span>{{list.name}}</span><span style="float:right;display:inline-block">{{list.id}}</span></el-radio>
             </div>
-        </div>  
+        </div>
   </div>
 </template>
 
@@ -39,6 +39,11 @@
                     id:'23124324234dfasdf324'
                 }]
             }
+        },
+        methods: {
+            log(){
+                this.radio = ''
+            }
         }
     }
 </script>
@@ -53,6 +58,9 @@
 <style>
     .clearmargin>div{
         margin-left: 0;
+    }
+    .newchoose.prevent .el-radio__input{
+        display: none;
     }
 </style>
 

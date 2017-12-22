@@ -1,6 +1,6 @@
 <template>
 	<el-container>
-		<el-aside class="page-bill-index" width="auto">
+		<!-- <el-aside class="page-bill-index" width="auto">
 			<div>
 				<Tab/>
 			</div>
@@ -33,7 +33,8 @@
 			<el-main>
 				<electrictwater/>
 			</el-main>
-		</el-container>
+		</el-container> -->
+		<div class="loaDing"><img src="http://bpic.588ku.com/element_origin_min_pic/04/09/51/6857e2a37aa17e0.jpg" alt=""></div>
 	</el-container>
 </template>
 
@@ -158,6 +159,8 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-
+	.loaDing{
+		margin: 200px auto
+	}
  </style>
  

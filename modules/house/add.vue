@@ -95,7 +95,7 @@
     				...this.form
     			};
     			console.log('this form : ', data);
-    			// this.$modal.$emit('dismiss');
+    			this.$modal.$emit('dismiss');
     			this.$model('houses').create(data, {
     				projectId: this.user.projectId
     			});

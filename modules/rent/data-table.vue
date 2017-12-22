@@ -290,15 +290,23 @@
 						cancelButtonText: '取消',
 						type: 'warning'
 					}).then(() => {
-						this.$message({
-							type: 'success',
-							message: '删除成功!'
-						});
+						console.log(this.projectId)
+						console.log(data.id)
+						this.$model('contract_del')
+						.delete({},{projectId: this.projectId,id:data.id})
+						.then(data=> {
+							console.log(data)
+							if(data.code==204){
+								this.$message({
+								type: 'success',
+								message: '删除成功!'
+							});
+							}else{
+								this.mistake('删除失败')
+							}
+						})
 					}).catch(() => {
-						this.$message({
-							type: 'info',
-							message: '已取消删除'
-						});
+						this.mistake('取消删除')
 					});
 				} else {
 					this.dialogVisible3 = true;
@@ -335,6 +343,12 @@
 					comp: Paym,
 					title: '充值'
 				})
+			},
+			mistake(data){
+				this.$message({
+						type: 'info',
+						message: data
+					});
 			}
 		}
 	};
