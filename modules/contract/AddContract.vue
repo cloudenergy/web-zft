@@ -129,7 +129,8 @@
 				}
 			},
 			createPaymentPlan(expense) {
-				return `${expense.billPlan}${expense.offset}`;
+				const number = `0${expense.offset}`.slice(-2);
+				return `${expense.billPlan}${number}`;
 			},
 			createStrategy(form) {
 				return {
