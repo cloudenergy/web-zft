@@ -48,7 +48,7 @@
 		methods: {
 			translate (res) {
 				return {
-					value: `${res.locationName} ${res.group} ${res.building} ${res.unit} ${res.roomNumber}`,
+					value: `${res.locationName} ${res.group} ${res.building} ${res.unit} ${res.roomNumber} ${res.roomName}`,
                     id: res.id
                 }
             },
