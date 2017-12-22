@@ -32,10 +32,10 @@
 				<template slot-scope="scope">
 					<div class="flexcenter">
 						<div class="name-wrapper">
-							<span>￥{{ scope.row.strategy.freq.Rent }}元/月&nbsp;×&nbsp;</span>
+							<span>￥{{ scope.row.strategy.freq.rentprice }}元/月&nbsp;×&nbsp;</span>
 							<span>{{ scope.row.allM }}</span>
 							<div class="rent-bottom">
-								<span>￥{{ scope.row.strategy.Bond }}/押</span>
+								<span>￥{{ scope.row.strategy.bondprice }}/押</span>
 								<span v-if="scope.row.strategy.freq.pattern==1">&nbsp;&nbsp;一月一付</span>
 								<span v-if="scope.row.strategy.freq.pattern==2">&nbsp;&nbsp;二月一付</span>
 								<span v-if="scope.row.strategy.freq.pattern==3">&nbsp;&nbsp;三月一付</span>
@@ -257,8 +257,8 @@
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.allM = readableDuration(element.to - element.from)
-						element.strategy.freq.Rent = element.strategy.freq.rent/100
-						element.strategy.Bond = element.strategy.bond/100
+						element.strategy.freq.rentprice = element.strategy.freq.rent/100
+						element.strategy.bondprice = element.strategy.bond/100
 					});
 					console.log(data)
 					this.$set(this, 'housesrent', data);
@@ -296,18 +296,13 @@
 						console.log(this.projectId)
 						console.log(data.id)
 						this.$model('contract_del')
-						.delete({},{projectId: this.projectId,id:'100'})
+						.delete({},{projectId: this.projectId,id:data.id})
 						.then(data=> {
-							console.log(data)
-							if(data.code==204){
-								this.$message({
-								type: 'success',
-								message: '删除成功!'
+							this.$message({
+							type: 'success',
+							essage: '删除成功!'
 							});
 							this.query()
-							}else{
-								this.mistake('删除失败')
-							}
 						})
 					}).catch(() => {
 						this.mistake('取消删除')

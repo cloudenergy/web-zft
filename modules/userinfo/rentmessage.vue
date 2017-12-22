@@ -21,11 +21,11 @@
                 <el-tag type="info" class="inputuser" v-if="form.strategy.freq.pattern==12">一年一付</el-tag>
                 <el-tag type="info" class="inputuser" v-if="form.strategy.freq.pattern=='paidOff'">一次付清付</el-tag>
                 <br>
-                <el-tag type="info" class="inputuser" style="margin-top:10px">￥{{form.strategy.freq.Rent}}元/月</el-tag>
+                <el-tag type="info" class="inputuser" style="margin-top:10px">￥{{form.strategy.freq.rentprice}}元/月</el-tag>
             </el-form-item>
             <el-form-item label="押金" class="disable">
                 <el-tag type="info" class="inputuser">常规押金</el-tag>
-                <el-tag type="info" class="inputuser">{{form.strategy.Bond}}</el-tag>
+                <el-tag type="info" class="inputuser">{{form.strategy.bondprice}}</el-tag>
             </el-form-item>
             <el-form-item label="支付时间" class="disable">
                 <el-tag type="info" class="inputuser" v-if="this.form.paymentP==11">开始前提前</el-tag>
