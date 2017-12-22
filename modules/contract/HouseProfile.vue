@@ -47,13 +47,13 @@
 		methods: {
 			handleSelect(item) {
 				console.log(item);
-				this.property.roomId = 6349069673488846849
+				this.property.roomId = item.id
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;
 				this.$model('houses').query({houseFormat: this.property.houseType, q}, {projectId})
                     .then( data => {
-						const houses = _.get(data, 'data', []);
+						const houses = _.get(data, 'results', []);
 						const rooms = _(houses).map('rooms').flattenDeep().value();
 						cb(rooms)
                     })
