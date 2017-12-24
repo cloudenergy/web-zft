@@ -65,7 +65,8 @@ const apis = {
 	locations: get('/locations/{action}'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills'),
 	contract_del: resource('/projects/{projectId}/contracts'),
-	set_electric_price: resource('/projects/{projectId}/houses')
+	set_electric_price: resource('/projects/{projectId}/houses'),
+	login: post('login')
 };
 
 /**

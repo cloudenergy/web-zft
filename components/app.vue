@@ -24,7 +24,21 @@
     				<router-view />
     			</app>
     		);
-    	}
+    	},
+        created() {
+			this.stubLogin();
+        },
+		methods: {
+			stubLogin() {
+				_.isUndefined(this.$store.state.user.auth) ?
+                    this.$store
+					.dispatch('POST_LOGIN')
+					.then(data => {
+						console.log('login successfully', data)
+                        this.$store.state.user.auth = true;
+					}) : noop();
+			}
+		}
     };
 </script>
 

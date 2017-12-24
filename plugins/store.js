@@ -22,6 +22,9 @@ export default {
 		defaultHouseType: 'SOLE'
 	},
 	actions: {
+		POST_LOGIN({ commit, state }) {
+			return api('login', { username: 'admin', password: 'password' });
+		},
 		GET_COMMUNITIES({ commit, state }, { houseType }) {
 			return api('communities').query(
 				{ houseFormat: houseType },
