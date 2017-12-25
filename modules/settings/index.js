@@ -7,3 +7,7 @@ export {default as UploadImg} from './uploadImg';
 
 export {default as Dict} from './setup/dict';
 export {default as CostsSet} from './setup/dict/costsSet';
+export {default as Housing} from './setup/dict/housing';
+
+export {default as Hobby} from './setup/hobby';
+export {default as Contract} from './setup/hobby/contract';

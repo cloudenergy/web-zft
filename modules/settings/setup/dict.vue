@@ -32,10 +32,12 @@
 
 <script>
 import CostsSet from './dict/costsSet';
+import Housing from './dict/housing';
 
 export default {
 	components: {
-		CostsSet
+    CostsSet,
+    Housing
 	},
 	data() {
 		return {

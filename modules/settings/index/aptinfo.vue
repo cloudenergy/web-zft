@@ -238,7 +238,7 @@ UploadImg
 	}
 };
 </script>
-<<style>
+<style scoped>
 .formTit{
       background-color: #e0e7ec;
     line-height: 52px;

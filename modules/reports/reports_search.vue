@@ -1,4 +1,5 @@
 <template>
+<div class="reports_search">
 <el-form :inline="true" :model="formInline" class="demo-form-inline">
   <el-form-item v-if="isShow.indexOf('房源')!=-1">
 <el-select v-model="value" placeholder="房源">
@@ -15,6 +16,7 @@
 <el-form-item v-if="isShow.indexOf('时间')!=-1">
       <!-- <div class="block"> -->
     <el-date-picker
+		class="searchData"
       v-model="data"
       type="daterange"
       range-separator="至"
@@ -135,6 +137,7 @@
 </el-form-item>
 
 </el-form>
+</div>
 </template>
 <script>
 export default {
@@ -433,11 +436,17 @@ export default {
 	}
 };
 </script>
-<style scoped>
-.el-range-editor--mini.el-input__inner {
-	width: 250px;
+
+<style lang="less" scoped>
+.reports_search {
+	.searchData{
+		width: 250px;
+/deep/ span.el-range-separator{
+	min-width: 20px
 }
-.el-range-editor--mini .el-range-separator {
-	min-width: 20px;
+	}
+	  
 }
+
+
 </style>

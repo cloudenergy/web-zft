@@ -35,11 +35,13 @@
 
 <script>
 import Dict from "../../../modules/settings/setup/dict";
+import Hobby from "../../../modules/settings/setup/hobby";
 
 
 export default {
 components:{
-Dict
+Dict,
+Hobby
 },
 	data() {
 		return {

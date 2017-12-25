@@ -1,7 +1,7 @@
 <template>
 <el-row :gutter="20">
 
-<el-col :span="2">
+<el-col :span="3">
   <el-menu
       class="el-menu-vertical-demo"
 	  default-active='Profile'
@@ -22,7 +22,7 @@
     </el-menu>
 </el-col>
 
-<el-col :span="22">
+<el-col :span="20">
 <component :is="currentView">
 
 </component>
