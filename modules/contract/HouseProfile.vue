@@ -21,8 +21,7 @@
                                 :fetch-suggestions="querySearch"
                                 placeholder="搜索房源编号、小区名称等关键字"
                                 :trigger-on-focus="false"
-                                @select="handleSelect"
-                                valueKey="name">
+                                @select="handleSelect">
                         </el-autocomplete>
                     </div>
                 </el-form-item>
@@ -33,6 +32,8 @@
 
 <script>
     import _ from 'lodash'
+    import fp from 'lodash/fp'
+
 	export default {
 		props: {
 			property: {
@@ -45,17 +46,22 @@
 			}
 		},
 		methods: {
+			translate (res) {
+				return {
+					value: `${res.locationName} ${res.group} ${res.building} ${res.unit} ${res.roomNumber} ${res.roomName}`,
+                    id: res.id
+                }
+            },
 			handleSelect(item) {
-				console.log(item);
 				this.property.roomId = item.id
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;
-				this.$model('houses').query({houseFormat: this.property.houseType, q}, {projectId})
+				this.$model('rooms').query({houseFormat: this.property.houseType, q}, {projectId})
                     .then( data => {
-						const houses = _.get(data, 'data', []);
-						const rooms = _(houses).map('rooms').flattenDeep().value();
-						cb(rooms)
+						const rooms = _.get(data, 'data', []);
+						const displayRooms = fp.map(this.translate)(rooms);
+						cb(displayRooms);
                     })
 			}
 		}

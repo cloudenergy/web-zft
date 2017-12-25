@@ -1,6 +1,6 @@
 <template>
     <div class="house-cell" :class="{leased: out}">
-        <div class="cell">
+        <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
             <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
             <p>￥ 200</p>
@@ -10,14 +10,14 @@
                 <span>退: 2018-10-1</span>
             </p>
         </div>
-        <div class="actions">
+        <!-- <div class="actions">
             <p @click="edit()">
                 <i class="el-icon-edit-outline" />
             </p>
             <p @click="view()">
                 <i class="el-icon-view" />
             </p>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -32,7 +32,8 @@
 
     export default {
     	props: {
-    		room: Object
+    		room: Object,
+    		house: Object
     	},
     	filters: {
     		orientation(val) {
@@ -58,7 +59,7 @@
     			});
     		},
     		view() {
-    			this.$emit('view', this.room);
+    			this.$emit('view', {romm: this.room, house: this.house});
     		}
     	}
     };
@@ -79,6 +80,7 @@
     	}
 
     	.cell {
+    		cursor: pointer;
     		h3 {
     			margin-bottom: 10px;
     			overflow: hidden;

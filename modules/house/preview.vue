@@ -37,6 +37,7 @@
 <script>
     export default {
     	props: {
+    		house: Object,
     		room: {
     			type: Object,
     			default() {
@@ -46,11 +47,11 @@
     					bills: [{ name: '租金', amount: '1400', period: '一月一付' }]
     				};
     			}
-    		},
-    		id: null
+    		}
     	},
     	created() {
     		// 获取房间数据
+    		console.log('room:', this.room);
     	}
     };
 </script>

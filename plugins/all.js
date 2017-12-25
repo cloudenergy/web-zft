@@ -5,9 +5,9 @@
  * @Last Modified time: 2017-12-01 09:39:25
  */
 import api from './api';
-import '../static/style';
 import mixin from './mixins';
 import 'element-ui/lib/theme-chalk/index.css';
+import '../static/style';
 import Element from 'element-ui';
 
 export default function(vue) {

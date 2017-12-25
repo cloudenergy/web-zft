@@ -1,4 +1,9 @@
 const port = process.env.ZFT_BLADE_PORT || 8080;
+const publicPath =
+	process.env.NODE_ENV === 'production'
+		? 'http://static.cloudenergy.me'
+		: '/';
+
 module.exports = {
 	proxy: {
 		'/api': {
@@ -20,6 +25,9 @@ module.exports = {
 		// 'papers-details': "/:id"
 	},
 	port,
+	build: {
+		publicPath
+	},
 	// 全局 import less
 	resources: 'static/less/base.less',
 	plugins: {
