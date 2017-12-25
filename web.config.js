@@ -1,5 +1,8 @@
 const port = process.env.ZFT_BLADE_PORT || 8080;
-const publicPath = '/';
+const publicPath =
+	process.env.NODE_ENV === 'production'
+		? 'http://static.cloudenergy.me/'
+		: '/';
 
 module.exports = {
 	proxy: {

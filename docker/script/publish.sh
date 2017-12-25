@@ -9,12 +9,12 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
-env=test
+env=qa
 
 if [ "$2" = "master" ]; then
     env=production
 fi
 
-npm run build -- --env=production && \
+npm run build -- --env=$env && \
 docker build -f docker/Dockerfile . -t $REPO:$1 && \
 docker push $REPO:$1
