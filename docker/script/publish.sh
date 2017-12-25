@@ -15,6 +15,6 @@ if [ "$2" = "master" ]; then
     env=production
 fi
 
-npm run build -- --env=$env && \
+npm run build -- --env=production && \
 docker build -f docker/Dockerfile . -t $REPO:$1 && \
 docker push $REPO:$1
