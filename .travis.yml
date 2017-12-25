@@ -25,18 +25,17 @@ addons:
   ssh_known_hosts: testzft.cloudenergy.me
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: chmod 600 $KEY_PATH && ssh -o StrictHostKeyChecking=no -i $KEY_PATH $DEPLOY_USER@$HOST "docker login -u $DOCKER_USER -p $DOCKER_PASS registry.cn-hangzhou.aliyuncs.com && ./deploy.sh v$TRAVIS_BUILD_NUMBER"
-  on:
-    branch: develop
+  - provider: script
+    skip_cleanup: true
+    script: chmod 600 $KEY_PATH && ssh -o StrictHostKeyChecking=no -i $KEY_PATH $DEPLOY_USER@$HOST "docker login -u $DOCKER_USER -p $DOCKER_PASS registry.cn-hangzhou.aliyuncs.com && ./deploy.sh v$TRAVIS_BUILD_NUMBER"
+    on:
+      branch: develop
 
-deploy:
-  provider: releases
-  api_key:
-    secure: VKmirS5jIAcXQ/b6h73idboSfW0hk/Dd6mmYJx6ek1rcscN4Ei50rpaXneyTjq9MRGYu4qPPR7GLdn/KlQqu34q0B/ohnjYuI9U5J/5QYlBKSxT4cb0wL6aMmHTWRPIvS+YNLCH2BLcaF88/8ZwJszTrI0CcHwZ5mhUQ/kzD1AJF0SXs6P759eAshhXq2gfJeXPCb19XTJu8P4n3FhF5zFu5FIOg4gNp8K/PWqojU18bDIZqrrOiEM0eC7i5g8Hljim+fRBhjYIkJEfHGbpqWef/eNzhLtjhduBozk4jRJPAfFvmtNCOnZOzEURtrL+cfpBTN3waksgpr9Sm0QWWGlPcGD6pGt2HHYjk8RpiZrI/dsoTF506PgUci85xMGwngJDBDKtj4+BFB2OP7Eb3V38t1PzR2PO3WOxGt3Pi7CImbSvJd5iIIrFVBmALBcH0B8BO0uWJpSFIpBYITsm2TsJI+jHX3ZrRDwP3lVxO88Oe5azacFHoDu6t1d8+TV3rZy5ltx001Cs8SofXiuk8wasKm42lNs9Hsz76x65SfSRrwgStl+n37O5Oilwpaiv0n+DMM0VZXVngSAly/0DoVHRICTfE3swb27HihDQIRwkSSTIiFcKr+qehYfaY2ddMni+2PmpvpZZ2OqkzL/dLWUdpDYDeEEOmpdRSdFwwWQA=
-  file: "/tmp/dist.zip"
-  on:
-    repo: cloudenergy/web-zft
-    tags: true
-    branch: master
+  - provider: releases
+    api_key:
+      secure: VKmirS5jIAcXQ/b6h73idboSfW0hk/Dd6mmYJx6ek1rcscN4Ei50rpaXneyTjq9MRGYu4qPPR7GLdn/KlQqu34q0B/ohnjYuI9U5J/5QYlBKSxT4cb0wL6aMmHTWRPIvS+YNLCH2BLcaF88/8ZwJszTrI0CcHwZ5mhUQ/kzD1AJF0SXs6P759eAshhXq2gfJeXPCb19XTJu8P4n3FhF5zFu5FIOg4gNp8K/PWqojU18bDIZqrrOiEM0eC7i5g8Hljim+fRBhjYIkJEfHGbpqWef/eNzhLtjhduBozk4jRJPAfFvmtNCOnZOzEURtrL+cfpBTN3waksgpr9Sm0QWWGlPcGD6pGt2HHYjk8RpiZrI/dsoTF506PgUci85xMGwngJDBDKtj4+BFB2OP7Eb3V38t1PzR2PO3WOxGt3Pi7CImbSvJd5iIIrFVBmALBcH0B8BO0uWJpSFIpBYITsm2TsJI+jHX3ZrRDwP3lVxO88Oe5azacFHoDu6t1d8+TV3rZy5ltx001Cs8SofXiuk8wasKm42lNs9Hsz76x65SfSRrwgStl+n37O5Oilwpaiv0n+DMM0VZXVngSAly/0DoVHRICTfE3swb27HihDQIRwkSSTIiFcKr+qehYfaY2ddMni+2PmpvpZZ2OqkzL/dLWUdpDYDeEEOmpdRSdFwwWQA=
+    file: "/tmp/dist.zip"
+    on:
+      repo: cloudenergy/web-zft
+      tags: true
+      branch: master
