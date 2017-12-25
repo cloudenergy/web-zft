@@ -1,5 +1,6 @@
 <template>
 <!-- <p>{{tableTab}}</p> -->
+<div class="reports_childTable">
   <el-table
     :data="tableTab"
     style="width: 100%">
@@ -54,24 +55,27 @@
     </el-table-column> -->
 	</template>
   </el-table> 
+  </div>
 </template>
 
 
-<style scoped>
-.demo-table-expand {
-	font-size: 0;
-}
-.demo-table-expand label {
-	width: 90px;
-	color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-	margin-right: 0;
-	margin-bottom: 0;
-	width: 50%;
-}
-.el-table__expanded-cell[class*='cell'] {
-	padding: 0 inherit;
+<style lang="less" scoped>
+.reports_childTable {
+	.demo-table-expand {
+		font-size: 0;
+	}
+	.demo-table-expand label {
+		width: 90px;
+		color: #99a9bf;
+	}
+	.demo-table-expand .el-form-item {
+		margin-right: 0;
+		margin-bottom: 0;
+		width: 50%;
+	}
+	.el-table__expanded-cell[class*='cell'] {
+		padding: 0 inherit;
+	}
 }
 </style>
 
@@ -79,7 +83,7 @@
 export default {
 	props: {
 		tableData: String,
-		haveExpand:Boolean
+		haveExpand: Boolean
 	},
 	data() {
 		return {
@@ -115,8 +119,7 @@ export default {
 					a: '租金',
 					b: '其他',
 					c: '违约金',
-					d: '押金',
-					
+					d: '押金'
 				}
 			],
 			tabHead4: [
@@ -129,7 +132,8 @@ export default {
 			],
 
 			tabHead5: [
-				{		a: '小区/公寓',
+				{
+					a: '小区/公寓',
 					b: '租金收入',
 					c: '租金支出',
 					d: '利润',
@@ -147,9 +151,10 @@ export default {
 					d: '冷水费',
 					e: '租金',
 					f: '违约金',
-					g: '总额',
+					g: '总额'
 				}
-			],tabHead7: [
+			],
+			tabHead7: [
 				{
 					a: '小区/公寓',
 					b: '租金收入',
@@ -158,12 +163,12 @@ export default {
 					e: '利润率',
 					f: '其它收入',
 					g: '其它支出',
-					h:'利润',
-					i:'全部利润',
-					j:'利润率'
+					h: '利润',
+					i: '全部利润',
+					j: '利润率'
 				}
 			],
-tabHead8: [
+			tabHead8: [
 				{
 					a: '小区/公寓',
 					b: '1月',
@@ -172,14 +177,13 @@ tabHead8: [
 					e: '4月',
 					f: '5月',
 					g: '6月',
-					h:'7月',
-					i:'8月',
-					j:'9月',
-					k:'10月',
-					l:'11月',
-					m:'12月',
-					n:'总计'
-
+					h: '7月',
+					i: '8月',
+					j: '9月',
+					k: '10月',
+					l: '11月',
+					m: '12月',
+					n: '总计'
 				}
 			],
 			tableTab1: [
