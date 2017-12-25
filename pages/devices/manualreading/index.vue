@@ -34,7 +34,7 @@
 				<electrictwater/>
 			</el-main>
 		</el-container> -->
-		<div class="loaDing"><img src="http://bpic.588ku.com/element_origin_min_pic/04/09/51/6857e2a37aa17e0.jpg" alt=""></div>
+		<div class="loaDing">敬请期待</div>
 	</el-container>
 </template>
 
@@ -160,7 +160,8 @@
 		align-items: center;
 	}
 	.loaDing{
-		margin: 200px auto
+		margin: 200px auto;font-size: 50px
+
 	}
  </style>
  
