@@ -75,7 +75,6 @@
 						element.strategy.freq.rentprice = element.strategy.freq.rent/100
 						element.strategy.bondprice = element.strategy.bond/100
 					});
-					console.log(data)
 					this.$set(this, 'housesrent', data);
 				})
 			},
