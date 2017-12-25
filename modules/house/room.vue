@@ -32,7 +32,8 @@
 
     export default {
     	props: {
-    		room: Object
+    		room: Object,
+    		house: Object
     	},
     	filters: {
     		orientation(val) {
@@ -58,7 +59,7 @@
     			});
     		},
     		view() {
-    			this.$emit('view', this.room);
+    			this.$emit('view', {romm: this.room, house: this.house});
     		}
     	}
     };

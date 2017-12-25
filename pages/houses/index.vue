@@ -9,14 +9,14 @@
                         <span class="badge pull-right">2</span>
                     </div>
                     <div class="cells">
-                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" @view="showDrawer" />
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" />
                     </div>
                 </div>
             </div>
         </div>
         <drawer-panel :open.sync="viewRoom">
             <div v-if="viewRoom" class="drawer">
-                <Preview :id="currentRoom" />
+                <Preview :room="currentRoom" :house="currentHouse" />
             </div>
         </drawer-panel>
     </div>
@@ -30,6 +30,7 @@
     		return {
     			houses: [],
     			currentRoom: null,
+    			currentHouse: null,
     			viewRoom: false,
     			houseFormat: 'SHARE'
     		};
@@ -55,8 +56,9 @@
     					this.$set(this, 'houses', res.data || []);
     				});
     		},
-    		showDrawer(room) {
+    		showDrawer({ room, house }) {
     			this.currentRoom = room;
+    			this.currentHouse = house;
     			this.viewRoom = true;
     		}
     	}
