@@ -24,7 +24,7 @@
 			</el-header>
 			<el-main>
 				<div class="result">
-					<DataTable/>
+					<DataTable :housesrent='housesrent'/>
 				</div>
 			</el-main>
 		</el-container>
@@ -41,7 +41,7 @@
 		RentManager,
 		RentSearch
 	} from '~/modules/rent';
-
+	import {readableDuration} from '../../utils/date.js'
 	export default {
 		components: {
 			Tab,
@@ -52,35 +52,38 @@
 		},
 		data() {
 			return {
-
+				housesrent: []
 			};
 		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
+		created() {
+    		this.query();
+    	},
 		methods: {
+			query(){
+				this.$model('contracts')
+				.query({}, {projectId: this.projectId})
+				.then((data) =>{
+					data.forEach(element => {
+						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+						element.allM = readableDuration(element.to - element.from)
+						element.strategy.freq.rentprice = element.strategy.freq.rent/100
+						element.strategy.bondprice = element.strategy.bond/100
+					});
+					console.log(data)
+					this.$set(this, 'housesrent', data);
+				})
+			},
 			showmessage(data) {
 				console.log(data)
 			},
-			// 页面导出
 			importrent(mytalbe) {
-				// var table = document.getElementById(mytalbe);
-				// // 克隆（复制）此table元素，这样对复制品进行修改（如添加或改变table的标题等），导出复制品，而不影响原table在浏览器中的展示。
-				// table = table.cloneNode(true);
-				// var uri = 'data:application/vnd.ms-excel;base64,',
-				// 	template =
-				// 	'<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table style="vnd.ms-excel.numberformat:@">{table}</table></body></html>',
-				// 	base64 = function (s) {
-				// 		return window.btoa(unescape(encodeURIComponent(s)));
-				// 	},
-				// 	format = function (s, c) {
-				// 		return s.replace(/{(\w+)}/g, function (m, p) {
-				// 			return c[p];
-				// 		});
-				// 	};
-				// if (!table.nodeType) table = document.getElementById(table);
-				// var ctx = {
-				// 	worksheet: name || 'Worksheet',
-				// 	table: table.innerHTML
-				// };
-				// window.location.href = uri + base64(format(template, ctx));
+				
 			}
 		}
 	};

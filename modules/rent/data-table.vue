@@ -173,7 +173,6 @@
 		Showrent,
 		Paym
 	} from '../userinfo';
-	import {readableDuration} from '../../utils/date.js'
 	export default {
 		components: {
 			Rentinfo,
@@ -190,6 +189,11 @@
 				return this.$store.state.user.projectId;
 			}
 		},
+		props: {
+    		housesrent: {
+    			type: Array
+    		}
+    	},
 		data() {
 			return {
 				contractbill: '',
@@ -202,7 +206,6 @@
 				dialogTitle3: '预览租客合同',
 				showinf: 1,
 				showmoney: 1,
-				housesrent: [],
 				list1: [{
 						showlist: '租户详情',
 						value: 1
@@ -245,25 +248,9 @@
 			};
 		},
 		created(){
-			this.query()
 			this.updateData = this.userdatainfo;
 		},
 		methods: {
-			query(){
-				this.$model('contracts')
-				.query({}, {projectId: this.projectId})
-				.then((data) =>{
-					data.forEach(element => {
-						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.allM = readableDuration(element.to - element.from)
-						element.strategy.freq.rentprice = element.strategy.freq.rent/100
-						element.strategy.bondprice = element.strategy.bond/100
-					});
-					console.log(data)
-					this.$set(this, 'housesrent', data);
-				})
-			},
 			rentuser(index, value, item) {
 				this.dialogVisible = true;
 				this.showinf = value;
@@ -302,6 +289,7 @@
 							type: 'success',
 							essage: '删除成功!'
 							});
+							// @@@错误，一会改正
 							this.query()
 						})
 					}).catch(() => {
@@ -317,9 +305,9 @@
 			rentPay(datanum) {
 				this.showmoney = datanum;
 			},
-			callMobile() {
+			callMobilebile() {
 				console.log(1)
-				this.$confirm('将要使用短信t通知租户, 是否继续?', '提示', {
+				this.$confirm('将要使用短信通知租户, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'

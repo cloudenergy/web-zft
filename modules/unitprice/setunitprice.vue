@@ -1,13 +1,21 @@
 <template>
     <div>
-        <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+        <el-table :data="homePrice" style="width: 100%" @selection-change="handleSelectionChange">
             <el-table-column
                 type="selection"
                 width="55">
             </el-table-column>
-            <el-table-column prop="type" label="房源">
+            <el-table-column label="房源">
+                <template slot-scope="scope">
+                    <div>
+                        <span>{{scope.row.group}}</span>
+                        <span>{{scope.row.building}}</span>
+                        <span>{{scope.row.unit}}</span>
+                        <span>{{scope.row.roomNumber}}</span>
+                    </div>
+                </template>
             </el-table-column>
-            <el-table-column label="电" min-width="150">
+            <el-table-column label="电">
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconYufu />
@@ -70,13 +78,19 @@
     import myIconYufu from './myiconyufu.vue'
     import myIconZujin from './myiconzujin.vue'
     import setPrice from './setprice.vue'
+    import {success_message} from '~/utils/date'
     export default {
         components: {
 			myIconNum,
 			myIconYufu,
             myIconZujin,
             setPrice
-		},
+        },
+        props: {
+            homePrice: {
+                type: Array
+            }
+        },
         data() {
             return {
                 dialogVisible:false,
@@ -110,6 +124,11 @@
                 homeinfo: ''
             }
         },
+        computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
         methods: {
             handleSelectionChange(val) {
                 this.multipleSelection = val;
@@ -121,8 +140,6 @@
                 console.log(this.multipleSelection)
             },
             setElectricit(data){
-                // console.log(data)
-                // this.setPrice(data)
                 this.homeinfo = data
                 this.dialogVisible = true;
             },
@@ -131,16 +148,6 @@
                 this.homeinfo = this.multipleSelection
                 this.dialogVisible = true;
             },
-            // setPrice(data){
-            //     this.$modal.$emit('open', {
-			// 			comp: setPrice,
-			// 			data: {
-			// 				item: data
-            //             },
-            //             width: '50%',
-			// 			title: '修改'
-			// 		});
-            // }
             notify(){
                 this.$refs.childinput.sendchange()
             },
@@ -148,7 +155,17 @@
                 if(data==undefined){
                     alert('输入价格为空或者不是数字，请重新输入')
                 }else{
-                    this.hidden()
+                    console.log(data.houseId)
+                    console.log(data)
+                    this.$model('set_electric_price')
+                    .update (data.prices,{projectId: this.projectId,id:data.houseId})
+                    .then(data=>{
+                        this.hidden()
+                        this.$emit('refresh')
+                        this.$message.success('修改成功')
+                    }).catch(()=>{
+                        this.$message.error('修改失败')
+                    })
                 }
             },
             hidden(){

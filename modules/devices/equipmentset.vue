@@ -29,7 +29,12 @@
     	},
     	created() {
     		this.query();
-    	},
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
     	methods: {
     		refresh(type) {
     			this.houseFormat = type;
@@ -41,7 +46,7 @@
     					{
     						houseFormat: this.houseFormat
     					},
-    					{ projectId: '980488114' }
+    					{ projectId: this.projectId }
     				)
     				.then(res => {
     					// console.log('data: ', data);

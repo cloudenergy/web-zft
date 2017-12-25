@@ -33,7 +33,12 @@
     			viewRoom: false,
     			houseFormat: 'SHARE'
     		};
-    	},
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
     	created() {
     		this.query();
     	},
@@ -48,7 +53,7 @@
     					{
     						houseFormat: this.houseFormat
     					},
-    					{ projectId: '980488114' }
+    					{ projectId: this.projectId }
     				)
     				.then(res => {
     					// console.log('data: ', data);
