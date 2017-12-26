@@ -22,7 +22,7 @@ export default {
 	},
 	actions: {
 		POST_LOGIN({ commit, state }) {
-			return api('login', { username: 'admin', password: 'password' });
+			return api('login', { username: 'admin100', password: '5f4dcc3b5aa765d61d8327deb882cf99' });
 		},
 
 		GET_ENVIRONMENTS({ commit, state }) {
