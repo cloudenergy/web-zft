@@ -44,6 +44,18 @@ npm run build -- --env=qa
 npm run build -- --env=production
 ```
 
+### Deploy
+
+there are 2 environment variables needs to be set in deployment:
+
+```bash
+#For the prefix of static assets public serving path
+export ZFT_PUBLIC_PATH=
+
+#For the url of backend api server path
+export ZFT_BACKEND_PROXY= 
+```
+
 ### Ref
 
 *[blade-vue README](https://doctorwork.github.io/blade-vue/#/)*
