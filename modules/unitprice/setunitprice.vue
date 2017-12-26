@@ -1,9 +1,14 @@
 <template>
     <div>
         <el-table :data="homePrice" style="width: 100%" @selection-change="handleSelectionChange">
-            <el-table-column
+            <!-- @@@暂时下线 -->
+            <!-- <el-table-column
                 type="selection"
                 width="55">
+            </el-table-column> -->
+            <el-table-column
+                type="index"
+                width="50">
             </el-table-column>
             <el-table-column label="房源">
                 <template slot-scope="scope">
@@ -62,7 +67,8 @@
             <!-- <el-table-column prop="stype" label="操作"> -->
             <!-- </el-table-column> -->
         </el-table>
-        <el-button type="primary" plain @click="batchchange" :disabled="disabledshow" style="margin-top:15px">批量修改</el-button>
+        <!-- @@@暂时下线 -->
+        <!-- <el-button type="primary" plain @click="batchchange" :disabled="disabledshow" style="margin-top:15px">批量修改</el-button> -->
         <el-dialog title="xiugai" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose'/>
             <div slot="footer" class="dialog-footer">
@@ -155,8 +161,6 @@
                 if(data==undefined){
                     alert('输入价格为空或者不是数字，请重新输入')
                 }else{
-                    console.log(data.houseId)
-                    console.log(data)
                     this.$model('set_electric_price')
                     .update (data.prices,{projectId: this.projectId,id:data.houseId})
                     .then(data=>{

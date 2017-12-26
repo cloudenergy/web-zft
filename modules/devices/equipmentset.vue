@@ -7,7 +7,7 @@
                         <span class="badge pull-right">2</span>
                     </div>
                     <div class="cells">
-                        <room v-for="(room, index) in house.rooms" :key="index" :room="room" class="cell" @view="showDrawer" />
+                        <room v-for="(room, index) in house.rooms" :key="index" :room="room" :houseId="house.houseId" class="cell" @view="showDrawer" @sendFloor="sendFloor" @click.native="show(house.houseId,room.id)" />
                     </div>
                 </div>
             </div>
@@ -24,7 +24,9 @@
     			houses: [],
     			currentRoom: null,
     			viewRoom: false,
-    			houseFormat: 'SHARE'
+    			houseFormat: 'SOLE',
+				houseId:'',
+				roomId: ''
     		};
     	},
     	created() {
@@ -36,10 +38,6 @@
 			}
 		},
     	methods: {
-    		refresh(type) {
-    			this.houseFormat = type;
-    			this.query();
-    		},
     		query() {
     			this.$model('houses')
     				.query(
@@ -56,7 +54,20 @@
     		showDrawer(room) {
     			this.currentRoom = room;
     			this.viewRoom = true;
-    		}
+    		},
+			sendFloor(data){
+				// this.$model('devices_set')
+				// .update({},{houseId:this.houseId,roomId:this.roomId,projectId:this.projectId,id:data})
+				// .then((data)=>{
+				// 	this.$message.success('绑定成功')
+				// })
+				// .catch(()=>{
+				// 	this.$message.mistake('绑定失败')
+				// })
+			},
+			show(house,room){
+				
+			},
     	}
     };
 </script>

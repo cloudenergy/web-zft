@@ -2,33 +2,40 @@
     <div class="house-cell" :class="{leased: out}">
         <div class="cell">
             <h3>{{room.name}}</h3>
-            <div>读数：0000</div>
+            <div v-if="room.devices!=''||null">
+                <div>读数：0000</div>
+            </div>
             
         </div>
         <div class="actions flexc">
-            <p @click="edit()">
-                <i class="el-icon-edit-outline" />
-                <span>解绑</span>
-            </p>
-            <p @click="view()">
-                <i class="el-icon-view"/>
-                <span>换表</span>
-            </p>
-            <p class="setswitch">
-                <el-switch
-                    :width="num"
-                    v-model="conversions"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                </el-switch>
-                <span>断电</span>
-            </p>
+            <div v-if="room.devices!=''||null">
+                <p @click="deleteequipment()">
+                    <i class="el-icon-edit-outline" />
+                    <span>解绑</span>
+                </p>
+                <p @click="view()">
+                    <i class="el-icon-view"/>
+                    <span>换表</span>
+                </p>
+                <p class="setswitch">
+                    <el-switch
+                        :width="num"
+                        v-model="conversions"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                    <span>断电</span>
+                </p>
+            </div>
+            <div v-if="room.devices==''||null" class="add" @click="edit(room)">
+                <i class="el-icon-circle-plus"></i>
+            </div>
         </div>
         <el-dialog
-            title="换表"
+            title="选择要绑定的职能设备"
             :visible.sync="dialogVisible"
             width="40%">
-            <conversion ref="aaa"/>
+            <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="choosechange()">确 定</el-button>
@@ -41,17 +48,23 @@
     import conversion from './conversion.vue'
     export default {
     	props: {
-    		room: Object
+            room: Object,
+            houseId: {required: true}
     	},
     	components: {
             conversion  
         },
+        computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
     	data() {
     		return {
                 out: Math.random() > 0.5,
                 conversions:true,
                 dialogVisible: false,
-                num: 30
+                num: 30,
     		};
     	},
     	methods: {
@@ -62,23 +75,41 @@
                 this.del()
             },
             del(){
-                this.$confirm('此操作将更换租户电表, 是否继续?', '提示', {
+                this.$confirm('此操作将选择此电表, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						type: 'warning'
 					}).then(() => {
-						this.$message({
-							type: 'success',
-							message: '更换成功!'
-						});
+                        this.$refs.aaa.changeelectricity(this.houseId)
                         this.dialogVisible = false
                         this.$refs.aaa.log()
 					}).catch(() => {
-						this.$message({
-							type: 'info',
-							message: '更换失败'
-						});
+						
 				});
+            },
+            edit(data){
+                this.dialogVisible = true
+            },
+            setEquipmentid(data){
+                this.$model('devices_set')
+				.update({},{houseId:this.houseId,roomId:this.room.id,projectId:this.projectId,id:data})
+				.then((data)=>{
+					this.$message.success('绑定成功')
+				})
+				.catch(()=>{
+					this.$message.mistake('绑定失败')
+				})
+            },
+            deleteequipment(){
+                console.log(this.room.devices)
+                this.$model('devices_set')
+				.delete({},{projectId:this.projectId,houseId:this.houseId,roomId:this.room.id,id:this.room.devices[0].deviceId})
+				.then((data)=>{
+					this.$message.success('解绑成功')
+				})
+				.catch(()=>{
+					this.$message.mistake('解绑失败')
+				})
             }
     	}
     };
@@ -94,9 +125,9 @@
     	border: 1px solid @light;
     	border-left: 4px solid @success;
 
-    	&.leased {
-    		border-left-color: @light;
-    	}
+    	// &.leased {
+    	// 	border-left-color: @light;
+    	// }
 
     	.cell {
     		h3 {
@@ -125,6 +156,12 @@
     		right: 15px;
             margin-left: -36px;
             margin-right: 28px;
+            .add {
+                position: absolute;
+                right:-25px;
+                bottom:0;
+                font-size:20px;
+            }
             p:last-child{
                 position: absolute;
                 top:-5px;

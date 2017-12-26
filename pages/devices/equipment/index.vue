@@ -4,7 +4,7 @@
     <el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab/>
+				<Tab @change="refresh" :selected="houseFormat"/>
 			</div>
 		</el-aside>
 		<el-container>
@@ -54,10 +54,11 @@ export default {
 	},
 	data(){
 		return{
+			houseFormat: 'SHARE',
 			info:{
 				search:'',
 				room:'',
-				manager:''
+				manager:'',
 			}
 		}
 	},
@@ -73,6 +74,10 @@ export default {
 		},
 		manager(data){
 			console.log(data)
+		},
+		refresh(type) {
+    		this.houseFormat = type;
+    		// this.query();
 		}
 	}
 }
