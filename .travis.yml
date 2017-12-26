@@ -13,7 +13,7 @@ env:
   - HOST=testzft.cloudenergy.me
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS registry.cn-hangzhou.aliyuncs.com
-  - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then docker/script/publish.sh v$TRAVIS_BUILD_NUMBER $TRAVIS_BRANCH; fi
+  - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then docker/script/publish.sh v$TRAVIS_BUILD_NUMBER; fi
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_827234cce453_key -iv $encrypted_827234cce453_iv
