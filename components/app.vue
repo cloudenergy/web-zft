@@ -1,5 +1,6 @@
 <script>
     const defaultLayout = ['login', 'notFound'];
+    import _ from 'lodash' ;
 
     export default {
     	data() {
@@ -25,21 +26,23 @@
     			</app>
     		);
     	},
-        created() {
-			this.stubLogin();
-        },
+		created() {
+			_.isUndefined(this.$store.state.user.auth) ?
+				this.stubLogin() : noop();
+		},
 		methods: {
 			stubLogin() {
-				_.isUndefined(this.$store.state.user.auth) ?
-                    this.$store
-					.dispatch('POST_LOGIN')
+				this.$store.dispatch('POST_LOGIN')
 					.then(data => {
 						console.log('login successfully', data)
-                        this.$store.state.user.auth = true;
-					}) : noop();
+						this.$store.state.user.auth = true;
+					})
+                    .then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
+                    .then(env => _.fromPairs(_.map(env, i => [i.key, i.value])))
+					.then(env => _.merge(this.$store.state, env))
 			}
 		}
-    };
+	};
 </script>
 
 <style lang="less" scoped>
