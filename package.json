@@ -9,7 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"blade-scripts": "^1.2.8",
+		"blade-scripts": "~1.2.8",
 		"date-fns": "^1.29.0",
 		"element-ui": "^2.0.5",
 		"humanize-duration": "^3.12.0"

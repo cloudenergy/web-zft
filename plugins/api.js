@@ -11,6 +11,12 @@ import {
 import { isFunc } from '~/utils';
 import { Message } from 'element-ui';
 
+import router from '@/router';
+import axios from 'axios';
+
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
 let baseURL = '/api/v1.0';
 
 switch (process.env.NODE_ENV) {
@@ -27,13 +33,14 @@ switch (process.env.NODE_ENV) {
 
 setup({
 	baseURL,
+	cancelToken: source.token,
 	headers: {
 		'content-type': 'application/json'
 	}
 });
 
-const interceptor = function(data) {
-	const { code, message, errmsg } = data;
+const interceptor = function(res) {
+	const { code, message, errmsg, status, data } = res;
 	if ((code && code !== 0) || errmsg) {
 		Message({
 			message: message || errmsg,
@@ -42,7 +49,14 @@ const interceptor = function(data) {
 
 		return Promise.reject(message || errmsg);
 	}
-	return data;
+
+	if (status && status == 401) {
+		source.cancel('login required.');
+		router.replace('/login');
+		return;
+	}
+
+	return res;
 };
 const [get, post, put, del] = [makeGet, makePost, makePut, makeDelete].map(
 	action => decorateMaker(action, interceptor)
