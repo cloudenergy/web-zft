@@ -52,8 +52,7 @@ const interceptor = function(res) {
 
 	if (status && status == 401) {
 		source.cancel('login required.');
-		router.replace('/login');
-		return;
+		return data;
 	}
 
 	return res;
@@ -83,7 +82,9 @@ const apis = {
 	set_electric_price: resource('/projects/{projectId}/houses'),
 	login: post('login'),
 	devices: resource('/projects/{projectId}/devices'),
-	devices_set: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices')
+	devices_set: resource(
+		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
+	)
 };
 
 /**

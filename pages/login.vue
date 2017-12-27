@@ -9,7 +9,7 @@
                     <el-input type="password" v-model="user.pass" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">登录</el-button>
+                    <el-button type="primary" @click.native="login()">登录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -18,12 +18,27 @@
 
 <script>
     import { add, format } from '~/utils/date';
+    import _ from 'lodash';
     export default {
     	created() {},
     	data() {
     		return {
     			user: {}
     		};
+    	},
+    	methods: {
+    		login() {
+    			this.$store
+    				.dispatch('POST_LOGIN')
+    				.then(data => {
+    					console.log('login successfully', data);
+    					this.$store.state.user.auth = true;
+    				})
+    				.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
+    				.then(env => _.fromPairs(_.map(env, i => [i.key, i.value])))
+    				.then(env => _.merge(this.$store.state, env))
+    				.then(() => this.$router.push('/'));
+    		}
     	}
     };
 </script>
