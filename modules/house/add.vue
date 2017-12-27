@@ -61,7 +61,7 @@
     				unit: '1单元',
     				roomNumber: 2301,
     				location: {
-    					id: 'B0FFFM44SM',
+    					code: 'B0FFFM44SM',
     					divisionId: 330102,
     					name: '新帝朗郡',
     					district: '浙江省杭州市西湖区',

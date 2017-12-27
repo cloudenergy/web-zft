@@ -4,9 +4,9 @@
             <RentSearch style="width:300px" class="clearmargin"/>
             <p>106个未绑定的仪表</p>
         </div>
-        <div class="newchoose prevent">
+        <div class="newchoose prevent" v-loading="loading">
             <div v-for="list in item" :key="list.index">
-                <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()" >
+                <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()">
                     <span>{{list.title}}</span><span style="float:right;display:inline-block">{{list.deviceId}}</span>
                 </el-radio>
             </div>
@@ -28,7 +28,8 @@
                 item:[],
                 room:{
                     mode:'FREE'
-                }
+                },
+                loading:true
             }
         },
         computed: {
@@ -52,11 +53,16 @@
                 .query(data,{projectId:this.projectId})
                 .then((data)=>{
                     console.log(data)
+                    console.log(this.loading)
                     this.$set(this, 'item', data || [])
+                    this.loading = false
                 })
             },
             equipmentId(){
                 console.log(this.radio)
+            },
+            setNewList(){
+                this.query(this.room)
             }
         }
     }
@@ -67,6 +73,7 @@
         margin-top: 20px;
         border: 1px solid #ddd;
         padding: 5px;
+        min-height: 100px;
     }
 </style>
 <style>

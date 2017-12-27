@@ -56,14 +56,7 @@
     			this.viewRoom = true;
     		},
 			sendFloor(data){
-				// this.$model('devices_set')
-				// .update({},{houseId:this.houseId,roomId:this.roomId,projectId:this.projectId,id:data})
-				// .then((data)=>{
-				// 	this.$message.success('绑定成功')
-				// })
-				// .catch(()=>{
-				// 	this.$message.mistake('绑定失败')
-				// })
+				this.query()
 			},
 			show(house,room){
 				

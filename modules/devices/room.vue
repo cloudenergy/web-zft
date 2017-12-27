@@ -13,10 +13,6 @@
                     <i class="el-icon-edit-outline" />
                     <span>解绑</span>
                 </p>
-                <p @click="view()">
-                    <i class="el-icon-view"/>
-                    <span>换表</span>
-                </p>
                 <p class="setswitch">
                     <el-switch
                         :width="num"
@@ -68,9 +64,6 @@
     		};
     	},
     	methods: {
-            view(){
-                this.dialogVisible = true
-            },
             choosechange(){
                 this.del()
             },
@@ -94,7 +87,9 @@
                 this.$model('devices_set')
 				.update({},{houseId:this.houseId,roomId:this.room.id,projectId:this.projectId,id:data})
 				.then((data)=>{
-					this.$message.success('绑定成功')
+                    this.$message.success('绑定成功')
+                    this.$emit('sendFloor')
+                    this.$refs.aaa.setNewList()
 				})
 				.catch(()=>{
 					this.$message.mistake('绑定失败')
@@ -105,7 +100,8 @@
                 this.$model('devices_set')
 				.delete({},{projectId:this.projectId,houseId:this.houseId,roomId:this.room.id,id:this.room.devices[0].deviceId})
 				.then((data)=>{
-					this.$message.success('解绑成功')
+                    this.$message.success('解绑成功')
+                    this.$emit('sendFloor')
 				})
 				.catch(()=>{
 					this.$message.mistake('解绑失败')
@@ -158,8 +154,8 @@
             margin-right: 28px;
             .add {
                 position: absolute;
-                right:-25px;
-                bottom:0;
+                right:-35px;
+                bottom:3px;
                 font-size:20px;
             }
             p:last-child{
