@@ -13,7 +13,6 @@
     		return {
     			links: [
                     { url: '/settings', text: '设置' },
-                    { url: '/settings/setting/user', text: '帐号中心' },
                     { url: '/settings/setting/setup', text: '全局设置' },
                     { url: '/settings/setting/permit', text: '管家权限' },
                     { url: '/settings/setting/wallet', text: '我的钱包' },
