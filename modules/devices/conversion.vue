@@ -6,7 +6,9 @@
         </div>
         <div class="newchoose prevent">
             <div v-for="list in item" :key="list.index">
-                <el-radio v-model="radio" :label="list.id" style="width:100%;"><span>{{list.name}}</span><span style="float:right;display:inline-block">{{list.id}}</span></el-radio>
+                <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()" >
+                    <span>{{list.title}}</span><span style="float:right;display:inline-block">{{list.deviceId}}</span>
+                </el-radio>
             </div>
         </div>
   </div>
@@ -23,26 +25,38 @@
         data () {
             return {
                 radio:'',
-                item:[{
-                    index:1,
-                    name:'adsf',
-                    id:'231243asdf24234324'
-                },
-                {
-                    index:2,
-                    name:'adsf',
-                    id:'23124adsf324234324'
-                },
-                {
-                    index:3,
-                    name:'adsf',
-                    id:'23124324234dfasdf324'
-                }]
+                item:[],
+                room:{
+                    mode:'FREE'
+                }
             }
+        },
+        computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
+        created () {
+            this.query(this.room)  
         },
         methods: {
             log(){
                 this.radio = ''
+            },
+            changeelectricity(data){
+                this.$emit('setEquipmentid',this.radio)
+            },
+            query(data){
+                console.log(data)
+                this.$model('devices')
+                .query(data,{projectId:this.projectId})
+                .then((data)=>{
+                    console.log(data)
+                    this.$set(this, 'item', data || [])
+                })
+            },
+            equipmentId(){
+                console.log(this.radio)
             }
         }
     }

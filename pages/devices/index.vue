@@ -12,7 +12,6 @@
 						<div style="margin-left:-20px">
 							<RentSearch @childinfo="showmessage" />
 						</div>
-						
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">32项结果</span>
