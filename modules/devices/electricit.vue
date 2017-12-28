@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="houses" style="width: 100%">
             <el-table-column label="房源" min-width="175">
                 <template slot-scope="scope">
                     <span>{{ scope.row.address }}</span>
@@ -21,7 +21,7 @@
                 <template slot-scope="scope">
                     <el-dropdown style="width:90%" @command="handleCommand">
                     <span class="el-dropdown-link devicesuser">
-                        {{scope.row.user[0].label}}userId<i class="el-icon-arrow-down el-icon--right"></i>
+                        {{}}userId<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <!-- @@@需要返还userId -->
@@ -54,13 +54,6 @@
                     <span style="margin-left: 30px;margin-top:5px">{{ scope.row.thisnum }}</span>
                 </template>
             </el-table-column>
-            <!-- <el-table-column label="仪表读数">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.thisnum }}</span>
-                    <el-input v-model="scope.row.readnum" v-if="scope.row.thisnum==''"></el-input>
-                    <span style="opacity:0">1</span>
-                </template>
-            </el-table-column> -->
             <el-table-column label="差值">
                 <template slot-scope="scope">
                     <span>{{ scope.row.differentnum }}</span>
@@ -82,6 +75,11 @@
 </template>
 <script>
     export default {
+        props: {
+            houses: {
+                type: Array
+            }
+        },
         data() {
             return {
                 valueuser: '',
@@ -245,7 +243,7 @@
                 data.bill = this.computationsPrice(data.differentnum,data.unitprice)
             },
             savech() {
-                console.log(this.tableData)
+                console.log(this.houses)
             },
             handleCommand(command){
                 console.log(command)

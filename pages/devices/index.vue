@@ -2,7 +2,7 @@
 	<el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab/>
+				<Tab @change="refresh" :selected="houseFormat"/>
 			</div>
 		</el-aside>
 		<el-container>
@@ -25,7 +25,7 @@
 				</div>
 			</el-header>
 			<el-main>
-				<electricit/>
+				<electricit :houses="houses"/>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -51,10 +51,32 @@
 		},
 		data() {
 			return {
-				
+				houseFormat: 'SHARE',
+				houses:[]
 			};
 		},
+		computed : {
+			projectId(){
+				return this.$store.state.user.projectId;
+			}	
+		},
+		mounted () {
+			this.query()	
+		},
 		methods:{
+			refresh(type) {
+    			this.houseFormat = type;
+    			this.query();
+			},
+			query() {
+    			this.$model('houses')
+    				.query(
+    					{houseFormat: this.houseFormat},{ projectId: this.projectId }
+    				)
+    				.then(res => {
+    					this.$set(this, 'houses', res.data || []);
+					});
+    		},
 			showmessage(data){
 				console.log(data)
 			}

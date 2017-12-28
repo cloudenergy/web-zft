@@ -2,8 +2,7 @@
   <div>
       <div class="block" style="margin-bottom:10px">
         <el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">   
-          
-          <tenant-way class="marsp marspa"/>
+          <tenant-way class="marsp marspa" style="margin-left:0px"/>
           <ofpayments class="marsp marspa"/>
           <mounth class="marsp marspa"/>
           <water-source class="marsp marspa"/>

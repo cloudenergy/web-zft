@@ -24,7 +24,7 @@
 			</el-header>
 			<el-main>
 				<div class="result">
-					<DataTable :housesrent='housesrent'/>
+					<DataTable :housesrent='housesrent' class="rentTable" v-loading="loading" @refresh="refresh"/>
 				</div>
 			</el-main>
 		</el-container>
@@ -52,7 +52,8 @@
 		},
 		data() {
 			return {
-				housesrent: []
+				housesrent: [],
+				loading:true
 			};
 		},
 		computed: {
@@ -76,6 +77,10 @@
 						element.strategy.bondprice = element.strategy.bond/100
 					});
 					this.$set(this, 'housesrent', data);
+					var that = this;
+					setTimeout(()=>{
+						this.loading = false
+					},100)
 				})
 			},
 			showmessage(data) {
@@ -83,6 +88,9 @@
 			},
 			importrent(mytalbe) {
 				
+			},
+			refresh(){
+				this.query()
 			}
 		}
 	};

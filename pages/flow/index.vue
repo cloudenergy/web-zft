@@ -1,17 +1,5 @@
 <template>
-	<el-container style="height:100%">
-		<!-- <div>
-			<Tab/>
-		</div> -->
-		<el-container style="height:100%">
-			<el-header style="height:100%">
-				<flowm/>
-			</el-header>
-			<el-main>
-				
-			</el-main>
-		</el-container>
-	</el-container>
+	<flowm/>
 </template>
 
 <script>

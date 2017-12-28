@@ -1,63 +1,57 @@
 <template>
 	<div class="top-nav">
+		<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" style="margin-bottom:15px">
+			<el-menu-item index="flowmounth">
+				按月度
+			</el-menu-item>
+			<el-menu-item index="quantum">
+				按时间
+			</el-menu-item>
+			<el-menu-item index="flowsubject">
+				按科目
+			</el-menu-item>
+			<el-menu-item index="flowchnnel">
+				渠道
+			</el-menu-item>
+		</el-menu>
 
-		  <el-tabs v-model="activeName" @tab-click="handleClick">
-        <div v-loading="loading">
-            <el-tab-pane label="按科目" name="second"><flowsubject/></el-tab-pane>
-            <el-tab-pane label="按时间" name="first"><quantum/></el-tab-pane>
-            <el-tab-pane label="按月度" name="third"><flowmounth/></el-tab-pane>
-            <el-tab-pane label="按渠道" name="fourth"><flowchnnel/></el-tab-pane>
-        </div>
-            
-      </el-tabs>
+		<component :is="activeIndex">
 
+		</component>
 	</div>
 </template>
 <script>
-  import {
+	import {
 		flowchnnel,
 		flowmounth,
 		flowsubject,
 		quantum
 	} from './index';
-  export default {
-    components: {
-      flowchnnel,
-      flowmounth,
-      flowsubject,
-      quantum,
-    },
-    data() {
-      return {
-        activeName: 'first',
-        loading: false,
-        tanind: 0
-      };
-    },
-    methods: {
-      handleClick(tab) {
-        this.tanind = parseInt(tab.index);
-        // switch(this.tanind){
-        //   case 0:
-        //     this.loading0=true;
-        //   case 1:
-        //     this.loading1=true;
-        //     break;
-        //   case 2:
-        //     this.loading2=true;
-        //     break;
-        //   case 3:
-        //     this.loading3=true;
-        //     break;
-      
-        }
-      }
-    }
+	export default {
+		components: {
+			flowchnnel,
+			flowmounth,
+			flowsubject,
+			quantum,
+		},
+		data() {
+			return {
+				activeName: 'first',
+				loading: false,
+				activeIndex: 'flowmounth'
+			};
+		},
+		methods: {
+			handleSelect(key, keyPath) {
+				console.log(key, keyPath);
+				this.activeIndex = key
+			}
+		}
+	}
 </script>
 
 <style lang="less" scoped>
-  .top-nav{
-    height: 100%;
-
-  }
+	.top-nav {
+		height: 100%;
+	}
 </style>

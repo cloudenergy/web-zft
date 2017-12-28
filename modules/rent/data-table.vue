@@ -17,7 +17,7 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="房源/租期" min-width="450" max-width="600">
+			<el-table-column label="房源/租期" min-width="450" max-width="600">				
 				<template slot-scope="scope">
 						<div slot="reference" class="name-wrapper">
 							<!-- @@@地址没有返回，用时间代替 -->
@@ -159,6 +159,13 @@
 				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
 			</div>
 		</el-dialog>
+		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
+			<RentWithout :form="updateData"/>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisible4 = false">取 消</el-button>
+				<el-button type="primary" @click="dialogVisible4 = false">确 定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -171,7 +178,8 @@
 		Rentsendmoney,
 		Relet,
 		Showrent,
-		Paym
+		Paym,
+		RentWithout
 	} from '../userinfo';
 	export default {
 		components: {
@@ -182,7 +190,8 @@
 			Rentsendmoney,
 			Relet,
 			Showrent,
-			Paym
+			Paym,
+			RentWithout
 		},
 		computed: {
 			projectId() {
@@ -204,6 +213,8 @@
 				dialogTitle2: '用户续租',
 				dialogVisible3: false,
 				dialogTitle3: '预览租客合同',
+				dialogVisible4: false,
+				dialogTitle4: '退租结算',
 				showinf: 1,
 				showmoney: 1,
 				list1: [{
@@ -226,6 +237,10 @@
 					{
 						showlist: '删除',
 						value: 2
+					},
+					{
+						showlist: '退租',
+						value: 4
 					},
 					{
 						showlist: '预览',
@@ -286,16 +301,18 @@
 						.delete({},{projectId: this.projectId,id:data.id})
 						.then(data=> {
 							this.$message({
-							type: 'success',
-							essage: '删除成功!'
+								type: 'success',
+								message: '删除成功!'
 							});
 							// @@@错误，一会改正
-							this.query()
+							this.$emit('refresh')
 						})
 					}).catch(() => {
 						this.mistake('取消删除')
 					});
-				} else {
+				} else if(value == 4){
+					this.dialogVisible4 = true
+				}else {
 					this.dialogVisible3 = true;
 				}
 			},
