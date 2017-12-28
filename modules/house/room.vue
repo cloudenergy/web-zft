@@ -59,7 +59,7 @@
     			});
     		},
     		view() {
-    			this.$emit('view', {romm: this.room, house: this.house});
+    			this.$emit('view', { romm: this.room, house: this.house });
     		}
     	}
     };

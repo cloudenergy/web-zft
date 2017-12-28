@@ -6,11 +6,21 @@
  */
 
 import api from '~/plugins/api';
+import { fromPairs, merge, map } from 'lodash';
+
+let localUser = '';
+try {
+	localUser = JSON.parse(localStorage.user);
+} catch (e) {
+	localUser = {
+		projectId: 100
+	};
+}
 
 export default {
 	state: {
 		user: {
-			projectId: 100
+			...localUser
 		},
 		cityArea: {},
 		houseTypes: {
@@ -20,13 +30,33 @@ export default {
 		},
 		defaultHouseType: 'SOLE'
 	},
+	mutations: {
+		UPDATE_ENV(state, data) {
+			Object.keys(data).forEach(item => {
+				state[item] = data[item];
+			});
+		}
+	},
 	actions: {
 		POST_LOGIN({ commit, state }) {
-			return api('login', { username: 'admin100', password: '5f4dcc3b5aa765d61d8327deb882cf99' });
+			return api('login', {
+				username: 'admin100',
+				password: '5f4dcc3b5aa765d61d8327deb882cf99'
+			});
 		},
 
 		GET_ENVIRONMENTS({ commit, state }) {
-			return api('environments');
+			return api('environments')
+				.then(env => fromPairs(map(env, i => [i.key, i.value])))
+				.then(env => {
+					commit('UPDATE_ENV', env);
+
+					// sync user
+					localStorage.user = JSON.stringify({
+						auth: true,
+						...env.user
+					});
+				});
 		},
 		GET_COMMUNITIES({ commit, state }, { houseType }) {
 			return api('communities').query(

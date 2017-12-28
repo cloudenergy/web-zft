@@ -30,13 +30,7 @@
     		login() {
     			this.$store
     				.dispatch('POST_LOGIN')
-    				.then(data => {
-    					console.log('login successfully', data);
-    					this.$store.state.user.auth = true;
-    				})
     				.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
-    				.then(env => _.fromPairs(_.map(env, i => [i.key, i.value])))
-    				.then(env => _.merge(this.$store.state, env))
     				.then(() => this.$router.push('/'));
     		}
     	}

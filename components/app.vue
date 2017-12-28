@@ -28,7 +28,7 @@
     	},
     	created() {
     		// read cookie or storage
-    		_.isUndefined(this.$store.state.user.auth) ? this.stubLogin() : noop();
+    		_.isUndefined(this.$store.state.user.auth) ? this.stubLogin() : '';
     	},
     	methods: {
     		stubLogin() {
