@@ -31,29 +31,43 @@
 </template>
 
 <script>
-import Profile from "../../modules//settings/index/profile";
-import PassWord from "../../modules//settings/index/password";
-import Aptinfo from "../../modules//settings/index/aptinfo";
-import PayNew from "../../modules//settings/index/paynew";
+import Profile from '../../modules//settings/index/profile';
+import PassWord from '../../modules//settings/index/password';
+import Aptinfo from '../../modules//settings/index/aptinfo';
+import PayNew from '../../modules//settings/index/paynew';
 
 export default {
-components:{
-Profile,
-Aptinfo,
-PassWord,
-PayNew
-},
+	components: {
+		Profile,
+		Aptinfo,
+		PassWord,
+		PayNew
+	},
 	data() {
 		return {
-			currentView:'Profile',
-			
+			currentView: 'Profile'
 		};
 	},
-	methods: {
-		toggleComponents(index,path){
-			this.currentView=index
+	computed: {
+		projectId() {
+			return this.$store.state.user.projectId;
 		}
-		
+	},
+	created() {
+		this.query();
+	},
+	methods: {
+		toggleComponents(index, path) {
+			this.currentView = index;
+		},
+
+		query() {
+			this.$model('credentials')
+				.query({}, { projectId: this.projectId })
+				.then(data => {
+					console.log(data);
+				});
+		}
 	}
 };
 </script>
