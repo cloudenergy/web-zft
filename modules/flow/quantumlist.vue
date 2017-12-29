@@ -158,7 +158,6 @@ export default {
                         this.toggle(this.upflowi)
                         this.upflowi=row.id
                     }
-                    
                     console.log(this.upflowi)
                 }else{
                     this.toggle(row.id)
