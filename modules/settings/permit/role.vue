@@ -2,83 +2,62 @@
  <div class="partner">
      <el-col :span="2">
      <el-tree :data="tree" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
-     <el-button class="addBtn" size="medium" @click="dialogVisible=true">添加岗位</el-button>
+     <el-button class="addBtn" size="medium" @click="addSteward=true">添加岗位</el-button>
      </el-col>
      <el-col :span="20">
        <component :is="currentView"></component>
      </el-col>
 
-<el-dialog
-  title="操作权限分配"
-  :visible.sync="dialogVisible"
-  width="50%">
-  <el-form>
+   <el-dialog
+  title="提示"
+  :visible.sync="addSteward"
+  width="30%">
+ <el-form ref="addStewardForm" :model="addStewardForm" label-width="80px">
 
-    <el-form-item label="岗位名称">
-      <el-col :span="10">
-<el-input v-model="postName" placeholder="请输入岗位名称"></el-input>
-      </el-col>
-    </el-form-item>
+     <el-form-item label="管家姓名">
+<el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
+     </el-form-item>
 
-    <el-form-item label="排序序号">
-      <el-col :span="10">
-<el-input v-model="number" placeholder=""></el-input>
-      </el-col>
-    </el-form-item>
+     <el-form-item label="权限">
+<el-select v-model="addStewardForm.level" placeholder="请选择">
+      <el-option value="manager" label="管家"></el-option>
+      <el-option value="accountant" label="财务"></el-option>
+    </el-select>
+     </el-form-item>
+  <!-- <el-form-item label="姓名">
+ <el-input placeholder="管家姓名" v-model="stewardName" class="input-with-select">
+    <el-select v-model="select" slot="prepend" placeholder="请选择">
+      <el-option label="男" value="man"></el-option>
+      <el-option label="女" value="woman"></el-option>
+    </el-select>
+  </el-input>
+  </el-form-item>
+  <el-form-item label="编号">
+<el-input placeholder="员工编号" v-model="stewardNub"></el-input>
+  </el-form-item>
+  <el-form-item label="部门">
 
-    <el-form-item label="操作房源范围">
-      <el-select v-model="value" placeholder="请选择">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
-</el-form-item>
-
-
-    <el-form-item label="租金降价权限">
-      <el-cascader
-    :options="rentReduction"
-    v-model="selectedOptions"
-    separator=','>
-  </el-cascader>
-    </el-form-item>
-  
-
-<el-form-item>
-   <el-table
-      :data="dialogTable"
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="模块"
-        width="140">
-      </el-table-column>
-      <el-table-column
-        prop="jurisdiction"
-        label="权限">
-        <template slot-scope="scope">
-          <ul class="dialog_tab_ul" v-for="dialogTable_v in dialogTable" :key="dialogTable_v.id">
-            <li v-for="jurisdiction_v in dialogTable_v.jurisdiction" :key="jurisdiction_v.id">
-              <label>{{jurisdiction_v.label}}</label>
-              <div class="dialog_tab_ul_checked">
-<el-checkbox v-for="checked_v in jurisdiction_v.checked" :label="checked_v" :key="checked_v.id"></el-checkbox>
-              </div>
-              
-            </li>
-          </ul>
-          
-        </template>
-      </el-table-column>
-    </el-table>
-</el-form-item>
-
-</el-form>
+  </el-form-item>
+  <el-form-item label="岗位">
+<el-select>
+    
+</el-select>
+  </el-form-item>
+  <el-form-item label="登录手机号">
+<el-input placeholder="手机号码" v-model="stewardTel" class="input-with-select">
+    <el-select v-model="select" slot="prepend" placeholder="请选择">
+      <el-option label="+86" value="+86"></el-option>
+    </el-select>
+  </el-input>
+  </el-form-item>
+  <el-form-item label="登录密码">
+<el-input v-model="stewardPassWord" placeholder="登录密码" type="password"></el-input>
+      
+  </el-form-item> -->
+ </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button @click="addSteward = false">取 消</el-button>
+    <el-button type="primary" @click="add">确 定</el-button>
   </span>
 </el-dialog>
 
@@ -97,7 +76,11 @@ export default {
 		Medics
 	},
 	data() {
-		return {
+		return {addSteward:false,
+		addStewardForm: {
+				username: '',
+				level: ''
+			},
 			dialogVisible: false,
 			currentView: 'all',
 			selectedOptions: [],
@@ -243,8 +226,21 @@ export default {
 		handleNodeClick(data) {
 			this.currentView = data.index;
 			console.log(data);
+			
+		},
+		add() {
+			this.addSteward = false;
+			this.$model('credentials').create(this.addStewardForm, {
+    			projectId: this.projectId
+    		});
 		}
-	}
+	},
+	computed: {
+		projectId() {
+			return this.$store.state.user.projectId;
+		}
+	},
+
 };
 </script>
 
