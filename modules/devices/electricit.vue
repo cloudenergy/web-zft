@@ -1,6 +1,15 @@
 <template>
     <div>
-        <el-table :data="houses" style="width: 100%">
+        <el-table :data="tableData" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle' ref="tableData">
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form-item label="商品名称">
+                            <span>{{ props.row.instrument }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
             <el-table-column label="房源" min-width="175">
                 <template slot-scope="scope">
                     <span>{{ scope.row.address }}</span>
@@ -19,25 +28,17 @@
             </el-table-column>
             <el-table-column label="归属账单" min-width="180">
                 <template slot-scope="scope">
-                    <el-dropdown style="width:90%" @command="handleCommand">
+                   
                     <span class="el-dropdown-link devicesuser">
-                        {{}}userId<i class="el-icon-arrow-down el-icon--right"></i>
+                        {{}}userId
                     </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <!-- @@@需要返还userId -->
-                        <el-dropdown-item v-for="item in scope.row.user" :key="item.value" :command="item.value">
-                            {{item.label}} {{item.value}}
-                            <br>
-                            {{item.from}}至{{item.to}}
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                    </el-dropdown>
-                    <br>
+                    
+                    
                     <!-- @@@时间，等数据传回来 -->
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>
             </el-table-column>
-             <el-table-column label="往次抄表" min-width="180">
+            <el-table-column label="往次抄表" min-width="180">
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
                         @change="oldTime(scope.row)">
@@ -70,7 +71,6 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-button type="primary" style="margin-top:15px;float:right" @click="savech">全部保存</el-button>
     </div>
 </template>
 <script>
@@ -83,6 +83,12 @@
         data() {
             return {
                 valueuser: '',
+                // 获取row的key值
+                getRowKeys(row) {
+                    return row.userid;
+                },
+                // 要展开的行，数值的元素是row的key值
+                expands: [],
                 tableData: [{
                         address: '上海市普陀区金沙江路',
                         addressdet: '12栋2单元1202',
@@ -146,7 +152,7 @@
                             },
                         ],
                         currentuser: '1',
-                        userid: '110',
+                        userid: '111',
                         instrument: '仪表001',
                         instrumentid: '000000000021',
                         lastdateall: [{
@@ -192,7 +198,7 @@
                             },
                         ],
                         currentuser: '1',
-                        userid: '110',
+                        userid: '112',
                         instrument: '仪表001',
                         instrumentid: '000000000021',
                         lastdateall: [{
@@ -242,9 +248,6 @@
                 data.differentnum=this.computations(data.thisnum,data.lastnum)
                 data.bill = this.computationsPrice(data.differentnum,data.unitprice)
             },
-            savech() {
-                console.log(this.houses)
-            },
             handleCommand(command){
                 console.log(command)
             },
@@ -253,6 +256,15 @@
             },
             computationsPrice(differentnum,price){
                 return differentnum*price
+            },
+            handleRowHandle(row,event){
+                if(event.path[0].tagName!='INPUT'){
+                    this.toggle(row.userid)
+                }
+            },
+            // 展开
+            toggle(flowi){
+                this.$refs.tableData.toggleRowExpansion(this.tableData.find(d => d.userid == flowi)) 
             }
         }
     }
@@ -265,9 +277,7 @@
     .devicesuser{
         display: inline-block;
         width: 100%;
-        i{
-            float:right;
-        }
+
     }
 </style>
 <style>

@@ -1,11 +1,11 @@
 <template>
 	<div class="top-nav">
 		<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" style="margin-bottom:15px">
-			<el-menu-item index="flowmounth">
-				按月度
-			</el-menu-item>
 			<el-menu-item index="quantum">
 				按时间
+			</el-menu-item>
+			<el-menu-item index="flowmounth">
+				按月度
 			</el-menu-item>
 			<el-menu-item index="flowsubject">
 				按科目
