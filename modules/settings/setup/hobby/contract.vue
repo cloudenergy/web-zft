@@ -45,28 +45,29 @@
                         <el-checkbox-group v-model="tenantContractExtraCharges">
                             <div v-for="(extraCharges,index) in tenantContract.extraCharges" :key="extraCharges.id">
                                 <el-checkbox :label="extraCharges.name" :checked="extraCharges.isChecked">{{extraCharges.name}} </el-checkbox>
-                                <i @click="checkDefault(tenantContract.extraCharges,index,tenantContractExtraCharges,'tenantContractDefaultDisplayFee')" :class='extraCharges.isDefault?"el-icon-star-on":"el-icon-star-off"'></i>
+                                <i @click="checkDefault(tenantContract.extraCharges,index,tenantContractExtraCharges,'tenantContractDefaultDisplayFee')"
+                                    :class='extraCharges.isDefault?"el-icon-star-on":"el-icon-star-off"'></i>
                             </div>
                         </el-checkbox-group>
                     </el-form-item>
 
                     <el-form-item label="默认显示费用">
-                       <ul v-if="tenantContract.defaultDisplayFee.length !=0">
+                        <ul v-if="tenantContract.defaultDisplayFee.length !=0">
                             <li v-for="val in tenantContract.defaultDisplayFee" :key="val.id">
                                 <el-col :span="2">
- <label>{{val.name}}</label>
+                                    <label>{{val.name}}</label>
                                 </el-col>
                                 <el-col :span="5">
-                            <el-select v-model="tenantContractDefaultDisplayFeeTimeVal" placeholder="请选择">
-                                <el-option v-for="item in tenantContractDefaultDisplayFeeTime" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-</el-col>
-<el-col :span="5">
-                            <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
-                                <span slot="suffix">元/月</span>
-                            </el-input>
-                            </el-col>
+                                    <el-select v-model="tenantContractDefaultDisplayFeeTimeVal" placeholder="请选择">
+                                        <el-option v-for="item in tenantContractDefaultDisplayFeeTime" :key="item.value" :label="item.label" :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
+                                        <span slot="suffix">元/月</span>
+                                    </el-input>
+                                </el-col>
                             </li>
                         </ul>
                         <p v-else>无</p>
@@ -86,17 +87,17 @@
                     </el-form-item>
 
                     <el-form-item label="默认显示押金">
-                         <ul v-if="tenantContract.defaultDisplayDeposit.length !=0">
+                        <ul v-if="tenantContract.defaultDisplayDeposit.length !=0">
                             <li v-for="val in tenantContract.defaultDisplayDeposit" :key="val.id">
                                 <el-col :span="3">
- <label>{{val.name}}</label>
+                                    <label>{{val.name}}</label>
                                 </el-col>
-                                
-<el-col :span="5">
-                            <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
-<span slot="prefix">共</span>
-                            </el-input>
-                            </el-col>
+
+                                <el-col :span="5">
+                                    <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
+                                        <span slot="prefix">共</span>
+                                    </el-input>
+                                </el-col>
                             </li>
                         </ul>
                         <p v-else>无</p>
@@ -156,28 +157,29 @@
                         <el-checkbox-group v-model="tenantContractExtraCharges">
                             <div v-for="(extraCharges,index) in tenantContract.extraCharges" :key="extraCharges.id">
                                 <el-checkbox :label="extraCharges.name" :checked="extraCharges.isChecked">{{extraCharges.name}} </el-checkbox>
-                                <i @click="checkDefault(tenantContract.extraCharges,index,tenantContractExtraCharges,'tenantContractDefaultDisplayFee')" :class='extraCharges.isDefault?"el-icon-star-on":"el-icon-star-off"'></i>
+                                <i @click="checkDefault(tenantContract.extraCharges,index,tenantContractExtraCharges,'tenantContractDefaultDisplayFee')"
+                                    :class='extraCharges.isDefault?"el-icon-star-on":"el-icon-star-off"'></i>
                             </div>
                         </el-checkbox-group>
                     </el-form-item>
 
                     <el-form-item label="默认显示费用">
-                       <ul v-if="tenantContract.defaultDisplayFee.length !=0">
+                        <ul v-if="tenantContract.defaultDisplayFee.length !=0">
                             <li v-for="val in tenantContract.defaultDisplayFee" :key="val.id">
                                 <el-col :span="2">
- <label>{{val.name}}</label>
+                                    <label>{{val.name}}</label>
                                 </el-col>
                                 <el-col :span="5">
-                            <el-select v-model="tenantContractDefaultDisplayFeeTimeVal" placeholder="请选择">
-                                <el-option v-for="item in tenantContractDefaultDisplayFeeTime" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-</el-col>
-<el-col :span="5">
-                            <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
-                                <span slot="suffix">元/月</span>
-                            </el-input>
-                            </el-col>
+                                    <el-select v-model="tenantContractDefaultDisplayFeeTimeVal" placeholder="请选择">
+                                        <el-option v-for="item in tenantContractDefaultDisplayFeeTime" :key="item.value" :label="item.label" :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
+                                        <span slot="suffix">元/月</span>
+                                    </el-input>
+                                </el-col>
                             </li>
                         </ul>
                         <p v-else>无</p>
@@ -197,17 +199,17 @@
                     </el-form-item>
 
                     <el-form-item label="默认显示押金">
-                         <ul v-if="tenantContract.defaultDisplayDeposit.length !=0">
+                        <ul v-if="tenantContract.defaultDisplayDeposit.length !=0">
                             <li v-for="val in tenantContract.defaultDisplayDeposit" :key="val.id">
                                 <el-col :span="3">
- <label>{{val.name}}</label>
+                                    <label>{{val.name}}</label>
                                 </el-col>
-                                
-<el-col :span="5">
-                            <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
-<span slot="prefix">共</span>
-                            </el-input>
-                            </el-col>
+
+                                <el-col :span="5">
+                                    <el-input v-model="tenantContractDefaultDisplayFeeInput" placeholder="请输入内容">
+                                        <span slot="prefix">共</span>
+                                    </el-input>
+                                </el-col>
                             </li>
                         </ul>
                         <p v-else>无</p>
@@ -264,40 +266,6 @@
                 <el-button type="primary" @click="add">确 定</el-button>
             </span>
         </el-dialog>
-
-
-        <!-- dd -->
-        <!-- <el-dialog title="提示" :visible.sync="dddialogVisible" width="30%">
-
-            <div class="addDiv">
-                <el-col :span="6">
-                    <label>名称</label>
-                </el-col>
-
-                <el-col :span="16">
-                    <el-input v-model="addInput" placeholder="名称"></el-input>
-                </el-col>
-            </div>
-
-
-            <div class="addDiv">
-                <el-col :span="6">
-                    <label>所属项目</label>
-                </el-col>
-
-                <el-col :span="16">
-                    <el-select v-model="addSelect" placeholder="请选择" class="addSelect">
-                        <el-option v-for="(val,key,index) in detached" :key="val.id" :label="transition(key)" :value='key'></el-option>
-                    </el-select>
-                </el-col>
-            </div>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dddialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="add">确 定</el-button>
-            </span>
-        </el-dialog> -->
-
         <el-popover ref="default" placement="top-start" trigger="hover" content="设置为默认">
         </el-popover>
         <el-popover ref="unDefault" placement="top-start" trigger="hover" content="取消默认">
@@ -806,12 +774,12 @@
                 console.log(model)
 
             },
-            checkDefault(key, index,model, belong) {
+            checkDefault(key, index, model, belong) {
                 let oldIsDefault = key[index].isDefault;
                 let arr = []
 
                 key[index].isDefault = !oldIsDefault;
-if (key[index].isDefault) {
+                if (key[index].isDefault) {
 
                     model.push(key[index].name)
                 }
@@ -875,9 +843,9 @@ if (key[index].isDefault) {
             /deep/.el-form-item__content {
                 width: 85%;
                 float: right;
-                li{
+                li {
                     list-style: none;
-                    width:100%;
+                    width: 100%;
                     float: left;
                     margin-bottom: 10px;
                 }
