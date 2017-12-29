@@ -15,7 +15,7 @@
 					<el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
 				</el-form-item>
 				<el-form-item label="账户密码">
-					<el-input v-model="addStewardForm.password" placeholder="密码"></el-input>
+					<el-input v-model="password" placeholder="密码" type="password"></el-input>
 				</el-form-item>
 				<el-form-item label="权限">
 					<el-select v-model="addStewardForm.level" placeholder="请选择">
@@ -37,7 +37,7 @@
 	import Root from './role/root';
 	import All from './role/all';
 	import Medics from './role/medics';
-
+	import md5 from 'js-md5';
 	export default {
 		components: {
 			Root,
@@ -53,6 +53,7 @@
 					password:''
 				},
 				dialogVisible: false,
+				password:'',
 				currentView: 'all',
 				selectedOptions: [],
 				value: [],
@@ -213,9 +214,19 @@
 			},
 			add() {
 				this.addSteward = false;
-				this.$model('credentials').create(this.addStewardForm, {
+				this.addStewardForm.password = md5(this.password);
+				console.log(this.addStewardForm.password)
+				this.$model('credentials')
+				.create(this.addStewardForm, {
 					projectId: this.projectId
-				});
+				})
+				.then(()=>{
+					this.$message.success('创建成功')
+					this.addStewardForm.username=this.addStewardForm.password=''
+				})
+				.catch(()=>{
+					this.$message('创建失败')
+				})
 			}
 		},
 		computed: {
