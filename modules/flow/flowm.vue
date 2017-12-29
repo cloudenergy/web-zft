@@ -38,7 +38,7 @@
 			return {
 				activeName: 'first',
 				loading: false,
-				activeIndex: 'flowmounth'
+				activeIndex: 'quantum'
 			};
 		},
 		methods: {

@@ -10,7 +10,7 @@
                     </el-form>
                 </template>
             </el-table-column>
-            <el-table-column label="房源" min-width="175">
+            <el-table-column label="房源" min-width="160">
                 <template slot-scope="scope">
                     <span>{{ scope.row.address }}</span>
                     <br>
@@ -18,7 +18,7 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="仪表名称/ID" min-width="105">
+            <el-table-column label="仪表名称/ID" min-width="120">
                 <template slot-scope="scope">
                     <span>{{ scope.row.instrument }}</span>
                     <br>
@@ -26,7 +26,7 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="归属账单" min-width="180">
+            <el-table-column label="归属账单" min-width="160">
                 <template slot-scope="scope">
                    
                     <span class="el-dropdown-link devicesuser">
@@ -38,7 +38,7 @@
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="往次抄表" min-width="180">
+            <el-table-column label="往次抄表" min-width="160">
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
                         @change="oldTime(scope.row)">
@@ -47,7 +47,7 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="本次抄表" min-width="180">
+            <el-table-column label="本次抄表" min-width="160">
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
                         @change="newTime(scope.row)">
@@ -60,7 +60,7 @@
                     <span>{{ scope.row.differentnum }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="单价" min-width="60">
+            <el-table-column label="单价">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.unitprice }}</span>
                 </template>

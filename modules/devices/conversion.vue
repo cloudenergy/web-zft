@@ -10,6 +10,14 @@
                     <span>{{list.title}}</span><span style="float:right;display:inline-block">{{list.deviceId}}</span>
                 </el-radio>
             </div>
+            <el-pagination
+                :background="background"
+                layout="prev, pager, next"
+                :total="listInfo.count"
+                @current-change="handleCurrentChange"
+                style="margin-top:5px;text-align:right"
+                :page-size='12'>
+            </el-pagination>
         </div>
   </div>
 </template>
@@ -27,9 +35,13 @@
                 radio:'',
                 item:[],
                 room:{
-                    mode:'FREE'
+                    mode:'FREE',
+                    index:1,
+                    size:12
                 },
-                loading:true
+                loading:true,
+                listInfo:'',
+                background:true
             }
         },
         computed: {
@@ -38,7 +50,7 @@
 			}
 		},
         created () {
-            this.query(this.room)  
+            this.query()  
         },
         methods: {
             log(){
@@ -47,14 +59,12 @@
             changeelectricity(data){
                 this.$emit('setEquipmentid',this.radio)
             },
-            query(data){
-                console.log(data)
+            query(){
                 this.$model('devices')
-                .query(data,{projectId:this.projectId})
+                .query((this.room),{projectId:this.projectId})
                 .then((data)=>{
-                    console.log(data)
-                    console.log(this.loading)
-                    this.$set(this, 'item', data || [])
+                    this.$set(this, 'item', data.data || [])
+                    this.$set(this, 'listInfo', data.paging || [])
                     this.loading = false
                 })
             },
@@ -63,6 +73,11 @@
             },
             setNewList(){
                 this.query(this.room)
+            },
+            handleCurrentChange(val){
+                this.room.index = val
+                this.loading = true
+                this.query()
             }
         }
     }
