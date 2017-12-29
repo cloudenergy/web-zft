@@ -11,7 +11,7 @@
                 </el-radio>
             </div>
             <el-pagination
-                background
+                :background="background"
                 layout="prev, pager, next"
                 :total="listInfo.count"
                 @current-change="handleCurrentChange"
@@ -40,7 +40,8 @@
                     size:12
                 },
                 loading:true,
-                listInfo:''
+                listInfo:'',
+                background:true
             }
         },
         computed: {
@@ -62,12 +63,9 @@
                 this.$model('devices')
                 .query((this.room),{projectId:this.projectId})
                 .then((data)=>{
-                    console.log(data)
-                    console.log(this.loading)
                     this.$set(this, 'item', data.data || [])
                     this.$set(this, 'listInfo', data.paging || [])
                     this.loading = false
-                    console.log(this.item)
                 })
             },
             equipmentId(){
