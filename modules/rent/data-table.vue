@@ -1,6 +1,6 @@
 <template>
 	<div id="rentinfo">
-		<el-table :data="housesrent" style="width: 100%">
+		<el-table :data="housesRent" style="width: 100%">
 			<el-table-column label="姓名" width="120">
 				<template slot-scope="scope">
 					<div slot="reference" class="name-wrapper">
@@ -205,7 +205,7 @@
 			projectId() {
 				return this.$store.state.user.projectId;
 			},
-			housesrent() {
+			housesRent() {
 				return this.housesrentData.data
 			}
 		},
