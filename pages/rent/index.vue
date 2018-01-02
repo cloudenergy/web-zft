@@ -24,7 +24,7 @@
 			</el-header>
 			<el-main>
 				<div class="result">
-					<DataTable :housesrent='housesrent' class="rentTable" v-loading="loading" @refresh="refresh"/>
+					<DataTable :housesrentData='housesrent' class="rentTable" v-loading="loading" @refresh="refresh"/>
 				</div>
 			</el-main>
 		</el-container>
@@ -52,7 +52,7 @@
 		},
 		data() {
 			return {
-				housesrent: [],
+				housesrent: {},
 				loading:true
 			};
 		},
@@ -69,12 +69,8 @@
 				this.$model('contracts')
 				.query({}, {projectId: this.projectId})
 				.then((data) =>{
-					// data.forEach((element,index) => {
-					// 	if(element.status=='TERMINATED'){
-					// 		data.splice(index,1)
-					// 	}
-					// })
-					data.forEach(element => {
+					console.log(data)
+					data.data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.allM = readableDuration(element.to - element.from)

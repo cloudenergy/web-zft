@@ -166,6 +166,14 @@
 				<el-button type="primary" @click="operateRent">确 定</el-button>
 			</span>
 		</el-dialog>
+		<el-pagination
+                :background="background"
+                layout="prev, pager, next"
+                :total='housesrentData.paging.count'
+                @current-change="handleCurrentChange"
+                style="margin-top:5px;text-align:right"
+                :page-size='12'>
+        </el-pagination>
 	</div>
 </template>
 
@@ -196,15 +204,19 @@
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
+			},
+			housesrent() {
+				return this.housesrentData.data
 			}
 		},
 		props: {
-    		housesrent: {
-    			type: Array
+    		housesrentData: {
+    			required: true
     		}
     	},
 		data() {
 			return {
+				background:true,
 				contractbill: '',
 				updateData: {},
 				dialogVisible: false,
@@ -357,6 +369,9 @@
 						type: 'info',
 						message: data
 					});
+			},
+			handleCurrentChange(){
+				
 			}
 		}
 	};
