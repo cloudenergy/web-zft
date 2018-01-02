@@ -10,14 +10,14 @@
                 <span>退: 2018-10-1</span>
             </p>
         </div>
-        <!-- <div class="actions">
+        <div class="actions">
             <p @click="edit()">
                 <i class="el-icon-edit-outline" />
             </p>
             <p @click="view()">
                 <i class="el-icon-view" />
             </p>
-        </div> -->
+        </div>
     </div>
 </template>
 

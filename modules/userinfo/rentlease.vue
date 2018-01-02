@@ -76,7 +76,6 @@
             newitem.createdAtTime=new Date(parseInt(newitem.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
             return newitem
           })
-          console.log(item)
           return item
         })
       }

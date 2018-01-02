@@ -52,7 +52,9 @@
     			this.$model('houses')
     				.query(
     					{
-    						houseFormat: this.houseFormat
+							houseFormat: this.houseFormat,
+							size:200,
+							index:1
     					},
     					{ projectId: this.projectId }
     				)

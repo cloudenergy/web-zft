@@ -95,8 +95,8 @@ const apis = {
 	devices_set: resource(
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
 	),
-
-	credentials: resource('/projects/{projectId}/credentials')
+	credentials: resource('/projects/{projectId}/credentials'),
+	operate_contracts: resource('/projects/{projectId}/contracts')
 };
 
 /**

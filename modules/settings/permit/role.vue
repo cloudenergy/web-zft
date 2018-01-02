@@ -220,12 +220,14 @@
 				.create(this.addStewardForm, {
 					projectId: this.projectId
 				})
-				.then(()=>{
-					this.$message.success('创建成功')
-					this.addStewardForm.username=this.addStewardForm.password=''
-				})
-				.catch(()=>{
-					this.$message('创建失败')
+				.then(res=>{
+					console.log(res)
+					if(res.status!=200){
+						this.$message('创建失败')
+					}else{
+						this.$message.success('创建成功')
+						this.addStewardForm.username=this.addStewardForm.password=this.password=''
+					}
 				})
 			}
 		},

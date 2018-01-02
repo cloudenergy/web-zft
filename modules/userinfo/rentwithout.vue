@@ -2,19 +2,19 @@
     <div>
         <div class='flexc'>
             <div class="exit-house-left">
-                <span>合同周期</span>
-                <span>{}</span>
+                <span>合同周期 </span>
+                <span>{{form.fromDate}}-{{form.toDate}}</span>
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
-                <el-radio v-model="radio" label="1">是</el-radio>
-                <el-radio v-model="radio" label="2">否</el-radio>
+                <el-radio v-model="roomStatus" label="">是</el-radio>
+                <el-radio v-model="roomStatus" label="pause">否</el-radio>
             </div>
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
-                <span>租户姓名</span>
-                <span>{}</span>
+                <span>租户姓名 </span>
+                <span>{{form.user.name}}</span>
             </div>
             <div>
                 <span class="set-width">经办人</span>
@@ -26,8 +26,8 @@
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
-                <span>租户账号</span>
-                <span>{}</span>
+                <span>租户账号 </span>
+                <span>{{form.user.accountName}}</span>
             </div>
             <div>
                 <span class="set-width">支付方式</span>
@@ -39,7 +39,7 @@
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
-                <span>当前余额</span>
+                <span>当前余额 </span>
                 <span>{}</span>
             </div>
             <div class="flexc setInput">
@@ -67,12 +67,18 @@
                 type: Object
             }
         },
+        computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
         data() {
             return {
                 radio: '',
                 input: '',
                 textarea: '',
                 value:'',
+                roomStatus:'',
                 options: [{
                     value: '1',
                     label: 'laoli'
@@ -88,6 +94,17 @@
         methods: {
             onSubmit() {
                 console.log('submit!');
+            },
+            operateRent(){
+                this.$model('operate_contracts')
+                .update({status: 'terminated'},{projectId:this.projectId,id:this.form.id})
+                .then(res=>{
+                    console.log(res)
+                    this.$message.success('退组成功')
+                })
+                .catch(res=>{
+                    this.$message.info('退租失败')
+                })
             }
         }
     }

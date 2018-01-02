@@ -160,10 +160,10 @@
 			</div>
 		</el-dialog>
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
-			<RentWithout :form="updateData"/>
+			<RentWithout :form="updateData" ref="operate"/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible4 = false">取 消</el-button>
-				<el-button type="primary" @click="dialogVisible4 = false">确 定</el-button>
+				<el-button type="primary" @click="operateRent">确 定</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -251,11 +251,11 @@
 					"contractId": 1,
 					"roomId": 430000,
 					"user": {
-						"id": 4234948878,
+						"id": 111111111,
 						"accountName": "accountName",
 						"name": "username",
-						"mobile": "13897656479",
-						"documentId": "330109198007085678X",
+						"mobile": "111111111111",
+						"documentId": "11111111111",
 						"documentType": 1,
 						"gender": "M"
 					}
@@ -276,7 +276,6 @@
 			},
 			rentuser2(data, value) {
 				var that = this;
-				console.log(data,value)
 				this.updateData = data;
 				if (value == 1) {
 					// 打开续租页面
@@ -311,10 +310,15 @@
 						this.mistake('取消删除')
 					});
 				} else if(value == 4){
+					console.log(this.updateData)
 					this.dialogVisible4 = true
 				}else {
 					this.dialogVisible3 = true;
 				}
+			},
+			operateRent(){
+				this.$refs.operate.operateRent()
+				this.dialogVisible4 = false
 			},
 			changeUserInfo(data) {
 				this.showinf = data;

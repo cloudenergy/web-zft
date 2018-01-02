@@ -69,6 +69,11 @@
 				this.$model('contracts')
 				.query({}, {projectId: this.projectId})
 				.then((data) =>{
+					// data.forEach((element,index) => {
+					// 	if(element.status=='TERMINATED'){
+					// 		data.splice(index,1)
+					// 	}
+					// })
 					data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
