@@ -11,6 +11,7 @@
 </script>
 
 <style lang="less" scoped>
+    @import './icon.less';
     @font-face {
     	font-family: 'iconfont';
     	src: url('./fonts/iconfont.eot'); /* IE9*/
@@ -27,106 +28,6 @@
     	font-style: normal;
     	-webkit-font-smoothing: antialiased;
     	-moz-osx-font-smoothing: grayscale;
-    }
-
-    .icon-piaoquan:before {
-    	content: '\e609';
-    }
-
-    .icon-youhuiquan:before {
-    	content: '\e613';
-    }
-
-    .icon-fukuan:before {
-    	content: '\e615';
-    }
-
-    .icon-qiye:before {
-    	content: '\e661';
-    }
-
-    .icon-quanxian:before {
-    	content: '\e663';
-    }
-
-    .icon-shuju:before {
-    	content: '\e666';
-    }
-
-    .icon-yuangong:before {
-    	content: '\e668';
-    }
-
-    .icon-yunying:before {
-    	content: '\e669';
-    }
-
-    .icon-dianfei:before {
-    	content: '\e62a';
-    }
-
-    .icon-gengduo:before {
-    	content: '\e62b';
-    }
-
-    .icon-ranqifei:before {
-    	content: '\e62c';
-    }
-
-    .icon-shuidianmei:before {
-    	content: '\e62d';
-    }
-
-    .icon-shoujichongzhi:before {
-    	content: '\e62e';
-    }
-
-    .icon-shuifei:before {
-    	content: '\e62f';
-    }
-
-    .icon-tahangqia:before {
-    	content: '\e630';
-    }
-
-    .icon-wodezhanghu:before {
-    	content: '\e631';
-    }
-
-    .icon-xinyongqia:before {
-    	content: '\e632';
-    }
-
-    .icon-zijinguiji:before {
-    	content: '\e633';
-    }
-
-    .icon-youxiandianshi:before {
-    	content: '\e634';
-    }
-
-    .icon-zhuanzhanghuikuan:before {
-    	content: '\e635';
-    }
-
-    .icon-shezhi:before {
-    	content: '\e680';
-    }
-
-    .icon-bumen:before {
-    	content: '\e687';
-    }
-
-    .icon-jiedongzhiquchaxun:before {
-    	content: '\e6cf';
-    }
-
-    .icon-rizhi:before {
-    	content: '\e6d2';
-    }
-
-    .icon-shouqushenqingdengji:before {
-    	content: '\e6d4';
     }
 </style>
 
