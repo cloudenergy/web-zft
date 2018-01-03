@@ -18,10 +18,14 @@
 <script>
     import room from './room.vue';
     export default {
+		props: {
+    		houses: {
+    			required: true
+    		}
+    	},
     	components: { room },
     	data() {
     		return {
-    			houses: [],
     			currentRoom: null,
     			viewRoom: false,
     			houseFormat: 'SOLE',
@@ -29,28 +33,13 @@
 				roomId: ''
     		};
     	},
-    	created() {
-    		this.query();
-		},
+    	
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
 			}
 		},
     	methods: {
-    		query() {
-    			this.$model('houses')
-    				.query(
-    					{
-    						houseFormat: this.houseFormat
-    					},
-    					{ projectId: this.projectId }
-    				)
-    				.then(res => {
-    					// console.log('data: ', data);
-    					this.$set(this, 'houses', res.data || []);
-    				});
-    		},
     		showDrawer(room) {
     			this.currentRoom = room;
     			this.viewRoom = true;

@@ -23,6 +23,9 @@
 						<el-option value="accountant" label="财务"></el-option>
 					</el-select>
 				</el-form-item>
+				<el-form-item label="电子邮件">
+					<el-input v-model="addStewardForm.email" placeholder="电子邮件"></el-input>
+				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="addSteward = false">取 消</el-button>
@@ -50,7 +53,8 @@
 				addStewardForm: {
 					username: '',
 					level: '',
-					password:''
+					password:'',
+					email: '' //TODO: 必须提供email
 				},
 				dialogVisible: false,
 				password:'',
