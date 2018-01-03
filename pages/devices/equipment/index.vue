@@ -30,7 +30,7 @@
 				</div>
 			</el-header>
 			<el-main>
-				<equipmentset :houses="houses"/>
+				<equipmentset :houses="houses" @sendThird="sendThird"/>
 			</el-main>
 		</el-container>
     </el-container>
@@ -68,6 +68,10 @@ export default {
     	this.query();
 	},
 	methods: {
+		sendThird(data){
+			console.log(1)
+			this.query()
+		},
 		query() {
     		this.$model('houses')
     			.query({houseFormat: this.houseFormat},{ projectId: this.projectId })
