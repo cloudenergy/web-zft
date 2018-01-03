@@ -30,7 +30,7 @@
 				</div>
 			</el-header>
 			<el-main>
-				<equipmentset/>
+				<equipmentset :houses="houses"/>
 			</el-main>
 		</el-container>
     </el-container>
@@ -59,10 +59,22 @@ export default {
 				search:'',
 				room:'',
 				manager:'',
-			}
+				
+			},
+			houses:''
 		}
 	},
+	created() {
+    	this.query();
+	},
 	methods: {
+		query() {
+    		this.$model('houses')
+    			.query({houseFormat: this.houseFormat},{ projectId: this.projectId })
+    			.then(res => {
+    				this.$set(this, 'houses', res.data || []);
+    			});
+    		},
 		showmessage(data){
 			console.log(data)
 		},
@@ -77,6 +89,7 @@ export default {
 		},
 		refresh(type) {
     		this.houseFormat = type;
+			this.query()
     		// this.query();
 		}
 	}

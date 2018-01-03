@@ -29,10 +29,7 @@ export default {
             if(!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(this.input)){
                 this.$emit('notclose')
             }else{
-                var price = new Object
-                price.type = 'ELECTRIC'
-                price.price = this.input
-                this.item.prices.unshift(price)
+                this.item.prices[0].price = this.input
                 this.$emit('notclose',this.item)
                 this.input = ''
             }

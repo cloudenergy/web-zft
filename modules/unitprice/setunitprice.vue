@@ -24,7 +24,7 @@
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconYufu />
-                        {{ scope.row.alltime }}
+                        {{ scope.row.prices[0].price }}
                         <div style="display:inline-block" @click="setElectricit(scope.row)">
                             <i class="el-icon-edit cursorp hideicon"></i>
                         </div>
@@ -68,7 +68,7 @@
             <!-- </el-table-column> -->
         </el-table>
         <!-- @@@暂时下线 -->
-        <!-- <el-button type="primary" plain @click="batchchange" :disabled="disabledshow" style="margin-top:15px">批量修改</el-button> -->
+        <!-- <el-button type="primary" plain @click="batchChange" :disabled="disabledShow" style="margin-top:15px">批量修改</el-button> -->
         <el-dialog title="xiugai" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose'/>
             <div slot="footer" class="dialog-footer">
@@ -100,32 +100,8 @@
         data() {
             return {
                 dialogVisible:false,
-                disabledshow:true,
-                tableData: [{
-                    type: 'NO.2',
-                    stype: '已完成',
-                    alltime: '2017-01-01——2-02',
-                    agoread: '10000',
-                    paytime: '2017-01-01'
-                }, {
-                    type: 'NO.4',
-                    stype: '已完成',
-                    alltime: '2017-01-01—02-02',
-                    agoread: '10',
-                    paytime: '2017-01-01'
-                }, {
-                    type: 'NO.1',
-                    stype: '已完成',
-                    alltime: '2017-01-01——02-02',
-                    agoread: '10',
-                    paytime: '2017-01-01'
-                }, {
-                    type: 'NO.3',
-                    stype: '已完成',
-                    alltime: '2017-01-0102-02',
-                    agoread: '10',
-                    paytime: '2017-01-01'
-                }],
+                disabledShow:true,
+                tableData: [],
                 multipleSelection: [],
                 homeinfo: ''
             }
@@ -139,9 +115,9 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
                 if(val!=''){
-                    this.disabledshow = false;
+                    this.disabledShow = false;
                 }else{
-                    this.disabledshow = true
+                    this.disabledShow = true
                 }
                 console.log(this.multipleSelection)
             },
@@ -149,7 +125,7 @@
                 this.homeinfo = data
                 this.dialogVisible = true;
             },
-            batchchange(){
+            batchChange(){
                 // this.setPrice(this.multipleSelection)
                 this.homeinfo = this.multipleSelection
                 this.dialogVisible = true;
@@ -161,8 +137,9 @@
                 if(data==undefined){
                     alert('输入价格为空或者不是数字，请重新输入')
                 }else{
+                    console.log(data)
                     this.$model('set_electric_price')
-                    .update (data.prices,{projectId: this.projectId,id:data.houseId})
+                    .update (data,{projectId: this.projectId,id:data.houseId})
                     .then(data=>{
                         this.hidden()
                         this.$emit('refresh')

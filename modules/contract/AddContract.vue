@@ -47,9 +47,10 @@
 
 						this.$model('contracts')
 							.create(this.translate(this.form), {projectId: this.projectId})
-							.then(() => {
+							.then((res) => {
 								this.closeDialog();
 								this.resetForm();
+								console.log(res)
 								this.successMessage();
 							});
 					} else {
@@ -148,7 +149,7 @@
 			},
 			successMessage() {
 				this.$message({
-					message: '恭喜你,提交成功',
+					message: '创建成功',
 					type: 'success'
         		});
 			},
