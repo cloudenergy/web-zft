@@ -45,7 +45,7 @@
     			this.viewRoom = true;
     		},
 			sendFloor(data){
-				this.query()
+				this.$emit('sendThird')
 			},
 			show(house,room){
 				

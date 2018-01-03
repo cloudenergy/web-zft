@@ -72,7 +72,7 @@
                 console.log(this.radio)
             },
             setNewList(){
-                this.query(this.room)
+                this.query()
             },
             handleCurrentChange(val){
                 this.room.index = val
