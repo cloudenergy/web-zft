@@ -31,7 +31,7 @@
     				size="mini"
     				on-change={val => {
     					this.city = val;
-    					this.$emit('change', { city: this.city });
+    					this.$emit('change', { city: this.city, area: this.area });
     					filters.area = [];
     					this.area = null;
     				}}
@@ -54,7 +54,7 @@
     				size="mini"
     				on-change={val => {
     					this.area = val;
-    					this.$emit('change', { area: this.area });
+    					this.$emit('change', { area: this.area, city: this.city });
     				}}
     				placeholder="请选择区域"
     			>

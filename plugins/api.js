@@ -8,12 +8,8 @@ import {
 	makePut,
 	makeDelete
 } from '@/api';
-import {
-	isFunc
-} from '~/utils';
-import {
-	Message
-} from 'element-ui';
+import { isFunc } from '~/utils';
+import { Message } from 'element-ui';
 
 import router from '@/router';
 import axios from 'axios';
@@ -43,14 +39,8 @@ setup({
 	}
 });
 
-const interceptor = function (res) {
-	const {
-		code,
-		message,
-		errmsg,
-		status,
-		data
-	} = res;
+const interceptor = function(res) {
+	const { code, message, errmsg, status, data } = res;
 	if ((code && code !== 0) || errmsg) {
 		Message({
 			message: message || errmsg,
@@ -62,6 +52,8 @@ const interceptor = function (res) {
 
 	if (status && status == 401) {
 		source.cancel('login required.');
+		localStorage.user = '{}';
+		router.push('/login');
 		return data;
 	}
 
@@ -105,7 +97,7 @@ const apis = {
  * @param {object} data  query/body 参数
  * @param {object} params url 参数
  */
-export default function (entry, data, params) {
+export default function(entry, data, params) {
 	// entry - string, array, function
 
 	if (apis.hasOwnProperty(entry)) {

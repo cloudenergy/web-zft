@@ -12,7 +12,7 @@
                 </el-select>
             </el-form-item>
         </div>
-        <city-area :isForm="true" class="group" />
+        <city-area :isForm="true" @change="cityAreaChange" class="group" />
     </div>
 </template>
 
@@ -39,6 +39,12 @@
     	},
     	created() {
     		this.$set(this, 'model', this.form);
+    	},
+    	methods: {
+    		cityAreaChange({ city, area }) {
+    			this.model.city = city;
+    			this.model.area = area;
+    		}
     	},
     	data() {
     		return {

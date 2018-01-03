@@ -2,12 +2,11 @@
     <div class="add-house-form">
         <el-form :model="form" class="mini-form">
             <h3>房源信息</h3>
-            <base-info @change="mergeBaseInfo" :form="form">
-            </base-info>
+            <base-info @change="mergeBaseInfo" :form="form"></base-info>
             <div class="group">
-                <el-input v-model="form.community" class="full" auto-complete="off">
+                <el-autocomplete v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect" auto-complete="off">
                     <template slot="prepend">小区</template>
-                </el-input>
+                </el-autocomplete>
             </div>
             <div class="group">
                 <el-input v-model="form.location.address" auto-complete="off">
@@ -85,6 +84,16 @@
     	methods: {
     		mergeBaseInfo(val) {
     			Object.assign(this.form, val);
+    		},
+    		querySearchAsync(queryString, cb) {
+    			this.$model(
+    				'locations',
+    				{ q: queryString, city: this.form.city },
+    				{ action: 'houses' }
+    			);
+    		},
+    		handleSelect(item) {
+    			console.log(item);
     		},
     		dismiss() {
     			this.$modal.$emit('dismiss');

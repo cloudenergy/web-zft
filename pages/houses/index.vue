@@ -6,7 +6,18 @@
             <div class="houses">
                 <div class="room" v-for="house in houses">
                     <div>{{house.group}} {{house.building}} {{house.unit}} {{house.roomNumber}}
-                        <span class="badge pull-right">2</span>
+                        <div class="pull-right">
+                            <el-dropdown>
+                                <span class="el-dropdown-link">
+                                    操作
+                                    <i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>编辑</el-dropdown-item>
+                                    <el-dropdown-item @click.native="del(house)">删除</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
                     </div>
                     <div class="cells">
                         <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" />
@@ -34,12 +45,12 @@
     			viewRoom: false,
     			houseFormat: 'SHARE'
     		};
-		},
-		computed: {
-			projectId() {
-				return this.$store.state.user.projectId;
-			}
-		},
+    	},
+    	computed: {
+    		projectId() {
+    			return this.$store.state.user.projectId;
+    		}
+    	},
     	created() {
     		this.query();
     	},
@@ -52,9 +63,9 @@
     			this.$model('houses')
     				.query(
     					{
-							houseFormat: this.houseFormat,
-							size:200,
-							index:1
+    						houseFormat: this.houseFormat,
+    						size: 200,
+    						index: 1
     					},
     					{ projectId: this.projectId }
     				)
@@ -67,6 +78,26 @@
     			this.currentRoom = room;
     			this.currentHouse = house;
     			this.viewRoom = true;
+    		},
+    		del(house) {
+    			this.$confirm('确认删除该房源, 是否继续?', '提示', {
+    				confirmButtonText: '确定',
+    				cancelButtonText: '取消',
+    				type: 'warning'
+    			})
+    				.then(() => {
+    					this.$model('houses').delete(null, {
+    						id: house.houseId,
+    						projectId: this.projectId
+    					});
+    				})
+    				.catch(e => {
+    					console.log(e);
+    					this.$message({
+    						type: 'info',
+    						message: '已取消删除'
+    					});
+    				});
     		}
     	}
     };
@@ -95,10 +126,12 @@
 
     		.cells {
     			display: flex;
+    			flex-wrap: wrap;
     			margin-top: 20px;
 
     			.cell {
     				margin-right: 20px;
+    				margin-bottom: 20px;
     			}
     		}
     	}
