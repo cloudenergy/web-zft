@@ -77,7 +77,7 @@ const apis = {
 	communities: resource('/projects/{projectId}/communities'),
 	contracts: resource('/projects/{projectId}/contracts'),
 	rooms: resource('/projects/{projectId}/rooms'),
-	locations: get('/locations/{action}'),
+	locations: get('/locations/'),
 	environments: get('/environments'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills'),
 	contract_del: resource('/projects/{projectId}/contracts'),

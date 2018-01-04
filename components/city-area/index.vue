@@ -11,12 +11,12 @@
     	render() {
     		const city = [
     			{ label: '北京', value: 20100 },
-    			{ label: '浙江', value: 30100 }
+    			{ label: '浙江', value: 330100 }
     		];
 
     		const area = [
     			{ label: '北京', parent: 20100, value: 20101 },
-    			{ label: '杭州', parent: 30100, value: 30101 }
+    			{ label: '杭州', parent: 330100, value: 30101 }
     		];
     		const filters = new Vue({
     			data: {

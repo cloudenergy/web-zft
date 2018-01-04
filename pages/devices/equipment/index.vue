@@ -29,7 +29,7 @@
 					</div>
 				</div>
 			</el-header>
-			<el-main>
+			<el-main style="max-width:100%">
 				<equipmentset :houses="houses" @sendThird="sendThird"/>
 			</el-main>
 		</el-container>
@@ -60,7 +60,7 @@ export default {
 				room:'',
 				manager:''
 			},
-			houses:''
+			houses:[]
 		}
 	},
 	computed : {
@@ -78,7 +78,11 @@ export default {
 		},
 		query() {
     		this.$model('houses')
-    			.query({houseFormat: this.houseFormat},{ projectId: this.projectId })
+    			.query({
+					houseFormat: this.houseFormat,
+					size:200,
+					index:1
+				},{ projectId: this.projectId })
     			.then(res => {
     				this.$set(this, 'houses', res.data || []);
     			});

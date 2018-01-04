@@ -3,7 +3,10 @@
         <div class="cell">
             <h3>{{room.name}}</h3>
             <div v-if="room.devices!=''||null">
-                <div>读数：0000</div>
+                <div>名称：{{room.showEquipment.title}}</div>
+                <div>表ID：{{room.showEquipment.deviceId}}</div>
+                <div>读数：{{room.showEquipment.scale}}</div>
+                <div>时间：{{room.showEquipment.updatedAtTime}}</div>
             </div>
             
         </div>
@@ -127,7 +130,7 @@
 
     	.cell {
     		h3 {
-    			margin-bottom: 10px;
+    			margin-bottom: 12px;
     			overflow: hidden;
     			white-space: nowrap;
     		}
@@ -137,14 +140,20 @@
     			color: @gray;
     			overflow: hidden;
     			white-space: nowrap;
-    		}
+            }
+            >div{
+                color:#7F7D80;
+                >div{
+                    margin-top: 3px
+                }
+            }
 
     	}
 
     	.actions {
     		cursor: pointer;
     		position: absolute;
-    		bottom: 0px;
+    		bottom: -5px;
     		background-color: rgba(250, 246, 246,0);
     		display: none;
     		text-align: center;

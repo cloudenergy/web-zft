@@ -65,7 +65,6 @@
     },
     computed: {
       billItem: function(){
-        console.log(this)
         return this.form.map(function(item){
           item.startDateNew = new Date(parseInt(item.startDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           // console.log(item.startDate)

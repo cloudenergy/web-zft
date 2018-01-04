@@ -89,7 +89,7 @@
     			this.$model(
     				'locations',
     				{ q: queryString, city: this.form.city },
-    				{ action: 'houses' }
+    				{  }
     			);
     		},
     		handleSelect(item) {

@@ -2,7 +2,7 @@
     <div class="page-house-index">
         <div class="main-container">
             <div class="houses">
-                <div class="room" v-for="house in houses">
+                <div class="room" v-for="house in equipmentHouses">
                     <div>{{house.group}} {{house.building}} {{house.unit}} {{house.roomNumber}}
                         <span class="badge pull-right">2</span>
                     </div>
@@ -37,6 +37,25 @@
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
+			},
+			equipmentHouses:function() {
+				return this.houses.map((element,index)=>{
+					element.rooms.map((item,list)=>{
+						if(item.devices!=''||null){
+							item.devices.map((ele,num)=>{
+								ele.updatedAtTime = new Date(parseInt(ele.updatedAt) * 1000).toLocaleDateString().replace(/\//g, "-")
+								item.devicesChooseElectricity = []
+								if(ele.type=='ELECTRICITYMETER'){
+									item.devicesChooseElectricity.push(ele)
+								}
+								return ele
+							})
+							item.showEquipment = item.devicesChooseElectricity[0]
+						}
+						return item
+					})
+					return element
+				})
 			}
 		},
     	methods: {
@@ -77,9 +96,10 @@
 
     		.cells {
     			display: flex;
-    			margin-top: 20px;
-
+				max-width: 100%;
+				flex-wrap: wrap;
     			.cell {
+					margin-top: 20px;
     				margin-right: 20px;
     			}
     		}
