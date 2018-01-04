@@ -18,7 +18,7 @@
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="仪表名称/ID" min-width="80">
+            <el-table-column label="仪表名称/ID" min-width="120">
                 <template slot-scope="scope">
                     <span>{{ scope.row.instrument }}</span>
                     <br>

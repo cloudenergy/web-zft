@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<div>
-			<Tab/>
+			<Tab @change="refresh" :selected="houseFormat"/>
 		</div>
 		<el-container>
 			<el-header style="height:auto">
@@ -12,7 +12,7 @@
 						<RentSearch class="rentsearchi" v-on:childinfo="showmessage" />
 					</div>
 					<div class="flexcenter">
-						<span class="result-info">32项结果</span>
+						<span class="result-info">30项结果</span>
 						<div class="actions">
 							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
 								导出
@@ -52,7 +52,8 @@
 		},
 		data() {
 			return {
-				housesRent: null
+				housesRent: null,
+				houseFormat:'SHARE'
 			};
 		},
 		computed: {
@@ -64,11 +65,15 @@
     		this.query();
     	},
 		methods: {
+			refresh(type) {
+				console.log(type)
+				this.houseFormat = type;
+				this.query()
+			},
 			query(){
 				this.$model('contracts')
-				.query({}, {projectId: this.projectId})
+				.query({houseFormat:this.houseFormat}, {projectId: this.projectId})
 				.then((data) =>{
-					console.log(data)
 					data.data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
@@ -84,9 +89,6 @@
 			},
 			importrent(mytalbe) {
 
-			},
-			refresh(){
-				this.query()
 			}
 		}
 	};

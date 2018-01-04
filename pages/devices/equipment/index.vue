@@ -58,10 +58,14 @@ export default {
 			info:{
 				search:'',
 				room:'',
-				manager:'',
-				
+				manager:''
 			},
 			houses:''
+		}
+	},
+	computed : {
+		projectId(){
+			return this.$store.state.user.projectId
 		}
 	},
 	created() {
