@@ -19,7 +19,7 @@
 						</div>
 					</div>
 					<div class="flexcenter">
-						<span class="result-info">32项结果</span>
+						<span class="result-info">{{paging.count}}项结果</span>
 						<div class="actions">
 							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
 								导出
@@ -60,7 +60,8 @@ export default {
 				room:'',
 				manager:''
 			},
-			houses:[]
+			houses:[],
+			paging:''
 		}
 	},
 	computed : {
@@ -85,6 +86,7 @@ export default {
 				},{ projectId: this.projectId })
     			.then(res => {
     				this.$set(this, 'houses', res.data || []);
+    				this.$set(this, 'paging', res.paging || []);
     			});
     		},
 		showmessage(data){

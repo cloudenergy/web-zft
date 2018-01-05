@@ -88,7 +88,8 @@ const apis = {
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
 	),
 	credentials: resource('/projects/{projectId}/credentials'),
-	operate_contracts: resource('/projects/{projectId}/contracts')
+	operate_contracts: resource('/projects/{projectId}/contracts'),
+	paid_bills: resource('/projects/{projectId}/contracts/{contractId}/prePaidBills')
 };
 
 /**

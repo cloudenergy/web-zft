@@ -35,8 +35,19 @@
 
 <script>
   export default {
+    props: {
+      form: {
+        required:true
+      }
+    },
+    computed: {
+      projectId(){
+        return this.$store.state.user.projectId
+      }
+    },
     data() {
       return {
+        bills:[],
         tableData: [{
           date: '2016-05-02',
           name: '王小虎',
@@ -66,6 +77,27 @@
           agoread: '10',
           thisread: '100'
         }]
+      }
+    },
+    created () {
+      this.query()
+    },
+    methods: {
+      query(){
+        this.$model('paid_bills')
+        .query({
+          mode:'topup',
+          index:1,
+          size:15
+        },
+        {
+          projectId:this.projectId,
+          contractId:this.form.id
+        })
+        .then(res=>{
+          console.log(res)
+          // this.$set(this, 'bills', res.data || []);
+        })
       }
     }
   }

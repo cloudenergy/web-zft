@@ -32,6 +32,11 @@
 
 <script>
   export default {
+    computed: {
+      projectId(){
+        return this.$store.state.user.projectId
+      }
+    },
     data() {
       return {
         tableData: [{
@@ -59,6 +64,27 @@
           money: '100',
           payload: '支付宝',
         }]
+      }
+    },
+    created () {
+      this.query()
+    },
+    methods: {
+      query(){
+        this.$model('paid_bills')
+        .query({
+          mode:'topup',
+          index:1,
+          size:15
+        },
+        {
+          projectId:this.projectId,
+          contractId:this.form.id
+        })
+        .then(res=>{
+          console.log(res)
+          // this.$set(this, 'bills', res.data || []);
+        })
       }
     }
   }
