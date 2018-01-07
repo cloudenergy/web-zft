@@ -77,7 +77,7 @@ const apis = {
 	communities: resource('/projects/{projectId}/communities'),
 	contracts: resource('/projects/{projectId}/contracts'),
 	rooms: resource('/projects/{projectId}/rooms'),
-	locations: get('/locations/'),
+	locations: get('/locations'),
 	environments: get('/environments'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills'),
 	contract_del: resource('/projects/{projectId}/contracts'),
@@ -89,7 +89,9 @@ const apis = {
 	),
 	credentials: resource('/projects/{projectId}/credentials'),
 	operate_contracts: resource('/projects/{projectId}/contracts'),
-	paid_bills: resource('/projects/{projectId}/contracts/{contractId}/prePaidBills')
+	paid_bills: resource(
+		'/projects/{projectId}/contracts/{contractId}/prePaidBills'
+	)
 };
 
 /**

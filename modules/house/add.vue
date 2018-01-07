@@ -4,7 +4,7 @@
             <h3>房源信息</h3>
             <base-info @change="mergeBaseInfo" :form="form"></base-info>
             <div class="group">
-                <el-autocomplete v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect" auto-complete="off">
+                <el-autocomplete width="400" v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect" auto-complete="off">
                     <template slot="prepend">小区</template>
                 </el-autocomplete>
             </div>
@@ -41,8 +41,8 @@
 
 <script>
     import BaseInfo from './base-info';
-	import { mapState } from 'vuex';
-	import fp from 'lodash/fp'
+    import { mapState } from 'vuex';
+    import fp from 'lodash/fp';
     export default {
     	props: {
     		item: {
@@ -83,39 +83,38 @@
     		Object.assign(this.form, this.item);
     	},
     	methods: {
-			translate (res) {
-				return {
-					value: `${res.name}`,
-                    address:res.address,
-					code:res.code,
-					district:res.district,
-					divisionId:res.divisionId,
-					latitude:res.latitude,
-					longitude:res.longitude,
-					name:res.name
-                }
-            },
+    		translate(res) {
+    			return {
+    				value: `${res.name}`,
+    				address: res.address,
+    				code: res.code,
+    				district: res.district,
+    				divisionId: res.divisionId,
+    				latitude: res.latitude,
+    				longitude: res.longitude,
+    				name: res.name
+    			};
+    		},
     		mergeBaseInfo(val) {
     			Object.assign(this.form, val);
     		},
     		querySearchAsync(queryString, cb) {
-				console.log(queryString)
-				if(queryString!=undefined){
-					this.$model(
-						'locations',
-						{ q: queryString, city: this.form.city },
-						{  }
-					)
-					.then(res=>{
-						const displayRooms = fp.map(this.translate)(res);
-						cb(displayRooms);
-					})
-				}
-    			
+    			if (queryString != undefined && this.form.city) {
+    				this.$model(
+    					'locations',
+    					{ q: queryString, city: this.form.city },
+    					{}
+    				).then(res => {
+    					const displayRooms = fp.map(this.translate)(res);
+    					cb(displayRooms);
+    				});
+    			} else {
+    				cb([]);
+    			}
     		},
     		handleSelect(item) {
-				delete item.value
-    			this.form.location = item
+    			delete item.value;
+    			this.form.location = item;
     		},
     		dismiss() {
     			this.$modal.$emit('dismiss');
@@ -150,4 +149,17 @@
     	}
     }
 </style>
+
+<style lang="less">
+    .add-house-form {
+    	.el-autocomplete {
+    		width: 100%;
+
+    		.el-input-group {
+    			width: 80%;
+    		}
+    	}
+    }
+</style>
+
 
