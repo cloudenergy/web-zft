@@ -71,7 +71,7 @@
 				const rangeStart = _.get(this.currentPlan, 'min', 0);
 				const rangeEnd = _.get(this.currentPlan, 'max', 31);
 				return _.range(rangeStart, rangeEnd).map(i => ({
-					value: `0${i}`.slice(-2),
+					value: _.padStart(i, 2, '0'),
 					label: `${i}${this.unitOfDate}`
 				}))
 			},
