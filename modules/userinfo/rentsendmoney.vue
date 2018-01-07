@@ -37,6 +37,11 @@
         return this.$store.state.user.projectId
       }
     },
+    props: {
+      form: {
+        required: true
+      }
+    },
     data() {
       return {
         tableData: [{

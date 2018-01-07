@@ -41,7 +41,8 @@
 
 <script>
     import BaseInfo from './base-info';
-    import { mapState } from 'vuex';
+	import { mapState } from 'vuex';
+	import fp from 'lodash/fp'
     export default {
     	props: {
     		item: {
@@ -82,18 +83,39 @@
     		Object.assign(this.form, this.item);
     	},
     	methods: {
+			translate (res) {
+				return {
+					value: `${res.name}`,
+                    address:res.address,
+					code:res.code,
+					district:res.district,
+					divisionId:res.divisionId,
+					latitude:res.latitude,
+					longitude:res.longitude,
+					name:res.name
+                }
+            },
     		mergeBaseInfo(val) {
     			Object.assign(this.form, val);
     		},
     		querySearchAsync(queryString, cb) {
-    			this.$model(
-    				'locations',
-    				{ q: queryString, city: this.form.city },
-    				{  }
-    			);
+				console.log(queryString)
+				if(queryString!=undefined){
+					this.$model(
+						'locations',
+						{ q: queryString, city: this.form.city },
+						{  }
+					)
+					.then(res=>{
+						const displayRooms = fp.map(this.translate)(res);
+						cb(displayRooms);
+					})
+				}
+    			
     		},
     		handleSelect(item) {
-    			console.log(item);
+				delete item.value
+    			this.form.location = item
     		},
     		dismiss() {
     			this.$modal.$emit('dismiss');
