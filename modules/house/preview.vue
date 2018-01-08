@@ -112,8 +112,9 @@
 					}).then(() => {
                         this.$model('devices_set')
                         .delete({},{projectId:this.projectId,houseId:this.house.houseId,roomId:this.room.id,id:data.deviceId})
-                        .then(res=>{
-                            console.log(res)
+                        .then((res)=>{
+                            // console.log(res)
+                            this.queryAgain('unbundling')
                         })
 					}).catch(() => {
 						
@@ -126,14 +127,8 @@
                 this.$model('devices_set')
 				.update({},{projectId:this.projectId,houseId:this.house.houseId,roomId:this.room.id,id:data})
 				.then((data)=>{
-                    console.log(data)
-                    this.$message.success('绑定成功')
                     this.$refs.aaa.setNewList()
-                    this.$model('room_detail')
-                    .query({},{projectId:this.projectId,houseId:this.house.houseId,roomId:this.room.id})
-                    .then(res=>{
-                        this.room.devices = res.devices
-                    })
+                    this.queryAgain('bind')
 				})
 				.catch(()=>{
 					this.$message.mistake('绑定失败')
@@ -155,6 +150,26 @@
 						
 				});
             },
+            queryAgain(data){
+                this.$model('room_detail')
+                    .query({},{projectId:this.projectId,houseId:this.house.houseId,roomId:this.room.id})
+                    .then(res=>{
+                        if(data=='bind'){
+                            if(res.devices.length!=0){
+                                this.$message.success('操作成功')
+                            }else{
+                                this.$message('操作失败')
+                            }
+                        }else{
+                            if(res.devices.length==0){
+                                this.$message.success('操作成功')
+                            }else{
+                                this.$message('操作失败')
+                            }
+                        }
+                        this.room.devices = res.devices
+                    })
+            }
     	}
     };
 </script>
