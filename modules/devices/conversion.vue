@@ -2,7 +2,7 @@
   <div>
         <div class="flexcenter">
             <RentSearch style="width:300px" class="clearmargin"/>
-            <p>106个未绑定的仪表</p>
+            <p>{{listInfo.count}}</p>
         </div>
         <div class="newchoose prevent" v-loading="loading">
             <div v-for="list in item" :key="list.index">
@@ -56,7 +56,7 @@
             log(){
                 this.radio = ''
             },
-            changeelectricity(data){
+            changeelectricity(){
                 this.$emit('setEquipmentid',this.radio)
             },
             query(){
@@ -65,6 +65,7 @@
                 .then((data)=>{
                     this.$set(this, 'item', data.data || [])
                     this.$set(this, 'listInfo', data.paging || [])
+                    console.log(this.listInfo)
                     this.loading = false
                 })
             },

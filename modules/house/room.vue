@@ -11,12 +11,26 @@
             </p>
         </div>
         <div class="actions">
-            <p @click="edit()">
-                <i class="el-icon-edit-outline" />
-            </p>
-            <p @click="view()">
-                <i class="el-icon-view" />
-            </p>
+			<el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
+				<p @click="view()">
+					<i class="el-icon-view" />
+				</p>
+			</el-tooltip>
+			<el-tooltip content="合同列表" placement="top" style="margin:0 5px;">
+				<p @click="view()">
+					<i class="el-icon-view" />
+				</p>
+			</el-tooltip>
+			<el-tooltip content="添加合同" placement="top" style="margin:0 5px;">
+				<p @click="view()">
+					<i class="el-icon-view" />
+				</p>
+			</el-tooltip>
+			<el-tooltip content="更多操作" placement="top" style="margin:0 5px;">
+				<p @click="view()">
+					<i class="el-icon-view" />
+				</p>
+			</el-tooltip>
         </div>
     </div>
 </template>
@@ -113,7 +127,7 @@
     		text-align: center;
     		border: 1px solid #ddd;
     		border-radius: 2px;
-    		left: 50%;
+    		right: 10%;
     		margin-left: -36px;
     		p {
     			padding: 5px;

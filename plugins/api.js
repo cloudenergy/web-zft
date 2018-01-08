@@ -91,7 +91,8 @@ const apis = {
 	operate_contracts: resource('/projects/{projectId}/contracts'),
 	paid_bills: resource(
 		'/projects/{projectId}/contracts/{contractId}/prePaidBills'
-	)
+	),
+	room_detail: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}')
 };
 
 /**

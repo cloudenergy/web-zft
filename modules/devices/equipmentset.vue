@@ -3,7 +3,7 @@
         <div class="main-container">
             <div class="houses">
                 <div class="room" v-for="house in equipmentHouses">
-                    <div>{{house.group}} {{house.building}} {{house.unit}} {{house.roomNumber}}
+                    <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
                         <span class="badge pull-right">2</span>
                     </div>
                     <div class="cells">

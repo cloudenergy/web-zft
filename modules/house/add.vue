@@ -16,6 +16,24 @@
                     <template slot="prepend">名称</template>
                 </el-input>
             </div>
+			<div class="group">
+				<div class="inputs">
+					<el-input v-model="building" @blur="changeBuilding">
+						<template slot="prepend">序号</template>
+						<template slot="append">幢</template>
+					</el-input>
+					<el-input v-model="unit" @blur="changeUnit">
+						<template slot="append">单元</template>
+					</el-input>
+					<el-input v-model="form.roomNumber">
+						<template slot="append">室</template>
+					</el-input>
+					<el-select v-model="form.orientation" placeholder="方位" style="opacity:0">
+						<el-option value="E" label="东">东</el-option>
+					</el-select>
+				</div>
+				
+			</div>
             <room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
             <building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]"></building-floor>
             <div class="group">
@@ -55,19 +73,15 @@
     	data() {
     		return {
     			layouts: [],
+				building: '',
+    			unit: '',
+    			roomNumber: '',
     			form: {
     				group: '一期/君临阁',
-    				building: '一幢',
-    				unit: '1单元',
-    				roomNumber: 2301,
+    				building: '',
+    				unit: '',
+    				roomNumber: '',
     				location: {
-    					code: 'B0FFFM44SM',
-    					divisionId: 330102,
-    					name: '新帝朗郡',
-    					district: '浙江省杭州市西湖区',
-    					address: '钱江路555号',
-    					latitude: 120.195213,
-    					longitude: 30.235099
     				},
     				layout: {
     					name: ''
@@ -83,6 +97,12 @@
     		Object.assign(this.form, this.item);
     	},
     	methods: {
+			changeBuilding(){
+				this.form.building = this.building+'幢'
+			},
+			changeUnit(){
+				this.form.unit = this.unit+'单元'
+			},
     		translate(res) {
     			return {
     				value: `${res.name}`,
@@ -158,6 +178,14 @@
     		.el-input-group {
     			width: 80%;
     		}
+    	}
+	}
+	.group .inputs {
+    	display: flex;
+
+    	>.el-input {
+    		width: 24%;
+    		margin: 2px 10px 2px 0px;
     	}
     }
 </style>

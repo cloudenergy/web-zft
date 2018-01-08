@@ -5,19 +5,13 @@
             <Search />
             <div class="houses">
                 <div class="room" v-for="house in houses">
-                    <div>{{house.group}} {{house.building}} {{house.unit}} {{house.roomNumber}}
-                        <div class="pull-right">
-                            <el-dropdown>
-                                <span class="el-dropdown-link">
-                                    操作
-                                    <i class="el-icon-arrow-down el-icon--right"></i>
-                                </span>
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>编辑</el-dropdown-item>
-                                    <el-dropdown-item @click.native="del(house)">删除</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
-                        </div>
+                    <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
+                        <span>
+							<el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
+								<icon type='iconupload'/>
+							</el-tooltip>
+							<icon type="gengduo"/>
+						</span>
                     </div>
                     <div class="cells">
                         <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" />

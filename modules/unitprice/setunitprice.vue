@@ -1,11 +1,6 @@
 <template>
     <div>
         <el-table :data="homePrice" style="width: 100%" @selection-change="handleSelectionChange">
-            <!-- @@@暂时下线 -->
-            <!-- <el-table-column
-                type="selection"
-                width="55">
-            </el-table-column> -->
             <el-table-column
                 type="index"
                 width="50">
@@ -13,7 +8,7 @@
             <el-table-column label="房源">
                 <template slot-scope="scope">
                     <div>
-                        <span>{{scope.row.group}}</span>
+                        <span>{{scope.row.location.name}}</span>
                         <span>{{scope.row.building}}</span>
                         <span>{{scope.row.unit}}</span>
                         <span>{{scope.row.roomNumber}}</span>
