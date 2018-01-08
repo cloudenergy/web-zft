@@ -80,7 +80,6 @@ const apis = {
 	locations: get('/locations'),
 	environments: get('/environments'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills'),
-	contract_del: resource('/projects/{projectId}/contracts'),
 	set_electric_price: resource('/projects/{projectId}/houses'),
 	login: post('login'),
 	devices: resource('/projects/{projectId}/devices'),
@@ -88,7 +87,6 @@ const apis = {
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
 	),
 	credentials: resource('/projects/{projectId}/credentials'),
-	operate_contracts: resource('/projects/{projectId}/contracts'),
 	paid_bills: resource(
 		'/projects/{projectId}/contracts/{contractId}/prePaidBills'
 	),

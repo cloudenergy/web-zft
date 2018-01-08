@@ -308,7 +308,7 @@
 					}).then(() => {
 						console.log(this.projectId)
 						console.log(data.id)
-						this.$model('contract_del')
+						this.$model('contracts')
 						.delete({},{projectId: this.projectId,id:data.id})
 						.then(data=> {
 							this.$message({

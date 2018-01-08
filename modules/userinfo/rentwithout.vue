@@ -96,11 +96,11 @@
                 console.log('submit!');
             },
             operateRent(){
-                this.$model('operate_contracts')
+                this.$model('contracts')
                 .update({status: 'terminated'},{projectId:this.projectId,id:this.form.id})
                 .then(res=>{
                     console.log(res)
-                    this.$message.success('退组成功')
+                    this.$message.success('退租成功')
                 })
                 .catch(res=>{
                     this.$message.info('退租失败')
