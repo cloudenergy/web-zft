@@ -48,7 +48,8 @@
         <el-dialog
             title="选择要绑定的职能设备"
             :visible.sync="dialogVisible"
-            width="40%">
+            width="40%"
+            append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>

@@ -10,7 +10,7 @@
                 <span>退: 2018-10-1</span>
             </p>
         </div>
-        <div class="actions">
+        <div class="actions cursorp">
 			<el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
 				<p @click="view()">
 					<i class="el-icon-view" />
