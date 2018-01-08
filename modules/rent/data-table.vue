@@ -20,8 +20,7 @@
 			<el-table-column label="房源/租期" min-width="450" max-width="600">				
 				<template slot-scope="scope">
 						<div slot="reference" class="name-wrapper">
-							<!-- @@@地址没有返回，用时间代替 -->
-							<div>{{ scope.row.fromDate }}{{ scope.row.toDate }}</div>
+							<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber }}{{ scope.row.room.roomName }}</div>
 							<div class="rent-bottom">
 								<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>
 							</div>
