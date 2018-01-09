@@ -28,6 +28,14 @@
 	import fp from 'lodash/fp';
 
 	export default {
+		props: {
+			item_room:{
+				type:Object
+			},
+			item_house: {
+				type:Object
+			}
+		},
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
@@ -38,6 +46,13 @@
 			return {
 				form: this.newModel(today)
 			};
+		},
+		mounted(){
+			if(this.item_house!=undefined){
+				this.form.property.house = this.item_house.location.name+this.item_house.building+this.item_house.unit+this.item_house.roomNumber
+				this.form.property.roomId = this.item_room.id
+				this.form.property.disabled = true
+			}
 		},
 		methods: {
 			submitForm(formName) {

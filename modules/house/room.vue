@@ -22,7 +22,7 @@
 				</p>
 			</el-tooltip>
 			<el-tooltip content="添加合同" placement="top" style="margin:0 5px;">
-				<p @click="view()">
+				<p @click="addContracts()">
 					<i class="el-icon-view" />
 				</p>
 			</el-tooltip>
@@ -36,7 +36,8 @@
 </template>
 
 <script>
-    import AddModal from './add';
+	import AddModal from './add';
+	import { NewContract } from '~/modules/contract';
     const orientations = {
     	N: '北',
     	S: '南',
@@ -74,7 +75,17 @@
     		},
     		view() {
     			this.$emit('view', { room: this.room, house: this.house });
-    		}
+			},
+			addContracts() {
+				this.$modal.$emit('open', {
+					comp: NewContract,
+					data:{
+						item_room: this.room,
+						item_house: this.house
+					},
+    				title: '新增合约'
+    			});
+			}
     	}
     };
 </script>

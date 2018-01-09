@@ -21,7 +21,8 @@
                                 :fetch-suggestions="querySearch"
                                 placeholder="搜索房源编号、小区名称等关键字"
                                 :trigger-on-focus="false"
-                                @select="handleSelect">
+                                @select="handleSelect"
+                                :disabled="property.disabled">
                         </el-autocomplete>
                     </div>
                 </el-form-item>
@@ -53,7 +54,8 @@
                 }
             },
 			handleSelect(item) {
-				this.property.roomId = item.id
+                this.property.roomId = item.id
+                console.log(this.property.house)
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;
