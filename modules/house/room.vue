@@ -11,33 +11,33 @@
             </p>
         </div>
         <div class="actions cursorp">
-			<el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
-				<p @click="view()">
-					<i class="el-icon-view" />
-				</p>
-			</el-tooltip>
-			<el-tooltip content="合同列表" placement="top" style="margin:0 5px;">
-				<p @click="view()">
-					<i class="el-icon-view" />
-				</p>
-			</el-tooltip>
-			<el-tooltip content="添加合同" placement="top" style="margin:0 5px;">
-				<p @click="addContracts()">
-					<i class="el-icon-view" />
-				</p>
-			</el-tooltip>
-			<el-tooltip content="更多操作" placement="top" style="margin:0 5px;">
-				<p @click="view()">
-					<i class="el-icon-view" />
-				</p>
-			</el-tooltip>
+            <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
+                <p @click="view()">
+                    <i class="el-icon-view" />
+                </p>
+            </el-tooltip>
+            <el-tooltip content="合同列表" placement="top" style="margin:0 5px;">
+                <p @click="view()">
+                    <i class="el-icon-view" />
+                </p>
+            </el-tooltip>
+            <el-tooltip content="添加合同" placement="top" style="margin:0 5px;">
+                <p @click="addContracts()">
+                    <i class="el-icon-view" />
+                </p>
+            </el-tooltip>
+            <el-tooltip content="更多操作" placement="top" style="margin:0 5px;">
+                <p @click="view()">
+                    <i class="el-icon-view" />
+                </p>
+            </el-tooltip>
         </div>
     </div>
 </template>
 
 <script>
-	import AddModal from './add';
-	import { NewContract } from '~/modules/contract';
+    import AddModal from './add';
+    import { NewContract } from '~/modules/contract';
     const orientations = {
     	N: '北',
     	S: '南',
@@ -75,17 +75,17 @@
     		},
     		view() {
     			this.$emit('view', { room: this.room, house: this.house });
-			},
-			addContracts() {
-				this.$modal.$emit('open', {
-					comp: NewContract,
-					data:{
-						itemRoom: this.room,
-						itemHouse: this.house
-					},
+    		},
+    		addContracts() {
+    			this.$modal.$emit('open', {
+    				comp: NewContract,
+    				data: {
+    					itemRoom: this.room,
+    					itemHouse: this.house
+    				},
     				title: '新增合约'
     			});
-			}
+    		}
     	}
     };
 </script>
