@@ -29,10 +29,10 @@
 
 	export default {
 		props: {
-			item_room:{
+			itemRoom:{
 				type:Object
 			},
-			item_house: {
+			itemHouse: {
 				type:Object
 			}
 		},
@@ -48,9 +48,9 @@
 			};
 		},
 		mounted(){
-			if(this.item_house!=undefined){
-				this.form.property.house = this.item_house.location.name+this.item_house.building+this.item_house.unit+this.item_house.roomNumber
-				this.form.property.roomId = this.item_room.id
+			if(!_.isUndefined(this.itemHouse)){
+				this.form.property.house = `${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}`
+				this.form.property.roomId = this.itemRoom.id
 				this.form.property.disabled = true
 			}
 		},
@@ -65,7 +65,6 @@
 							.then((res) => {
 								this.closeDialog();
 								this.resetForm();
-								console.log(res)
 								this.successMessage();
 							});
 					} else {

@@ -80,8 +80,8 @@
 				this.$modal.$emit('open', {
 					comp: NewContract,
 					data:{
-						item_room: this.room,
-						item_house: this.house
+						itemRoom: this.room,
+						itemHouse: this.house
 					},
     				title: '新增合约'
     			});

@@ -55,7 +55,6 @@
             },
 			handleSelect(item) {
                 this.property.roomId = item.id
-                console.log(this.property.house)
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;
