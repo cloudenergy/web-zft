@@ -47,9 +47,9 @@
 				form: this.newModel(today)
 			};
 		},
-		mounted(){
-			if(!_.isUndefined(this.itemHouse)){
-				this.form.property.house = `${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}`
+		mounted() {
+			if(!_.isUndefined(this.itemHouse)) {
+				this.form.property.house = `${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}${this.itemRoom.name}`
 				this.form.property.roomId = this.itemRoom.id
 				this.form.property.disabled = true
 			}

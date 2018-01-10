@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table :data="homePrice" style="width: 100%" @selection-change="handleSelectionChange">
+        <el-table :data="equipmentHouses" style="width: 100%" @selection-change="handleSelectionChange">
             <el-table-column
                 type="index"
                 width="50">
@@ -19,7 +19,7 @@
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconYufu />
-                        {{ scope.row.prices[0].price }}
+                            {{scope.row.electricity[0].price}}
                         <div style="display:inline-block" @click="setElectricit(scope.row)">
                             <i class="el-icon-edit cursorp hideicon"></i>
                         </div>
@@ -80,6 +80,7 @@
     import myIconZujin from './myiconzujin.vue'
     import setPrice from './setprice.vue'
     import {success_message} from '~/utils/date'
+    import _ from 'lodash'
     export default {
         components: {
 			myIconNum,
@@ -98,14 +99,33 @@
                 disabledShow:true,
                 tableData: [],
                 multipleSelection: [],
-                homeinfo: ''
+                homeinfo: '',
+                showPrice : false
             }
         },
         computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
+            },
+            equipmentHouses:function() {
+				return this.homePrice.map((element,index)=>{
+                    if(element.prices.length!==0){
+                        element.prices.map((item,list)=>{
+                            element.electricity = []
+                            if(item.type==='ELECTRIC'){
+                                element.electricity.push(item)
+                            }
+                        })
+                    }else{
+                        element.electricity = []
+                        element.electricity.push({price:'未设置',type:'ELECTRIC'})
+                    }
+                        
+                    
+                    return element
+				})
 			}
-		},
+        },
         methods: {
             handleSelectionChange(val) {
                 this.multipleSelection = val;
@@ -132,9 +152,11 @@
                 if(data==undefined){
                     alert('输入价格为空或者不是数字，请重新输入')
                 }else{
-                    console.log(data)
+                    var req = {
+                        prices:[data.electricity[0]]
+                    }
                     this.$model('set_electric_price')
-                    .update (data,{projectId: this.projectId,id:data.houseId})
+                    .update (req,{projectId: this.projectId,id:data.houseId})
                     .then(data=>{
                         this.hidden()
                         this.$emit('refresh')

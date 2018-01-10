@@ -45,7 +45,7 @@
 							item.devices.map((ele,num)=>{
 								ele.updatedAtTime = new Date(parseInt(ele.updatedAt) * 1000).toLocaleDateString().replace(/\//g, "-")
 								item.devicesChooseElectricity = []
-								if(ele.type=='ELECTRICITYMETER'){
+								if(ele.type=='ELECTRICITY'){
 									item.devicesChooseElectricity.push(ele)
 								}
 								return ele
@@ -68,7 +68,7 @@
 			},
 			show(house,room){
 				
-			},
+			}
     	}
     };
 </script>
