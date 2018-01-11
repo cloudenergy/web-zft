@@ -6,6 +6,7 @@ import {
 	makeResource,
 	decorateMaker,
 	makePut,
+	makePatch,
 	makeDelete
 } from '@/api';
 import { isFunc } from '~/utils';
@@ -59,16 +60,21 @@ const interceptor = function(res) {
 
 	return res;
 };
-const [get, post, put, del] = [makeGet, makePost, makePut, makeDelete].map(
-	action => decorateMaker(action, interceptor)
-);
+const [get, post, put, del, patch] = [
+	makeGet,
+	makePost,
+	makePut,
+	makeDelete,
+	makePatch
+].map(action => decorateMaker(action, interceptor));
 
 const resource = (url, actions) => {
 	return makeResource(url, actions, {
 		GET: get,
 		POST: post,
 		PUT: put,
-		DELETE: del
+		DELETE: del,
+		PATCH: patch
 	});
 };
 
