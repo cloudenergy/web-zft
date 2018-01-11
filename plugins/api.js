@@ -51,11 +51,17 @@ const interceptor = function(res) {
 		return Promise.reject(message || errmsg);
 	}
 
-	if (status && status == 401) {
-		source.cancel('login required.');
-		localStorage.user = '{}';
-		router.push('/login');
-		return data;
+	if (status) {
+		switch (status) {
+			case 401:
+				source.cancel('login required.');
+				localStorage.user = '{}';
+				router.push('/login');
+				return data;
+				break;
+			default:
+				return Promise.reject(data);
+		}
 	}
 
 	return res;
@@ -92,17 +98,17 @@ const apis = {
 	room_devices: resource(
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
 	),
-	house_devices: resource(
-		'/projects/{projectId}/houses/{houseId}/devices'
-	),
+	house_devices: resource('/projects/{projectId}/houses/{houseId}/devices'),
 	credentials: resource('/projects/{projectId}/credentials'),
 	paid_bills: resource(
 		'/projects/{projectId}/contracts/{contractId}/prePaidBills'
 	),
-	room_detail: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}'),
+	room_detail: resource(
+		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}'
+	),
 	housedetail: resource('/projects/{projectId}/houses/{id}'),
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
-	top_up:resource('/project/{projectId}/fundChannels')
+	top_up: resource('/project/{projectId}/fundChannels')
 };
 
 /**
