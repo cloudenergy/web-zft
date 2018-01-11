@@ -1,17 +1,17 @@
 <template>
-    <div class="house-cell" :class="{leased: out}">
+    <div class="house-cell">
         <div class="cell">
-            <h3>{{room.name}}</h3>
-            <div v-if="room.devices!=''||null">
-                <div>名称：{{room.showEquipment.title}}</div>
-                <div>表ID：{{room.showEquipment.deviceId}}</div>
-                <div>读数：{{room.showEquipment.scale}}</div>
-                <div>时间：{{room.showEquipment.updatedAtTime}}</div>
+            <h3>房屋公区表</h3>
+            <div v-if="house.devices!=''||null">
+                <div>名称：{{house.devices[0].title}}</div>
+                <div>表ID：{{house.devices[0].deviceId}}</div>
+                <div>读数：{{house.devices[0].scale}}</div>
+                <div>时间：{{house.devices[0].updatedAtTime}}</div>
             </div>
 
         </div>
         <div class="actions flexc">
-            <div v-if="room.devices!=''||null">
+            <div v-if="house.devices!=''||null">
                 <p @click="deleteequipment()">
                     <icon type="jiebang1" />
                     <span>解绑</span>
@@ -22,7 +22,7 @@
                     <span>断电</span>
                 </p>
             </div>
-            <div v-if="room.devices==''||null" class="add" @click="edit(room)">
+            <div v-if="house.devices==''||null" class="add" @click="edit(house)">
                 <i class="el-icon-circle-plus"></i>
             </div>
         </div>
@@ -40,8 +40,9 @@
     import conversion from './conversion.vue';
     export default {
     	props: {
-    		room: Object,
-    		houseId: { required: true }
+    		house: {
+				type:Object
+			}
     	},
     	components: {
     		conversion
@@ -53,7 +54,6 @@
     	},
     	data() {
     		return {
-    			out: Math.random() > 0.5,
     			conversions: true,
     			dialogVisible: false,
     			num: 30
@@ -80,12 +80,11 @@
     			this.dialogVisible = true;
     		},
     		setEquipmentid(data) {
-    			this.$model('room_devices')
+    			this.$model('house_devices')
     				.update(
     					{},
     					{
-    						houseId: this.houseId,
-    						roomId: this.room.id,
+    						houseId: this.house.houseId,
     						projectId: this.projectId,
     						id: data
     					}
@@ -100,25 +99,31 @@
     				});
     		},
     		deleteequipment() {
-    			this.$model('room_devices')
+    			this.$model('house_devices')
     				.delete(
     					{},
     					{
     						projectId: this.projectId,
-    						houseId: this.houseId,
-    						roomId: this.room.id,
-    						id: this.room.devices[0].deviceId
+    						houseId: this.house.houseId,
+    						id: this.house.devices[0].deviceId
     					}
     				)
-    				.then(data => {
-						console.log(data)
-    					this.$message.success('解绑成功');
-    					this.$emit('sendFloor');
+    				.then(res => {
+						if(res.status===500){
+							this.error()
+						}else{
+							this.success()
+						}
+    					
     				})
-    				.catch(e => {
-    					this.$message('解绑失败');
-    				});
-    		}
+			},
+			success(){
+				this.$message.success('解绑成功');
+				this.$emit('sendFloor');
+			},
+			error(){
+				this.$message('解绑失败');
+			}
     	}
     };
 </script>
@@ -224,4 +229,5 @@
     	left: 4px;
     }
 </style>
+
 

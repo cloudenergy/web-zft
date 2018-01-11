@@ -89,8 +89,11 @@ const apis = {
 	set_electric_price: resource('/projects/{projectId}/houses'),
 	login: post('login'),
 	devices: resource('/projects/{projectId}/devices'),
-	devices_set: resource(
+	room_devices: resource(
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
+	),
+	house_devices: resource(
+		'/projects/{projectId}/houses/{houseId}/devices'
 	),
 	credentials: resource('/projects/{projectId}/credentials'),
 	paid_bills: resource(

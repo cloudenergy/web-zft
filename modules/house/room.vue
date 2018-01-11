@@ -26,23 +26,20 @@
                     <icon type="shebeiguanli4"  style="margin:0 5px;"/>
                 </p>
             </el-tooltip>
-            <el-tooltip content="更多操作" placement="top">
-                <p>
-                    <el-dropdown placement='top-end' class="moreOperation">
-						<span class="el-dropdown-link">
-							<icon type="gengduo1"  style="margin:0 5px;"/>
-						</span>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item>退租</el-dropdown-item>
-							<el-dropdown-item>续租</el-dropdown-item>
-							<el-dropdown-item>删除合同</el-dropdown-item>
-							<el-dropdown-item>删除房间</el-dropdown-item>
-							<el-dropdown-item>编辑房间</el-dropdown-item>
-							<el-dropdown-item>关闭房间</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
+            
+                <p class="moreSet">
+					<span class="el-dropdown-link">
+						<icon type="gengduo1"  style="margin:0 5px;"/>
+					</span>
+					<ul>
+						<li>退租</li>
+						<li>续租</li>
+						<li>删除合同</li>
+						<li>删除房间</li>
+						<li>编辑房间</li>
+						<li>关闭房间</li>
+					</ul>
                 </p>
-            </el-tooltip>
         </div>
     </div>
 </template>
@@ -154,12 +151,34 @@
     		margin-left: -36px;
     		p {
     			padding: 5px;
-    			display: inline-block;
-    		}
+				display: inline-block;
+				position: relative;
+				ul{
+					position: absolute;
+					bottom: 21px;
+					right:-4px;
+					width: 60px;
+					background: #fff;
+					box-shadow:0 0 1px #CCC;
+					display: none;
+					overflow: hidden;
+					li{
+						list-style: none;
+						margin:4px 0;
+					}
+				}
+			}
+			
 
     		p + p {
     			border-left: 1px solid #ddd;
-    		}
+			}
+			.moreSet:hover ul{
+				display: block;	
+				li:hover{
+					color:#409eff
+				}			
+			}
     	}
 
     	&:hover {

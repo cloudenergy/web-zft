@@ -6,7 +6,8 @@
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
                         <span class="badge pull-right">2</span>
                     </div>
-                    <div class="cells">
+                    <div class="cells" :houseId="house.houseId">
+						<house :house="house" class="cell" @sendFloor="sendFloor"></house>
                         <room v-for="(room, index) in house.rooms" :key="index" :room="room" :houseId="house.houseId" class="cell" @view="showDrawer" @sendFloor="sendFloor" @click.native="show(house.houseId,room.id)" />
                     </div>
                 </div>
@@ -17,13 +18,14 @@
 
 <script>
     import room from './room.vue';
+    import house from './house.vue';
     export default {
 		props: {
     		houses: {
     			required: true
     		}
     	},
-    	components: { room },
+    	components: { room,house },
     	data() {
     		return {
     			currentRoom: null,

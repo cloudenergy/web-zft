@@ -79,6 +79,9 @@
                 }else{
                     this.$model('top_up')
                     .patch({amount:this.form.price,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.payRoad[0].id})
+                    .then(res=>{
+                        console.log(res)
+                    })
                     this.$message.success('记入账单成功');
                     this.$refs[formName].resetFields();
                     this.cleraboth();

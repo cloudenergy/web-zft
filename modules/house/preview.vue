@@ -110,7 +110,7 @@
 						cancelButtonText: '取消',
 						type: 'warning'
 					}).then(() => {
-                        this.$model('devices_set')
+                        this.$model('room_devices')
                         .delete({},{projectId:this.projectId,houseId:this.house.houseId,roomId:this.room.id,id:data.deviceId})
                         .then((res)=>{
                             // console.log(res)
@@ -124,7 +124,7 @@
                 this.dialogVisible = true
             },
             setEquipmentid(data){
-                this.$model('devices_set')
+                this.$model('room_devices')
 				.update({},{projectId:this.projectId,houseId:this.house.houseId,roomId:this.room.id,id:data})
 				.then((data)=>{
                     this.$refs.aaa.setNewList()

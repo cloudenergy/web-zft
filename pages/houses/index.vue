@@ -8,7 +8,9 @@
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
                         <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
-                                <icon type='iconupload' />
+                                <span @click="showHouse(house)">
+									<icon type='iconupload'/>
+								</span>
                             </el-tooltip>
                             <icon type="gengduo1" />
                         </span>
@@ -24,6 +26,11 @@
                 <Preview :room="currentRoom" :house="currentHouse" />
             </div>
         </drawer-panel>
+		<drawer-panel :open.sync="viewHouse">
+            <div v-if="viewHouse" class="drawer">
+                <Preview :house="currentHouse" />
+            </div>
+        </drawer-panel>
     </div>
 </template>
 
@@ -37,6 +44,7 @@
     			currentRoom: null,
     			currentHouse: null,
     			viewRoom: false,
+    			viewHouse: false,
     			houseFormat: 'SHARE'
     		};
     	},
@@ -73,6 +81,11 @@
     			this.currentHouse = house;
     			this.viewRoom = true;
     		},
+			showHouse(house){
+				console.log(123)
+				this.currentHouse = house
+				this.viewHouse = true
+			},
     		del(house) {
     			this.$confirm('确认删除该房源, 是否继续?', '提示', {
     				confirmButtonText: '确定',
@@ -132,5 +145,5 @@
     }
     .drawer {
     	padding: 30px;
-    }
+	}
 </style>
