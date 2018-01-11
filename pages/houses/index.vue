@@ -28,16 +28,16 @@
         </drawer-panel>
 		<drawer-panel :open.sync="viewHouse">
             <div v-if="viewHouse" class="drawer">
-                <Preview :house="currentHouse" />
+                <houseInformation :house="currentHouse" :houseType="houseFormat"/>
             </div>
         </drawer-panel>
     </div>
 </template>
 
 <script>
-    import { Tab, Room, Search, Preview } from '~/modules/house';
+    import { Tab, Room, Search, Preview, houseInformation } from '~/modules/house';
     export default {
-    	components: { Tab, Room, Search, Preview },
+    	components: { Tab, Room, Search, Preview, houseInformation },
     	data() {
     		return {
     			houses: [],
@@ -82,7 +82,6 @@
     			this.viewRoom = true;
     		},
 			showHouse(house){
-				console.log(123)
 				this.currentHouse = house
 				this.viewHouse = true
 			},

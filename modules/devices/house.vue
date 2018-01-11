@@ -82,7 +82,7 @@
     		setEquipmentid(data) {
     			this.$model('house_devices')
     				.update(
-    					{},
+    					{public:'1'},
     					{
     						houseId: this.house.houseId,
     						projectId: this.projectId,

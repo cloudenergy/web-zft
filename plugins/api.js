@@ -100,6 +100,7 @@ const apis = {
 		'/projects/{projectId}/contracts/{contractId}/prePaidBills'
 	),
 	room_detail: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}'),
+	housedetail: resource('/projects/{projectId}/houses/{id}'),
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
 	top_up:resource('/project/{projectId}/fundChannels')
 };

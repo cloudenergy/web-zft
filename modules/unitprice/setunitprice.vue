@@ -155,6 +155,7 @@
                     var req = {
                         prices:[data.electricity[0]]
                     }
+                    console.log(req)
                     this.$model('set_electric_price')
                     .update (req,{projectId: this.projectId,id:data.houseId})
                     .then(data=>{
