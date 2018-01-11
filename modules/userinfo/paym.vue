@@ -14,14 +14,8 @@
             <div class="paymway">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="缴费方式">
-                        <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%" @change="choosePay">
-                            <el-option label="现金" value="manual"></el-option>
-                            <el-option label="银行转账" value="2"></el-option>
-                            <el-option label="POS刷卡" value="3"></el-option>
-                            <el-option label="支票" value="4"></el-option>
-                            <el-option label="账扣" value="5"></el-option>
-                            <el-option label="冲正" value="6"></el-option>
-                            <el-option label="其他" value="7"></el-option>
+                        <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%">
+                            <el-option :label=item.name value="id" v-for="item in payRoad" :key="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="缴费金额" prop="price" :rules="[
@@ -56,7 +50,10 @@
     		projectId() {
     			return this.$store.state.user.projectId;
     		}
-    	},
+        },
+        created(){
+            this.query()
+        },
         data() {
             return {
                 form: {
@@ -71,35 +68,29 @@
             show(){
                 console.log(this.userInfo,this.payRoad)
             },
-            choosePay(data){
-                console.log(data)
+            query(data){
                 this.$model('fund_channel')
-                .query({flow:'receive',tag:data},{projectId: this.projectId})
+                .query({flow:'receive',tag:'manual'},{projectId: this.projectId})
                 .then(res=>this.$set(this,'payRoad',res))
             },
             onSubmit(formName) {
                 if(this.form.price==""){
                     this.$message.error('请填写金额');
                 }else{
-                    
+                    this.$model('top_up')
+                    .patch({amount:this.form.price,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.payRoad[0].id})
                     this.$message.success('记入账单成功');
                     this.$refs[formName].resetFields();
                     this.cleraboth();
                 }
             },
             onclose(formName) {
-                // this.$refs['form'].resetFields();
                 this.cleraboth()
                 this.$refs[formName].resetFields();
             },
             cleraboth(){
                 this.$modal.$emit('dismiss');
-                this.form.region= "1"
                 this.form.desc = ""
-            },
-            payUrl(){
-                const url = 'http://localhost:8080/api/v1.0/project/'
-                return `${url}${this.projectId}${'/fundChannels/'}${this.payRoad[0].id}`
             }
         }
 

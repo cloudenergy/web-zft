@@ -98,7 +98,7 @@ const apis = {
 	),
 	room_detail: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}'),
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
-	top_up:resource('/project/{projectId}/fundChannels/{fundChannelId}')
+	top_up:resource('/project/{projectId}/fundChannels')
 };
 
 /**
