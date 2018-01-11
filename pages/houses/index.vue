@@ -10,7 +10,7 @@
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
                                 <icon type='iconupload' />
                             </el-tooltip>
-                            <icon type="gengduo" />
+                            <icon type="gengduo1" />
                         </span>
                     </div>
                     <div class="cells">

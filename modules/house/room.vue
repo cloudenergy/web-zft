@@ -11,24 +11,36 @@
             </p>
         </div>
         <div class="actions cursorp">
-            <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
+            <el-tooltip content="房源预览" placement="top">
                 <p @click="view()">
-                    <i class="el-icon-view" />
+                    <i class="el-icon-view"  style="margin:0 5px;"/>
                 </p>
             </el-tooltip>
-            <el-tooltip content="合同列表" placement="top" style="margin:0 5px;">
+            <el-tooltip content="合同列表" placement="top">
                 <p @click="view()">
-                    <i class="el-icon-view" />
+                    <icon type="touxiang1"  style="margin:0 5px;"/>
                 </p>
             </el-tooltip>
-            <el-tooltip content="添加合同" placement="top" style="margin:0 5px;">
+            <el-tooltip content="添加合同" placement="top">
                 <p @click="addContracts()">
-                    <i class="el-icon-view" />
+                    <icon type="shebeiguanli4"  style="margin:0 5px;"/>
                 </p>
             </el-tooltip>
-            <el-tooltip content="更多操作" placement="top" style="margin:0 5px;">
-                <p @click="view()">
-                    <i class="el-icon-view" />
+            <el-tooltip content="更多操作" placement="top">
+                <p>
+                    <el-dropdown placement='top-end' class="moreOperation">
+						<span class="el-dropdown-link">
+							<icon type="gengduo1"  style="margin:0 5px;"/>
+						</span>
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item>退租</el-dropdown-item>
+							<el-dropdown-item>续租</el-dropdown-item>
+							<el-dropdown-item>删除合同</el-dropdown-item>
+							<el-dropdown-item>删除房间</el-dropdown-item>
+							<el-dropdown-item>编辑房间</el-dropdown-item>
+							<el-dropdown-item>关闭房间</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
                 </p>
             </el-tooltip>
         </div>

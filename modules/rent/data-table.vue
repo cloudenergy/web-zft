@@ -359,6 +359,9 @@
 				console.log(1)
 				this.$modal.$emit('open', {
 					comp: Paym,
+					data:{
+						userInfo:date
+					},
 					title: '充值'
 				})
 			},
