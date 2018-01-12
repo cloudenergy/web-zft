@@ -108,7 +108,9 @@ const apis = {
 	),
 	housedetail: resource('/projects/{projectId}/houses/{id}'),
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
-	top_up: resource('/project/{projectId}/fundChannels')
+	top_up: resource('/project/{projectId}/fundChannels'),
+	all_user_bills: resource('/projects/{projectId}/bills'),
+	config_list: resource('/projects/{projectId}/config')
 };
 
 /**

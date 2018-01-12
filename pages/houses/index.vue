@@ -74,6 +74,9 @@
     				.then(res => {
     					// console.log('data: ', data);
     					this.$set(this, 'houses', res.data || []);
+						error=>{
+							console.log(error)
+						}
     				});
     		},
     		showDrawer({ room, house }) {

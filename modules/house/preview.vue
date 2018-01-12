@@ -116,7 +116,7 @@
                             // console.log(res)
                             this.queryAgain('unbundling')
                         })
-					}).catch(() => {
+					}).catch(err => {
 						
 				});
             },
@@ -130,7 +130,7 @@
                     this.$refs.aaa.setNewList()
                     this.queryAgain('bind')
 				})
-				.catch(()=>{
+				.catch(err=>{
 					this.$message.mistake('绑定失败')
 				})
             },
@@ -146,7 +146,7 @@
                         this.$refs.aaa.changeelectricity(this.houseId)
                         this.dialogVisible = false
                         this.$refs.aaa.log()
-					}).catch(() => {
+					}).catch(err => {
 						
 				});
             },

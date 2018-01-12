@@ -74,7 +74,7 @@
     					this.dialogVisible = false;
     					this.$refs.aaa.log();
     				})
-    				.catch(() => {});
+    				.catch(err => {});
     		},
     		edit(data) {
     			this.dialogVisible = true;
@@ -95,7 +95,7 @@
     					this.$emit('sendFloor');
     					this.$refs.aaa.setNewList();
     				})
-    				.catch(() => {
+    				.catch(err => {
     					this.$message.mistake('绑定失败');
     				});
     		},
@@ -115,7 +115,7 @@
     					this.$message.success('解绑成功');
     					this.$emit('sendFloor');
     				})
-    				.catch(e => {
+    				.catch(err => {
     					this.$message('解绑失败');
     				});
     		}

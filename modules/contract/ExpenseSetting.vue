@@ -34,7 +34,7 @@
 		<el-row class="extra-rent-row">
 			<el-col :span="3">
 				<div class="section-label">附加费用</div>
-				<el-button size="mini">+添加</el-button>
+				<el-button size="mini" @click="innerVisible = true">+添加</el-button>
 			</el-col>
 			<el-col :span="21" class="extra-item">
 				<ExpenseDisplay v-for="item in expense.extra" :expense="item" :key="item.id"></ExpenseDisplay>
@@ -50,6 +50,17 @@
 				</el-input>
 			</el-col>
 		</el-row>
+		<el-dialog
+			width="30%"
+			title="选择要增加的收费选项"
+			:visible.sync="innerVisible"
+			append-to-body>
+			<el-checkbox v-model="otherCoste" :label="item.id" border v-for="item in otherCost" :key="item.id" @change="showother" style="width:85px;margin:3px">{{item.key}}</el-checkbox>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisible = false">取 消</el-button>
+				<el-button type="primary" @click="chooseCost">确 定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -60,6 +71,9 @@
 	export default {
 		props: {
 			expense: {
+				required: true
+			},
+			otherCost: {
 				required: true
 			}
 		},
@@ -84,6 +98,11 @@
 		},
 		data() {
 			return {
+				outerVisible: false,
+				innerVisible: false,
+				otherCoste:[
+					1041,1043
+				],
 				// (开始前提前-02/开始后固定+02/开始前固定F02/开始前一个月固定M02)
 				availablePlans: [
 					{
@@ -112,6 +131,20 @@
 						max: 30
 					},
 				]
+			}
+		},
+		methods: {
+			addCost(data){
+				
+			},
+			showother(){
+				console.log(this.otherCoste)
+			},
+			chooseCost(){
+				this.otherCoste.map((item,index)=>{
+					return this.addCost(item)
+				})
+				this.innerVisible = false;
 			}
 		}
 	}

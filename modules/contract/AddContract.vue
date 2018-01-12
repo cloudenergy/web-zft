@@ -7,8 +7,7 @@
 			<ContractDetail :contract="form.contract"></ContractDetail>
 
 			<h3 class="section-2">租费设置</h3>
-			<ExpenseSetting :expense="form.expense"></ExpenseSetting>
-
+			<ExpenseSetting :expense="form.expense" :otherCost='otherCost'></ExpenseSetting>
 		</el-form>
 		<div class="dialog-footer" slot="footer">
 			<el-button @click="closeDialog()">取 消</el-button>
@@ -39,12 +38,19 @@
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
+			},
+			otherCost() {
+				return _.filter(this.configList,{group:"加收费用"})
 			}
+		},
+		created(){
+			this.query()
 		},
 		data() {
 			const today = new Date();
 			return {
-				form: this.newModel(today)
+				form: this.newModel(today),
+				configList:[]
 			};
 		},
 		mounted() {
@@ -55,6 +61,12 @@
 			}
 		},
 		methods: {
+			query(){
+				this.$model('config_list')
+				.query({},{projectId:this.projectId})
+				.then(res=>{this.$set(this,'configList',res)})
+				.catch(err=>console.log(err))
+			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
@@ -109,14 +121,14 @@
 						},
 						extra: [
 							{
-								configId: 2,
+								configId: 1041,
 								name: '电费',
 								type: 'extra',
 								rent: 1.2,
 								pattern: 'prepaid'
 							},
 							{
-								configId: 3,
+								configId: 1043,
 								name: '水费',
 								type: 'extra',
 								rent: 20,

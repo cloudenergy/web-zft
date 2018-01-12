@@ -259,7 +259,7 @@ _select.push(_input)
 						message: '删除成功!'
 					});
 				})
-				.catch(() => {
+				.catch(err => {
 					this.$message({
 						type: 'info',
 						message: '已取消删除'

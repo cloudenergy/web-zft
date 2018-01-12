@@ -316,7 +316,7 @@
 							});
 							this.$emit('refresh')
 						})
-					}).catch(() => {
+					}).catch(err => {
 						this.mistake('取消删除')
 					});
 				} else if(value == 4){
@@ -347,7 +347,7 @@
 						type: 'success',
 						message: '提醒成功!'
 					});
-				}).catch(() => {
+				}).catch(err => {
 					this.$message({
 						type: 'info',
 						message: '取消提醒'

@@ -2,7 +2,7 @@
 	<el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab/>
+				<Tab @change="refresh" :selected="houseFormat"/>
 			</div>
 		</el-aside>
 		<el-container>
@@ -25,7 +25,7 @@
 			</el-header>
 			<el-main>
 				<div class="result">
-					<DataTable/>
+					<DataTable :tableBill='tableBill' :pagingSize="pagingSize"/>
 				</div>
 			</el-main>
 		</el-container>
@@ -57,8 +57,48 @@
 		},
 		data() {
 			return {
-				input: ''
+				input: '',
+				tableData:[],
+				pagingSize:{},
+				houseFormat: 'SHARE',
 			};
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId
+			},
+			tableBill() {
+				return this.tableData.map((list,index)=>{
+					list.dueDateTime = new Date(parseInt(list.dueDate) * 1000).toLocaleDateString().replace(/\//g, "-")
+					list.endDateTime = new Date(parseInt(list.endDate) * 1000).toLocaleDateString().replace(/\//g, "-")
+					list.startDateTime = new Date(parseInt(list.startDate) * 1000).toLocaleDateString().replace(/\//g, "-")
+					return list
+				})
+			}	
+		},
+		created () {
+			this.query()	
+		},
+		methods: {
+			query(){
+				this.$model('all_user_bills')
+					.query({
+						houseFormat: this.houseFormat,
+						size:15,
+						index:1
+						},{projectId:this.projectId})
+					.then(res=>{
+						this.$set(this,'tableData',res.data)
+						this.$set(this,'pagingSize',res.paging)
+					})
+					.catch(err=>{
+						console.log(err)
+					})
+				},
+			refresh(type) {
+				this.houseFormat = type;
+				this.query()
+			}	
 		}
 	};
 </script>

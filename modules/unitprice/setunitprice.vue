@@ -120,8 +120,6 @@
                         element.electricity = []
                         element.electricity.push({price:'未设置',type:'ELECTRIC'})
                     }
-                        
-                    
                     return element
 				})
 			}
@@ -162,7 +160,7 @@
                         this.hidden()
                         this.$emit('refresh')
                         this.$message.success('修改成功')
-                    }).catch(()=>{
+                    }).catch(err=>{
                         this.$message.error('修改失败')
                     })
                 }
