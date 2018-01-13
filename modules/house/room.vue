@@ -1,5 +1,5 @@
 <template>
-    <div class="house-cell" :class="{leased: out}">
+    <div class="house-cell" :class="{leased: classOut}">
         <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
             <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
@@ -63,7 +63,12 @@
     		orientation(val) {
     			return orientations[val] || '';
     		}
-    	},
+		},
+		computed: {
+			classOut() {
+				return this.room.contract.status==='IDLE'
+			}	
+		},
     	data() {
     		return {
     			out: Math.random() > 0.5
