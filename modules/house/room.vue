@@ -3,10 +3,11 @@
         <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
             <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
-            <p>￥ 200</p>
-            <p class="rentee">
+            <p v-if="room.contract.rent!==undefined">￥{{rentSmall}}/月</p>
+            <p v-if="room.contract.rent===undefined">未出租</p>
+            <p class="rentee"  v-if="room.contract.rent!==undefined">
                 <span>
-                    <icon type="yuangong" />小清新</span>
+                    <icon type="yuangong" />{{room.contract.name}}</span>
                 <span>退: 2018-10-1</span>
             </p>
         </div>
@@ -17,7 +18,7 @@
                 </p>
             </el-tooltip>
             <el-tooltip content="合同列表" placement="top">
-                <p @click="view()">
+                <p @click="viewContracts()">
                     <icon type="touxiang1"  style="margin:0 5px;"/>
                 </p>
             </el-tooltip>
@@ -67,11 +68,17 @@
 		computed: {
 			classOut() {
 				return this.room.contract.status==='IDLE'
-			}	
+			},
+			rentSmall() {
+				return this.room.contract.rent/100
+			},
+			projectId() {
+				return this.$store.state.user.projectId
+			}
 		},
     	data() {
     		return {
-    			out: Math.random() > 0.5
+    			roomAllContracts:[]
     		};
     	},
     	methods: {
@@ -99,7 +106,17 @@
     				},
     				title: '新增合约'
     			});
-    		}
+			},
+			viewContracts(){
+				this.$model('room_contracts')
+				.query({},{projectId:this.projectId,roomId:this.room.id})
+				.then(res=>{
+					this.$set(this,'roomAllContracts',res)
+				})
+				.catch(err=>{
+					consosle.log(err)
+				})
+			}
     	}
     };
 </script>
@@ -108,14 +125,14 @@
     .house-cell {
     	position: relative;
     	padding: 10px;
-    	width: 180px;
+    	width: 240px;
     	height: 116px;
     	border-radius: 4px;
     	border: 1px solid @light;
     	border-left: 4px solid @success;
 
     	&.leased {
-    		border-left-color: @light;
+    		border-left-color: rgb(253, 109, 109);
     	}
 
     	.cell {

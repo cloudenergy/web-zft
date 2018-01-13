@@ -43,6 +43,23 @@
 				return _.filter(this.configList,{group:"加收费用"})
 			}
 		},
+		watch: {
+			otherCost(newVal,oldVal){
+				this.form.expense.extra=newVal.map((ele,index)=>{
+					var extraCost = {
+						configId:ele.id,
+						name:ele.key,
+						type:'extra',
+						rent:'',
+						pattern:'withRent'
+					} 
+					if(extraCost.name==="电费"){
+						extraCost.pattern="prepaid"
+					}
+					return extraCost
+				})
+			}
+		},
 		created(){
 			this.query()
 		},
@@ -72,13 +89,13 @@
 					if (valid) {
 						console.log('submit: ', this.translate(this.form));
 
-						this.$model('contracts')
-							.create(this.translate(this.form), {projectId: this.projectId})
-							.then((res) => {
-								this.closeDialog();
-								this.resetForm();
-								this.successMessage();
-							});
+						// this.$model('contracts')
+						// 	.create(this.translate(this.form), {projectId: this.projectId})
+						// 	.then((res) => {
+						// 		this.closeDialog();
+						// 		this.resetForm();
+						// 		this.successMessage();
+						// 	});
 					} else {
 						console.log('error in submitting ...');
 						return false;
