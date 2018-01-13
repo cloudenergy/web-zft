@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2017-12-25 11:11:52
+ * @Last Modified time: 2018-01-13 11:07:56
  */
 
 import api from '~/plugins/api';
@@ -24,8 +24,8 @@ export default {
 		},
 		cityArea: {},
 		houseTypes: {
-			SOLE: ['SOLE', '整租'],
 			SHARE: ['SHARE', '合租'],
+			SOLE: ['SOLE', '整租'],
 			ENTIRE: ['ENTIRE', '整栋']
 		},
 		defaultHouseType: 'SOLE'
