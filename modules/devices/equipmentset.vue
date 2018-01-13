@@ -4,7 +4,7 @@
             <div class="houses">
                 <div class="room" v-for="house in equipmentHouses">
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
-                        <span class="badge pull-right">2</span>
+                        <span class="badge pull-right">{{house.rooms.length+1}}</span>
                     </div>
                     <div class="cells" :houseId="house.houseId">
 						<house :house="house" class="cell" @sendFloor="sendFloor"></house>
