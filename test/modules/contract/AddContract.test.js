@@ -1,10 +1,21 @@
-import {mount} from 'vue-test-utils';
+import {mount, shallow} from 'vue-test-utils';
 import AddContract from '../../../modules/contract/AddContract.vue';
 import {format} from 'date-fns';
 
 describe('AddContract', () => {
 	// Now mount the component, and you have the wrapper.
-	const wrapper = mount(AddContract);
+	const wrapper = shallow(AddContract, {
+		mocks: {
+			$model: (api) => ({query: () => Promise.resolve([])}),
+			$store: {
+				state: {
+					user: {
+						projectId: 100
+					}
+				}
+			}
+		}
+	});
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain(

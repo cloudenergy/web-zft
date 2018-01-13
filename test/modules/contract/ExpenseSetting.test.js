@@ -32,7 +32,8 @@ describe('ExpenseSetting', () => {
 					}
 				],
 				bond: 2600
-			}
+			},
+			otherCost:[]
 		}
 	});
 
@@ -62,7 +63,8 @@ describe('ExpenseSetting', () => {
 					standard: {},
 					extra: [],
 					bond: 0
-				}
+				},
+				otherCost:[]
 			}
 		});
 		expect(billPlan1.vm.unitOfDate).toBe('天')
@@ -77,7 +79,8 @@ describe('ExpenseSetting', () => {
 					standard: {},
 					extra: [],
 					bond: 0
-				}
+				},
+				otherCost:[]
 			}
 		});
 		expect(billPlan2.vm.unitOfDate).toBe('号')
