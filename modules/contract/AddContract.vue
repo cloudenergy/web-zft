@@ -89,13 +89,13 @@
 					if (valid) {
 						console.log('submit: ', this.translate(this.form));
 
-						// this.$model('contracts')
-						// 	.create(this.translate(this.form), {projectId: this.projectId})
-						// 	.then((res) => {
-						// 		this.closeDialog();
-						// 		this.resetForm();
-						// 		this.successMessage();
-						// 	});
+						this.$model('contracts')
+							.create(this.translate(this.form), {projectId: this.projectId})
+							.then((res) => {
+								this.closeDialog();
+								this.resetForm();
+								this.successMessage();
+							});
 					} else {
 						console.log('error in submitting ...');
 						return false;

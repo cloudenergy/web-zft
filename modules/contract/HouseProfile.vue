@@ -53,15 +53,18 @@
                     id: res.id
                 }
             },
+			filterFreeRoom (room) {
+				return room.status === 'IDLE'
+            },
 			handleSelect(item) {
                 this.property.roomId = item.id
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;
-				this.$model('rooms').query({houseFormat: this.property.houseType, q}, {projectId})
+				this.$model('rooms').query({houseFormat: this.property.houseType, q, size: 100}, {projectId})
                     .then( data => {
 						const rooms = _.get(data, 'data', []);
-						const displayRooms = fp.map(this.translate)(rooms);
+						const displayRooms = fp.map(this.translate)(fp.filter(this.filterFreeRoom)(rooms));
 						cb(displayRooms);
                     })
 			}
