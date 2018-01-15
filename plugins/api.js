@@ -112,7 +112,9 @@ const apis = {
 	all_user_bills: resource('/projects/{projectId}/bills'),
 	config_list: resource('/projects/{projectId}/config'),
 	room_contracts: resource('/projects/{projectId}/rooms/{roomId}/contracts'),
-	delete_room: resource('/projects/{projectId}/houses/{houseId}/rooms')
+	delete_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
+	add_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
+	contracts_info: resource('/projects/{projectId}/contracts/{contractId}')
 };
 
 /**
