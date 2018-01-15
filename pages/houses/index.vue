@@ -1,8 +1,8 @@
 <template>
     <div class="page-house-index">
-        <Tab @change="refresh" :selected="houseFormat" />
+        <Tab @change="refresh" :selected="reqData.houseFormat" />
         <div class="main-container">
-            <Search />
+            <Search @changeRoom='changeRoom'/>
             <div class="houses">
                 <div class="room" v-for="house in houses">
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
@@ -55,7 +55,11 @@
     			currentHouse: null,
     			viewRoom: false,
     			viewHouse: false,
-    			houseFormat: 'SHARE'
+				reqData:{
+					houseFormat: 'SHARE',
+    				size: 200,
+    				index: 1
+				}
     		};
     	},
     	computed: {
@@ -67,18 +71,19 @@
     		this.query();
     	},
     	methods: {
+			changeRoom(data) {
+				console.log(1)
+				this.reqData.bedRooms = data
+				this.query()
+			},
     		refresh(type) {
-    			this.houseFormat = type;
+    			this.reqData.houseFormat = type;
     			this.query();
-    		},
+			},
     		query() {
     			this.$model('houses')
     				.query(
-    					{
-    						houseFormat: this.houseFormat,
-    						size: 200,
-    						index: 1
-    					},
+						this.reqData,
     					{ projectId: this.projectId }
     				)
     				.then(res => {
