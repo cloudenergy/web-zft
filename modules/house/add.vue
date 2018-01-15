@@ -32,7 +32,6 @@
 						<el-option value="E" label="东">东</el-option>
 					</el-select>
 				</div>
-				
 			</div>
             <room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
             <building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]"></building-floor>
@@ -77,7 +76,7 @@
     			unit: '',
     			roomNumber: '',
     			form: {
-    				group: '一期/君临阁',
+    				group: '',
     				building: '',
     				unit: '',
     				roomNumber: '',

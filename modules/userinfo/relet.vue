@@ -7,7 +7,7 @@
 			<Contract :contract="form.contract"></Contract>
 
 			<h3 class="section-2">租费设置</h3>
-			<ExpenseSetting :expense="form.expense"></ExpenseSetting>
+			<ExpenseSetting :expense="form.expense" :otherCost='otherCost'></ExpenseSetting>
 		</el-form>
 		<div class="dialog-footer" slot="footer">
 			<el-button @click="closeDialog()">取 消</el-button>
@@ -30,21 +30,51 @@
             }
         },
 		computed: {
-				projectId() {
-					return this.$store.state.user.projectId;
+			projectId() {
+				return this.$store.state.user.projectId;
 			},
+			otherCost() {
+				return _.filter(this.configList,{group:"加收费用"})
+			}
+		},
+		watch: {
+			otherCost(newVal,oldVal){
+				this.form.expense.extra=newVal.map((ele,index)=>{
+					var extraCost = {
+						configId:ele.id,
+						name:ele.key,
+						type:'extra',
+						rent:'',
+						pattern:'withRent'
+					} 
+					if(extraCost.name==="电费"){
+						extraCost.pattern="prepaid"
+					}
+					return extraCost
+				})
+			}
+		},
+		created(){
+			this.query()
 		},
 		data() {
 			const today = new Date();
 			return {
 				form: this.newModel(today),
-				changeuserdata: ''
+				changeuserdata: '',
+				configList:[]
 			};
 		},
 		mounted(){
 			console.log(this.form)
 		},
 		methods: {
+			query(){
+				this.$model('config_list')
+				.query({},{projectId:this.projectId})
+				.then(res=>{this.$set(this,'configList',res)})
+				.catch(err=>console.log(err))
+			},
 			onselect(userdata){
 				console.log(1)
 				this.changeuserdata = userdata

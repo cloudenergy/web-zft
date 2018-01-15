@@ -15,7 +15,7 @@
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="缴费方式">
                         <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%">
-                            <el-option :label=item.name value="id" v-for="item in payRoad" :key="item.id"></el-option>
+                            <el-option :label='item.name' :value='item.id' v-for="item in payRoad" :key="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="缴费金额" prop="price" :rules="[

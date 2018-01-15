@@ -7,35 +7,28 @@
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
-                <el-radio v-model="roomStatus" label="">是</el-radio>
-                <el-radio v-model="roomStatus" label="pause">否</el-radio>
+                <el-radio v-model="withOutInfo.toConfig" label="1">是</el-radio>
+                <el-radio v-model="withOutInfo.toConfig" label="0">否</el-radio>
             </div>
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户姓名 </span>
-                <!-- TODO USERNAME NONE ZSH -->
-                <!-- <span>{{contractInfo.user.name}}</span> -->
+                <span v-if="contractInfo.user.name">{{contractInfo.user.name}}</span>
             </div>
             <div>
-                <span class="set-width">经办人</span>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
+                
             </div>
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户账号 </span>
-                <!-- TODO USERNAME NONE ZSH -->
-                <!-- <span>{{contractInfo.user.accountName}}</span> -->
+                <span v-if="contractInfo.user.name">{{contractInfo.user.accountName}}</span>
             </div>
             <div>
                 <span class="set-width">支付方式</span>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
+                <el-select v-model="withOutInfo.payChannel" placeholder="请选择">
+                    <el-option :label='item.name' :value="item.id" v-for="item in payRoad" :key="item.id"></el-option>
                 </el-select>
             </div>
         </div>
@@ -46,14 +39,14 @@
             </div>
             <div class="flexc setInput">
                 <span class="set-width">结算余额</span>
-                <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;"></el-input>
+                <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number"></el-input>
                 <span class="hint">整数表示收款，负数表示退款</span>
             </div>
         </div>
         <div>
             <div class="flexc setElementHeight">
                 <span style="display:inline-block;width:70px">
-                    结算余额
+                    结算备注
                 </span>
                 <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea" style="min-height:80px">
                 </el-input>
@@ -77,59 +70,74 @@
 		},
         data() {
             return {
+                withOutInfo:this.newModel(),
                 input: '',
                 textarea: '',
-                value:'',
-                roomStatus:'',
-                options: [{
-                    value: '1',
-                    label: 'laoli'
-                }, {
-                    value: '2',
-                    label: 'laowang'
-                }, {
-                    value: '3',
-                    label: 'laozhang'
-                }],
-                contractInfo:{}
+                contractInfo:{
+                    user:''
+                },
+                payRoad:[]
             }
         },
-        created () {
+        mounted () {
             this.query(this.id)
         },
         methods: {
+            newModel(){
+                return {
+                    toConfig:'0',
+                    timeCheckout:this.nowData(),
+                    status:'terminated',
+                    payChannel:1,
+                    refund:[{}],
+                    receipt:[{}]
+                }
+            },
             query(data){
                 // TODO LUOJIE axios err,all in 'catch err'
-                // this.$model('contracts_info')
-                // .query({},{projectId:this.projectId,contractId:data})
-                // .then(res=>{
-                //     console.log(res)
-                // })
-                // .catch(err=>{
-                //     console.log(err,'asdfa')
-                // })
-                axios.get(this.mySet(data))
+                this.$model('contracts_info')
+                .query({},{projectId:this.projectId,contractId:data})
                 .then(res=>{
-                    this.contractInfo = res.data
-                    console.log(this.contractInfo)
+                    this.$set(this,'contractInfo',res)
                 })
-            },
-            mySet(data){
-                return `${'http://localhost:8080/api/v1.0/projects/'}${this.projectId}${'/contracts/'}${data}`
+                .catch(err=>{
+                    console.log(err,'asdfa')
+                })
+                this.$model('fund_channel')
+                .query({flow:'receive',tag:'manual'},{projectId: this.projectId})
+                .then(res=>this.$set(this,'payRoad',res))
             },
             onSubmit() {
                 console.log('submit!');
             },
             operateRent(){
-                this.$model('contracts')
-                .update({status: 'terminated'},{projectId:this.projectId,id:this.form.id})
-                .then(res=>{
-                    console.log(res)
-                    this.$message.success('退租成功')
-                })
-                .catch(err=>{
-                    this.$message.info('退租失败')
-                })
+                if(this.input>0){
+                    this.withOutInfo.refund[0].from = this.contractInfo.from
+                    this.withOutInfo.refund[0].to = this.contractInfo.to
+                    this.withOutInfo.refund[0].amount = this.input
+                    this.withOutInfo.refund[0].cfgId = this.contractInfo.to
+                    delete this.withOutInfo.receipt;
+                }else{
+                    this.withOutInfo.receipt[0].from = this.contractInfo.from
+                    this.withOutInfo.receipt[0].to = this.contractInfo.to
+                    this.withOutInfo.receipt[0].amount = -this.input
+                    this.withOutInfo.receipt[0].cfgId = this.contractInfo.to
+                    delete this.withOutInfo.refund;
+                }
+                console.log(this.withOutInfo)
+                // this.$model('contracts')
+                // .update(this.withOutInfo,{projectId:this.projectId,id:this.form.id})
+                // .then(res=>{
+                //     console.log(res)
+                //     this.$message.success('退租成功')
+                // })
+                // .catch(err=>{
+                //     this.$message.info('退租失败')
+                // })
+                this.withOutInfo = this.newModel()
+            },
+            nowData(){
+                return Date.parse(new Date())
             }
         }
     }

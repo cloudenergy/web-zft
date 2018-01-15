@@ -170,7 +170,6 @@
 			},
 			// 退租
 			without(){
-				console.log(this.room,this.house)
 				this.dialogVisibleWithout = true
 			},
 			// 续租
@@ -186,7 +185,8 @@
 
 			},
 			operateRent(){
-
+				this.$refs.operate.operateRent()
+				this.dialogVisibleWithout = false
 			}
 
     	}
