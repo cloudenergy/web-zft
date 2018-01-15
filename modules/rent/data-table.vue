@@ -293,7 +293,7 @@
 					this.$modal.$emit('open', {
 						comp: Relet,
 						data: {
-							item: data
+							contractsId:data.id
 						},
 						title: '续租'
 					});

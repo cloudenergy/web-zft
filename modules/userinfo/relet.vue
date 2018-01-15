@@ -1,8 +1,9 @@
 <template>
-	<div class="modal add-contract" v-on:useralldata="onselect">
+	<div class="modal add-contract" v-on:useralldata="onselect" v-loading="loading">
 		<el-form :model="form" ref="form" class="v-form">
 			<h3>续租</h3>
-			<UserProfile :user="form.user"></UserProfile>
+			<UserProfile :user="form.user" v-if="showUser"></UserProfile>
+			<div style="height:74px" v-if="!showUser"></div>
 			<HouseProfile :property="form.property"></HouseProfile>
 			<Contract :contract="form.contract"></Contract>
 
@@ -27,7 +28,10 @@
 		props: {
             item: {
                 type: Object
-            }
+			},
+			contractsId:{
+				required:true
+			}
         },
 		computed: {
 			projectId() {
@@ -52,6 +56,9 @@
 					}
 					return extraCost
 				})
+			},
+			contractInfo(newVal,oldVal){
+				console.log(newVal)
 			}
 		},
 		created(){
@@ -62,7 +69,10 @@
 			return {
 				form: this.newModel(today),
 				changeuserdata: '',
-				configList:[]
+				configList:[],
+				contractInfo:'',
+				showUser:false,
+				loading: true
 			};
 		},
 		mounted(){
@@ -74,6 +84,25 @@
 				.query({},{projectId:this.projectId})
 				.then(res=>{this.$set(this,'configList',res)})
 				.catch(err=>console.log(err))
+				this.$model('contracts_info')
+                .query({},{projectId:this.projectId,contractId:this.contractsId})
+                .then(res=>{
+					this.$set(this,'contractInfo',res)
+					this.setUser()
+                })
+                .catch(err=>{
+                    console.log(err,'asdfa')
+                })
+			},
+			setUser(){
+				this.form.user.name = this.contractInfo.user.name
+				this.form.user.accountName = this.contractInfo.user.accountName
+				this.form.user.mobile = this.contractInfo.user.mobile
+				this.form.user.gender = this.contractInfo.user.gender
+				this.form.user.documentId = this.contractInfo.user.documentId
+				this.form.user.documentType = 1
+				this.showUser = true
+				this.loading = false
 			},
 			onselect(userdata){
 				console.log(1)
@@ -104,15 +133,9 @@
 				return addYears(now, 1);
 			},
 			newModel(today) {
-				console.log(this.item)
 				return {
 					user: {
-						name: this.item.user.name,
-						accountName: this.item.user.accountName,
-						mobile: this.item.user.mobile,
-						gender: this.item.user.gender,
-						documentId: this.item.user.documentId,
-						documentType: 1
+						
 					},
 					property: {
 						houseType: '1',

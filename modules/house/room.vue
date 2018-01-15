@@ -60,7 +60,8 @@
 	import { NewContract } from '~/modules/contract';
 	import ContractsList from './contractsList'
 	import {
-		RentWithout
+		RentWithout,
+		Relet
 	} from '../userinfo';
     const orientations = {
     	N: '北',
@@ -174,7 +175,13 @@
 			},
 			// 续租
 			renewal(){
-
+				this.$modal.$emit('open', {
+					comp: Relet,
+					data: {
+						contractsId:this.room.contract.id
+					},
+					title: '续租'
+				});
 			},
 			// 删除合同
 			deleteContracts(){
