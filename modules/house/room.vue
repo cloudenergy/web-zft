@@ -42,12 +42,16 @@
 					</ul>
                 </p>
         </div>
+		<el-dialog title="合同列表" :visible.sync="visibility" width="600px">
+			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading"/>
+		</el-dialog>
     </div>
 </template>
 
 <script>
     import AddModal from './add';
-    import { NewContract } from '~/modules/contract';
+	import { NewContract } from '~/modules/contract';
+	import ContractsList from './contractsList'
     const orientations = {
     	N: '北',
     	S: '南',
@@ -59,7 +63,10 @@
     	props: {
     		room: Object,
     		house: Object
-    	},
+		},
+		components: {
+			ContractsList	
+		},
     	filters: {
     		orientation(val) {
     			return orientations[val] || '';
@@ -78,7 +85,9 @@
 		},
     	data() {
     		return {
-    			roomAllContracts:[]
+				roomAllContracts:[],
+				visibility:false,
+				loading: true
     		};
     	},
     	methods: {
@@ -108,14 +117,21 @@
     			});
 			},
 			viewContracts(){
-				this.$model('room_contracts')
-				.query({},{projectId:this.projectId,roomId:this.room.id})
-				.then(res=>{
-					this.$set(this,'roomAllContracts',res)
-				})
-				.catch(err=>{
-					consosle.log(err)
-				})
+				if(this.classOut){
+					this.$message('暂无合约')
+				}else{
+					this.$model('room_contracts')
+					.query({},{projectId:this.projectId,roomId:this.room.id})
+					.then(res=>{
+						this.$set(this,'roomAllContracts',res.data)
+					})
+					.catch(err=>{
+						consosle.log(err)
+					})
+					this.visibility = true
+					this.loading = false
+				}
+				
 			}
     	}
     };
