@@ -37,34 +37,34 @@ setup({
 	cancelToken: source.token,
 	headers: {
 		'content-type': 'application/json'
+	},
+	interceptors: {
+		reponse(res) {
+			const { code, message, data } = res;
+			if (code && code !== 0) {
+				Message({
+					message: message,
+					type: 'error'
+				});
+
+				return Promise.reject(message);
+			}
+
+			return data;
+		}
 	}
 });
 
-const interceptor = function(res) {
-	const { code, message, errmsg, status, data } = res;
-	if ((code && code !== 0) || errmsg) {
-		Message({
-			message: message || errmsg,
-			type: 'error'
-		});
+const interceptor = function({ response }) {
+	const { status, data } = response;
 
-		return Promise.reject(message || errmsg);
+	if (status === 401) {
+		source.cancel('login required.');
+		localStorage.user = '{}';
+		router.push('/login');
+		return data;
 	}
-
-	if (status) {
-		switch (status) {
-			case 401:
-				source.cancel('login required.');
-				localStorage.user = '{}';
-				router.push('/login');
-				return data;
-				break;
-			default:
-				return Promise.reject(data);
-		}
-	}
-
-	return res;
+	return Promise.reject(data);
 };
 const [get, post, put, del, patch] = [
 	makeGet,
@@ -85,7 +85,7 @@ const resource = (url, actions) => {
 };
 
 const apis = {
-	houses: resource('/projects/{projectId}/houses'),
+	houses: resource('/pssrojects/{projectId}/houses'),
 	communities: resource('/projects/{projectId}/communities'),
 	contracts: resource('/projects/{projectId}/contracts'),
 	rooms: resource('/projects/{projectId}/rooms'),

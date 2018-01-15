@@ -68,12 +68,16 @@
     		width: 300px;
     		padding: 40px 60px;
     		background: #fff;
-    		box-shadow: 0 0 15px #ddd;
+    		box-shadow: 0 0 15px #eee;
     		border-radius: 4px;
     	}
 
     	.bottom-btn {
     		margin-bottom: 0px;
+
+    		button {
+    			box-shadow: 0 0 10px @primary;
+    		}
     	}
     }
 </style>
