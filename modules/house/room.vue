@@ -36,7 +36,7 @@
 						<li>退租</li>
 						<li>续租</li>
 						<li>删除合同</li>
-						<li>删除房间</li>
+						<li @click="deleteRoom()">删除房间</li>
 						<li>编辑房间</li>
 						<li>关闭房间</li>
 					</ul>
@@ -132,6 +132,27 @@
 					this.loading = false
 				}
 				
+			},
+			deleteRoom(){
+				this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+					}).then(() => {
+						this.$model('delete_room')
+						.delete({},{projectId:this.projectId,houseId:this.house.houseId,id:this.room.id})
+						.then(res=>{
+							this.$message.success('删除成功!');
+						})
+						.catch(err=>{
+							this.$message('删除失败')
+						})
+					}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});          
+				});
 			}
     	}
     };

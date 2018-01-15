@@ -12,7 +12,17 @@
 									<icon type='iconupload'/>
 								</span>
                             </el-tooltip>
-                            <icon type="gengduo1" />
+							<el-dropdown placement="bottom-start">
+								<span class="el-dropdown-link">
+									<icon type="gengduo1" />
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item>编辑房源</el-dropdown-item>
+									<el-dropdown-item>添加房间</el-dropdown-item>
+									<el-dropdown-item @click.native="deleteHouse(house)">删除房源</el-dropdown-item>
+									<el-dropdown-item>关闭房源</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
                         </span>
                     </div>
                     <div class="cells">
@@ -88,7 +98,7 @@
 				this.currentHouse = house
 				this.viewHouse = true
 			},
-    		del(house) {
+    		deleteHouse(house) {
     			this.$confirm('确认删除该房源, 是否继续?', '提示', {
     				confirmButtonText: '确定',
     				cancelButtonText: '取消',
@@ -147,5 +157,30 @@
     }
     .drawer {
     	padding: 30px;
+	}
+	.moreSet{
+		position: relative;
+			ul{
+				position: absolute;
+				top:13px;
+				left:-25px;				
+				width: 60px;
+				background: #fff;
+				box-shadow:0 0 1px #CCC;
+				display: none;
+				overflow: hidden;
+				text-align: center;
+				z-index:100;
+				li{
+					list-style: none;
+					margin:4px 0;
+				}
+			}
+	}
+	.moreSet:hover ul{
+		display: block;	
+		li:hover{
+			color:#409eff
+		}			
 	}
 </style>
