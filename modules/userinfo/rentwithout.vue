@@ -3,7 +3,7 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>合同周期 </span>
-                <span>{{contractInfo.from}}-{{contractInfo.to}}</span>
+                <span>{{set(contractInfo.from)}}-{{set(contractInfo.to)}}</span>
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
@@ -83,6 +83,9 @@
             this.query(this.id)
         },
         methods: {
+            set(time){
+                return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
+            },
             newModel(){
                 return {
                     toConfig:'0',

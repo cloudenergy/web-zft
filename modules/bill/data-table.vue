@@ -30,17 +30,9 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
-                    <el-dropdown>
-                        <el-button type="primary" size="mini" @click.native="handleReceive(scope.$index, scope.row)">
-                            收款
-                            <i class="el-icon-arrow-down el-icon--right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item @click.native="handleEdit(scope.$index, scope.row)">编辑</el-dropdown-item>
-                            <el-dropdown-item @click.native="addComment(scope.$index, scope.row)">备注</el-dropdown-item>
-                            <el-dropdown-item @click.native="changeDate(scope.$index, scope.row)">改期</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                    <el-button type="primary" size="small" style="width:70px" @click.native="handleReceive(scope.$index, scope.row)">
+                        收款
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -88,7 +80,10 @@ export default {
 		 */
 		narrow(data) {
 			return data/100
-		}
+        },
+        handleReceive() {
+
+        }
 	}
 };
 </script>

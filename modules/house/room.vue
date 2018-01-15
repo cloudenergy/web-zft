@@ -8,7 +8,7 @@
             <p class="rentee"  v-if="room.contract.rent!==undefined">
                 <span>
                     <icon type="yuangong" />{{room.contract.name}}</span>
-                <span>退: 2018-10-1</span>
+                <span>退: {{timeDate(room.contract.to)}}</span>
             </p>
         </div>
         <div class="actions cursorp">
@@ -104,6 +104,9 @@
     		};
     	},
     	methods: {
+			timeDate(data){
+				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+			},
     		edit() {
     			// 编辑窗口
     			this.$modal.$emit('open', {
@@ -146,8 +149,6 @@
 				}
 				
 			},
-			// 删除房间
-			// TODO : ZHOUYI  删除接口删除失败
 			deleteRoom(){
 				this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
 					confirmButtonText: '确定',

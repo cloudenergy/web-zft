@@ -82,7 +82,7 @@
                 this.tt2=this.set(tm2)
             },
             set(time){
-                return new Date(parseInt(time) * 1000).toLocaleString().replace(/\//g, "-")
+                return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
             },
             strt(payment){
                 if(/-/g.test(payment)){
