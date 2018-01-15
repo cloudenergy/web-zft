@@ -85,7 +85,7 @@ const resource = (url, actions) => {
 };
 
 const apis = {
-	houses: resource('/pssrojects/{projectId}/houses'),
+	houses: resource('/projects/{projectId}/houses'),
 	communities: resource('/projects/{projectId}/communities'),
 	contracts: resource('/projects/{projectId}/contracts'),
 	rooms: resource('/projects/{projectId}/rooms'),
