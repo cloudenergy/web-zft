@@ -159,7 +159,7 @@
 			</div>
 		</el-dialog>
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
-			<RentWithout :form="updateData" ref="operate"/>
+			<RentWithout :id="updateData.id" ref="operate"/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible4 = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>
@@ -320,7 +320,6 @@
 						this.mistake('取消删除')
 					});
 				} else if(value == 4){
-					console.log(this.updateData)
 					this.dialogVisible4 = true
 				}else {
 					this.dialogVisible3 = true;

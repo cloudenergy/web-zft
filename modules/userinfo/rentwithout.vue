@@ -3,7 +3,7 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>合同周期 </span>
-                <span>{{form.fromDate}}-{{form.toDate}}</span>
+                <span>{{contractInfo.from}}-{{contractInfo.to}}</span>
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
@@ -14,7 +14,8 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户姓名 </span>
-                <span>{{form.user.name}}</span>
+                <!-- TODO USERNAME NONE ZSH -->
+                <!-- <span>{{contractInfo.user.name}}</span> -->
             </div>
             <div>
                 <span class="set-width">经办人</span>
@@ -27,7 +28,8 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户账号 </span>
-                <span>{{form.user.accountName}}</span>
+                <!-- TODO USERNAME NONE ZSH -->
+                <!-- <span>{{contractInfo.user.accountName}}</span> -->
             </div>
             <div>
                 <span class="set-width">支付方式</span>
@@ -61,10 +63,11 @@
 </template>
 
 <script>
+    import axios from 'axios' 
     export default {
         props: {
-            form: {
-                type: Object
+            id: {
+                type:String
             }
         },
         computed: {
@@ -74,7 +77,6 @@
 		},
         data() {
             return {
-                radio: '',
                 input: '',
                 textarea: '',
                 value:'',
@@ -88,10 +90,33 @@
                 }, {
                     value: '3',
                     label: 'laozhang'
-                }]
+                }],
+                contractInfo:{}
             }
         },
+        created () {
+            this.query(this.id)
+        },
         methods: {
+            query(data){
+                // TODO LUOJIE axios err,all in 'catch err'
+                // this.$model('contracts_info')
+                // .query({},{projectId:this.projectId,contractId:data})
+                // .then(res=>{
+                //     console.log(res)
+                // })
+                // .catch(err=>{
+                //     console.log(err,'asdfa')
+                // })
+                axios.get(this.mySet(data))
+                .then(res=>{
+                    this.contractInfo = res.data
+                    console.log(this.contractInfo)
+                })
+            },
+            mySet(data){
+                return `${'http://localhost:8080/api/v1.0/projects/'}${this.projectId}${'/contracts/'}${data}`
+            },
             onSubmit() {
                 console.log('submit!');
             },
@@ -102,7 +127,7 @@
                     console.log(res)
                     this.$message.success('退租成功')
                 })
-                .catch(res=>{
+                .catch(err=>{
                     this.$message.info('退租失败')
                 })
             }

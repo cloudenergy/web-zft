@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-table :data="tableBill" style="width: 100%">
-            <el-table-column label="应支付日" width="150">
+            <el-table-column label="应支付日">
                 <template slot-scope="scope">
                     <p style="margin-left: 10px;color:red">{{ scope.row.overdue }}</p>
                     <p style="margin-left: 10px">{{ scope.row.dueDateTime }}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="住户姓名/帐号" width="150">
+            <el-table-column label="住户姓名/帐号">
                 <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                         <i class="el-icon-phone"></i>
@@ -22,13 +22,13 @@
 					<p>{{scope.row.startDateTime}}至{{scope.row.endDateTime}}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="金额(¥)/账期" width="150">
+            <el-table-column label="金额(¥)/账期">
                 <template slot-scope="scope">
                     <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}</p>
                     <p style="margin-left: 10px;color:grey" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type">{{ item.text }}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="150">
+            <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-dropdown>
                         <el-button type="primary" size="mini" @click.native="handleReceive(scope.$index, scope.row)">

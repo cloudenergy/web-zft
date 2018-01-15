@@ -33,17 +33,24 @@
 						<icon type="gengduo1"  style="margin:0 5px;"/>
 					</span>
 					<ul>
-						<li>退租</li>
-						<li>续租</li>
-						<li>删除合同</li>
+						<li v-if="room.contract.status==='INUSE'" @click="without()">退租</li>
+						<li v-if="room.contract.status==='INUSE'" @click="renewal()">续租</li>
+						<li v-if="room.contract.status==='INUSE'" @click="deleteContracts()">删除合同</li>
 						<li @click="deleteRoom()">删除房间</li>
 						<li>编辑房间</li>
-						<li>关闭房间</li>
+						<li @click="closeRoom()">关闭房间</li>
 					</ul>
                 </p>
         </div>
 		<el-dialog title="合同列表" :visible.sync="visibility" width="600px">
 			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading"/>
+		</el-dialog>
+		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="50%">
+			<RentWithout :id="room.contract.id" ref="operate"/>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
+				<el-button type="primary" @click="operateRent">确 定</el-button>
+			</span>
 		</el-dialog>
     </div>
 </template>
@@ -52,6 +59,9 @@
     import AddModal from './add';
 	import { NewContract } from '~/modules/contract';
 	import ContractsList from './contractsList'
+	import {
+		RentWithout
+	} from '../userinfo';
     const orientations = {
     	N: '北',
     	S: '南',
@@ -65,7 +75,8 @@
     		house: Object
 		},
 		components: {
-			ContractsList	
+			ContractsList,
+			RentWithout
 		},
     	filters: {
     		orientation(val) {
@@ -87,7 +98,8 @@
     		return {
 				roomAllContracts:[],
 				visibility:false,
-				loading: true
+				loading: true,
+				dialogVisibleWithout:false
     		};
     	},
     	methods: {
@@ -133,6 +145,8 @@
 				}
 				
 			},
+			// 删除房间
+			// TODO : ZHOUYI  删除接口删除失败
 			deleteRoom(){
 				this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
 					confirmButtonText: '确定',
@@ -153,7 +167,28 @@
 						message: '已取消删除'
 					});          
 				});
+			},
+			// 退租
+			without(){
+				console.log(this.room,this.house)
+				this.dialogVisibleWithout = true
+			},
+			// 续租
+			renewal(){
+
+			},
+			// 删除合同
+			deleteContracts(){
+
+			},
+			// 关闭房间
+			closeRoom(){
+
+			},
+			operateRent(){
+
 			}
+
     	}
     };
 </script>

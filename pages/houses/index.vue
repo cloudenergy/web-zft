@@ -18,7 +18,7 @@
 								</span>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item>编辑房源</el-dropdown-item>
-									<el-dropdown-item>添加房间</el-dropdown-item>
+									<el-dropdown-item @click.native="addRoom(house)">添加房间</el-dropdown-item>
 									<el-dropdown-item @click.native="deleteHouse(house)">删除房源</el-dropdown-item>
 									<el-dropdown-item>关闭房源</el-dropdown-item>
 								</el-dropdown-menu>
@@ -98,6 +98,7 @@
 				this.currentHouse = house
 				this.viewHouse = true
 			},
+			// TODO : ZHOUYI 删除house接口失败
     		deleteHouse(house) {
     			this.$confirm('确认删除该房源, 是否继续?', '提示', {
     				confirmButtonText: '确定',
@@ -117,7 +118,18 @@
     						message: '已取消删除'
     					});
     				});
-    		}
+			},
+			addRoom(data){
+				this.$model('add_room')
+				.create({},{projectId:this.projectId,houseId:data.houseId})
+				.then(res=>{
+					this.$message.success('添加成功')
+					this.query()
+				})
+				.catch(err=>{
+					console.log(err)
+				})
+			}
     	}
     };
 </script>
