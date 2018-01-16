@@ -41,7 +41,7 @@
         title="收款"
         :visible.sync="dialogVisible"
         width="40%">
-        <billCollection :data="tableData" :type="type" ref="collect"/>
+        <billCollection :data="tableData" :type="type" ref="collect" @closeDialog='closeDialog()'/>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="collection()">确 定</el-button>
@@ -107,6 +107,9 @@ export default {
         },
         collection() {
             this.$refs.collect.payRent()
+        },
+        closeDialog() {
+            this.dialogVisible = false;
         }
 	}
 };
