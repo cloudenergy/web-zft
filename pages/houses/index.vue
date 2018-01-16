@@ -72,7 +72,6 @@
     	},
     	methods: {
 			changeRoom(data) {
-				console.log(1)
 				this.reqData.bedRooms = data
 				this.query()
 			},
@@ -103,7 +102,6 @@
 				this.currentHouse = house
 				this.viewHouse = true
 			},
-			// TODO : ZHOUYI 删除house接口失败
     		deleteHouse(house) {
     			this.$confirm('确认删除该房源, 是否继续?', '提示', {
     				confirmButtonText: '确定',

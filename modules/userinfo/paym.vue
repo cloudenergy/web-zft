@@ -70,7 +70,7 @@
             },
             query(data){
                 this.$model('fund_channel')
-                .query({flow:'receive',tag:'manual'},{projectId: this.projectId})
+                .query({category:'offline',flow:'receive'},{projectId: this.projectId})
                 .then(res=>this.$set(this,'payRoad',res))
             },
             onSubmit(formName) {

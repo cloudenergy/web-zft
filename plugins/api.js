@@ -114,7 +114,8 @@ const apis = {
 	room_contracts: resource('/projects/{projectId}/rooms/{roomId}/contracts'),
 	delete_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
 	add_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
-	contracts_info: resource('/projects/{projectId}/contracts/{contractId}')
+	contracts_info: resource('/projects/{projectId}/contracts/{contractId}'),
+	bill_collection: resource('/projects/{projectId}/bills/{billId}/payments')
 };
 
 /**

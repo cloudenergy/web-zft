@@ -3,7 +3,7 @@
         <h3>卫生员({{tableData.length}}人)
             <div>
                 <el-button>编辑岗位</el-button>
-                <el-button @click="addSteward=true">添加员工</el-button>
+                <!-- <el-button @click="addSteward=true">添加员工</el-button> -->
             </div>
         </h3>
         <div class="tit">
@@ -73,28 +73,6 @@
                 暂无数据
             </el-table>
         </div>
-        <el-dialog title="提示" :visible.sync="addSteward" width="30%">
-            <el-form ref="addStewardForm" :model="addStewardForm" label-width="80px">
-
-                <el-form-item label="管家姓名">
-                    <el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
-                </el-form-item>
-                <el-form-item label="密码">
-                    <el-input v-model="addStewardForm.passWord" placeholder="密码"></el-input>
-                </el-form-item>
-                <el-form-item label="权限">
-                    <el-select v-model="addStewardForm.level" placeholder="请选择">
-                        <el-option value="manager" label="管家"></el-option>
-                        <el-option value="accountant" label="财务"></el-option>
-                    </el-select>
-                </el-form-item>
-
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addSteward = false">取 消</el-button>
-                <el-button type="primary" @click="add">确 定</el-button>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -127,13 +105,7 @@
             // this.query();
         },
         methods: {
-            add() {
-                this.addSteward = false;
-                //TODO: 为什么role.vue里面有一个创建，这里又有一个一样的对话框和创建代码？
-                this.$model('credentials').create(this.addStewardForm, {
-                    projectId: this.projectId
-                });
-            }
+           
         },
         components: {}
     };

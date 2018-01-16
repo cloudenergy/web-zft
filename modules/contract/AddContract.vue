@@ -183,7 +183,7 @@
 				}
 			},
 			createExpense(form) {
-				const extraExpense = fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra);
+				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra),function(o){return o.rent});
 				return fp.map(this.unitAsCent)(extraExpense);
 			},
 			closeDialog() {

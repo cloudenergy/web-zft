@@ -36,10 +36,23 @@
                 </template>
             </el-table-column>
         </el-table>
+        
+        <el-dialog
+        title="收款"
+        :visible.sync="dialogVisible"
+        width="40%">
+        <billCollection :data="tableData" :type="type" ref="collect"/>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="collection()">确 定</el-button>
+        </span>
+        </el-dialog>
     </div>
 </template>
 
+
 <script>
+import billCollection from './bill-collection.vue'
 export default {
 	props: {
 		pagingSize:{
@@ -49,6 +62,9 @@ export default {
 			type:Array
 		}
 	},
+    components: {
+        billCollection  
+    },
 	computed: {
 		projectId(){
 			return this.$store.state.user.projectId
@@ -81,8 +97,16 @@ export default {
 		narrow(data) {
 			return data/100
         },
-        handleReceive() {
-
+        handleReceive(index,data) {
+            this.tableData = data
+            console.log(this.tableData)
+            this.tableData.billItems[0].from = data.contract.from
+            this.tableData.billItems[0].to = data.contract.to
+            this.tableData.billItems[0].type = data.type
+            this.dialogVisible = true
+        },
+        collection() {
+            this.$refs.collect.payRent()
         }
 	}
 };
