@@ -81,10 +81,14 @@
                     .patch({amount:this.form.price,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.payRoad[0].id})
                     .then(res=>{
                         console.log(res)
+                        this.$message.success('充值成功');
+                        this.$refs[formName].resetFields();
+                        this.cleraboth();
                     })
-                    this.$message.success('记入账单成功');
-                    this.$refs[formName].resetFields();
-                    this.cleraboth();
+                    .catch(err=>{
+                        this.$message('充值失败');
+                    })
+                    
                 }
             },
             onclose(formName) {
