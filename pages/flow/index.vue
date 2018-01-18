@@ -20,8 +20,21 @@ export default {
 		quantum,
 		flowm
 	},
+	computed: {
+			projectId() {
+				return this.$store.state.user.projectId;
+			}
+		},
+	created () {
+	},
 	data() {
-		return {};
+		return {
+			mounthFlows:[],
+			flowPaging:''
+		};
+	},
+	methods: {
+		
 	}
 };
 </script>

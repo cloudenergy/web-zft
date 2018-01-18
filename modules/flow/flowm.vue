@@ -38,7 +38,8 @@
 			return {
 				activeName: 'first',
 				loading: false,
-				activeIndex: 'quantum'
+				activeIndex: 'quantum',
+				flowMounth:'adsf'
 			};
 		},
 		methods: {

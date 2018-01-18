@@ -115,7 +115,8 @@ const apis = {
 	delete_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
 	add_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
 	contracts_info: resource('/projects/{projectId}/contracts/{contractId}'),
-	bill_collection: resource('/projects/{projectId}/bills/{billId}/payments')
+	bill_collection: resource('/projects/{projectId}/bills/{billId}/payments'),
+	flow_mounth: resource('/projects/{projectId}/flows')
 };
 
 /**

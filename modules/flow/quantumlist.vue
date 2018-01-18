@@ -1,6 +1,6 @@
 <template lang="html">
     <el-table
-        :data="tableData5"
+        :data="mounthFlows"
         :row-key="getRowKeys"
         :expand-row-keys="expands"
         @row-click='handleRowHandle'
@@ -34,17 +34,22 @@
             </template>
         </el-table-column>
         <el-table-column
-            label="时间"
-            prop="datetime">
+            label="支付时间">
+            <template slot-scope="scope">
+                <span>{{ timeChange(scope.row.paidAt) }}</span>
+            </template>
         </el-table-column>
         <el-table-column
             label="金额"
             prop="folwm"
             width="80px">
+            <template slot-scope="scope">
+                <span>{{ price(scope.row.amount) }}</span>
+            </template>
         </el-table-column>
         <el-table-column
             label="姓名"
-            prop="username"
+            prop="user.name"
             min-width="100">
         </el-table-column>
         <el-table-column
@@ -52,14 +57,17 @@
             prop="houseresource"
             min-width="180"
             max-width="200">
+            <template slot-scope="scope">
+                <span>{{scope.row.room.locationName}}{{scope.row.room.building}}{{scope.row.room.unit}}{{scope.row.room.roomNumber}}{{scope.row.room.roomName}}</span>
+            </template>
         </el-table-column>
         <el-table-column
             label="费用类型"
-            prop="waym">
+            prop="category">
         </el-table-column>
         <el-table-column
             label="支付方式"
-            prop="payway">
+            prop="paymentChannel">
         </el-table-column>
         <el-table-column
             label="操作人"
@@ -74,6 +82,14 @@
 
 <script>
 export default {
+    props:{
+        flowPaging:{
+            required:true
+        },
+        mounthFlows:{
+            type:Array
+        }
+    },
     data() {
         return {
             upflowi:0,
@@ -166,6 +182,12 @@ export default {
         },
         toggle(flowi){
             this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == flowi)) 
+        },
+        timeChange(data){
+            return new Date(parseInt(data)).toLocaleDateString()
+        },
+        price(data) {
+            return data/100
         }
     }
 }
