@@ -1,12 +1,13 @@
 /*
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-01-13 16:59:09
+ * @Last Modified by: mikey.other
+ * @Last Modified time: 2018-01-18 16:27:31
  */
 
 import api from '~/plugins/api';
 import { fromPairs, merge, map } from 'lodash';
+import _ from 'lodash'
 
 let localUser = '';
 try {
@@ -29,7 +30,8 @@ export default {
             ENTIRE: ['ENTIRE', '整栋']
         },
         defaultHouseType: 'SOLE',
-        communities: null
+        communities: null,
+        othercost:null
     },
     mutations: {
         UPDATE_ENV(state, data) {
@@ -39,6 +41,11 @@ export default {
         },
         SAVE_COMMUNITIES(state, data) {
             state.communities = data;
+        },
+        SAVE_OTHERCOST(state, data) {
+            state.extra = function(){
+                return _.filter(data,{group:"加收费用"})
+            }
         }
     },
     actions: {
@@ -79,6 +86,18 @@ export default {
                 return state.city_area;
             }
             return api('city_area');
+        },
+        GET_OTHERCOST({ commit, state }, { }) {
+            if (state.othercost) {
+                return Promise.resolve(state.othercost);
+            }
+            return api('config_list').query(
+                {},
+                { projectId: state.user.projectId }
+            ).then(data => {
+                commit("SAVE_OTHERCOST", data);
+                return _.filter(data,{group:"加收费用"});
+            });
         }
     }
 };

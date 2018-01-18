@@ -88,7 +88,6 @@
                     .catch(err=>{
                         this.$message('充值失败');
                     })
-                    
                 }
             },
             onclose(formName) {

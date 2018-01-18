@@ -11,7 +11,7 @@
 				按科目
 			</el-menu-item>
 			<el-menu-item index="flowchnnel">
-				渠道
+				按渠道
 			</el-menu-item>
 		</el-menu>
 

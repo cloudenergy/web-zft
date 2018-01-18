@@ -38,9 +38,6 @@
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
-			},
-			otherCost() {
-				return _.filter(this.configList,{group:"加收费用"})
 			}
 		},
 		watch: {
@@ -67,7 +64,8 @@
 			const today = new Date();
 			return {
 				form: this.newModel(today),
-				configList:[]
+				configList:[],
+				otherCost:[]
 			};
 		},
 		mounted() {
@@ -79,10 +77,9 @@
 		},
 		methods: {
 			query(){
-				this.$model('config_list')
-				.query({},{projectId:this.projectId})
-				.then(res=>{this.$set(this,'configList',res)})
-				.catch(err=>console.log(err))
+				this.$store
+    			.dispatch('GET_OTHERCOST')
+    			.then(data => (this.otherCost = data));
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {

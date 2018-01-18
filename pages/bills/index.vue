@@ -8,7 +8,7 @@
 		<el-container>
 			<el-header style="height:auto">
 				<div class="ops-bills">
-					<BillStatus class="status"/>
+					<BillStatus class="status" @billStatus="billStatus"/>
 					<BillMode class="bill-mode"/>
 					<BillType class="bill-type"/>
 					<ReportPeriod class="period"/>
@@ -25,7 +25,7 @@
 			</el-header>
 			<el-main>
 				<div class="result">
-					<DataTable :tableBill='tableBill' :pagingSize="pagingSize"/>
+					<DataTable :tableBill='tableBill' :pagingSize="pagingSize" @refresh = "refreshCost"/>
 				</div>
 			</el-main>
 		</el-container>
@@ -61,6 +61,7 @@
 				tableData:[],
 				pagingSize:{},
 				houseFormat: 'SHARE',
+				paid:false
 			};
 		},
 		computed: {
@@ -83,6 +84,7 @@
 			query(){
 				this.$model('all_user_bills')
 					.query({
+						paid:this.paid,
 						houseFormat: this.houseFormat,
 						size:15,
 						index:1
@@ -98,7 +100,15 @@
 			refresh(type) {
 				this.houseFormat = type;
 				this.query()
-			}	
+			},
+			billStatus(type) {
+				this.paid=type
+				console.log(this.paid)
+				this.query()
+			},
+			refreshCost(){
+				this.query()
+			}
 		}
 	};
 </script>

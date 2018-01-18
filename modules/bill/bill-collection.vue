@@ -7,15 +7,16 @@
             <el-table :data="data.billItems" style="width: 100%">
                 <el-table-column label="账单类型">
                     <template slot-scope="scope">
-                        <div slot="reference" class="name-wrapper" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type">
-                            {{item.text}}
+                        <div slot="reference" class="name-wrapper" v-for="item in type" :key="item.id" v-if="scope.row.configId===item.id">
+                            {{item.key}}
                         </div>
+                        <div v-if="scope.row.configId===121">租金</div>
                     </template>
                 </el-table-column>
                 <el-table-column label="费用周期" min-width="230">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
-                            {{set(scope.row.from)}}-{{set(scope.row.to)}}
+                            {{scope.row.dueDateTime}}-{{scope.row.endDateTime}}
                         </div>
                     </template>
                 </el-table-column>
@@ -85,10 +86,7 @@
                 return this.$store.state.user.projectId;
             },
             calculateNum() {
-                this.data.billItems.map((val, index) => {
-                    this.amountPrice = this.amountPrice + val.amount
-                })
-                return this.amountPrice
+                return this.data.dueAmount
             }
         },
         methods: {
@@ -112,7 +110,9 @@
                 return new Date()
             },
             payRent() {
-                this.form.paidAt = Date.parse(new Date());
+                console.log(Date.parse(new Date()))
+                console.log(Date.parse(new Date())/1000)
+                this.form.paidAt = Date.parse(new Date())/1000;
                 this.form.amount = this.calculateNum
                 this.$model('bill_collection')
                     .create(this.form, {

@@ -7,8 +7,8 @@
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
-                <el-radio v-model="withOutInfo.toConfig" label="1">是</el-radio>
-                <el-radio v-model="withOutInfo.toConfig" label="0">否</el-radio>
+                <el-radio v-model="withOutInfo.toConfig" label="PAUSED">是</el-radio>
+                <el-radio v-model="withOutInfo.toConfig" label="IDIE">否</el-radio>
             </div>
         </div>
         <div class='flexc'>
@@ -88,12 +88,12 @@
             },
             newModel(){
                 return {
-                    toConfig:'0',
-                    timeCheckout:this.nowData(),
-                    status:'terminated',
+                    toConfig:'IDIE',
+                    status:'TERMINATED',
                     payChannel:1,
-                    refund:[{}],
-                    receipt:[{}]
+                    transaction:{
+                        remake:''
+                    }
                 }
             },
             query(data){
@@ -113,20 +113,19 @@
                 console.log('submit!');
             },
             operateRent(){
-                if(this.input>0){
-                    this.withOutInfo.refund[0].from = this.contractInfo.from
-                    this.withOutInfo.refund[0].to = this.contractInfo.to
-                    this.withOutInfo.refund[0].amount = this.input
-                    this.withOutInfo.refund[0].cfgId = this.contractInfo.to
-                    delete this.withOutInfo.receipt;
+                if(this.input>=0){
+                    this.withOutInfo.transaction.flow = 'pay'
+                    this.withOutInfo.endDate = this.nowData()
+                    this.withOutInfo.transaction.amount = this.input
+
                 }else{
-                    this.withOutInfo.receipt[0].from = this.contractInfo.from
-                    this.withOutInfo.receipt[0].to = this.contractInfo.to
-                    this.withOutInfo.receipt[0].amount = -this.input
-                    this.withOutInfo.receipt[0].cfgId = this.contractInfo.to
-                    delete this.withOutInfo.refund;
+                    this.withOutInfo.transaction.flow = 'receive'
+                    this.withOutInfo.endDate = this.nowData()
+                    this.withOutInfo.transaction.amount = -this.input
                 }
                 console.log(this.withOutInfo)
+                this.input = ''
+                this.newModel()
                 // this.$model('contracts')
                 // .update(this.withOutInfo,{projectId:this.projectId,id:this.form.id})
                 // .then(res=>{
@@ -139,7 +138,7 @@
                 this.withOutInfo = this.newModel()
             },
             nowData(){
-                return Date.parse(new Date())
+                return Date.parse(new Date())/1000
             }
         }
     }
