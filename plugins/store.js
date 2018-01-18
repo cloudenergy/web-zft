@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-01-18 16:27:31
+ * @Last Modified time: 2018-01-18 18:35:29
  */
 
 import api from '~/plugins/api';
@@ -43,7 +43,7 @@ export default {
             state.communities = data;
         },
         SAVE_OTHERCOST(state, data) {
-            state.extra = function(){
+            state.othercost = function(){
                 return _.filter(data,{group:"加收费用"})
             }
         }
@@ -87,7 +87,7 @@ export default {
             }
             return api('city_area');
         },
-        GET_OTHERCOST({ commit, state }, { }) {
+        GET_OTHERCOST({ commit, state }) {
             if (state.othercost) {
                 return Promise.resolve(state.othercost);
             }

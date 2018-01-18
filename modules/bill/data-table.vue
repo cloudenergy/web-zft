@@ -31,13 +31,12 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="small" style="width:70px" @click.native="handleReceive(scope.$index, scope.row)">
+                    <el-button type="primary" size="small" style="width:70px" @click.native="handleReceive(scope.$index, scope.row)" :disabled="scope.row.payments.length!==0">
                         收款
                     </el-button>
                 </template>
             </el-table-column>
         </el-table>
-        
         <el-dialog
         title="收款"
         :visible.sync="dialogVisible"
@@ -131,7 +130,6 @@ export default {
         },
         differentTimePoor(data,time) {
             if(time>data){
-                console.log((Date.parse(differentTime(data*1000))))
                 return Math.ceil((time-(Date.parse(differentTime(data*1000)))/1000)/86400)
             }
         },
