@@ -7,8 +7,7 @@ describe('AddContract', () => {
 	// Now mount the component, and you have the wrapper.
 	const wrapper = shallow(AddContract, {
 		mocks: {
-			$model: (api) => ({query: () => Promise.resolve([])}),
-			// TODO Louis Suo revise the test
+			$model: () => ({query: () => Promise.resolve([])}),
 			$store: {
 				dispatch: () => Promise.resolve([])
 			}
