@@ -5,8 +5,9 @@ describe('DataTable', () => {
 	// Now mount the component, and you have the wrapper.
 	const wrapper = shallow(DataTable, {
 		mocks: {
-			$model: (api) => ({query: () => Promise.resolve([])}),
+			$model: () => ({query: () => Promise.resolve([])}),
 			$store: {
+				dispatch: () => Promise.resolve([]),
 				state: {
 					user: {
 						projectId: 100
@@ -18,8 +19,8 @@ describe('DataTable', () => {
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain('<el-table-column label="应支付日"></el-table-column>')
-		expect(wrapper.html()).toContain('<el-table-column label="房源/租期"></el-table-column>')
-		expect(wrapper.html()).toContain('<el-table-column label="金额(¥)/账期"></el-table-column>')
+		expect(wrapper.html()).toContain('<el-table-column label="房源/账期"></el-table-column>')
+		expect(wrapper.html()).toContain('<el-table-column label="金额(¥)/类型"></el-table-column>')
 		expect(wrapper.html()).toContain('<el-table-column label="操作"></el-table-column>')
 
 	})

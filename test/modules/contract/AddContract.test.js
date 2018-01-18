@@ -10,7 +10,7 @@ describe('AddContract', () => {
 			$model: (api) => ({query: () => Promise.resolve([])}),
 			// TODO Louis Suo revise the test
 			$store: {
-				dispatch:(api) => ({query: () => new Promise(function(resolve, reject) {}).then(function(){})})
+				dispatch: () => Promise.resolve([])
 			}
 		}
 	});
