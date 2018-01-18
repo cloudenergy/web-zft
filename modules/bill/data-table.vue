@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-table :data="tableBill" style="width: 100%">
-            <el-table-column label="应支付日" width="150">
+            <el-table-column label="应支付日">
                 <template slot-scope="scope">
-                    <p style="margin-left: 10px;color:red">{{ scope.row.overdue }}</p>
+                    <p style="margin-left: 10px;color:red" v-if="scope.row.payments.length===0&&nowTime>chooseTime(scope.row.dueDate)">已逾期{{differentTimePoor(scope.row.dueDate,nowTime)}}天</p>
                     <p style="margin-left: 10px">{{ scope.row.dueDateTime }}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="住户姓名/帐号" width="150">
+            <el-table-column label="住户姓名/帐号">
                 <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                         <i class="el-icon-phone"></i>
@@ -16,38 +16,45 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="房源/租期">
+            <el-table-column label="房源/账期">
                 <template slot-scope="scope">
                     <p>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber }}&nbsp;{{ scope.row.room.roomName }}</p>
 					<p>{{scope.row.startDateTime}}至{{scope.row.endDateTime}}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="金额(¥)/账期" width="150">
+            <!-- TODO 增加租金期数 -->
+            <el-table-column label="金额(¥)/类型">
                 <template slot-scope="scope">
                     <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}</p>
                     <p style="margin-left: 10px;color:grey" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type">{{ item.text }}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="150">
+            <el-table-column label="操作">
                 <template slot-scope="scope">
-                    <el-dropdown>
-                        <el-button type="primary" size="mini" @click.native="handleReceive(scope.$index, scope.row)">
-                            收款
-                            <i class="el-icon-arrow-down el-icon--right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item @click.native="handleEdit(scope.$index, scope.row)">编辑</el-dropdown-item>
-                            <el-dropdown-item @click.native="addComment(scope.$index, scope.row)">备注</el-dropdown-item>
-                            <el-dropdown-item @click.native="changeDate(scope.$index, scope.row)">改期</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                    <el-button type="primary" size="small" style="width:70px" @click.native="handleReceive(scope.$index, scope.row)">
+                        收款
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
+        
+        <el-dialog
+        title="收款"
+        :visible.sync="dialogVisible"
+        width="40%">
+        <billCollection :data="tableData" :type="otherCost" ref="collect" @closeDialog='closeDialog()'/>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="collection()">确 定</el-button>
+        </span>
+        </el-dialog>
     </div>
 </template>
 
+
 <script>
+import billCollection from './bill-collection.vue'
+import {differentTime} from '../../utils/date.js'
 export default {
 	props: {
 		pagingSize:{
@@ -57,12 +64,20 @@ export default {
 			type:Array
 		}
 	},
+    components: {
+        billCollection  
+    },
 	computed: {
 		projectId(){
 			return this.$store.state.user.projectId
 		},
-		
-	},
+		nowTime() {
+            return Date.parse(new Date())/1000
+        }
+    },
+    created () {
+        this.query()  
+    },
 	data() {
 		return {
 			tableData:[],
@@ -78,7 +93,8 @@ export default {
 				{type:'deposit-refund',text:'退定金'},
 				{type:'rent-refund',text:'退租金'},
 				{type:'extra-refund',text:'退加收'},
-			]
+            ],
+            otherCost:[]
 		};
 	},
 	methods: {
@@ -88,7 +104,37 @@ export default {
 		 */
 		narrow(data) {
 			return data/100
-		}
+        },
+        handleReceive(index,data) {
+            this.tableData = data
+            console.log(this.tableData)
+            this.tableData.billItems.map((ele,index)=>{
+                ele.dueDateTime = data.dueDateTime
+                ele.endDateTime = data.endDateTime
+            })
+            this.dialogVisible = true
+        },
+        collection() {
+            this.$refs.collect.payRent()
+        },
+        closeDialog() {
+            this.$emit('refresh')
+            this.dialogVisible = false;
+        },
+        query(){
+			this.$store
+    		.dispatch('GET_OTHERCOST')
+    		.then(data => (this.otherCost = data));
+        },
+        chooseTime(data) {
+            return Date.parse(differentTime(data*1000))/1000
+        },
+        differentTimePoor(data,time) {
+            if(time>data){
+                console.log((Date.parse(differentTime(data*1000))))
+                return Math.ceil((time-(Date.parse(differentTime(data*1000)))/1000)/86400)
+            }
+        },
 	}
 };
 </script>

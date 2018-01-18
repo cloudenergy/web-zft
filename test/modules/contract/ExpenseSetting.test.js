@@ -17,23 +17,23 @@ describe('ExpenseSetting', () => {
 				},
 				extra: [
 					{
-						id: 2,
+						configId: 1041,
 						name: '电费',
-						type: '2',
-						rent: 1.20,
-						pattern: 'prepaid',
+						type: 'extra',
+						rent: 1.2,
+						pattern: 'prepaid'
 					},
 					{
-						id: 3,
+						configId: 1043,
 						name: '水费',
-						type: 'water',
+						type: 'extra',
 						rent: 20,
-						pattern: '1',
+						pattern: '1'
 					}
 				],
 				bond: 2600
 			},
-			otherCost: []
+			otherCost:[]
 		}
 	});
 
@@ -64,7 +64,7 @@ describe('ExpenseSetting', () => {
 					extra: [],
 					bond: 0
 				},
-				otherCost: []
+				otherCost:[]
 			}
 		});
 		expect(billPlan1.vm.unitOfDate).toBe('天')
@@ -80,7 +80,7 @@ describe('ExpenseSetting', () => {
 					extra: [],
 					bond: 0
 				},
-				otherCost: []
+				otherCost:[]
 			}
 		});
 		expect(billPlan2.vm.unitOfDate).toBe('号')

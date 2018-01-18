@@ -37,34 +37,34 @@ setup({
 	cancelToken: source.token,
 	headers: {
 		'content-type': 'application/json'
+	},
+	interceptors: {
+		reponse(res) {
+			const { code, message, data } = res;
+			if (code && code !== 0) {
+				Message({
+					message: message,
+					type: 'error'
+				});
+
+				return Promise.reject(message);
+			}
+
+			return data;
+		}
 	}
 });
 
-const interceptor = function(res) {
-	const { code, message, errmsg, status, data } = res;
-	if ((code && code !== 0) || errmsg) {
-		Message({
-			message: message || errmsg,
-			type: 'error'
-		});
+const interceptor = function({ response }) {
+	const { status, data } = response;
 
-		return Promise.reject(message || errmsg);
+	if (status === 401) {
+		source.cancel('login required.');
+		localStorage.user = '{}';
+		router.push('/login');
+		return data;
 	}
-
-	if (status) {
-		switch (status) {
-			case 401:
-				source.cancel('login required.');
-				localStorage.user = '{}';
-				router.push('/login');
-				return data;
-				break;
-			default:
-				return Promise.reject(data);
-		}
-	}
-
-	return res;
+	return Promise.reject(data);
 };
 const [get, post, put, del, patch] = [
 	makeGet,
@@ -108,9 +108,14 @@ const apis = {
 	),
 	housedetail: resource('/projects/{projectId}/houses/{id}'),
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
-	top_up: resource('/project/{projectId}/fundChannels'),
+	top_up: resource('/projects/{projectId}/fundChannels'),
 	all_user_bills: resource('/projects/{projectId}/bills'),
-	config_list: resource('/projects/{projectId}/config')
+	config_list: resource('/projects/{projectId}/config'),
+	room_contracts: resource('/projects/{projectId}/rooms/{roomId}/contracts'),
+	delete_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
+	add_room: resource('/projects/{projectId}/houses/{houseId}/rooms'),
+	contracts_info: resource('/projects/{projectId}/contracts/{contractId}'),
+	bill_collection: resource('/projects/{projectId}/bills/{billId}/payments')
 };
 
 /**

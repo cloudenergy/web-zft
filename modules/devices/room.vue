@@ -100,24 +100,34 @@
     				});
     		},
     		deleteequipment() {
-    			this.$model('room_devices')
-    				.delete(
-    					{},
-    					{
-    						projectId: this.projectId,
-    						houseId: this.houseId,
-    						roomId: this.room.id,
-    						id: this.room.devices[0].deviceId
-    					}
-    				)
-    				.then(data => {
-						console.log(data)
-    					this.$message.success('解绑成功');
-    					this.$emit('sendFloor');
-    				})
-    				.catch(err => {
-    					this.$message('解绑失败');
-    				});
+				this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+					}).then(() => {
+						this.$model('room_devices')
+						.delete({},{
+								projectId: this.projectId,
+								houseId: this.houseId,
+								roomId: this.room.id,
+								id: this.room.devices[0].deviceId
+							}
+						)
+						.then(data => {
+							console.log(data)
+							this.$message.success('解绑成功');
+							this.$emit('sendFloor');
+						})
+						.catch(err => {
+							this.$message('解绑失败');
+						});
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+					});          
+				});
+    			
     		}
     	}
     };

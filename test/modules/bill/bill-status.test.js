@@ -6,8 +6,8 @@ describe('BillStatus', () => {
 	const wrapper = mount(BillStatus)
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<el-menu-item index="progressing">未完成</el-menu-item>')
-		expect(wrapper.html()).toContain('<el-menu-item index="finished">已完成</el-menu-item>')
+		expect(wrapper.html()).toContain('<el-menu-item index="false">未完成</el-menu-item>')
+		expect(wrapper.html()).toContain('<el-menu-item index="true">已完成</el-menu-item>')
 	})
 
 

@@ -38,9 +38,23 @@
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
-			},
-			otherCost() {
-				return _.filter(this.configList,{group:"加收费用"})
+			}
+		},
+		watch: {
+			otherCost(newVal,oldVal){
+				this.form.expense.extra=newVal.map((ele,index)=>{
+					var extraCost = {
+						configId:ele.id,
+						name:ele.key,
+						type:'extra',
+						rent:'',
+						pattern:'withRent'
+					} 
+					if(extraCost.name==="电费"){
+						extraCost.pattern="prepaid"
+					}
+					return extraCost
+				})
 			}
 		},
 		created(){
@@ -50,7 +64,8 @@
 			const today = new Date();
 			return {
 				form: this.newModel(today),
-				configList:[]
+				configList:[],
+				otherCost:[]
 			};
 		},
 		mounted() {
@@ -62,10 +77,9 @@
 		},
 		methods: {
 			query(){
-				this.$model('config_list')
-				.query({},{projectId:this.projectId})
-				.then(res=>{this.$set(this,'configList',res)})
-				.catch(err=>console.log(err))
+				this.$store
+    			.dispatch('GET_OTHERCOST')
+    			.then(data => (this.otherCost = data));
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
@@ -166,7 +180,7 @@
 				}
 			},
 			createExpense(form) {
-				const extraExpense = fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra);
+				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra),function(o){return o.rent});
 				return fp.map(this.unitAsCent)(extraExpense);
 			},
 			closeDialog() {

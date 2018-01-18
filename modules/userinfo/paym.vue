@@ -15,7 +15,7 @@
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="缴费方式">
                         <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%">
-                            <el-option :label=item.name value="id" v-for="item in payRoad" :key="item.id"></el-option>
+                            <el-option :label='item.name' :value='item.id' v-for="item in payRoad" :key="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="缴费金额" prop="price" :rules="[
@@ -70,7 +70,7 @@
             },
             query(data){
                 this.$model('fund_channel')
-                .query({flow:'receive',tag:'manual'},{projectId: this.projectId})
+                .query({category:'offline',flow:'receive'},{projectId: this.projectId})
                 .then(res=>this.$set(this,'payRoad',res))
             },
             onSubmit(formName) {
@@ -81,10 +81,13 @@
                     .patch({amount:this.form.price,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.payRoad[0].id})
                     .then(res=>{
                         console.log(res)
+                        this.$message.success('充值成功');
+                        this.$refs[formName].resetFields();
+                        this.cleraboth();
                     })
-                    this.$message.success('记入账单成功');
-                    this.$refs[formName].resetFields();
-                    this.cleraboth();
+                    .catch(err=>{
+                        this.$message('充值失败');
+                    })
                 }
             },
             onclose(formName) {

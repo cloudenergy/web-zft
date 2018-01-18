@@ -98,7 +98,7 @@
         this.$refs.tableData.toggleRowExpansion(this.form.find(d => d.id == flowi))
       },
       set(time){
-        return new Date(parseInt(time) * 1000).toLocaleString().replace(/\//g, "-")
+        return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
       },
     }
   }

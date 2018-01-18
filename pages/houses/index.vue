@@ -1,8 +1,8 @@
 <template>
     <div class="page-house-index">
-        <Tab @change="refresh" :selected="houseFormat" />
+        <Tab @change="refresh" :selected="reqData.houseFormat" />
         <div class="main-container">
-            <Search />
+            <Search @changeRoom='changeRoom'/>
             <div class="houses">
                 <div class="room" v-for="house in houses">
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
@@ -12,7 +12,17 @@
 									<icon type='iconupload'/>
 								</span>
                             </el-tooltip>
-                            <icon type="gengduo1" />
+							<el-dropdown placement="bottom-start">
+								<span class="el-dropdown-link">
+									<icon type="gengduo1" />
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item>编辑房源</el-dropdown-item>
+									<el-dropdown-item @click.native="addRoom(house)">添加房间</el-dropdown-item>
+									<el-dropdown-item @click.native="deleteHouse(house)">删除房源</el-dropdown-item>
+									<el-dropdown-item>关闭房源</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
                         </span>
                     </div>
                     <div class="cells">
@@ -45,7 +55,11 @@
     			currentHouse: null,
     			viewRoom: false,
     			viewHouse: false,
-    			houseFormat: 'SHARE'
+				reqData:{
+					houseFormat: 'SHARE',
+    				size: 200,
+    				index: 1
+				}
     		};
     	},
     	computed: {
@@ -57,18 +71,18 @@
     		this.query();
     	},
     	methods: {
+			changeRoom(data) {
+				this.reqData.bedRooms = data
+				this.query()
+			},
     		refresh(type) {
-    			this.houseFormat = type;
+    			this.reqData.houseFormat = type;
     			this.query();
-    		},
+			},
     		query() {
     			this.$model('houses')
     				.query(
-    					{
-    						houseFormat: this.houseFormat,
-    						size: 200,
-    						index: 1
-    					},
+						this.reqData,
     					{ projectId: this.projectId }
     				)
     				.then(res => {
@@ -88,7 +102,7 @@
 				this.currentHouse = house
 				this.viewHouse = true
 			},
-    		del(house) {
+    		deleteHouse(house) {
     			this.$confirm('确认删除该房源, 是否继续?', '提示', {
     				confirmButtonText: '确定',
     				cancelButtonText: '取消',
@@ -107,7 +121,18 @@
     						message: '已取消删除'
     					});
     				});
-    		}
+			},
+			addRoom(data){
+				this.$model('add_room')
+				.create({},{projectId:this.projectId,houseId:data.houseId})
+				.then(res=>{
+					this.$message.success('添加成功')
+					this.query()
+				})
+				.catch(err=>{
+					console.log(err)
+				})
+			}
     	}
     };
 </script>
@@ -147,5 +172,30 @@
     }
     .drawer {
     	padding: 30px;
+	}
+	.moreSet{
+		position: relative;
+			ul{
+				position: absolute;
+				top:13px;
+				left:-25px;				
+				width: 60px;
+				background: #fff;
+				box-shadow:0 0 1px #CCC;
+				display: none;
+				overflow: hidden;
+				text-align: center;
+				z-index:100;
+				li{
+					list-style: none;
+					margin:4px 0;
+				}
+			}
+	}
+	.moreSet:hover ul{
+		display: block;	
+		li:hover{
+			color:#409eff
+		}			
 	}
 </style>

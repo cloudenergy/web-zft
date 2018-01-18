@@ -1,13 +1,14 @@
 <template>
-    <div class="house-cell" :class="{leased: out}">
+    <div class="house-cell" :class="{leased: classOut}">
         <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
             <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
-            <p>￥ 200</p>
-            <p class="rentee">
+            <p v-if="room.contract.rent!==undefined">￥{{rentSmall}}/月</p>
+            <p v-if="room.contract.rent===undefined">未出租</p>
+            <p class="rentee"  v-if="room.contract.rent!==undefined">
                 <span>
-                    <icon type="yuangong" />小清新</span>
-                <span>退: 2018-10-1</span>
+                    <icon type="yuangong" />{{room.contract.name}}</span>
+                <span>退: {{timeDate(room.contract.to)}}</span>
             </p>
         </div>
         <div class="actions cursorp">
@@ -17,7 +18,7 @@
                 </p>
             </el-tooltip>
             <el-tooltip content="合同列表" placement="top">
-                <p @click="view()">
+                <p @click="viewContracts()">
                     <icon type="touxiang1"  style="margin:0 5px;"/>
                 </p>
             </el-tooltip>
@@ -32,21 +33,36 @@
 						<icon type="gengduo1"  style="margin:0 5px;"/>
 					</span>
 					<ul>
-						<li>退租</li>
-						<li>续租</li>
-						<li>删除合同</li>
-						<li>删除房间</li>
+						<li v-if="room.status==='INUSE'" @click="without()">退租</li>
+						<li v-if="room.status==='INUSE'" @click="renewal()">续租</li>
+						<li v-if="room.status==='INUSE'" @click="deleteContracts()">删除合同</li>
+						<li @click="deleteRoom()">删除房间</li>
 						<li>编辑房间</li>
-						<li>关闭房间</li>
+						<li @click="closeRoom()">关闭房间</li>
 					</ul>
                 </p>
         </div>
+		<el-dialog title="合同列表" :visible.sync="visibility" width="600px">
+			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading"/>
+		</el-dialog>
+		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="50%">
+			<RentWithout :id="room.contract.id" ref="operate"/>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
+				<el-button type="primary" @click="operateRent">确 定</el-button>
+			</span>
+		</el-dialog>
     </div>
 </template>
 
 <script>
     import AddModal from './add';
-    import { NewContract } from '~/modules/contract';
+	import { NewContract } from '~/modules/contract';
+	import ContractsList from './contractsList'
+	import {
+		RentWithout,
+		Relet
+	} from '../userinfo';
     const orientations = {
     	N: '北',
     	S: '南',
@@ -58,18 +74,39 @@
     	props: {
     		room: Object,
     		house: Object
-    	},
+		},
+		components: {
+			ContractsList,
+			RentWithout
+		},
     	filters: {
     		orientation(val) {
     			return orientations[val] || '';
     		}
-    	},
+		},
+		computed: {
+			classOut() {
+				return this.room.status==='IDLE'
+			},
+			rentSmall() {
+				return this.room.contract.rent/100
+			},
+			projectId() {
+				return this.$store.state.user.projectId
+			}
+		},
     	data() {
     		return {
-    			out: Math.random() > 0.5
+				roomAllContracts:[],
+				visibility:false,
+				loading: true,
+				dialogVisibleWithout:false
     		};
     	},
     	methods: {
+			timeDate(data){
+				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+			},
     		edit() {
     			// 编辑窗口
     			this.$modal.$emit('open', {
@@ -94,7 +131,72 @@
     				},
     				title: '新增合约'
     			});
-    		}
+			},
+			viewContracts(){
+				if(this.classOut){
+					this.$message('暂无合约')
+				}else{
+					this.$model('room_contracts')
+					.query({},{projectId:this.projectId,roomId:this.room.id})
+					.then(res=>{
+						this.$set(this,'roomAllContracts',res.data)
+					})
+					.catch(err=>{
+						consosle.log(err)
+					})
+					this.visibility = true
+					this.loading = false
+				}
+				
+			},
+			deleteRoom(){
+				this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+					}).then(() => {
+						this.$model('delete_room')
+						.delete({},{projectId:this.projectId,houseId:this.house.houseId,id:this.room.id})
+						.then(res=>{
+							this.$message.success('删除成功!');
+						})
+						.catch(err=>{
+							this.$message('删除失败')
+						})
+					}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});          
+				});
+			},
+			// 退租
+			without(){
+				this.dialogVisibleWithout = true
+			},
+			// 续租
+			renewal(){
+				this.$modal.$emit('open', {
+					comp: Relet,
+					data: {
+						contractsId:this.room.contract.id
+					},
+					title: '续租'
+				});
+			},
+			// 删除合同
+			deleteContracts(){
+
+			},
+			// 关闭房间
+			closeRoom(){
+
+			},
+			operateRent(){
+				this.$refs.operate.operateRent()
+				this.dialogVisibleWithout = false
+			}
+
     	}
     };
 </script>
@@ -103,14 +205,14 @@
     .house-cell {
     	position: relative;
     	padding: 10px;
-    	width: 180px;
+    	width: 240px;
     	height: 116px;
     	border-radius: 4px;
     	border: 1px solid @light;
     	border-left: 4px solid @success;
 
     	&.leased {
-    		border-left-color: @light;
+    		border-left-color: rgb(253, 109, 109);
     	}
 
     	.cell {

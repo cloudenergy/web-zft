@@ -4,23 +4,25 @@
 			<el-col :span="3">
 				<div class="section-label">收租时间</div>
 			</el-col>
-			<el-col :span="9">
-				<div class="select-with-label el-input-group">
-					<span class="el-input-group__prepend">账单</span>
-					<el-select v-model="expense.billPlan" class="bill-plan prepend-label">
-						<el-option v-for="item in availablePlans" :label="item.name" :value="item.plan"
-								   :key="item.plan"></el-option>
-					</el-select>
-				</div>
-			</el-col>
-			<el-col :span="9">
-				<div class="select-with-label el-input-group">
-					<el-select v-model="expense.offset" class="bill-plan-days">
-						<el-option v-for="item in dateRange" :label="item.label" :value="item.value"
-								   :key="item.value"></el-option>
-					</el-select>
-					<span class="el-input-group__append">收租</span>
-				</div>
+			<el-col :span="21">
+				<el-col :span="9">
+					<div class="select-with-label el-input-group">
+						<span class="el-input-group__prepend">账单</span>
+						<el-select v-model="expense.billPlan" class="bill-plan prepend-label">
+							<el-option v-for="item in availablePlans" :label="item.name" :value="item.plan"
+									:key="item.plan"></el-option>
+						</el-select>
+					</div>
+				</el-col>
+				<el-col :span="9">
+					<div class="select-with-label el-input-group">
+						<el-select v-model="expense.offset" class="bill-plan-days">
+							<el-option v-for="item in dateRange" :label="item.label" :value="item.value"
+									:key="item.value"></el-option>
+						</el-select>
+						<span class="el-input-group__append">收租</span>
+					</div>
+				</el-col>
 			</el-col>
 		</el-row>
 		<el-row class="standard-rent-row">
@@ -37,7 +39,7 @@
 				<el-button size="mini" @click="innerVisible = true">+添加</el-button>
 			</el-col>
 			<el-col :span="21" class="extra-item">
-				<ExpenseDisplay v-for="item in expense.extra" :expense="item" :key="item.id"></ExpenseDisplay>
+				<ExpenseDisplay v-for="item in expense.extra" :expense="item" :key="item.id" v-if="otherCoste.includes(item.configId)"></ExpenseDisplay>
 			</el-col>
 		</el-row>
 		<el-row class="bond-row">
@@ -55,9 +57,9 @@
 			title="选择要增加的收费选项"
 			:visible.sync="innerVisible"
 			append-to-body>
-			<el-checkbox v-model="otherCoste" :label="item.id" border v-for="item in otherCost" :key="item.id" @change="showother" style="width:85px;margin:3px">{{item.key}}</el-checkbox>
+			<el-checkbox v-model="otherCoste" :label="item.id" border v-for="item in otherCost" :key="item.id" @change="showOther" style="width:85px;margin:3px">{{item.key}}</el-checkbox>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">取 消</el-button>
+				<el-button @click="chooseCost">取 消</el-button>
 				<el-button type="primary" @click="chooseCost">确 定</el-button>
 			</span>
 		</el-dialog>
@@ -137,13 +139,10 @@
 			addCost(data){
 				
 			},
-			showother(){
+			showOther(){
 				console.log(this.otherCoste)
 			},
 			chooseCost(){
-				this.otherCoste.map((item,index)=>{
-					return this.addCost(item)
-				})
 				this.innerVisible = false;
 			}
 		}

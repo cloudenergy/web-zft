@@ -3,37 +3,32 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>合同周期 </span>
-                <span>{{form.fromDate}}-{{form.toDate}}</span>
+                <span>{{set(contractInfo.from)}}-{{set(contractInfo.to)}}</span>
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
-                <el-radio v-model="roomStatus" label="">是</el-radio>
-                <el-radio v-model="roomStatus" label="pause">否</el-radio>
+                <el-radio v-model="withOutInfo.toConfig" label="PAUSED">是</el-radio>
+                <el-radio v-model="withOutInfo.toConfig" label="IDIE">否</el-radio>
             </div>
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户姓名 </span>
-                <span>{{form.user.name}}</span>
+                <span v-if="contractInfo.user.name">{{contractInfo.user.name}}</span>
             </div>
             <div>
-                <span class="set-width">经办人</span>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
+                
             </div>
         </div>
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户账号 </span>
-                <span>{{form.user.accountName}}</span>
+                <span v-if="contractInfo.user.name">{{contractInfo.user.accountName}}</span>
             </div>
             <div>
                 <span class="set-width">支付方式</span>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
+                <el-select v-model="withOutInfo.payChannel" placeholder="请选择">
+                    <el-option :label='item.name' :value="item.id" v-for="item in payRoad" :key="item.id"></el-option>
                 </el-select>
             </div>
         </div>
@@ -44,14 +39,14 @@
             </div>
             <div class="flexc setInput">
                 <span class="set-width">结算余额</span>
-                <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;"></el-input>
+                <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number"></el-input>
                 <span class="hint">整数表示收款，负数表示退款</span>
             </div>
         </div>
         <div>
             <div class="flexc setElementHeight">
                 <span style="display:inline-block;width:70px">
-                    结算余额
+                    结算备注
                 </span>
                 <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea" style="min-height:80px">
                 </el-input>
@@ -61,10 +56,11 @@
 </template>
 
 <script>
+    import axios from 'axios' 
     export default {
         props: {
-            form: {
-                type: Object
+            id: {
+                type:String
             }
         },
         computed: {
@@ -74,37 +70,75 @@
 		},
         data() {
             return {
-                radio: '',
+                withOutInfo:this.newModel(),
                 input: '',
                 textarea: '',
-                value:'',
-                roomStatus:'',
-                options: [{
-                    value: '1',
-                    label: 'laoli'
-                }, {
-                    value: '2',
-                    label: 'laowang'
-                }, {
-                    value: '3',
-                    label: 'laozhang'
-                }]
+                contractInfo:{
+                    user:''
+                },
+                payRoad:[]
             }
         },
+        mounted () {
+            this.query(this.id)
+        },
         methods: {
+            set(time){
+                return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
+            },
+            newModel(){
+                return {
+                    toConfig:'IDIE',
+                    status:'TERMINATED',
+                    payChannel:1,
+                    transaction:{
+                        remake:''
+                    }
+                }
+            },
+            query(data){
+                this.$model('contracts_info')
+                .query({},{projectId:this.projectId,contractId:data})
+                .then(res=>{
+                    this.$set(this,'contractInfo',res)
+                })
+                .catch(err=>{
+                    console.log(err,'asdfa')
+                })
+                this.$model('fund_channel')
+                .query({category:'offline',flow:'receive'},{projectId: this.projectId})
+                .then(res=>this.$set(this,'payRoad',res))
+            },
             onSubmit() {
                 console.log('submit!');
             },
             operateRent(){
-                this.$model('contracts')
-                .update({status: 'terminated'},{projectId:this.projectId,id:this.form.id})
-                .then(res=>{
-                    console.log(res)
-                    this.$message.success('退租成功')
-                })
-                .catch(res=>{
-                    this.$message.info('退租失败')
-                })
+                if(this.input>=0){
+                    this.withOutInfo.transaction.flow = 'pay'
+                    this.withOutInfo.endDate = this.nowData()
+                    this.withOutInfo.transaction.amount = this.input
+
+                }else{
+                    this.withOutInfo.transaction.flow = 'receive'
+                    this.withOutInfo.endDate = this.nowData()
+                    this.withOutInfo.transaction.amount = -this.input
+                }
+                console.log(this.withOutInfo)
+                this.input = ''
+                this.newModel()
+                // this.$model('contracts')
+                // .update(this.withOutInfo,{projectId:this.projectId,id:this.form.id})
+                // .then(res=>{
+                //     console.log(res)
+                //     this.$message.success('退租成功')
+                // })
+                // .catch(err=>{
+                //     this.$message.info('退租失败')
+                // })
+                this.withOutInfo = this.newModel()
+            },
+            nowData(){
+                return Date.parse(new Date())/1000
             }
         }
     }

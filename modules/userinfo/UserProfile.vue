@@ -1,6 +1,6 @@
 <template>
 	<div class="profile profile-form">
-		<el-row>
+		<el-row v-if="user.name===undefined">
 			<el-col :span="8">
 				<el-form-item
 						prop="user.name"
