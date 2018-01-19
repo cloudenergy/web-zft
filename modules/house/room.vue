@@ -43,7 +43,7 @@
                 </p>
         </div>
 		<el-dialog title="合同列表" :visible.sync="visibility" width="600px">
-			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading" @click.native="showUserInfo(room.contract)"/>
+			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading" @click.native="showUserInfo(room.contract)" class="cursorp"/>
 		</el-dialog>
 		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="50%">
 			<RentWithout :id="room.contract.id" ref="operate"/>

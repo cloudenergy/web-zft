@@ -38,7 +38,7 @@
         </drawer-panel>
 		<drawer-panel :open.sync="viewHouse">
             <div v-if="viewHouse" class="drawer">
-                <houseInformation :house="currentHouse" :houseType="houseFormat"/>
+                <houseInformation :house="currentHouse" :houseType="reqData.houseFormat"/>
             </div>
         </drawer-panel>
     </div>

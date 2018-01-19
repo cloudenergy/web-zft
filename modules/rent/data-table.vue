@@ -278,12 +278,10 @@
 		},
 		methods: {
 			rentuser( value, item) {
-				this.dialogVisible = true;
-				this.showinf = value;
+				this.updateData.user = item.user;
 				this.$model('contracts_info')
 				.query({},{projectId: this.projectId,contractId:item.id})
 				.then(res=>{
-					console.log(res)
 					this.updateData = res;
 				})
 				.catch(err=>{
@@ -292,6 +290,8 @@
 				this.$model('contract_bill')
 				.query({},{projectId: this.projectId,id:item.id})
 				.then(data=> this.$set(this,'contractbill',data))
+				this.dialogVisible = true;
+				this.showinf = value;
 			},
 			rentuser2(data, value) {
 				var that = this;

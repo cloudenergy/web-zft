@@ -11,7 +11,7 @@
             class="startEND">
             </el-date-picker>
         </div>
-        <el-form ref="form" :model="form" label-width="120px" :label-position="labelPosition">
+        <el-form ref="form" :model="form" label-width="120px" :label-position="labelPosition" v-if="form.contractId!==1">
             <el-form-item label="租金" class="disable">
                 <el-tag type="info" class="inputuser">月租</el-tag>
                 <el-tag type="info" class="inputuser" v-if="form.strategy.freq.pattern==1">一月一付</el-tag>
@@ -66,7 +66,6 @@
         },
         watch:{
             form(newval,oldval){
-                console.log(newval)
                 this.changetime(newval.signUpTime,newval.from,newval.to)
                 this.strt(newval.paymentPlan)
             }
