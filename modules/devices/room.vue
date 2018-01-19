@@ -22,7 +22,7 @@
                     <span>断电</span>
                 </p>
             </div>
-            <div v-if="room.devices==''||null" class="add" @click="edit(room)">
+            <div class="add" @click="edit(room)">
                 <i class="el-icon-circle-plus"></i>
             </div>
         </div>

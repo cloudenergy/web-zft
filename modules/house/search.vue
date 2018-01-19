@@ -63,6 +63,9 @@
 			},
 			changeRoomsNum(data) {
 				this.$emit('changeRoom',data)
+			},
+			addHouse() {
+				this.$emit('successRefresh')
 			}
 		},
 		

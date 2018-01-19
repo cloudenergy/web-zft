@@ -14,12 +14,28 @@
                 <span style="line-height:20px;margin-right:15px">
                     智能设备
                 </span>
-                <i class="el-icon-circle-plus-outline" style="font-size:20px" v-if="house.devices.length==0" @click="bindEleciricity"></i>
+                <i class="el-icon-circle-plus-outline" style="font-size:20px" @click="bindEleciricity"></i>
             </h4>
             <el-table :data="house.devices" stripe>
                 <el-table-column prop="deviceId" label="ID" width="150">
                 </el-table-column>
                 <el-table-column prop="title" label="设备" min-width="200">
+                </el-table-column>
+                <el-table-column label="通讯状态"  width="100">
+                     <template slot-scope="scope">
+                        <span>正常</span>
+                        <span>异常</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="控制"  width="100">
+                     <template slot-scope="scope">
+                        <el-switch
+                            style="display: block"
+                            v-model="value4"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949">
+                        </el-switch>
+                    </template>
                 </el-table-column>
                 <el-table-column label="管理"  max-width="80">
                      <template slot-scope="scope">
@@ -31,8 +47,21 @@
                 </el-table-column>
             </el-table>
         </div>
+        <div class="flexc setPrice">
+            <span class="title">电费分摊</span>
+            <div class="centerRoom">
+                <span>房间:a20</span>
+                <span>房间:a20</span>
+                <span>房间:a20</span>
+                <span>房间:a20</span>
+                <span>房间:a20</span>
+            </div>
+            <div class="write">
+                <i class="el-icon-edit-outline" @click="writePercent"></i>
+            </div>
+        </div>
         <div>
-            <el-button @click.native="del" type="danger">删除</el-button>
+            <el-button @click.native="del" type="danger"  style="margin-top:100px;">删除此房源</el-button>
         </div>
         <el-dialog
             title="选择要绑定的职能设备"
@@ -57,7 +86,8 @@
         },
         data () {
             return {
-                dialogVisible:false
+                dialogVisible:false,
+                value4:true
             }
         },
         // created () {
@@ -84,6 +114,9 @@
     		}
         },
     	methods: {
+            writePercent() {
+                this.visibility = true;
+            },
     		del(room) {
     			this.$model('rooms').delete(null, {
     				id: this.roomId
@@ -158,5 +191,31 @@
     		margin-bottom: 20px;
     	}
     }
+    .setPrice{
+        .title{
+            width: 80px;
+            font-size: 14px;
+            line-height: 28px;
+        }
+        .centerRoom{
+            flex: 1;
+            span{
+                display: inline-block;
+                width: 80px;
+                line-height: 28px;
+            }
+        }
+        .write{
+            width: 102px;
+            padding: 0 10px;
+            font-size: 20px;
+            line-height: 28px;
+        }
+        
+    }
 </style>
-
+<style>
+    .el-switch{
+        height: 22px;
+    }
+</style>

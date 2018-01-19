@@ -24,9 +24,10 @@
 								</el-dropdown-menu>
 							</el-dropdown>
                         </span>
+                        <span class="badge pull-right">{{house.rooms.length}}</span>
                     </div>
                     <div class="cells">
-                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" />
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh'/>
                     </div>
                 </div>
             </div>
@@ -132,6 +133,9 @@
 				.catch(err=>{
 					console.log(err)
 				})
+			},
+			successRefresh(){
+				this.query()
 			}
     	}
     };

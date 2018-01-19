@@ -14,14 +14,30 @@
                 <span style="line-height:20px;margin-right:15px">
                     职能设备
                 </span>
-                <i class="el-icon-circle-plus-outline" style="font-size:20px" v-if="room.devices.length==0" @click="bindEleciricity"></i>
+                <i class="el-icon-circle-plus-outline" style="font-size:20px" @click="bindEleciricity"></i>
             </h4>
             <el-table :data="room.devices" stripe>
                 <el-table-column prop="deviceId" label="ID" width="150">
                 </el-table-column>
                 <el-table-column prop="title" label="设备" min-width="200">
                 </el-table-column>
-                <el-table-column label="管理"  max-width="80">
+                <el-table-column label="通讯状态"  width="100">
+                     <template slot-scope="scope">
+                        <span>正常</span>
+                        <span>异常</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="控制"  width="100">
+                     <template slot-scope="scope">
+                        <el-switch
+                            style="display: block"
+                            v-model="value4"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="管理"  width="100">
                      <template slot-scope="scope">
                         <el-button
                         size="mini"
@@ -73,11 +89,12 @@
     					bills: [{ name: '租金', amount: '1400', period: '一月一付' }]
     				};
     			}
-    		}
+            }
         },
         data () {
             return {
-                dialogVisible:false
+                dialogVisible:false,
+                value4:true
             }
         },
         components: {
@@ -183,4 +200,10 @@
     	}
     }
 </style>
+<style>
+    .el-switch{
+        height: 22px;
+    }
+</style>
+
 

@@ -147,7 +147,11 @@
     			this.$modal.$emit('dismiss');
     			this.$model('houses').create(data, {
     				projectId: this.user.projectId
-    			});
+    			})
+				.then(res=>{
+					this.$message.success('创建成功')
+					this.$emit('addhouse')
+				})
     		}
     	}
     };

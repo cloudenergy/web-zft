@@ -35,7 +35,7 @@
 					<ul>
 						<li v-if="room.status==='INUSE'" @click="without()">退租</li>
 						<li v-if="room.status==='INUSE'" @click="renewal()">续租</li>
-						<li v-if="room.status==='INUSE'" @click="deleteContracts()">删除合同</li>
+						<li v-if="room.status==='INUSE'" @click="deleteContracts(room.contract)">删除合同</li>
 						<li @click="deleteRoom()">删除房间</li>
 						<li>编辑房间</li>
 						<li @click="closeRoom()">关闭房间</li>
@@ -264,6 +264,7 @@
 						.delete({},{projectId:this.projectId,houseId:this.house.houseId,id:this.room.id})
 						.then(res=>{
 							this.$message.success('删除成功!');
+							this.$emit('successRefresh')
 						})
 						.catch(err=>{
 							this.$message('删除失败')
@@ -290,8 +291,24 @@
 				});
 			},
 			// 删除合同
-			deleteContracts(){
-
+			deleteContracts(data){
+				this.$confirm('此操作将删除该合同, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+						this.$model('contracts')
+						.delete({},{projectId: this.projectId,id:data.id})
+						.then(data=> {
+							this.$message({
+								type: 'success',
+								message: '删除成功!'
+							});
+							this.$emit('successRefresh')
+						})
+					}).catch(err => {
+						this.mistake('取消删除')
+					});
 			},
 			// 关闭房间
 			closeRoom(){

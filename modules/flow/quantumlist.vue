@@ -109,21 +109,19 @@ export default {
     },
     methods:{
         handleRowHandle(row){
-                console.log(row.id)
                 if(row.id!=this.upflowi){
                     this.toggle(row.id)
                     if (this.upflowi!=0){
                         this.toggle(this.upflowi)
                         this.upflowi=row.id
                     }
-                    console.log(this.upflowi)
                 }else{
                     this.toggle(row.id)
                 }
                 
         },
         toggle(flowi){
-            this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == flowi)) 
+            this.$refs.tableData5.toggleRowExpansion(this.mounthFlows.find(d => d.id == flowi)) 
         },
         timeChange(data){
             return new Date(parseInt(data)).toLocaleDateString()
