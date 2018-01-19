@@ -43,13 +43,76 @@
                 </p>
         </div>
 		<el-dialog title="合同列表" :visible.sync="visibility" width="600px">
-			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading"/>
+			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading" @click.native="showUserInfo(room.contract)"/>
 		</el-dialog>
 		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="50%">
 			<RentWithout :id="room.contract.id" ref="operate"/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>
+			</span>
+		</el-dialog>
+		<el-dialog title="详情信息" :visible.sync="dialogVisible" width="65%" class="">
+			<div></div>
+			<div class="flexc rgbc">
+				<div class="setborder">
+					<div class="flexdirection botborder">
+						<img src="" alt="" style="width:100px;height:100px;">
+						<p>{{updateData.user.name}}</p>
+						<p>{{updateData.user.mobile}}</p>
+					</div>
+					<div class="userinfobot">
+						<div>
+							<p>姓名</p>
+							<p>{{updateData.user.name}}</p>
+							<p v-if="updateData.user.name==''">暂无信息</p>
+						</div>
+						<div>
+							<p>性别</p>
+							<p v-if="updateData.user.gender=='M'">男</p>
+							<p v-if="updateData.user.gender=='F'">女</p>
+							<p v-if="updateData.user.gender==''">暂无信息</p>
+						</div>
+						<div>
+							<p>身份证号</p>
+							<p>{{updateData.user.documentId}}</p>
+							<p v-if="updateData.user.documentId==''">暂无信息</p>
+						</div>
+						<div>
+							<p>手机号</p>
+							<p>{{updateData.user.mobile}}</p>
+							<p v-if="updateData.user.mobile==''">暂无信息</p>
+						</div>
+						<div class="others"></div>
+					</div>
+				</div>
+				<div style="width:100%;margin-left:30px;">
+					<div class="flexc dialog" style="color:#aaa">
+						<div @click="changeUserInfo(1)" class="cursorp" :class="{activerent:showinf==1}">租户详情</div>
+						<div @click="changeUserInfo(2)" class="cursorp" :class="{activerent:showinf==2}">租约信息</div>
+						<div class="menu-right">
+							<div class="flexcenter">
+								<span @click="changeUserInfo(3)" class="cursorp" :class="{activerent:showinf==3}">费用清单</span>
+								<div v-if="showinf==3" class="flexc menu-rightthree cursorpoin">
+									<div @click="rentPay(1)" :class="{activerent:showmoney==1}">预付费扣费</div>
+									<div @click="rentPay(2)" :class="{activerent:showmoney==2}">账单扣费</div>
+									<div @click="rentPay(3)" :class="{activerent:showmoney==3}">充值记录</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div v-if="showinf==1" class="triangle cursorfir">基本信息</div>
+					<div v-if="showinf==2" class="triangle cursorsec">合同信息</div>
+					<div v-if="showinf==3" class="triangle cursorthi">账单信息</div>
+					<Rentinfo v-if="showinf==1" :form="updateData" />
+					<Rentmessasge v-if="showinf==2" :form="updateData"/>
+					<Rentmoney v-if="showinf==3&&showmoney==1" :form="updateData"/>
+					<Rentlease v-if="showinf==3&&showmoney==2" :form="contractbill"/>
+					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData"/>
+				</div>
+			</div>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisible = false;showinf=showmoney=1" type="primary">确定</el-button>
 			</span>
 		</el-dialog>
     </div>
@@ -60,8 +123,15 @@
 	import { NewContract } from '~/modules/contract';
 	import ContractsList from './contractsList'
 	import {
-		RentWithout,
-		Relet
+		Rentinfo,
+		Rentlease,
+		Rentmessasge,
+		Rentmoney,
+		Rentsendmoney,
+		Relet,
+		Showrent,
+		Paym,
+		RentWithout
 	} from '../userinfo';
     const orientations = {
     	N: '北',
@@ -77,6 +147,14 @@
 		},
 		components: {
 			ContractsList,
+			Rentinfo,
+			Rentlease,
+			Rentmessasge,
+			Rentmoney,
+			Rentsendmoney,
+			Relet,
+			Showrent,
+			Paym,
 			RentWithout
 		},
     	filters: {
@@ -95,15 +173,42 @@
 				return this.$store.state.user.projectId
 			}
 		},
+		created(){
+			this.updateData = this.userdatainfo;
+		},
     	data() {
     		return {
 				roomAllContracts:[],
 				visibility:false,
 				loading: true,
-				dialogVisibleWithout:false
+				dialogVisibleWithout:false,
+				dialogVisible:false,
+				userdatainfo: {
+					"contractId": 1,
+					"roomId": 430000,
+					"user": {
+						"id": 111111111,
+						"accountName": "accountName",
+						"name": "username",
+						"mobile": "111111111111",
+						"documentId": "11111111111",
+						"documentType": 1,
+						"gender": "M"
+					}
+				},
+				updateData:{},
+				showinf:1,
+				contractbill: '',
+				showmoney:1
     		};
     	},
     	methods: {
+			rentPay(datanum) {
+				this.showmoney = datanum;
+			},
+			changeUserInfo(data) {
+				this.showinf = data;
+			},
 			timeDate(data){
 				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 			},
@@ -195,6 +300,21 @@
 			operateRent(){
 				this.$refs.operate.operateRent()
 				this.dialogVisibleWithout = false
+			},
+			showUserInfo(item) {
+				this.$model('contracts_info')
+				.query({},{projectId: this.projectId,contractId:item.id})
+				.then(res=>{
+					console.log(res)
+					this.updateData = res;
+				})
+				.catch(err=>{
+					console.log(err)
+				})
+				this.$model('contract_bill')
+				.query({},{projectId: this.projectId,id:item.id})
+				.then(data=> this.$set(this,'contractbill',data))
+				this.dialogVisible = true
 			}
 
     	}
@@ -288,5 +408,79 @@
     			display: block;
     		}
     	}
-    }
+	}
+	.setborder {
+		border: 1px solid #ddd;
+		width: 225px;
+		.botborder {
+			border-bottom: 1px solid #ddd;
+		}
+		.others {
+			height: 100px;
+		}
+	}
+	.dialog>div {
+		margin-right: 50px;
+	}
+	.triangle {
+		line-height: 40px;
+		background-color: #f5f7fa;
+		margin: 10px 0;
+		position: relative;
+	}
+
+	.triangle:before {
+		content: '';
+		width: 20px;
+		height: 40px;
+		background-color: #f5f7fa;
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: -20px;
+	}
+
+	.triangle:after {
+		content: '';
+		width: 0;
+		height: 0;
+		border-right: 12px solid transparent;
+		border-bottom: 12px solid #f5f7fa;
+		border-left: 12px solid transparent;
+		display: block;
+		position: absolute;
+		top: -12px;
+	} 
+	.userinfobot{
+		margin-left: 5px;
+		color:#888;
+		>div:first-child{
+			margin-top: 16px;
+		}
+		>div>p:nth-child(1){
+			color:#000;
+		}
+	}
+	div.activerent,
+	span.activerent {
+		color: #000
+	}
+	.menu-right {
+		flex: 1
+	}
+	.menu-rightthree div {
+		margin-left: 15px;
+	}
+	.cursorfir:after {
+		left: 14px
+	}
+
+	.cursorsec:after {
+		left: 120px
+	}
+
+	.cursorthi:after {
+		left: 226px
+	}
+
 </style>

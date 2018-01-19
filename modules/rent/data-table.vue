@@ -4,7 +4,7 @@
 			<el-table-column label="姓名" width="120">
 				<template slot-scope="scope">
 					<div slot="reference" class="name-wrapper">
-						<span size="medium">{{ scope.row.user.name }}
+						<span size="medium" @click="rentuser('1',scope.row)" class="cursorp">{{ scope.row.user.name }}
 							<el-popover trigger="hover" placement="top">
 								<p v-if="scope.row.user.mobile!=''">{{ scope.row.user.mobile }}</p>
 								<p v-if="scope.row.user.mobile==''">暂无信息</p>
@@ -19,7 +19,7 @@
 			</el-table-column>
 			<el-table-column label="房源/租期" min-width="450" max-width="600">				
 				<template slot-scope="scope">
-						<div slot="reference" class="name-wrapper">
+						<div slot="reference" class="name-wrapper cursorp" @click="rentuser('2',scope.row)">
 							<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber }}{{ scope.row.room.roomName }}</div>
 							<div class="rent-bottom">
 								<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>
@@ -52,7 +52,7 @@
 									<i class="el-icon-caret-bottom el-icon--right"></i>
 								</span>
 								<el-dropdown-menu slot="dropdown">
-									<el-dropdown-item v-for="item in list1" :key="item.value" @click.native="rentuser(scope.$index,item.value,scope.row)">{{item.showlist}}</el-dropdown-item>
+									<el-dropdown-item v-for="item in list1" :key="item.value" @click.native="rentuser(item.value,scope.row)">{{item.showlist}}</el-dropdown-item>
 								</el-dropdown-menu>
 							</el-dropdown>&nbsp;|&nbsp;
 							<el-dropdown>
@@ -68,7 +68,7 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="账号/余额(¥)" width="110">
+			<el-table-column label="余额(¥)" width="110">
 				<template slot-scope="scope">
 					<div class="flexcenter" v-if="scope.row.rent!=0">
 						<p style="margin-left: 10px" :class="{islosem:scope.row.rent<0}">{{ scope.row.rent }}</p>
@@ -277,10 +277,18 @@
 			this.updateData = this.userdatainfo;
 		},
 		methods: {
-			rentuser(index, value, item) {
+			rentuser( value, item) {
 				this.dialogVisible = true;
 				this.showinf = value;
-				this.updateData = item;
+				this.$model('contracts_info')
+				.query({},{projectId: this.projectId,contractId:item.id})
+				.then(res=>{
+					console.log(res)
+					this.updateData = res;
+				})
+				.catch(err=>{
+					console.log(err)
+				})
 				this.$model('contract_bill')
 				.query({},{projectId: this.projectId,id:item.id})
 				.then(data=> this.$set(this,'contractbill',data))
@@ -452,9 +460,7 @@
 		display: block;
 		position: absolute;
 		top: -12px;
-	} // .triangle:nth-child(1):after{
-	// 	left:10px;
-	// }
+	} 
 	.cursorfir:after {
 		left: 14px
 	}

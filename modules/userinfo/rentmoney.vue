@@ -1,104 +1,71 @@
 <template>
-  <el-table
-    :data="tableData"
-    stripe
-    style="width: 100%">
-    <el-table-column
-      prop="date"
-      label="日期"
-      width="130">
-    </el-table-column>
-    <!-- <el-table-column
+	<el-table :data="bills" stripe style="width: 100%">
+		<el-table-column label="日期" width="130">
+			<template slot-scope="scope">
+				<span>{{ nowTime(scope.row.time) }}</span>
+			</template>
+		</el-table-column>
+		<!-- <el-table-column
       prop="name"
       label="姓名"
       width="130">
     </el-table-column> -->
-    <el-table-column
-      prop="type"
-      label="类型"
-      width="130">
-    </el-table-column>
-    <el-table-column
-      prop="money"
-      label="金额">
-    </el-table-column>
-    <el-table-column
-      prop="agoread"
-      label="读数">
-    </el-table-column>
-    <el-table-column
-      prop="thisread"
-      label="用量">
-    </el-table-column>
-  </el-table>
+		<el-table-column prop="type" label="类型" width="130">
+		</el-table-column>
+		<el-table-column label="金额">
+			<template slot-scope="scope">
+                <span>{{ price(scope.row.amount) }}</span>
+            </template>
+		</el-table-column>
+		<el-table-column prop="scale" label="读数">
+		</el-table-column>
+		<el-table-column prop="usage" label="用量">
+		</el-table-column>
+	</el-table>
 </template>
 
 <script>
-  export default {
-    props: {
-      form: {
-        required:true
-      }
-    },
-    computed: {
-      projectId(){
-        return this.$store.state.user.projectId
-      }
-    },
-    data() {
-      return {
-        bills:[],
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          type: '电费',
-          money: '100',
-          agoread: '10',
-          thisread: '100'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          type: '电费',
-          money: '100',
-          agoread: '10',
-          thisread: '100'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          type: '电费',
-          money: '100',
-          agoread: '10',
-          thisread: '100'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          type: '水费',
-          money: '100',
-          agoread: '10',
-          thisread: '100'
-        }]
-      }
-    },
-    created () {
-      this.query()
-    },
-    methods: {
-      query(){
-        this.$model('paid_bills')
-        .query({
-          mode:'topup',
-          index:1,
-          size:15
-        },
-        {
-          projectId:this.projectId,
-          contractId:this.form.id
-        })
-        .then(res=>{
-          console.log(res)
-          // this.$set(this, 'bills', res.data || []);
-        })
-      }
-    }
-  }
+	export default {
+		props: {
+			form: {
+				required: true
+			}
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId
+			}
+		},
+		data() {
+			return {
+				bills: []
+			}
+		},
+		created() {
+			this.query()
+		},
+		methods: {
+			query() {
+				this.$model('paid_bills')
+					.query({
+						mode: 'prepaid',
+						index: 1,
+						size: 15
+					}, {
+						projectId: this.projectId,
+						contractId: this.form.id
+					})
+					.then(res => {
+						console.log(res)
+						this.$set(this, 'bills', res.data || []);
+					})
+			},
+			price(data){
+				return data/100
+			},
+			nowTime(data) {
+				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+			}
+		}
+	}
 </script>

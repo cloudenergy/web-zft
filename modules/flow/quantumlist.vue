@@ -93,64 +93,6 @@ export default {
     data() {
         return {
             upflowi:0,
-            tableData5: [{
-                id: 11110,
-                datetime: '2017-01-01 17:05',
-                folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
-                shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101',
-                payway: '支付宝',
-                waym: '缴费',
-                handlem: '老王',
-                remark: '3年没有缴费了'
-            }, {
-                id: 11111,
-                datetime: '2017-01-01 17:05',
-                folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
-                shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101',
-                payway: '微信',
-                waym: '缴费',
-                handlem: '',
-                remark: '3年没有缴费了'
-            }, {
-                id: 11112,
-                datetime: '2017-01-01 17:05',
-                folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
-                shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101撒地方士大夫士大夫撒旦法第三方',
-                payway: '现金',
-                waym: '结余',
-                handlem: '老王',
-                remark: '3年没有缴费了'
-            }, {
-                id: 11113,
-                datetime: '2017-01-01 17:05',
-                folwm: '￥1000',
-                category: '江浙小吃、小吃零食',
-                username: '11011912011 username',
-                address: '上海市普陀区真北路',
-                shop: '王小虎夫妻店',
-                shopId: '10333',
-                houseresource: '西湖区文一西路·5D 1栋A101',
-                payway: '银行卡',
-                waym: '缴费',
-                handlem: '老王',
-                remark: '3年没有缴费了'
-            }],
-            
             // 获取row的key值
             getRowKeys(row) {
                 return row.id;

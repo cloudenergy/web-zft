@@ -11,6 +11,7 @@
                             {{item.key}}
                         </div>
                         <div v-if="scope.row.configId===121">租金</div>
+                        <div v-if="scope.row.configId===123">押金</div>
                     </template>
                 </el-table-column>
                 <el-table-column label="费用周期" min-width="230">
