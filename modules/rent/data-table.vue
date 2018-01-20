@@ -17,7 +17,7 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="房源/租期" min-width="450" max-width="600">				
+			<el-table-column label="房源/租期" min-width="300" max-width="500">				
 				<template slot-scope="scope">
 						<div slot="reference" class="name-wrapper cursorp" @click="rentuser('2',scope.row)">
 							<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber }}{{ scope.row.room.roomName }}</div>
@@ -68,10 +68,11 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="余额(¥)" width="110">
+			<el-table-column label="余额(¥)" width="130">
 				<template slot-scope="scope">
-					<div class="flexcenter" v-if="scope.row.rent!=0">
-						<p style="margin-left: 10px" :class="{islosem:scope.row.rent<0}">{{ scope.row.rent }}</p>
+					<div class="flexcenter">
+						<span class="userCashAmount" style="color:#F03D53" v-if="scope.row.user.cashAccount.balance<20">{{scope.row.user.cashAccount.balance}}</span>
+						<span class="userCashAmount" v-if="scope.row.user.cashAccount.balance>=20">{{scope.row.user.cashAccount.balance}}</span>
 						<el-dropdown>
 							<span class="el-dropdown-link cursorp">
 								充值
@@ -480,5 +481,10 @@
 
 	.islosem {
 		color: #F03D53
+	}
+	.userCashAmount{
+		display: inline-block;
+		width: 34px;
+		text-align: center;
 	}
 </style>

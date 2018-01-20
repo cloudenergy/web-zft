@@ -191,7 +191,8 @@
 				this.$message({
 					message: '创建成功',
 					type: 'success'
-        		});
+				});
+				this.$emit('successRefresh')
 			},
 			unitAsCent(obj) {
 				const rent = obj.rent * 100;

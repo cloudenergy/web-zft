@@ -100,13 +100,15 @@
                 this.$model('contracts_info')
                 .query({},{projectId:this.projectId,contractId:data})
                 .then(res=>{
+                    
                     this.$set(this,'contractInfo',res)
+                    console.log(this.contractInfo)
                 })
                 .catch(err=>{
                     console.log(err,'asdfa')
                 })
                 this.$model('fund_channel')
-                .query({category:'offline',flow:'receive'},{projectId: this.projectId})
+                .query({category:'all',flow:'receive'},{projectId: this.projectId})
                 .then(res=>this.$set(this,'payRoad',res))
             },
             onSubmit() {
@@ -123,18 +125,18 @@
                     this.withOutInfo.endDate = this.nowData()
                     this.withOutInfo.transaction.amount = -this.input
                 }
-                console.log(this.withOutInfo)
                 this.input = ''
                 this.newModel()
-                // this.$model('contracts')
-                // .update(this.withOutInfo,{projectId:this.projectId,id:this.form.id})
-                // .then(res=>{
-                //     console.log(res)
-                //     this.$message.success('退租成功')
-                // })
-                // .catch(err=>{
-                //     this.$message.info('退租失败')
-                // })
+                this.$model('contracts')
+                .update(this.withOutInfo,{projectId:this.projectId,id:this.contractInfo.id})
+                .then(res=>{
+                    this.$emit('successInfo')
+                    this.$message.success('退租成功')
+                })
+                .catch(err=>{
+                    this.$message.info('退租失败')
+                    
+                })
                 this.withOutInfo = this.newModel()
             },
             nowData(){
