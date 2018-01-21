@@ -1,14 +1,5 @@
 /*eslint no-unused-vars: 0 */
-import {
-	makeGet,
-	makePost,
-	setup,
-	makeResource,
-	decorateMaker,
-	makePut,
-	makePatch,
-	makeDelete
-} from '@/api';
+import { makeGet, makePost, setup, makeResource, decorateMaker, makePut, makePatch, makeDelete } from '@/api';
 import { isFunc } from '~/utils';
 import { Message } from 'element-ui';
 
@@ -66,13 +57,9 @@ const interceptor = function({ response }) {
 	}
 	return Promise.reject(data);
 };
-const [get, post, put, del, patch] = [
-	makeGet,
-	makePost,
-	makePut,
-	makeDelete,
-	makePatch
-].map(action => decorateMaker(action, interceptor));
+const [ get, post, put, del, patch ] = [ makeGet, makePost, makePut, makeDelete, makePatch ].map((action) =>
+	decorateMaker(action, interceptor)
+);
 
 const resource = (url, actions) => {
 	return makeResource(url, actions, {
@@ -90,22 +77,17 @@ const apis = {
 	contracts: resource('/projects/{projectId}/contracts'),
 	rooms: resource('/projects/{projectId}/rooms'),
 	locations: get('/locations'),
+	districts: get('/districts'),
 	environments: get('/environments'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills'),
 	set_electric_price: resource('/projects/{projectId}/houses'),
 	login: post('login'),
 	devices: resource('/projects/{projectId}/devices'),
-	room_devices: resource(
-		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
-	),
+	room_devices: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'),
 	house_devices: resource('/projects/{projectId}/houses/{houseId}/devices'),
 	credentials: resource('/projects/{projectId}/credentials'),
-	paid_bills: resource(
-		'/projects/{projectId}/contracts/{contractId}/prePaidBills'
-	),
-	room_detail: resource(
-		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}'
-	),
+	paid_bills: resource('/projects/{projectId}/contracts/{contractId}/prePaidBills'),
+	room_detail: resource('/projects/{projectId}/houses/{houseId}/rooms/{roomId}'),
 	housedetail: resource('/projects/{projectId}/houses/{id}'),
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
 	top_up: resource('/projects/{projectId}/fundChannels'),

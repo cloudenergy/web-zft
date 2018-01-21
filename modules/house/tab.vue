@@ -3,7 +3,7 @@
         <el-tabs v-model="type" @tab-click="change">
             <el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
         </el-tabs>
-        <city-area />
+        <city-area @change="districtChanged" />
         <el-menu default-active="0">
             <el-menu-item index="0">
                 <!-- <i class="el-icon-menu"></i> -->
@@ -37,15 +37,22 @@
     		};
     	},
     	created() {
-    		this.type = this.selected || this.defaultHouseType;
-    		this.$store
-    			.dispatch('GET_COMMUNITIES', { houseType: this.type })
-    			.then(data => (this.community = data));
+    		this.updateCommunity();
     	},
     	methods: {
+            updateCommunity (force = false) {
+                this.type = this.selected || this.defaultHouseType;
+                this.$store
+                    .dispatch('GET_COMMUNITIES', { houseType: this.type, districtsCode: this.filters.area || this.filters.city , force})
+                    .then(data => (this.community = data));
+            },
     		change(tab, event) {
     			this.$emit('change', tab.name);
-    		}
+            },
+            districtChanged (filters) {
+                this.filters = filters;
+                this.updateCommunity(true);
+            }
     	}
     };
 </script>

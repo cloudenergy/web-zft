@@ -1,112 +1,135 @@
 <script>
-    import Vue from 'vue';
+import Vue from 'vue';
 
-    function isCity(city) {
-    	return function(item) {
-    		return city ? item.parent == city : false;
-    	};
-    }
+function isCity(city) {
+	return function(item) {
+		return parseInt(item.value / 100) === city / 100;
+	};
+}
 
-    export default {
-    	render() {
-    		const city = [
-    			{ label: '北京', value: 20100 },
-    			{ label: '浙江', value: 330100 }
-    		];
+let pending = false;
 
-    		const area = [
-    			{ label: '北京', parent: 20100, value: 20101 },
-    			{ label: '杭州', parent: 330100, value: 330100 }
-    		];
-    		const filters = new Vue({
-    			data: {
-    				city,
-    				area
-    			}
-    		});
+function mapper(item) {
+	return {
+		label: item.name,
+		value: item.id
+	};
+}
 
-    		let citySelect = (
-    			<el-select
-    				value={this.city}
-    				size="mini"
-    				on-change={val => {
-    					this.city = val;
-    					this.$emit('change', { city: this.city, area: this.area });
-    					filters.area = [];
-    					this.area = null;
-    				}}
-    				placeholder="请选择城市"
-    			>
-    				{filters.city.map(item => {
-    					return (
-    						<el-option
-    							key={item.value}
-    							label={item.label}
-    							value={item.value}
-    						/>
-    					);
-    				})}
-    			</el-select>
-    		);
-    		let areaSelect = (
-    			<el-select
-    				value={this.area}
-    				size="mini"
-    				on-change={val => {
-    					this.area = val;
-    					this.$emit('change', { area: this.area, city: this.city });
-    				}}
-    				placeholder="请选择区域"
-    			>
-    				{filters.area.filter(isCity(this.city)).map(item => {
-    					return (
-    						<el-option
-    							key={item.value}
-    							label={item.label}
-    							value={item.value}
-    						/>
-    					);
-    				})}
-    			</el-select>
-    		);
-    		return (
-    			<div class={{ inForm: this.isForm, filters: !this.isForm }}>
-    				{this.isForm ? (
-    					<el-form-item label="城市">{citySelect}</el-form-item>
-    				) : (
-    					citySelect
-    				)}
-    				{this.isForm ? (
-    					<el-form-item label="区域">{areaSelect}</el-form-item>
-    				) : (
-    					areaSelect
-    				)}
-    				{this.$slots.default}
-    			</div>
-    		);
-    	},
-    	data() {
-    		return {
-    			city: '',
-    			area: ''
-    		};
-    	},
-    	created() {},
-    	props: {
-    		isForm: {
-    			type: Boolean,
-    			default: false
-    		}
-    	}
-    };
+export default {
+	created() {
+		if (!pending) {
+			this.$store.dispatch('GET_CITY_AREA').then(({ result }) => {
+				this.list.city = result.map(mapper);
+			});
+			pending = true;
+		}
+	},
+	data() {
+		return {
+			list: {
+				city: [],
+				area: []
+			},
+			city: '',
+			area: ''
+		};
+	},
+	methods: {
+		cityChange() {
+			this.$model('districts', { level: 3, cityId: this.city }).then(
+				({ result }) => {
+					this.list.area = result;
+					console.log('list', this.list);
+				}
+			);
+			this.area = null;
+			this.$emit('change', { city: this.city, area: this.area });
+		}
+	},
+	render() {
+		const city = this.list.city;
+		const area = this.list.area.map(mapper);
+		const filters = {
+			city,
+			area
+		};
+
+		let citySelect = (
+			<el-select
+				value={this.city}
+				size="mini"
+				clearable={true}
+				filterable={true}
+				on-change={val => {
+					this.city = val;
+					this.cityChange();
+				}}
+				placeholder="请选择城市"
+			>
+				{filters.city.map(item => {
+					return (
+						<el-option
+							key={item.value}
+							label={item.label}
+							value={item.value}
+						/>
+					);
+				})}
+			</el-select>
+		);
+		let areaSelect = (
+			<el-select
+				value={this.area}
+				size="mini"
+				on-change={val => {
+					this.area = val;
+					this.$emit('change', { area: this.area, city: this.city });
+				}}
+				placeholder="请选择区域"
+			>
+				{filters.area.filter(isCity(this.city)).map(item => {
+					return (
+						<el-option
+							key={item.value}
+							label={item.label}
+							value={item.value}
+						/>
+					);
+				})}
+			</el-select>
+		);
+		return (
+			<div class={{ inForm: this.isForm, filters: !this.isForm }}>
+				{this.isForm ? (
+					<el-form-item label="城市">{citySelect}</el-form-item>
+				) : (
+					citySelect
+				)}
+				{this.isForm ? (
+					<el-form-item label="区域">{areaSelect}</el-form-item>
+				) : (
+					areaSelect
+				)}
+				{this.$slots.default}
+			</div>
+		);
+	},
+	props: {
+		isForm: {
+			type: Boolean,
+			default: false
+		}
+	}
+};
 </script>
 
 <style lang="less" scoped>
-    .filters {
-    	display: flex;
-    	justify-content: space-between;
-    	.el-select {
-    		width: 48%;
-    	}
-    }
+.filters {
+	display: flex;
+	justify-content: space-between;
+	.el-select {
+		width: 48%;
+	}
+}
 </style>
