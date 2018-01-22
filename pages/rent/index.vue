@@ -67,7 +67,6 @@
     	},
 		methods: {
 			refresh(type) {
-				console.log(type)
 				this.houseFormat = type;
 				this.query()
 			},

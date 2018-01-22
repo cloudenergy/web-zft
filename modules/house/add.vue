@@ -106,6 +106,9 @@
 			}	
 		},
     	methods: {
+			refresh() {
+				console.log(1)
+			},
 			houseTypeChange() {
 
 			},
@@ -161,7 +164,6 @@
 					data.houseCountOnFloor = this.Entire.houseCountOnFloor
 					data.enabledFloors = this.Entire.enabledFloors
 				}
-    			console.log('this form : ', data);
     			this.$modal.$emit('dismiss');
     			this.$model('houses').create(data, {
     				projectId: this.user.projectId

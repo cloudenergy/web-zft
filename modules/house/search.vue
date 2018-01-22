@@ -42,7 +42,10 @@
     				house: false
     			}
     		};
-    	},
+		},
+		created () {
+			this.$modal.$on('refresh',()=>{this.refresh()})	
+		},
     	components: {
     		AddModal,
     		NewContract
@@ -65,6 +68,9 @@
 				this.$emit('changeRoom',data)
 			},
 			addHouse() {
+				this.$emit('successRefresh')
+			},
+			refresh() {
 				this.$emit('successRefresh')
 			}
 		},

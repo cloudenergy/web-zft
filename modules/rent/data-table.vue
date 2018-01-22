@@ -276,6 +276,7 @@
 		},
 		created(){
 			this.updateData = this.userdatainfo;
+			this.$modal.$on('refresh', () => this.$emit('refresh'));
 		},
 		methods: {
 			rentuser( value, item) {
@@ -364,7 +365,6 @@
 			},
 			// 除了电子支付其余的手段
 			paym(date) {
-				console.log(1)
 				this.$modal.$emit('open', {
 					comp: Paym,
 					data:{
@@ -372,6 +372,9 @@
 					},
 					title: '充值'
 				})
+			},
+			successRefresh() {
+				this.$emit('refresh')
 			},
 			mistake(data){
 				this.$message({

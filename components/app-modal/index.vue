@@ -21,7 +21,9 @@
     	},
     	methods: {
     		dismiss: function() {
-    			this.visible = false;
+				this.visible = false;
+				this.$modal.$emit('refresh')
+				
     		},
     		open({ comp, title, data }) {
     			const Comp = comp;
