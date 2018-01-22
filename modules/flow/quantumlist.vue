@@ -72,10 +72,17 @@
         <el-table-column
             label="操作人"
             prop="handlem">
+            <template slot-scope="scope">
+                <span>{{scope.row.operator.username}}</span>
+            </template>
         </el-table-column>
         <el-table-column
             label="备注"
             prop="remark">
+            <template slot-scope="scope">
+                <span v-if="scope.row.remake!==undefined">{{scope.row.remake}}</span>
+                <span v-if="scope.row.remake===undefined">-</span>
+            </template>
         </el-table-column>
     </el-table>
 </template>
@@ -124,7 +131,7 @@ export default {
             this.$refs.tableData5.toggleRowExpansion(this.mounthFlows.find(d => d.id == flowi)) 
         },
         timeChange(data){
-            return new Date(parseInt(data)).toLocaleDateString()
+            return new Date(parseInt(data*1000)).toLocaleDateString()
         },
         price(data) {
             return data/100

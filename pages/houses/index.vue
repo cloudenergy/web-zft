@@ -1,6 +1,6 @@
 <template>
     <div class="page-house-index">
-        <Tab @change="refresh" :selected="reqData.houseFormat" />
+        <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation"/>
         <div class="main-container">
             <Search @changeRoom='changeRoom'/>
             <div class="houses">
@@ -59,7 +59,7 @@
 				reqData:{
 					houseFormat: 'SHARE',
     				size: 200,
-    				index: 1
+					index: 1
 				}
     		};
     	},
@@ -72,12 +72,24 @@
     		this.query();
     	},
     	methods: {
+			communityChange(data) {
+				if(data==='0'){
+					delete this.reqData.locationId
+					this.query()
+				}else{
+					this.reqData.locationId = data
+					this.query()
+				}
+				
+			},
 			changeRoom(data) {
 				this.reqData.bedRooms = data
 				this.query()
 			},
     		refresh(type) {
-    			this.reqData.houseFormat = type;
+				this.reqData.houseFormat = type;
+				delete this.reqData.locationId
+				this.$refs.setLocation.setChoose()
     			this.query();
 			},
     		query() {

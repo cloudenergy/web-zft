@@ -4,12 +4,12 @@
             <el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
         </el-tabs>
         <city-area @change="districtChanged" />
-        <el-menu default-active="0">
-            <el-menu-item index="0">
+        <el-menu :default-active="menuIndex" @select="handleSelect" ref="menuLocation">
+            <el-menu-item index="0" ref="activeMenu">
                 <!-- <i class="el-icon-menu"></i> -->
                 <span slot="title">全部小区</span>
             </el-menu-item>
-            <el-menu-item v-for="(item, index) in community" :key="index" :index="item.name">
+            <el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.locationId)">
                 <span slot="title">{{item.name}}</span>
             </el-menu-item>
         </el-menu>
@@ -33,7 +33,8 @@
     				area: ''
     			},
     			options: [],
-    			community: []
+				community: [],
+				menuIndex:'0'
     		};
     	},
     	created() {
@@ -52,7 +53,17 @@
             districtChanged (filters) {
                 this.filters = filters;
                 this.updateCommunity(true);
-            }
+			},
+			handleSelect(key,keyPath) {
+				this.$emit('communityChange',key)
+			},
+			setChoose() {
+				this.menuIndex='0'
+				this.$refs.menuLocation.$children.forEach((item,index)=>{
+					item.$el.classList.value="el-menu-item"
+				})
+				this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item is-active"
+			}
     	}
     };
 </script>

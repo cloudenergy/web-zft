@@ -18,12 +18,9 @@ function mapper(item) {
 
 export default {
 	created() {
-		if (!pending) {
 			this.$store.dispatch('GET_CITY_AREA').then(({ result }) => {
 				this.list.city = result.map(mapper);
 			});
-			pending = true;
-		}
 	},
 	data() {
 		return {
