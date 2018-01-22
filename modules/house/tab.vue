@@ -55,10 +55,12 @@
                 this.updateCommunity(true);
 			},
 			handleSelect(key,keyPath) {
+				if(key!=='0'){
+					this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item"
+				}
 				this.$emit('communityChange',key)
 			},
 			setChoose() {
-				this.menuIndex='0'
 				this.$refs.menuLocation.$children.forEach((item,index)=>{
 					item.$el.classList.value="el-menu-item"
 				})
