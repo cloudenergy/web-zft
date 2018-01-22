@@ -44,7 +44,7 @@
     		cityAreaChange({ city, area }) {
     			this.model.city = city;
     			this.model.area = area;
-    		}
+			}
     	},
     	data() {
     		return {
@@ -57,3 +57,9 @@
     	}
     };
 </script>
+
+<style>
+	.mini-form .el-form-item__label{
+		margin-top: 1.5px;
+	}
+</style>

@@ -2,7 +2,7 @@
     <div class="add-house-form">
         <el-form :model="form" class="mini-form">
             <h3>房源信息</h3>
-            <base-info @change="mergeBaseInfo" :form="form"></base-info>
+            <base-info @change="mergeBaseInfo" :form="form" @houseTypeChange='houseTypeChange'></base-info>
             <div class="group">
                 <el-autocomplete width="400" v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect" auto-complete="off">
                     <template slot="prepend">小区</template>
@@ -16,7 +16,7 @@
                     <template slot="prepend">名称</template>
                 </el-input>
             </div>
-			<div class="group">
+			<div class="group" v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
 				<div class="inputs">
 					<el-input v-model="building" @blur="changeBuilding">
 						<template slot="prepend">序号</template>
@@ -34,8 +34,8 @@
 				</div>
 			</div>
             <room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
-            <building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]"></building-floor>
-            <div class="group">
+            <building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]" :data="Entire"></building-floor>
+            <div class="group" v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
                 <el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
                     <template slot="prepend">面积</template>
                 </el-input>
@@ -86,7 +86,12 @@
     					name: ''
     				},
     				houseFormat: 'SHARE'
-    			}
+				},
+				Entire:{
+					totalFloor:7,
+					houseCountOnFloor:'',
+					enabledFloors:[]
+				}
     		};
     	},
     	components: {
@@ -94,8 +99,16 @@
     	},
     	created() {
     		Object.assign(this.form, this.item);
-    	},
+		},
+		watch: {
+			form(newVal,oldVal) {
+				console.log(newVal,oldVal)
+			}	
+		},
     	methods: {
+			houseTypeChange() {
+
+			},
 			changeBuilding(){
 				this.form.building = this.building+'幢'
 			},
@@ -142,7 +155,12 @@
     			const data = {
     				projectId: this.$store.state.user.projectId,
     				...this.form
-    			};
+				};
+				if(data.houseFormat==='ENTIRE'){
+					data.totalFloor = this.Entire.totalFloor
+					data.houseCountOnFloor = this.Entire.houseCountOnFloor
+					data.enabledFloors = this.Entire.enabledFloors
+				}
     			console.log('this form : ', data);
     			this.$modal.$emit('dismiss');
     			this.$model('houses').create(data, {
