@@ -1,5 +1,8 @@
 <template>
     <div class="nav">
+        <div class="logo">
+            <img src="~/static/imgs/logo.png">
+        </div>
         <el-menu :default-active="$route.path" class="el-menu-vertical" :collapse="false" :router="true">
             <el-menu-item index="/houses">
                 <i class="el-icon-location"></i>
@@ -34,25 +37,44 @@
 </template>
 
 <script>
-    export default {};
+export default {};
 </script>
 
 <style lang="less" scoped>
-    .el-menu-vertical {
-    	height: 100%;
-    	border-right: 0;
-    	background-color: #2f3c4d;
-    }
-    .el-menu-item {
-    	color: #eee;
-    	&:focus,
-    	&:hover,
-    	&.is-active {
-    		background-color: #212a38;
-    	}
-    }
+.logo {
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	height: 60px;
+	background-color: #3c4d68;
+	img {
+		max-width: 80%;
+	}
+}
+.el-menu-vertical {
+	height: 100%;
+	border-right: 0;
+	background-color: #2f3c4d;
+}
+.el-menu-item {
+	height: 48px;
+	line-height: 48px;
+	color: #eee;
+	&:focus,
+	&:hover,
+	&.is-active {
+		background-color: @primary;
 
-    .nav {
-    	height: 100%;
-    }
+		i {
+			color: #fff;
+		}
+	}
+}
+
+.nav {
+	height: 100%;
+}
 </style>
