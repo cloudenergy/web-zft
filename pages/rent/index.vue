@@ -9,7 +9,6 @@
 					<div class="flexcenter">
 						<RentStatus class="status" />
 						<RentManager class="manager" />
-						<RentSearch class="rentsearchi" v-on:childinfo="showmessage" />
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">30项结果</span>
@@ -20,14 +19,12 @@
 							</el-button>
 						</div>
 					</div>
-				</div>
+				</div><search-all :title="'搜索姓名/电话'"></search-all>
 			</el-header>
-			<el-main>
-				<div class="result">
-					<!-- TODO SUOQIN 返回预付费余额 -->
-					<DataTable v-if="housesRent" :housesrentData='housesRent' class="rentTable" v-loading="!housesRent" @refresh="refresh"/>
-				</div>
-			</el-main>
+			
+			<div class="result">
+				<DataTable v-if="housesRent" :housesrentData='housesRent' class="rentTable" v-loading="!housesRent" @refresh="refresh"/>
+			</div>
 		</el-container>
 	</el-container>
 </template>
@@ -67,7 +64,9 @@
     	},
 		methods: {
 			refresh(type) {
-				this.houseFormat = type;
+				if(type!==undefined){
+					this.houseFormat = type;
+				}
 				this.query()
 			},
 			query(){
@@ -102,12 +101,14 @@
 
 	.ops-bills {
 		// margin-bottom: 20px;
+		height: 54px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 
 	.result {
+		margin: 0 20px;
 		display: block;
 		&:before {
 			clear: both;
@@ -117,5 +118,8 @@
 	.actions {
 		// margin-top: 10px;
 		margin-left: 10px;
+	}
+	.manager{
+		margin-bottom: 11px;
 	}
 </style>

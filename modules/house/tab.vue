@@ -4,8 +4,8 @@
             <el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
         </el-tabs>
         <city-area @change="districtChanged" />
-        <el-menu :default-active="menuIndex" @select="handleSelect" ref="menuLocation">
-            <el-menu-item index="0" ref="activeMenu">
+        <el-menu :default-active="menuIndex" @select="handleSelect" ref="menuLocation" :style="menuStyle()">
+            <el-menu-item index="0" ref="activeMenu" v-if="type!=='ENTIRE'">
                 <!-- <i class="el-icon-menu"></i> -->
                 <span slot="title">全部小区</span>
             </el-menu-item>
@@ -27,28 +27,40 @@
     	},
     	data() {
     		return {
-    			type: 'SOLE',
+    			type: 'SHARE',
     			filters: {
     				city: '',
     				area: ''
     			},
     			options: [],
 				community: [],
-				menuIndex:'0'
+				menuIndex:'0',
+				h:0,
+				clickType:'SHARE'
     		};
-    	},
+		},
     	created() {
-    		this.updateCommunity();
+			this.updateCommunity();
+			var a = 0;
+			a = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			this.h=a-177
     	},
     	methods: {
+			menuStyle() {
+				return 'height:'+this.h+'px'
+			},
             updateCommunity (force = false) {
-                this.type = this.selected || this.defaultHouseType;
                 this.$store
                     .dispatch('GET_COMMUNITIES', { houseType: this.type, districtsCode: this.filters.area || this.filters.city , force})
-                    .then(data => (this.community = data));
+                    .then(data => {
+						this.community = data
+						this.$emit('change', this.clickType)
+						this.setChoose()
+					});
             },
     		change(tab, event) {
-    			this.$emit('change', tab.name);
+				this.clickType = tab.name
+				this.updateCommunity()
             },
             districtChanged (filters) {
                 this.filters = filters;
@@ -61,10 +73,13 @@
 				this.$emit('communityChange',key)
 			},
 			setChoose() {
-				this.$refs.menuLocation.$children.forEach((item,index)=>{
-					item.$el.classList.value="el-menu-item"
-				})
-				this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item is-active"
+				console.log(this.$refs.menuLocation.$children)
+				// this.$refs.activeMenu.handleMouseeter
+				// this.$refs.menuLocation.$children.forEach((item,index)=>{
+				// 	item.$el.classList.value="el-menu-item"
+				// 	console.log(item.$el.classList.value)
+				// })
+				// this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item is-active"
 			}
     	}
     };

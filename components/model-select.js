@@ -7,7 +7,7 @@ export default (options, config = {}) => {
 					onChange={val => {
 						this.$emit('input', val);
 					}}
-					size="mini"
+					size="small"
 					placeholder={config.placeholder}
 					{...config}
 					class="select"

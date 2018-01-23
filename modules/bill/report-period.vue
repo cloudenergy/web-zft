@@ -1,12 +1,12 @@
 <template>
-<el-col :span="2">
+
 	
-	<el-select v-model="period" size="mini" filterable placeholder="日期" class="select">
+	<el-select v-model="period" size="small" filterable placeholder="日期" class="select">
 		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 		</el-option>
 	</el-select>
 
-</el-col>
+
 </template>
 <script>
 	export default {

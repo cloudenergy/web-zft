@@ -3,6 +3,7 @@
         <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation"/>
         <div class="main-container">
             <Search @changeRoom='changeRoom'/>
+			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
                 <div class="room" v-for="house in houses">
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
@@ -69,9 +70,21 @@
     		}
     	},
     	created() {
-    		this.query();
+			this.query();
+			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
     	methods: {
+			setSearch(data) {
+				console.log(typeof(data))
+				console.log(data)
+				if(data!==''){
+					this.reqData.q=data
+				}
+				else{
+					delete this.reqData.q
+				}
+				this.query()
+			},
 			communityChange(data) {
 				if(data==='0'){
 					delete this.reqData.locationId
@@ -89,8 +102,7 @@
     		refresh(type) {
 				this.reqData.houseFormat = type;
 				delete this.reqData.locationId
-				this.$refs.setLocation.setChoose()
-    			this.query();
+				this.query();
 			},
     		query() {
     			this.$model('houses')
@@ -101,10 +113,10 @@
     				.then(res => {
     					// console.log('data: ', data);
     					this.$set(this, 'houses', res.data || []);
-						error=>{
-							console.log(error)
-						}
-    				});
+					})
+					.catch(err=>{
+						console.log(err)
+					})
     		},
     		showDrawer({ room, house }) {
     			this.currentRoom = room;
@@ -159,7 +171,7 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 40px;
+    		margin-left: 20px;
     	}
 
     	.room + .room {

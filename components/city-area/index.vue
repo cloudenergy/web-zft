@@ -55,7 +55,7 @@ export default {
 		let citySelect = (
 			<el-select
 				value={this.city}
-				size="mini"
+				size="small"
 				clearable={true}
 				filterable={true}
 				on-change={val => {
@@ -78,7 +78,7 @@ export default {
 		let areaSelect = (
 			<el-select
 				value={this.area}
-				size="mini"
+				size="small"
 				on-change={val => {
 					this.area = val;
 					this.$emit('change', { area: this.area, city: this.city });

@@ -1,7 +1,5 @@
 <template>
-    <el-col :span="2">
-        <bill-type v-model="billType" />
-    </el-col>
+    <bill-type v-model="billType" />
 </template>
 <script>
     export default {

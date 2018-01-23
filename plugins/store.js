@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-01-22 10:15:50
+ * @Last Modified time: 2018-01-23 15:02:43
  */
 
 import api from '~/plugins/api';
@@ -25,13 +25,15 @@ export default {
 		},
 		cityArea: {},
 		houseTypes: {
-			SHARE: ['SHARE', '合租'],
-			SOLE: ['SOLE', '整租'],
+			SOLE: ['SHARE', '合租'],
+			SHARE: ['SOLE', '整租'],
 			ENTIRE: ['ENTIRE', '整栋']
 		},
 		defaultHouseType: 'SOLE',
 		communities: null,
-		othercost: null
+		othercost: null,
+		soleCommunities:null,
+		entireCommunities:null
 	},
 	mutations: {
 		UPDATE_ENV(state, data) {
@@ -40,12 +42,19 @@ export default {
 			});
 		},
 		SAVE_COMMUNITIES(state, data) {
-			state.communities = data;
+			if(data.houseType==='SHARE'){
+				state.communities = data.data;
+			}else if(data.houseType==='SOLE'){
+				state.soleCommunities = data.data
+			}else{
+				state.entireCommunities = data.data
+			}
+			
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.othercost = _.filter(data, { group: '加收费用' });
 		},
-		SAVE_CITY_AREA(state,data) {
+		SAVE_CITY_AREA(state,data,) {
 			state.cityArea = data
 		}
 	},
@@ -74,8 +83,18 @@ export default {
 			{ commit, state },
 			{ houseType, districtsCode, force }
 		) {
-			if (state.communities && !force) {
-				return Promise.resolve(state.communities);
+			if(houseType==='SHARE'){
+				if (state.communities && !force) {
+					return Promise.resolve(state.communities);
+				}
+			}else if(houseType==='SOLE'){
+				if (state.soleCommunities && !force) {
+					return Promise.resolve(state.soleCommunities);
+				}
+			}else {
+				if (state.entireCommunities && !force) {
+					return Promise.resolve(state.entireCommunities);
+				}
 			}
 			return api('communities')
 				.query(
@@ -83,7 +102,7 @@ export default {
 					{ projectId: state.user.projectId }
 				)
 				.then(data => {
-					commit('SAVE_COMMUNITIES', data);
+					commit('SAVE_COMMUNITIES', {data,houseType});
 					return data;
 				});
 		},

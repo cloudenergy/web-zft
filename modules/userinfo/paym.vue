@@ -8,7 +8,7 @@
                     <p @click="show">{{userInfo.user.name}}</p>
                     <p>{{userInfo.user.accountName}}</p>
                     <p>当前余额</p>
-                    <p>￥-3444</p>
+                    <p>{{userInfo.user.cashAccount.balance}}</p>
                 </div>
             </div>
             <div class="paymway">

@@ -1,11 +1,11 @@
 
 <template>
-<el-col :span="2">
+
 	<el-select v-model="billMode" size="mini" filterable placeholder="方式" class="select">
 		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 		</el-option>
 	</el-select>
-    </el-col>
+
 </template>
 <script>
 	export default {

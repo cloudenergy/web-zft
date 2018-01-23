@@ -9,3 +9,8 @@
     ];
     export default modelSelect(options, { placeholder: '房源状态' });
 </script>
+<style scoped>
+	.select>div>input{
+		height: 35px;
+	}
+</style>

@@ -1,10 +1,9 @@
 <template>
     <div class="search-wrapper">
         <div class="filter">
-            <el-input placeholder="搜索小区/门牌/电话" prefix-icon="el-icon-search"></el-input>
-            <house-status v-model="filters.status" />
+            <house-status v-model="filters.status"/>
             <rooms-select v-model="filters.rooms" @input='changeRoomsNum'></rooms-select>
-            <el-select v-model="filters.city" clearable placeholder="管理">
+            <el-select v-model="filters.city" clearable placeholder="管理" size="small">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
         </div>
@@ -80,7 +79,8 @@
 
 <style lang="less" scoped>
     .search-wrapper {
-    	margin-bottom: 20px;
+		margin-bottom: 17px;
+		margin-top: 5px;
     	display: flex;
     	justify-content: space-between;
     	align-items: center;

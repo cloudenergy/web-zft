@@ -1,31 +1,42 @@
 <template>
 	<div class="top-nav">
 		<div class="links" style="display:inline-block">
-			<el-menu class="el-menu-status rent-menu" mode="horizontal" default-active="rent-all" @select="handleSelect">
-				<el-menu-item index="rent-all">全部</el-menu-item>
-				<el-menu-item index="rent-lessee">再租17</el-menu-item>
-				<el-menu-item index="rent-overdue">逾期3</el-menu-item>
-				<el-menu-item index="rent-wait">待入2</el-menu-item>
-			</el-menu>
+			<el-tabs v-model="type" @tab-click="change">
+				<el-tab-pane label="全部" name="all"></el-tab-pane>
+				<el-tab-pane v-for="(item,index) in stateTypes" :key="index" :label="item.label" :name="item.label" />
+			</el-tabs>
 		</div>
 	</div>
 </template>
 <script>
 	export default {
 		data() {
-			return {};
+			return {
+				stateTypes:[
+					{
+						label:'在租'
+					},
+					{
+						label:'逾期3'
+					},
+					{
+						label:'待入2'
+					},
+				],
+				type:'all'
+			};
 		},
 		methods: {
 			handleSelect(key, keyPath) {
 				console.log(key, keyPath);
+			},
+			change() {
+				
 			}
 		}
 	};
 </script>
 
 <style lang="less" scoped>
-	.rent-menu>li{
-		height:40px;
-		line-height:40px;
-	}
+	
 </style>

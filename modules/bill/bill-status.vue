@@ -1,40 +1,31 @@
 <template>
-<el-col :span="4">
-			<el-menu class="el-menu-status bill-menu" mode="horizontal" default-active="false" @select="handleSelect">
-				<el-menu-item index="false">未完成</el-menu-item>
-				<el-menu-item index="true">已完成</el-menu-item>
-			</el-menu>
-
-	<!-- <div class="top-nav">
-		<div class="links">
-			<el-menu class="el-menu-status bill-menu" mode="horizontal" default-active="progressing" @select="handleSelect">
-				<el-menu-item index="progressing">未完成</el-menu-item>
-				<el-menu-item index="finished">已完成</el-menu-item>
-			</el-menu>
-		</div>
-	</div> -->
-	</el-col>
+	<el-tabs v-model="type" @tab-click="change">
+		<el-tab-pane label="未完成" name="false"></el-tab-pane>
+		<el-tab-pane label="已完成" name="true"></el-tab-pane>
+	</el-tabs>
 </template>
 <script>
 	export default {
 		data() {
-			return {};
+			return {
+				type: 'false'
+			};
 		},
 		methods: {
-			handleSelect(key, keyPath) {
-				console.log(key);
-				this.$emit('billStatus',key)
+			change(key, keyPath) {
+				this.$emit('billStatus', key.name)
 			}
 		}
 	};
 </script>
 
 <style lang="less" scoped>
-	.bill-menu{
+	.bill-menu {
 		width: 164px;
 	}
-	.bill-menu>li{
-		height:40px;
-		line-height:40px;
+
+	.bill-menu>li {
+		height: 40px;
+		line-height: 40px;
 	}
 </style>
