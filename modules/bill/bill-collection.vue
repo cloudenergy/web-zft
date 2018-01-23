@@ -38,8 +38,8 @@
             </div>
             <div style="flex:3">
                 <p>缴费方式</p>
-                <el-select v-model="form.paymentChannel" placeholder="请选择缴费方式" style="width:220px">
-                    <el-option :label='item.name' :value='item.tag' v-for="item in payRoad" :key="item.id"></el-option>
+                <el-select v-model="form.fundChannelId" placeholder="请选择缴费方式" style="width:220px">
+                    <el-option :label='item.name' :value='item.id' v-for="item in payRoad" :key="item.id"></el-option>
                 </el-select>
             </div>
         </div>
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+    import fp from 'lodash/fp';
+
     export default {
         props: {
             data: {
@@ -63,19 +65,19 @@
         created() {
             this.query()
         },
-        watch: {
-            data(newVal, oldVal) {
-                this.form.paymentChannel = 'cash',
-                    this.form.remake = '',
-                    this.amountPrice = 0
-            }
-        },
+		watch: {
+			data(newVal, oldVal) {
+				this.form.fundChannelId = this.defaultFundChannel;
+				this.form.remake = '';
+				this.amountPrice = 0;
+			}
+		},
         data() {
             return {
                 payRoad: [],
                 nowData: this.date(),
                 form: {
-                    paymentChannel: 'cash',
+					fundChannelId: 0,
                     remake: '',
                     amount: ''
                 },
@@ -88,6 +90,9 @@
             },
             calculateNum() {
                 return this.data.dueAmount
+            },
+            defaultFundChannel() {
+            	return fp.get('id')(fp.head(this.payRoad));
             }
         },
         methods: {
@@ -105,12 +110,15 @@
                     }, {
                         projectId: this.projectId
                     })
-                    .then(res => this.$set(this, 'payRoad', res))
+                    .then(res => {
+                    	this.$set(this, 'payRoad', res);
+						this.form.fundChannelId = this.defaultFundChannel;
+					})
             },
             date() {
                 return new Date()
             },
-            payRent() {
+			payRent() {
                 console.log(Date.parse(new Date()))
                 console.log(Date.parse(new Date())/1000)
                 this.form.paidAt = Date.parse(new Date())/1000;
