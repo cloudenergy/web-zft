@@ -99,9 +99,13 @@
 				this.reqData.bedRooms = data
 				this.query()
 			},
-    		refresh(type) {
+    		refresh(type,commiunityId) {
 				this.reqData.houseFormat = type;
-				delete this.reqData.locationId
+				if(commiunityId!==undefined){
+					this.reqData.locationId = commiunityId
+				}else{
+					delete this.reqData.locationId
+				}
 				this.query();
 			},
     		query() {

@@ -4,8 +4,8 @@
             <el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
         </el-tabs>
         <city-area @change="districtChanged" />
-        <el-menu :default-active="menuIndex" @select="handleSelect" ref="menuLocation" :style="menuStyle()">
-            <el-menu-item :index='0' ref="activeMenu" v-if="type!=='ENTIRE'" :class="{'is-active':typeNum==index}">
+        <el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
+            <el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
                 <!-- <i class="el-icon-menu"></i> -->
                 <span slot="title">全部小区</span>
             </el-menu-item>
@@ -34,11 +34,12 @@
     			},
     			options: [],
 				community: [],
-				menuIndex:'0',
 				h:0,
 				clickType:'SHARE',
 				typeNum:0,
-				firNum:'0'
+				firNum:0,
+				index:'0',
+				communityType:'SHARE'
     		};
 		},
     	created() {
@@ -56,12 +57,24 @@
                     .dispatch('GET_COMMUNITIES', { houseType: this.type, districtsCode: this.filters.area || this.filters.city , force})
                     .then(data => {
 						this.community = data
-						this.$emit('change', this.clickType)
-						this.setChoose()
+						this.communityType = this.type
+						if(this.type=='ENTIRE'){
+							this.typeNum = data[0].locationId
+							this.$emit('change', this.clickType, data[0].locationId)
+						}
+						else {
+							this.typeNum = '0'
+							this.$emit('change', this.clickType)
+						}
+						if(this.firNum!==0){
+							this.setChoose()
+						}
+						this.firNum++
 					});
             },
     		change(tab, event) {
 				this.clickType = tab.name
+				this.firNum=0
 				this.updateCommunity()
             },
             districtChanged (filters) {
@@ -69,16 +82,13 @@
                 this.updateCommunity(true);
 			},
 			handleSelect(key,keyPath) {
-				this.typeNum=key
+				this.typeNum = 'a'
 				this.$emit('communityChange',key)
 			},
 			setChoose() {
-				console.log(this.$refs.menuLocation.$children)
 				this.$refs.menuLocation.$children.forEach((item,index)=>{
 					item.$el.classList.value="el-menu-item"
-					console.log(item.$el.classList.value)
 				})
-				this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item is-active"
 			}
     	}
     };
