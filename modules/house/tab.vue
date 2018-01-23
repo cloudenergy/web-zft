@@ -5,11 +5,11 @@
         </el-tabs>
         <city-area @change="districtChanged" />
         <el-menu :default-active="menuIndex" @select="handleSelect" ref="menuLocation" :style="menuStyle()">
-            <el-menu-item index="0" ref="activeMenu" v-if="type!=='ENTIRE'">
+            <el-menu-item :index='0' ref="activeMenu" v-if="type!=='ENTIRE'" :class="{'is-active':typeNum==index}">
                 <!-- <i class="el-icon-menu"></i> -->
                 <span slot="title">全部小区</span>
             </el-menu-item>
-            <el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.locationId)">
+            <el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.locationId)" :class="{'is-active':typeNum==item.locationId}">
                 <span slot="title">{{item.name}}</span>
             </el-menu-item>
         </el-menu>
@@ -36,7 +36,9 @@
 				community: [],
 				menuIndex:'0',
 				h:0,
-				clickType:'SHARE'
+				clickType:'SHARE',
+				typeNum:0,
+				firNum:'0'
     		};
 		},
     	created() {
@@ -67,19 +69,16 @@
                 this.updateCommunity(true);
 			},
 			handleSelect(key,keyPath) {
-				if(key!=='0'){
-					this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item"
-				}
+				this.typeNum=key
 				this.$emit('communityChange',key)
 			},
 			setChoose() {
 				console.log(this.$refs.menuLocation.$children)
-				// this.$refs.activeMenu.handleMouseeter
-				// this.$refs.menuLocation.$children.forEach((item,index)=>{
-				// 	item.$el.classList.value="el-menu-item"
-				// 	console.log(item.$el.classList.value)
-				// })
-				// this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item is-active"
+				this.$refs.menuLocation.$children.forEach((item,index)=>{
+					item.$el.classList.value="el-menu-item"
+					console.log(item.$el.classList.value)
+				})
+				this.$refs.menuLocation.$children[0].$el.classList.value="el-menu-item is-active"
 			}
     	}
     };
