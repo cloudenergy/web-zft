@@ -20,65 +20,65 @@
 </template>
 
 <script>
-    import { add, format } from '~/utils/date';
-    import _ from 'lodash';
-    export default {
-    	created() {},
-    	data() {
-    		return {
-    			user: {}
-    		};
-    	},
-    	methods: {
-    		login() {
-    			this.$store
-    				.dispatch('POST_LOGIN')
-    				.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
-    				.then(() => this.$router.push('/'));
-    		}
-    	}
-    };
+import { add, format } from '~/utils/date';
+import _ from 'lodash';
+export default {
+	created() {},
+	data() {
+		return {
+			user: {}
+		};
+	},
+	methods: {
+		login() {
+			this.$store
+				.dispatch('POST_LOGIN')
+				.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
+				.then(() => this.$router.push('/'));
+		}
+	}
+};
 </script>
 <style lang="less" scoped>
-    .login {
-    	width: 100%;
-    	height: 100%;
-    	display: flex;
-    	text-align: center;
-    	flex-direction: column;
-    	align-items: center;
-    	justify-content: center;
+.login {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
 
-    	h4 {
-    		padding: 10px 0 0;
-    		color: @dark;
-    		text-align: center;
+	h4 {
+		padding: 10px 0 0;
+		color: @dark;
+		text-align: center;
 
-    		span {
-    			display: inline-block;
-    			letter-spacing: 20px;
-    			text-indent: 20px;
-    			border-bottom: 3px solid @primary;
-    			padding-bottom: 10px;
-    			margin-bottom: 20px;
-    		}
-    	}
+		span {
+			display: inline-block;
+			letter-spacing: 20px;
+			text-indent: 20px;
+			border-bottom: 3px solid @primary;
+			padding-bottom: 10px;
+			margin-bottom: 20px;
+		}
+	}
 
-    	.container {
-    		width: 300px;
-    		padding: 40px 60px;
-    		background: #fff;
-    		box-shadow: 0 0 15px #eee;
-    		border-radius: 4px;
-    	}
+	.container {
+		width: 300px;
+		padding: 40px 60px;
+		background: #fff;
+		box-shadow: 0 0 15px #eee;
+		border-radius: 4px;
+	}
 
-    	.bottom-btn {
-    		margin-bottom: 0px;
+	.bottom-btn {
+		margin-bottom: 0px;
 
-    		button {
-    			box-shadow: 0 0 10px @primary;
-    		}
-    	}
-    }
+		button {
+			box-shadow: 0 0 10px @primary;
+		}
+	}
+}
 </style>
-

@@ -42,7 +42,6 @@ export default {};
 
 <style lang="less" scoped>
 .logo {
-	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
 	align-content: center;
@@ -51,7 +50,9 @@ export default {};
 	height: 60px;
 	background-color: #3c4d68;
 	img {
-		max-width: 80%;
+		max-width: 100%;
+		width: 100%;
+		margin-top: 10px;
 	}
 }
 .el-menu-vertical {
