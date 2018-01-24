@@ -68,11 +68,11 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="余额(¥)" width="130">
+			<el-table-column label="余额(¥)" width="160">
 				<template slot-scope="scope">
 					<div class="flexcenter">
-						<span class="userCashAmount" style="color:#F03D53" v-if="scope.row.user.cashAccount.balance<20">{{scope.row.user.cashAccount.balance}}</span>
-						<span class="userCashAmount" v-if="scope.row.user.cashAccount.balance>=20">{{scope.row.user.cashAccount.balance}}</span>
+						<span class="userCashAmount" style="color:#F03D53" v-if="scope.row.user.cashAccount.balance<2000">{{price(scope.row.user.cashAccount.balance)}}</span>
+						<span class="userCashAmount" v-if="scope.row.user.cashAccount.balance>=2000">{{price(scope.row.user.cashAccount.balance)}}</span>
 						<el-dropdown>
 							<span class="el-dropdown-link cursorp">
 								充值
@@ -279,6 +279,9 @@
 			this.$modal.$on('refresh', () => this.$emit('refresh'));
 		},
 		methods: {
+			price(data) {
+				return data/100
+			},
 			rentuser( value, item) {
 				this.updateData.user = item.user;
 				this.$model('contracts_info')
@@ -487,7 +490,7 @@
 	}
 	.userCashAmount{
 		display: inline-block;
-		width: 34px;
-		text-align: center;
+		width: 50px;
+		margin-left: 5px;
 	}
 </style>

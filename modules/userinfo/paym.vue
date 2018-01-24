@@ -58,7 +58,7 @@
             return {
                 form: {
                     "price": '',
-                    "region": '',
+                    "region": 1,
                     "desc": ''
                 },
                 payRoad:''
@@ -78,7 +78,7 @@
                     this.$message.error('请填写金额');
                 }else{
                     this.$model('top_up')
-                    .patch({amount:this.form.price,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.payRoad[0].id})
+                    .patch({amount:this.form.price*100,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.form.region})
                     .then(res=>{
                         this.$message.success('充值成功');
                         this.$refs[formName].resetFields();

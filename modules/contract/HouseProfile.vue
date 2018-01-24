@@ -13,7 +13,7 @@
                         <el-select v-model="property.houseType" class="house-type">
                             <el-option label="整租" value="SOLE"></el-option>
                             <el-option label="合租" value="SHARE"></el-option>
-                            <el-option label="整栋" value="ENTIRE"></el-option>
+                            <el-option label="整幢" value="ENTIRE"></el-option>
                         </el-select>
                         <el-autocomplete
                                 class="inline-input prepend-label"

@@ -16,7 +16,7 @@ module.exports = {
 	// options: mobile|pc|hybrid
 	type: 'pc',
 	framework: 'vue',
-	title: '租付通',
+	title: '电小鸽',
 	layout: { main: '~/components/app.vue' },
 	routes: {
 		// 'papers-details': "/:id"

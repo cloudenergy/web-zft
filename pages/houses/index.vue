@@ -6,7 +6,9 @@
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
                 <div class="room" v-for="house in houses">
-                    <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
+                    <div>
+						<span v-if="!entire">{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}</span>
+						<span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
                         <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
                                 <span @click="showHouse(house)">
@@ -25,10 +27,15 @@
 								</el-dropdown-menu>
 							</el-dropdown>
                         </span>
-                        <span class="badge pull-right">{{house.rooms.length}}</span>
+                        <!-- <span class="badge pull-right">{{house.rooms.length}}</span> -->
                     </div>
-                    <div class="cells">
+                    <div class="cells" v-if="!entire">
                         <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh'/>
+                    </div>
+					<div class="cells" v-if="entire">
+						<span v-for="(item, list) in house" :key="list">
+                        	<Room v-for="(room, index) in item.rooms" :key="index" :room="room" :house="item" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="reqData.houseFormat"/>
+						</span>
                     </div>
                 </div>
             </div>
@@ -47,6 +54,7 @@
 </template>
 
 <script>
+	import _ from 'lodash'
     import { Tab, Room, Search, Preview, houseInformation } from '~/modules/house';
     export default {
     	components: { Tab, Room, Search, Preview, houseInformation },
@@ -61,7 +69,10 @@
 					houseFormat: 'SHARE',
     				size: 200,
 					index: 1
-				}
+				},
+				entireHouse:[],
+				testArray:[],
+				entire:false
     		};
     	},
     	computed: {
@@ -115,8 +126,29 @@
     					{ projectId: this.projectId }
     				)
     				.then(res => {
-    					// console.log('data: ', data);
-    					this.$set(this, 'houses', res.data || []);
+						// console.log('data: ', data);
+						if(this.reqData.houseFormat==='ENTIRE'){
+							this.testArray = []
+							res.data.map((ele,index)=>{
+								if(!_.includes(this.entireHouse,ele.currentFloor)){
+									this.entireHouse.push(ele.currentFloor)
+									var newTset = []
+									newTset.push(ele)
+									this.testArray.push(newTset)
+								}else{
+									this.testArray[_.findIndex(this.entireHouse,function(o){
+										return o==ele.currentFloor
+									})].push(ele)
+								}
+							})
+							console.log(this.entireHouse)
+							console.log(this.testArray)
+							this.entire = true
+							this.houses = this.testArray
+						}else{
+							this.entire = false
+							this.$set(this, 'houses', res.data || []);
+						}
 					})
 					.catch(err=>{
 						console.log(err)

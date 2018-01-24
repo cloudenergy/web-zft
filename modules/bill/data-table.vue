@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table :data="tableBill" style="width: 100%">
-            <el-table-column label="应支付日">
+            <el-table-column label="应支付日" width="200">
                 <template slot-scope="scope">
                     <p style="margin-left: 10px;color:red" v-if="scope.row.payments.length===0&&nowTime>chooseTime(scope.row.dueDate)">已逾期{{differentTimePoor(scope.row.dueDate,nowTime)}}天</p>
                     <p style="margin-left: 10px">{{ scope.row.dueDateTime }}</p>

@@ -52,7 +52,25 @@
 			menuStyle() {
 				return 'height:'+this.h+'px'
 			},
-            updateCommunity (force = false) {
+    		change(tab, event) {
+				this.clickType = tab.name
+				this.firNum=0
+				this.updateCommunity()
+            },
+            districtChanged (filters) {
+                this.filters = filters;
+                this.updateCommunity(true);
+			},
+			handleSelect(key,keyPath) {
+				this.typeNum = 'a'
+				this.$emit('communityChange',key)
+			},
+			setChoose() {
+				this.$refs.menuLocation.$children.forEach((item,index)=>{
+					item.$el.classList.value="el-menu-item"
+				})
+			},
+			updateCommunity (force = false) {
                 this.$store
                     .dispatch('GET_COMMUNITIES', { houseType: this.type, districtsCode: this.filters.area || this.filters.city , force})
                     .then(data => {
@@ -72,24 +90,6 @@
 						this.firNum++
 					});
             },
-    		change(tab, event) {
-				this.clickType = tab.name
-				this.firNum=0
-				this.updateCommunity()
-            },
-            districtChanged (filters) {
-                this.filters = filters;
-                this.updateCommunity(true);
-			},
-			handleSelect(key,keyPath) {
-				this.typeNum = 'a'
-				this.$emit('communityChange',key)
-			},
-			setChoose() {
-				this.$refs.menuLocation.$children.forEach((item,index)=>{
-					item.$el.classList.value="el-menu-item"
-				})
-			}
     	}
     };
 </script>

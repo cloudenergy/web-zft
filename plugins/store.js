@@ -27,7 +27,7 @@ export default {
 		houseTypes: {
 			SOLE: ['SHARE', '合租'],
 			SHARE: ['SOLE', '整租'],
-			ENTIRE: ['ENTIRE', '整栋']
+			ENTIRE: ['ENTIRE', '整幢']
 		},
 		defaultHouseType: 'SOLE',
 		communities: null,

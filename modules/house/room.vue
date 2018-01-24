@@ -2,6 +2,7 @@
     <div class="house-cell" :class="{leased: classOut}">
         <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
+			<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
             <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
             <p v-if="room.contract.rent!==undefined">￥{{rentSmall}}/月</p>
             <p v-if="room.contract.rent===undefined">未出租</p>
@@ -143,7 +144,8 @@
     export default {
     	props: {
     		room: Object,
-    		house: Object
+    		house: Object,
+			houseFormat:String
 		},
 		components: {
 			ContractsList,
@@ -384,7 +386,7 @@
     	.actions {
     		cursor: pointer;
     		position: absolute;
-    		bottom: -22px;
+    		bottom: -17px;
     		background: #fff;
     		display: none;
     		text-align: center;
