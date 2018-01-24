@@ -18,7 +18,7 @@ describe('DataTable', () => {
 	})
 
 	it('should render the correct markup', () => {
-		expect(wrapper.html()).toContain('<el-table-column label="应支付日"></el-table-column>')
+		expect(wrapper.html()).toContain('<el-table-column label="应支付日" width="200"></el-table-column>')
 		expect(wrapper.html()).toContain('<el-table-column label="房源/账期"></el-table-column>')
 		expect(wrapper.html()).toContain('<el-table-column label="金额(¥)/类型"></el-table-column>')
 		expect(wrapper.html()).toContain('<el-table-column label="操作"></el-table-column>')
