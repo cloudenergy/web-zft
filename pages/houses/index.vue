@@ -5,7 +5,7 @@
             <Search @changeRoom='changeRoom'/>
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
-                <div class="room" v-for="house in houses">
+                <div class="room" v-for="house in houses" v-if="tabCard">
                     <div>
 						<span v-if="!entire">{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}</span>
 						<span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
@@ -34,10 +34,18 @@
                     </div>
 					<div class="cells" v-if="entire">
 						<span v-for="(item, list) in house" :key="list">
-                        	<Room v-for="(room, index) in item.rooms" :key="index" :room="room" :house="item" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="reqData.houseFormat"/>
+							<Room v-for="(room, index) in item.rooms" :key="index" :room="room" :house="item" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="reqData.houseFormat"/>
 						</span>
                     </div>
                 </div>
+				<div v-if="!tabCard" class="shareHouse ">
+					<div style="padding:10px 0 0 10px" class="flexc wrapHouse">
+						<span v-for="(house,lista) in houses" :key="lista">
+							<Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh'/>
+						</span>
+					</div>
+				</div>
+				
             </div>
         </div>
         <drawer-panel :open.sync="viewRoom">
@@ -72,7 +80,8 @@
 				},
 				entireHouse:[],
 				testArray:[],
-				entire:false
+				entire:false,
+				tabCard:true
     		};
     	},
     	computed: {
@@ -126,9 +135,9 @@
     					{ projectId: this.projectId }
     				)
     				.then(res => {
-						// console.log('data: ', data);
 						if(this.reqData.houseFormat==='ENTIRE'){
 							this.testArray = []
+							this.entireHouse = []
 							res.data.map((ele,index)=>{
 								if(!_.includes(this.entireHouse,ele.currentFloor)){
 									this.entireHouse.push(ele.currentFloor)
@@ -141,12 +150,15 @@
 									})].push(ele)
 								}
 							})
-							console.log(this.entireHouse)
-							console.log(this.testArray)
+							this.tabCard = true
 							this.entire = true
 							this.houses = this.testArray
+						}else if(this.reqData.houseFormat==='SOLE'){
+							this.tabCard = false
+							this.$set(this, 'houses', res.data || [])
 						}else{
 							this.entire = false
+							this.tabCard = true
 							this.$set(this, 'houses', res.data || []);
 						}
 					})
@@ -261,5 +273,15 @@
 		li:hover{
 			color:#409eff
 		}			
+	}
+	.shareHouse{
+		background-color: #fff;
+		.wrapHouse{
+			flex-wrap:wrap;
+			.cell {
+    				margin:10px
+    			}
+		}
+		
 	}
 </style>
