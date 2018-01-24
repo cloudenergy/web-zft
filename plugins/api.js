@@ -16,7 +16,7 @@ import router from '@/router';
 import axios from 'axios';
 
 const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+let source = CancelToken.source();
 
 let baseURL = '/api/v1.0';
 
@@ -56,10 +56,16 @@ setup({
 });
 
 const interceptor = function({ response, message }) {
-	const { status, data } = response;
+	const { status, data } = response || {};
 
 	if (status === 401) {
-		source.cancel('login required.');
+		// source.cancel('login required.');
+
+		// source = CancelToken.source();
+		// setup({
+		// 	cancelToken: source.token
+		// });
+
 		localStorage.user = '{}';
 		router.push('/login');
 		return data;
