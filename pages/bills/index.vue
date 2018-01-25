@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<div>
-			<Tab @change="refresh" :selected="houseFormat" />
+			<Tab @change="refresh" :selected="reqData.houseFormat" />
 		</div>
 		<el-container>
 			<el-header style="height:auto">
@@ -25,7 +25,7 @@
 				<search-all :title="'搜索姓名/电话'"></search-all>
 			</el-header>
 			<div class="result">
-				<DataTable :tableBill='tableBill' :pagingSize="pagingSize" @refresh="refreshCost" />
+				<DataTable :tableBill='tableBill' :pagingSize="pagingSize" @refresh="refreshCost" @sizeIndex="sizeIndex"/>
 			</div>
 		</el-container>
 	</el-container>
@@ -60,9 +60,13 @@
 			return {
 				input: '',
 				tableData: [],
-				pagingSize: {},
-				houseFormat: 'SHARE',
-				paid: false
+				pagingSize: 0,
+				reqData:{
+					houseFormat: 'SHARE',
+					paid: false,
+					size:20,
+					index:1
+				}
 			};
 		},
 		computed: {
@@ -81,17 +85,12 @@
 		methods: {
 			query() {
 				this.$model('all_user_bills')
-					.query({
-						paid: this.paid,
-						houseFormat: this.houseFormat,
-						size: 15,
-						index: 1
-					}, {
+					.query(this.reqData, {
 						projectId: this.projectId
 					})
 					.then(res => {
 						this.$set(this, 'tableData', res.data)
-						this.$set(this, 'pagingSize', res.paging)
+						this.$set(this, 'pagingSize', res.paging.count)
 					})
 					.catch(err => {
 						console.log(err)
@@ -99,16 +98,19 @@
 			},
 			refresh(type) {
 				if (type !== undefined) {
-					this.houseFormat = type;
+					this.reqData.houseFormat = type;
 				}
 				this.query()
 			},
 			billStatus(type) {
-				this.paid = type
-				console.log(this.paid)
+				this.reqData.paid = type
 				this.query()
 			},
 			refreshCost() {
+				this.query()
+			},
+			sizeIndex(data) {
+				this.reqData.index = data
 				this.query()
 			}
 		}

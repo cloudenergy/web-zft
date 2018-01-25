@@ -6,9 +6,8 @@
                     <div>{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}
                         <span class="badge pull-right">{{house.rooms.length+1}}</span>
                     </div>
-					<!-- TODO: ZHOUYI SOLE的house到底有几个表（争议） -->
                     <div class="cells" :houseId="house.houseId">
-						<house :house="house" class="cell" @sendFloor="sendFloor"></house>
+						<room :room="house" :houseId="house.houseId" class="cell" @view="showDrawer" @sendFloor="sendFloor" />
                         <room v-for="(room, index) in house.rooms" :key="index" :room="room" :houseId="house.houseId" class="cell" @view="showDrawer" @sendFloor="sendFloor" @click.native="show(house.houseId,room.id)" />
                     </div>
                 </div>
@@ -19,14 +18,13 @@
 
 <script>
     import room from './room.vue';
-    import house from './house.vue';
     export default {
 		props: {
     		houses: {
     			required: true
     		}
     	},
-    	components: { room,house },
+    	components: { room },
     	data() {
     		return {
     			currentRoom: null,
@@ -57,6 +55,7 @@
 						}
 						return item
 					})
+					element.showEquipment = element.devices[0]
 					return element
 				})
 			}
@@ -82,7 +81,7 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 40px;
+    		margin-left: 20px;
     	}
 
     	.room + .room {

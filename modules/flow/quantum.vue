@@ -20,7 +20,7 @@
 			</el-form>
 
 		</div>
-		<quantumlist :mounthFlows='mounthFlows' :flowPaging='flowPaging'/>
+		<quantumlist :mounthFlows='mounthFlows' :flowPaging='flowPaging' @pageIndex="pageIndex"/>
 	</div>
 
 </template>
@@ -60,7 +60,11 @@
 					community: ''
 				},
 				mounthFlows: [],
-				flowPaging: ''
+				flowPaging: '',
+				reqData:{
+					index:1,
+					size:20
+				}
 			};
 		},
 		methods: {
@@ -69,7 +73,7 @@
 			},
 			query() {
 				this.$model('flow_mounth')
-					.query({}, {
+					.query(this.reqData, {
 						projectId: this.projectId
 					})
 					.then(res => {
@@ -79,6 +83,10 @@
 					.catch(err => {
 						console.log(err)
 					})
+			},
+			pageIndex(data) {
+				this.reqData.index = data
+				this.query()
 			}
 		}
 	};

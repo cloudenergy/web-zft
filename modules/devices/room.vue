@@ -1,14 +1,20 @@
 <template>
     <div class="house-cell" :class="{leased: out}">
         <div class="cell">
-            <h3>{{room.name}}</h3>
+            <div class="flexcenter between">
+				<h3 v-if="room.name!==undefined">{{room.name}}</h3>
+				<h3 v-if="room.name===undefined">房屋公区表</h3>
+				<div v-if="room.devices!=''||null">
+					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status==='ONLINE'"/>
+					<icon type="jian" style="font-size:20px;" v-if="room.showEquipment.status==='OFFLINE'"/>
+				</div>
+			</div>
             <div v-if="room.devices!=''||null">
                 <div>名称：{{room.showEquipment.title}}</div>
                 <div>表ID：{{room.showEquipment.deviceId}}</div>
                 <div>读数：{{room.showEquipment.scale}}</div>
                 <div>时间：{{room.showEquipment.updatedAtTime}}</div>
             </div>
-
         </div>
         <div class="actions flexc">
             <div v-if="room.devices!=''||null">
@@ -21,13 +27,17 @@
                     </el-switch>
                     <span>断电</span>
                 </p>
+				<p class="add" @click="edit(room)">
+					<icon type="icon02" style="font-size:16px;"/>
+ 				</p>
             </div>
-            <div class="add" @click="edit(room)">
-                <i class="el-icon-circle-plus"></i>
-            </div>
+            
         </div>
+		<div class="noneAdd cursorp" @click="edit(room)" v-if="room.devices ==''||null">
+				<icon type="icon02" style="font-size:16px;"/>
+			</div>
         <el-dialog title="选择要绑定的职能设备" :visible.sync="dialogVisible" width="40%">
-            <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
+            <conversion ref="aaa" @setEquipmentid="setEquipmentid" style="min-height:337px"/>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="choosechange()">确 定</el-button>
@@ -137,7 +147,7 @@
     .house-cell {
     	position: relative;
     	padding: 10px;
-    	width: 180px;
+    	width: 240px;
     	height: 116px;
     	border-radius: 4px;
     	border: 1px solid @light;
@@ -146,10 +156,17 @@
     	// &.leased {
     	// 	border-left-color: @light;
     	// }
-
+		.noneAdd{
+			display: none;
+			margin-top: 73px;
+			text-align: right;
+		}
     	.cell {
+			.between{
+				margin-bottom: 6px;
+			}
     		h3 {
-    			margin-bottom: 12px;
+    			// margin-bottom: 12px;
     			overflow: hidden;
     			white-space: nowrap;
     		}
@@ -179,15 +196,10 @@
     		right: 15px;
     		margin-left: -36px;
     		margin-right: 28px;
-    		.add {
-    			position: absolute;
-    			right: -35px;
-    			bottom: 3px;
-    			font-size: 20px;
-    		}
     		p:last-child {
     			position: absolute;
-    			top: -5px;
+				top: 2px;
+				right:-37px;
     		}
     		p {
     			height: 21px;
@@ -216,9 +228,9 @@
     		}
     	}
     	&:hover {
-    		.actions {
+    		.actions,.noneAdd {
     			display: block;
-    		}
+			}
     	}
     }
 </style>

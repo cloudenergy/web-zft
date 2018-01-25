@@ -23,7 +23,7 @@
 			</el-header>
 			
 			<div class="result">
-				<DataTable v-if="housesRent" :housesrentData='housesRent' class="rentTable" v-loading="!housesRent" @refresh="refresh"/>
+				<DataTable v-if="housesRent" :housesrentData='housesRent' class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize"/>
 			</div>
 		</el-container>
 	</el-container>
@@ -51,7 +51,9 @@
 		data() {
 			return {
 				housesRent: null,
-				houseFormat:'SHARE'
+				houseFormat:'SHARE',
+				size:20,
+				index:1
 			};
 		},
 		computed: {
@@ -69,9 +71,13 @@
 				}
 				this.query()
 			},
+			pageSize(val){
+				this.index = val
+				this.query()
+			},
 			query(){
 				this.$model('contracts')
-				.query({houseFormat:this.houseFormat,size:'20'}, {projectId: this.projectId})
+				.query({houseFormat:this.houseFormat,size:this.size,index:this.index}, {projectId: this.projectId})
 				.then((data) =>{
 					data.data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")

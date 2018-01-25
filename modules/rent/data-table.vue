@@ -172,7 +172,7 @@
                 :total='housesrentData.paging.count'
                 @current-change="handleCurrentChange"
                 style="margin-top:5px;text-align:right"
-                :page-size='12'>
+                :page-size='20'>
         </el-pagination>
 	</div>
 </template>
@@ -385,9 +385,9 @@
 						message: data
 					});
 			},
-			handleCurrentChange(){
-				
-			}
+			handleCurrentChange(val){
+                this.$emit('pageSize',val)
+            }
 		}
 	};
 </script>

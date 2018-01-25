@@ -37,6 +37,14 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination
+                background
+                layout="prev, pager, next"
+                :total='pagingSize'
+                @current-change="handleCurrentChange"
+                style="margin-top:5px;text-align:right"
+                :page-size='20'>
+        </el-pagination>
         <el-dialog
         title="收款"
         :visible.sync="dialogVisible"
@@ -57,7 +65,7 @@ import {differentTime} from '../../utils/date.js'
 export default {
 	props: {
 		pagingSize:{
-			type:Object
+			type:Number
 		},
 		tableBill:{
 			type:Array
@@ -76,6 +84,11 @@ export default {
     },
     created () {
         this.query()  
+    },
+    watch: {
+        pagingSize(newVal,old) {
+            console.log(newVal,old)
+        }
     },
 	data() {
 		return {
@@ -133,6 +146,9 @@ export default {
                 return Math.ceil((time-(Date.parse(differentTime(data*1000)))/1000)/86400)
             }
         },
+        handleCurrentChange(val){
+            this.$emit('sizeIndex',val)
+        }
 	}
 };
 </script>
