@@ -64,7 +64,8 @@
 				this.$model('rooms').query({houseFormat: this.property.houseType, q, size: 100}, {projectId})
                     .then( data => {
 						const rooms = _.get(data, 'data', []);
-						const displayRooms = fp.map(this.translate)(fp.filter(this.filterFreeRoom)(rooms));
+                        console.log(rooms)
+						const displayRooms = fp.map(this.translate)(rooms)
 						cb(displayRooms);
                     })
 			}
