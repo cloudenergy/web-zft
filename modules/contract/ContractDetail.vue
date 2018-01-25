@@ -7,13 +7,12 @@
 			<el-col :span="10">
 				<el-form-item
 						prop="contract.leaseStart"
-						:rules="[
-      						{ required: true, message: '请输入租期开始时间', trigger: 'blur', type: 'date' }
-    					]">
+						>
 					<div class="select-with-label el-input-group">
 						<span class="el-input-group__prepend">范围</span>
 						<div class="block lease-start-input prepend-label">
-							<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间">
+							<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间"
+								:picker-options="startOptions">
 							</el-date-picker>
 						</div>
 					</div>
@@ -85,9 +84,19 @@
 				return addYears(this.contract.leaseStart, 3)
 			}
 		},
+		watch: {
+			contract(newVal,oldVal) {
+				this.startOptions.disabledDate = function(time){
+					return time.getTime() < newVal.leaseStart
+				}
+			}
+		},
 		data() {
 			const vm = this;
 			return {
+				startOptions:{
+
+				},
 				endOptions: {
 					disabledDate(time) {
 						return time.getTime() < Date.now();

@@ -90,7 +90,7 @@
     		}
     	},
     	created() {
-			this.query();
+			// this.query();
 			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
     	methods: {

@@ -70,6 +70,9 @@
 		},
 		mounted() {
 			if(!_.isUndefined(this.itemHouse)) {
+				if(this.itemRoom.contract.id!==undefined){
+					this.form = this.newModel(new Date((this.itemRoom.contract.to+1) * 1000))
+				}
 				this.form.property.house = `${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}${this.itemRoom.name}`
 				this.form.property.roomId = this.itemRoom.id
 				this.form.property.disabled = true

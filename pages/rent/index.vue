@@ -60,7 +60,7 @@
 			}
 		},
 		created() {
-    		this.query();
+    		// this.query();
     	},
 		methods: {
 			refresh(type) {
@@ -71,7 +71,7 @@
 			},
 			query(){
 				this.$model('contracts')
-				.query({houseFormat:this.houseFormat}, {projectId: this.projectId})
+				.query({houseFormat:this.houseFormat,size:'20'}, {projectId: this.projectId})
 				.then((data) =>{
 					data.data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")

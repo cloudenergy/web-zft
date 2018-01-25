@@ -27,8 +27,8 @@
             </div>
             <div>
                 <span class="set-width">支付方式</span>
-                <el-select v-model="withOutInfo.payChannel" placeholder="请选择">
-                    <el-option :label='item.name' :value="item.id" v-for="item in payRoad" :key="item.id"></el-option>
+                <el-select v-model="withOutInfo.transaction.paymentChannel" placeholder="请选择">
+                    <el-option :label='item.name' :value="item.tag" v-for="item in payRoad" :key="item.id"></el-option>
                 </el-select>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="flexc setInput">
                 <span class="set-width">结算余额</span>
                 <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number"></el-input>
-                <span class="hint">整数表示收款，负数表示退款</span>
+                <span class="hint">正数表示收款，负数表示退款</span>
             </div>
         </div>
         <div>
@@ -90,9 +90,9 @@
                 return {
                     toConfig:'IDIE',
                     status:'TERMINATED',
-                    payChannel:1,
                     transaction:{
-                        remake:''
+                        remake:'',
+                        paymentChannel:'cash'
                     }
                 }
             },
@@ -118,12 +118,12 @@
                 if(this.input>=0){
                     this.withOutInfo.transaction.flow = 'pay'
                     this.withOutInfo.endDate = this.nowData()
-                    this.withOutInfo.transaction.amount = this.input
+                    this.withOutInfo.transaction.amount = this.input*100
 
                 }else{
                     this.withOutInfo.transaction.flow = 'receive'
                     this.withOutInfo.endDate = this.nowData()
-                    this.withOutInfo.transaction.amount = -this.input
+                    this.withOutInfo.transaction.amount = -this.input*100
                 }
                 this.input = ''
                 this.newModel()
