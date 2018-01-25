@@ -2,8 +2,8 @@
     <div>
         <div class="flexc" v-for="list in item" :key="list.to">
             <div>
-                <div v-if="list.status!=='ONGOING'" class="setAuto flexdirection willIn"><span>将搬入</span></div>
-                <div v-if="list.status==='ONGOING'" class="setAuto flexdirection inThere"><span>在租中</span></div>
+                <div v-if="nowData<=list.from*1000" class="setAuto flexdirection willIn"><span>将搬入</span></div>
+                <div v-if="nowData>list.from*1000" class="setAuto flexdirection inThere"><span>在租中</span></div>
             </div>
             <div><img src="" alt=""></div>
             <div>
@@ -22,8 +22,11 @@
                 type:Array
             }
         },
-        components: {
-            
+        computed: {
+            nowData() {
+                console.log(Date.parse(new Date()))
+                return Date.parse(new Date())
+            }
         },
         methods: {
             price(data){
@@ -50,7 +53,7 @@
             color: #fff;
             font-size: 12px;
             padding-left: 5px;
-            line-height: 27px;
+            line-height: 28px;
         }
         span:after{
             position: absolute;
@@ -64,11 +67,12 @@
             border-left: 16px solid #67c23a ;
             border-bottom: 13px solid transparent ;
         }
-        .willIn{
-            background: #52bad5;
-        }
-        .willIn:after{
-            border-left: 16px solid #52bad5 ;
-        }
+        
+    }
+    .willIn span{
+        background: #d2d2d2;
+    }
+    .willIn span:after{
+        border-left: 16px solid #d2d2d2 ;
     }
 </style>

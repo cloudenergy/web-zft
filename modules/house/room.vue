@@ -1,5 +1,5 @@
 <template>
-    <div class="house-cell" :class="{leased: classOut}">
+    <div class="house-cell" :class="{leased: this.room.contract.id===undefined}">
         <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
 			<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
@@ -173,7 +173,10 @@
 			},
 			projectId() {
 				return this.$store.state.user.projectId
-			}
+			},
+			nowData() {
+				return Date.parse(new Date())
+			}	
 		},
 		created(){
 			this.updateData = this.userdatainfo;
@@ -244,7 +247,7 @@
     			});
 			},
 			viewContracts(){
-				if(this.classOut){
+				if(this.room.contract.id===undefined){
 					this.$message('暂无合约')
 				}else{
 					this.$model('room_contracts')
@@ -356,6 +359,9 @@
 
     	&.leased {
     		border-left-color: rgb(253, 109, 109);
+		}
+		&.willIn {
+    		border-left-color: #C8B9D4;
     	}
 
     	.cell {
