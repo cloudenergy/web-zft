@@ -56,7 +56,6 @@ export default {};
 	}
 }
 .el-menu-vertical {
-	height: 100%;
 	border-right: 0;
 	background-color: #2f3c4d;
 }

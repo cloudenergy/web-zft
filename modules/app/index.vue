@@ -26,6 +26,9 @@ export default {
 .app {
 	display: flex;
 }
+.main {
+	overflow-y: scroll;
+}
 .app,
 .main {
 	position: relative;
