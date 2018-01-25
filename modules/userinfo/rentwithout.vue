@@ -27,8 +27,8 @@
             </div>
             <div>
                 <span class="set-width">支付方式</span>
-                <el-select v-model="withOutInfo.transaction.paymentChannel" placeholder="请选择">
-                    <el-option :label='item.name' :value="item.tag" v-for="item in payRoad" :key="item.id"></el-option>
+                <el-select v-model="withOutInfo.transaction.fundChannelId" placeholder="请选择">
+                    <el-option :label='item.name' :value="item.id" v-for="item in payRoad" :key="item.id"></el-option>
                 </el-select>
             </div>
         </div>
@@ -91,8 +91,8 @@
                     toConfig:'IDIE',
                     status:'TERMINATED',
                     transaction:{
-                        remake:'',
-                        paymentChannel:'cash'
+                        fundChannelId:1,
+                        remake:''
                     }
                 }
             },
@@ -116,12 +116,12 @@
             },
             operateRent(){
                 if(this.input>=0){
-                    this.withOutInfo.transaction.flow = 'pay'
+                    this.withOutInfo.transaction.flow = 'receive'
                     this.withOutInfo.endDate = this.nowData()
                     this.withOutInfo.transaction.amount = this.input*100
 
                 }else{
-                    this.withOutInfo.transaction.flow = 'receive'
+                    this.withOutInfo.transaction.flow = 'pay'
                     this.withOutInfo.endDate = this.nowData()
                     this.withOutInfo.transaction.amount = -this.input*100
                 }

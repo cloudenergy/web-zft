@@ -78,9 +78,6 @@
 				})
 			}
 		},
-		created() {
-			this.query()
-		},
 		methods: {
 			query() {
 				this.$model('all_user_bills')
