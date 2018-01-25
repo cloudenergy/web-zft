@@ -1,5 +1,5 @@
 <template>
-    <div class="house-cell" :class="{leased: this.room.contract.id===undefined}">
+    <div class="house-cell" :class="{leased: this.room.contract.id===undefined,willIn:this.room.contract.from*1000>nowDate}">
         <div class="cell" @click="view()">
             <h3>{{room.name}}</h3>
 			<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
@@ -174,7 +174,7 @@
 			projectId() {
 				return this.$store.state.user.projectId
 			},
-			nowData() {
+			nowDate() {
 				return Date.parse(new Date())
 			}	
 		},
