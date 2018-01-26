@@ -7,17 +7,17 @@
             </el-tabs>
         </div>
         <div v-if="type==='myContracts'">
-            <span>账户余额</span>
-            <div class="flexc">
-                <h2>88888元</h2>
-                <el-button type="primary" plain>申请提现</el-button>
+            <p style="font-size:18px;margin-top:20px">账户余额</p>
+            <div class="flexc userCountMoney">
+                <p class="price">212930</p>
+                <el-button type="primary" plain class="reflect">申请提现</el-button>
             </div>
-            <div class="flexc">
+            <div class="flexc queryConditions">
                 <goend/>
-                <reflect-type/>
-                <reflect-status/>
+                <reflect-type style="margin-left:20px"/>
+                <reflect-status style="margin-left:20px"/>
             </div>
-            <div>
+            <div class="recordsShow">
                 <el-table :data="tableData" stripe style="width: 100%">
                     <el-table-column prop="date" label="时间" width="300">
                     </el-table-column>
@@ -63,4 +63,20 @@
 </script>
 
 <style lang="less" scoped>
+    .price{
+        font-size: 30px;
+        font-weight: 300;
+        padding: 20px 80px 30px 0;
+    }
+    .reflect{
+        height: 36px;
+        width: 128px;
+        margin-top: 18px
+    }
+    .queryConditions{
+        margin: 20px 0
+    }
+    .userCountMoney{
+        border-bottom: 1px solid #aaa
+    }
 </style>

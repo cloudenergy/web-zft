@@ -5,8 +5,8 @@
 				<h3 v-if="room.name!==undefined">{{room.name}}</h3>
 				<h3 v-if="room.name===undefined">房屋公区表</h3>
 				<div v-if="room.devices!=''||null">
-					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status==='ONLINE'"/>
-					<icon type="jian" style="font-size:20px;" v-if="room.showEquipment.status==='OFFLINE'"/>
+					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='ONLINE'"/>
+					<icon type="jian" style="font-size:20px;" v-if="room.showEquipment.status.service==='OFFLINE'"/>
 				</div>
 			</div>
             <div v-if="room.devices!=''||null">
@@ -23,7 +23,7 @@
                     <span>解绑</span>
                 </p>
                 <p class="setswitch">
-                    <el-switch :width="num" v-model="conversions" active-color="#13ce66" inactive-color="#ff4949">
+                    <el-switch :width="num" v-model="room.showEquipment.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch">
                     </el-switch>
                     <span>断电</span>
                 </p>
@@ -66,9 +66,14 @@
     			out: Math.random() > 0.5,
     			conversions: true,
     			dialogVisible: false,
-    			num: 30
+				num: 30,
+				eleciricityStatus:true,
+				reqData:{
+					roomId:this.roomId()
+				},
+				
     		};
-    	},
+		},
     	methods: {
     		choosechange() {
     			this.del();
@@ -85,10 +90,22 @@
     					this.$refs.aaa.log();
     				})
     				.catch(err => {});
-    		},
+			},
+			eleciricitySwitch(data) {
+				if(data){
+					this.reqData.mode='EMC_ON'
+				}else{
+					this.reqData.mode='EMC_OFF'
+				}
+				this.$model('electricity_instructions')
+					.patch(this.reqData,{projectId:this.projectId,id:'switch'})
+					.then(res=>{
+						console.log(res)
+					})
+			},
     		edit(data) {
     			this.dialogVisible = true;
-    		},
+			},
     		setEquipmentid(data) {
     			this.$model('room_devices')
     				.update(
@@ -138,7 +155,15 @@
 					});          
 				});
     			
-    		}
+			},
+			roomId() {
+				if(this.room.id){
+					return this.room.id
+				}else{
+					return null
+				}
+				
+			}
     	}
     };
 </script>
