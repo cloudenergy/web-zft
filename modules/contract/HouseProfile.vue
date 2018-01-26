@@ -50,7 +50,8 @@
 			translate (res) {
 				return {
 					value: `${res.locationName} ${res.building} ${res.unit} ${res.roomNumber} ${res.roomName}`,
-                    id: res.id
+                    id: res.id,
+                    houseId:res.houseId
                 }
             },
 			filterFreeRoom (room) {
@@ -58,6 +59,8 @@
             },
 			handleSelect(item) {
                 this.property.roomId = item.id
+                console.log(item)
+                this.$emit('roomChange', item.houseId)
 			},
 			querySearch(q, cb) {
 				const projectId = this.projectId;

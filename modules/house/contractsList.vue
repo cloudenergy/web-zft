@@ -2,7 +2,7 @@
     <div>
         <div class="flexc" v-for="list in item" :key="list.to">
             <div>
-                <div v-if="nowData<=list.from*1000" class="setAuto flexdirection willIn"><span>将搬入</span></div>
+                <div v-if="nowData<=list.from*1000" class="setAuto flexdirection willIn"><span class="willIn">将搬入</span></div>
                 <div v-if="nowData>list.from*1000" class="setAuto flexdirection inThere"><span>在租中</span></div>
             </div>
             <div><img src="" alt=""></div>
@@ -69,10 +69,10 @@
         }
         
     }
-    .willIn span{
+    .willIn span.willIn{
         background: #d2d2d2;
     }
-    .willIn span:after{
+    .willIn span.willIn:after{
         border-left: 16px solid #d2d2d2 ;
     }
 </style>

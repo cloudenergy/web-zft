@@ -19,7 +19,7 @@
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconYufu />
-                            {{scope.row.electricity[0].price}}
+                            {{price(scope.row.electricity[0].price)}}
                         <div style="display:inline-block" @click="setElectricit(scope.row)">
                             <i class="el-icon-edit cursorp hideicon"></i>
                         </div>
@@ -64,7 +64,7 @@
         </el-table>
         <!-- @@@暂时下线 -->
         <!-- <el-button type="primary" plain @click="batchChange" :disabled="disabledShow" style="margin-top:15px">批量修改</el-button> -->
-        <el-dialog title="xiugai" :visible.sync="dialogVisible" width="30%">
+        <el-dialog title="单价设置" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose'/>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="hidden()">取 消</el-button>
@@ -125,6 +125,13 @@
 			}
         },
         methods: {
+            price(data){
+                if(isNaN(data)){
+                    return '未设置'
+                }else{
+                    return data/100
+                }
+            },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
                 if(val!=''){

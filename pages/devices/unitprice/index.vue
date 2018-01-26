@@ -60,9 +60,6 @@
 				houses:[]
 			};
 		},
-		created() {
-    		this.query();
-		},
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;

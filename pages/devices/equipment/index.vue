@@ -69,9 +69,6 @@ export default {
 			return this.$store.state.user.projectId
 		}
 	},
-	created() {
-    	this.query();
-	},
 	methods: {
 		sendThird(data){
 			console.log(1)

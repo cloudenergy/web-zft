@@ -138,7 +138,7 @@
 						
 					},
 					property: {
-						houseType: '1',
+						houseType: 'SOLE',
 						house: ''
 					},
 					contract: {

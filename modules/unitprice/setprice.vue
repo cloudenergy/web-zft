@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- {{item}} -->
         <div class="flexc">
             <el-input v-model="input" placeholder="请输入修改价格" style="width:80%"></el-input>
             &nbsp;&nbsp;&nbsp;
@@ -28,7 +27,7 @@ export default {
             if(!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(this.input)){
                 this.$emit('notclose')
             }else{
-                this.item.electricity[0].price = this.input
+                this.item.electricity[0].price = this.input*100
                 this.$emit('notclose',this.item)
                 this.input = ''
             }

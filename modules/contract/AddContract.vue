@@ -3,7 +3,7 @@
 		<el-form :model="form" ref="form" class="v-form">
 			<h3>承租信息</h3>
 			<UserProfile :user="form.user"></UserProfile>
-			<HouseProfile :property="form.property"></HouseProfile>
+			<HouseProfile :property="form.property" @roomChange="roomChange"></HouseProfile>
 			<ContractDetail :contract="form.contract"></ContractDetail>
 
 			<h3 class="section-2">租费设置</h3>
@@ -52,6 +52,14 @@
 					} 
 					if(extraCost.name==="电费"){
 						extraCost.pattern="prepaid"
+						if(this.itemHouse&&this.itemHouse.prices.length!==0){
+							console.log(this.itemHouse)
+							this.itemHouse.prices.forEach((element,index) => {
+								if(element.type==="ELECTRIC"){
+									extraCost.rent = element.price/100
+								}
+							});
+						}
 					}
 					return extraCost
 				})
@@ -107,6 +115,22 @@
 			},
 			defaultEnd(now) {
 				return addYears(now, 1);
+			},
+			roomChange(data) {
+				console.log(data)
+				this.$model('house_info')
+				.query({houseFormat:this.form.property.houseType},{projectId:this.projectId,houseId:data})
+				.then(res=>{
+					res.price.forEach((item,index)=>{
+						if(item.type==='ELECTRIC'){
+							this.form.expense.extra.forEach((ele,list)=>{
+								if(ele.configId===1041){
+									ele.rent = item.price/100
+								}
+							})
+						}
+					})
+				})
 			},
 			newModel(today) {
 				return {
@@ -183,7 +207,7 @@
 				}
 			},
 			createExpense(form) {
-				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern']))(form.expense.extra),function(o){return o.rent});
+				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern','frequency']))(form.expense.extra),function(o){return o.rent});
 				return fp.map(this.unitAsCent)(extraExpense);
 			},
 			closeDialog() {

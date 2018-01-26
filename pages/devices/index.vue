@@ -60,9 +60,6 @@
 				return this.$store.state.user.projectId;
 			}	
 		},
-		mounted () {
-			this.query()	
-		},
 		methods:{
 			refresh(type) {
     			this.houseFormat = type;
