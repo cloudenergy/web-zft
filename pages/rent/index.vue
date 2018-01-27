@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<div>
-			<Tab @change="refresh" :selected="houseFormat"/>
+			<Tab @change="refresh" :selected="houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
 			<el-header style="height:auto">
@@ -51,9 +51,12 @@
 		data() {
 			return {
 				housesRent: null,
-				houseFormat:'SHARE',
-				size:20,
-				index:1
+				reqData:{
+					houseFormat:'SHARE',
+					size:20,
+					index:1
+				}
+				
 			};
 		},
 		computed: {
@@ -65,6 +68,15 @@
     		// this.query();
     	},
 		methods: {
+			communityChange(data) {
+				if(data==='0'){
+					delete this.reqData.locationId
+					this.query()
+				}else{
+					this.reqData.locationId = data
+					this.query()
+				}
+			},
 			refresh(type) {
 				if(type!==undefined){
 					this.houseFormat = type;
@@ -77,7 +89,7 @@
 			},
 			query(){
 				this.$model('contracts')
-				.query({houseFormat:this.houseFormat,size:this.size,index:this.index}, {projectId: this.projectId})
+				.query(this.reqData, {projectId: this.projectId})
 				.then((data) =>{
 					data.data.forEach(element => {
 						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")

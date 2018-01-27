@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<div>
-			<Tab @change="refresh" :selected="reqData.houseFormat" />
+			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
 			<el-header style="height:auto">
@@ -83,6 +83,15 @@
 			}
 		},
 		methods: {
+			communityChange(data) {
+				if(data==='0'){
+					delete this.reqData.locationId
+					this.query()
+				}else{
+					this.reqData.locationId = data
+					this.query()
+				}
+			},
 			query() {
 				this.$model('all_user_bills')
 					.query(this.reqData, {
