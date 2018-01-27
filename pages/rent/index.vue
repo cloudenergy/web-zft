@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<div>
-			<Tab @change="refresh" :selected="houseFormat" @communityChange="communityChange"/>
+			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
 			<el-header style="height:auto">
@@ -78,8 +78,9 @@
 				}
 			},
 			refresh(type) {
+				console.log(type)
 				if(type!==undefined){
-					this.houseFormat = type;
+					this.reqData.houseFormat = type;
 				}
 				this.query()
 			},
