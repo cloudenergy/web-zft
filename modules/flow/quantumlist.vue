@@ -1,32 +1,21 @@
 <template lang="html">
     <div>
-        <el-table :data="mounthFlows" :row-key="getRowKeys" :expand-row-keys="expands"         @row-click='handleRowHandle'         ref="tableData5"
+        <el-table :data="mounthFlows" :row-key="getRowKeys" :expand-row-keys="expands"     @row-click='handleRowHandle'         ref="tableData5"
             style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="商品名称">
-                            <span>{{ props.row.folwm }}</span>
-                        </el-form-item>
-                        <el-form-item label="所属店铺">
-                            <span>{{ props.row.shop }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品 ID">
-                            <span>{{ props.row.id }}</span>
-                        </el-form-item>
-                        <el-form-item label="店铺 ID">
-                            <span>{{ props.row.shopId }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品分类">
-                            <span>{{ props.row.category }}</span>
-                        </el-form-item>
-                        <el-form-item label="店铺地址">
-                            <span>{{ props.row.address }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品描述">
-                            <span>{{ props.row.username }}</span>
-                        </el-form-item>
-                    </el-form>
+                    <el-row>
+                        <el-col v-if="props.row.billItems!==null" :span="6">
+                            <p v-for="item in props.row.billItems" class="flexcenter">
+                                <span v-for="(list,index) in otherCost" :key="index" v-if="list.id===item.configId">{{list.key}}</span>
+                                <span v-if="item.configId===121">租金</span>
+                                <span v-if="item.configId===123">押金</span>
+                                <span>
+                                    {{price(item.amount)}}
+                                </span>
+                            </p>
+                        </el-col>
+                    </el-row>
                 </template>
             </el-table-column>
             <el-table-column label="支付时间">
@@ -99,7 +88,9 @@
                 },
                 // 要展开的行，数值的元素是row的key值
                 expands: [],
-                fundChannel: []
+                fundChannel: [],
+                otherCost:[],
+                item:{}
             }
         },
         mounted() {
@@ -144,6 +135,9 @@
                         projectId: this.projectId
                     })
                     .then(res => this.$set(this, 'fundChannel', res))
+                this.$store
+                    .dispatch('GET_OTHERCOST')
+                    .then(data => (this.otherCost = data));   
             }
         }
     }
@@ -163,5 +157,10 @@
         margin-right: 0;
         margin-bottom: 0;
         width: 50%;
+    }
+    
+    .billItems{
+        display: flex;
+        justify-content: space-around
     }
 </style>
