@@ -9,9 +9,8 @@
 		<app-modal ref="modal"></app-modal>
 		<div class="userInfo flexc">
 			<el-dropdown placement="bottom">
-				<span class="el-dropdown-link" style="line-height:60px">
+				<span class="el-dropdown-link">
 					username
-					<i class="el-icon-arrow-down el-icon--right"></i>
 				</span>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item>退出</el-dropdown-item>
@@ -61,7 +60,8 @@
 
 	.app .userInfo {
 		position: absolute;
-		right: 10px;
+		top:20px;
+		right: 20px;
 		z-index: 4;
 	}
 </style>
