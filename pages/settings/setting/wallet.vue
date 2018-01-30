@@ -10,7 +10,7 @@
             <p style="font-size:18px;margin-top:20px">账户余额</p>
             <div class="flexc userCountMoney">
                 <p class="price">212930</p>
-                <el-button type="primary" plain class="reflect">申请提现</el-button>
+                <el-button type="primary" class="reflect">申请提现</el-button>
             </div>
             <div class="flexc queryConditions">
                 <goend/>

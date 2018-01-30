@@ -24,10 +24,17 @@ export default {
     },
     methods: {
         sendchange(){
+            console.log(this.item)
             if(!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(this.input)){
                 this.$emit('notclose')
             }else{
-                this.item.electricity[0].price = this.input*100
+                this.item.electricity.forEach((element,index) => {
+                    if(element.category==='CLIENT'){
+                        element.price = this.input*100
+                    }else{
+                        element.price = this.input*100
+                    }
+                });
                 this.$emit('notclose',this.item)
                 this.input = ''
             }
