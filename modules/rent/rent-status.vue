@@ -12,21 +12,20 @@
 	export default {
 		data() {
 			return {
-				stateTypes:[
-					{
-						label:'在租',
-						value:'leasing'
+				stateTypes: [{
+						label: '在租',
+						value: 'leasing'
 					},
 					{
-						label:'逾期',
-						value:'overdue'
+						label: '逾期',
+						value: 'overdue'
 					},
 					{
-						label:'待入',
-						value:'waiting'
+						label: '待入',
+						value: 'waiting'
 					},
 				],
-				type:'all'
+				type: 'all'
 			};
 		},
 		methods: {
@@ -34,12 +33,11 @@
 				console.log(key, keyPath);
 			},
 			change(tab, event) {
-				this.$emit('leasingStatus',tab.name)
+				this.$emit('leasingStatus', tab.name)
 			}
 		}
 	};
 </script>
 
 <style lang="less" scoped>
-	
 </style>

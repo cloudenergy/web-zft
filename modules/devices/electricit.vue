@@ -1,6 +1,7 @@
 <template>
     <div>
-        <el-table :data="tableData" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle' ref="tableData">
+        <el-table :data="tableData" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle'
+            ref="tableData">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
@@ -28,30 +29,30 @@
             </el-table-column>
             <el-table-column label="归属账单" min-width="160">
                 <template slot-scope="scope">
-                   
+
                     <span class="el-dropdown-link devicesuser">
                         {{}}userId
                     </span>
-                    
-                    
+
+
                     <!-- @@@时间，等数据传回来 -->
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="往次抄表" min-width="160">
                 <template slot-scope="scope">
-                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
-                        @change="oldTime(scope.row)">
-                    </el-date-picker><br/>
+                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px" @change="oldTime(scope.row)">
+                    </el-date-picker>
+                    <br/>
                     <span style="margin-left: 30px;margin-top:5px">{{ scope.row.lastnum }}</span>
                     <br>
                 </template>
             </el-table-column>
             <el-table-column label="本次抄表" min-width="160">
                 <template slot-scope="scope">
-                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px"
-                        @change="newTime(scope.row)">
-                    </el-date-picker><br>
+                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:160px" @change="newTime(scope.row)">
+                    </el-date-picker>
+                    <br>
                     <span style="margin-left: 30px;margin-top:5px">{{ scope.row.thisnum }}</span>
                 </template>
             </el-table-column>
@@ -95,14 +96,14 @@
                         user: [{
                                 value: '1',
                                 label: '赵世浩',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                             {
                                 value: '0',
                                 label: '未分配',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                         ],
                         currentuser: '0',
@@ -141,14 +142,14 @@
                         user: [{
                                 value: 'asdf',
                                 label: '赵世浩',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                             {
                                 value: 'asdfasdf',
                                 label: '未分配',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                         ],
                         currentuser: '1',
@@ -187,14 +188,14 @@
                         user: [{
                                 value: '1',
                                 label: '赵世浩',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                             {
                                 value: '0',
                                 label: '未分配',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                         ],
                         currentuser: '1',
@@ -230,61 +231,62 @@
                 ]
             }
         },
-        mounted () {
-              this.tableData.forEach(element => {
-                  element.setdata = new Date(parseInt(element.setdata) * 1000).toLocaleDateString().replace(/\//g, "-")
-                  element.differentnum=this.computations(element.thisnum,element.lastnum)
-                  element.bill = this.computationsPrice(element.differentnum,element.unitprice)
-              });
+        mounted() {
+            this.tableData.forEach(element => {
+                element.setdata = new Date(parseInt(element.setdata) * 1000).toLocaleDateString().replace(/\//g,
+                    "-")
+                element.differentnum = this.computations(element.thisnum, element.lastnum)
+                element.bill = this.computationsPrice(element.differentnum, element.unitprice)
+            });
         },
         methods: {
             oldTime(data) {
                 data.lastnum = 11111;
-                data.differentnum=this.computations(data.thisnum,data.lastnum)
-                data.bill = this.computationsPrice(data.differentnum,data.unitprice)
+                data.differentnum = this.computations(data.thisnum, data.lastnum)
+                data.bill = this.computationsPrice(data.differentnum, data.unitprice)
             },
-            newTime(data){
+            newTime(data) {
                 data.thisnum = 999999;
-                data.differentnum=this.computations(data.thisnum,data.lastnum)
-                data.bill = this.computationsPrice(data.differentnum,data.unitprice)
+                data.differentnum = this.computations(data.thisnum, data.lastnum)
+                data.bill = this.computationsPrice(data.differentnum, data.unitprice)
             },
-            handleCommand(command){
+            handleCommand(command) {
                 console.log(command)
             },
-            computations(newnum,oldnum){
-                return newnum-oldnum;
+            computations(newnum, oldnum) {
+                return newnum - oldnum;
             },
-            computationsPrice(differentnum,price){
-                return differentnum*price
+            computationsPrice(differentnum, price) {
+                return differentnum * price
             },
-            handleRowHandle(row,event){
-                if(event.path[0].tagName!='INPUT'){
+            handleRowHandle(row, event) {
+                if (event.path[0].tagName != 'INPUT') {
                     this.toggle(row.userid)
                 }
-            },
+            },
             // 展开
-            toggle(flowi){
-                this.$refs.tableData.toggleRowExpansion(this.tableData.find(d => d.userid == flowi)) 
+            toggle(flowi) {
+                this.$refs.tableData.toggleRowExpansion(this.tableData.find(d => d.userid == flowi))
             }
         }
     }
 </script>
 
 <style lang="less" scoped>
-    input.choose{
-        border:1px solid transparent;
+    input.choose {
+        border: 1px solid transparent;
     }
-    .devicesuser{
+
+    .devicesuser {
         display: inline-block;
         width: 100%;
 
     }
 </style>
 <style>
-    .no-border>.el-input>.el-input__inner{
+    .no-border>.el-input>.el-input__inner {
         border: 1px solid transparent;
         padding: 0;
         background-color: none;
     }
 </style>
-

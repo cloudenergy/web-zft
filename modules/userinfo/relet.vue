@@ -14,54 +14,64 @@
 			<el-button @click="closeDialog()">取 消</el-button>
 			<el-button type="primary" @click="submitForm('form')">续租</el-button>
 		</div>
-		
+
 	</div>
 </template>
 
 <script>
 	import UserProfile from '../relet/UserProfile.vue';
-	import {HouseProfile,Contract,ExpenseSetting} from '../contract'
+	import {
+		HouseProfile,
+		Contract,
+		ExpenseSetting
+	} from '../contract'
 
-	import {addYears, format, getTime} from 'date-fns';
+	import {
+		addYears,
+		format,
+		getTime
+	} from 'date-fns';
 
 	export default {
 		props: {
-            item: {
-                type: Object
+			item: {
+				type: Object
 			},
-			contractsId:{
-				required:true
+			contractsId: {
+				required: true
 			}
-        },
+		},
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
 			},
 			otherCost() {
-				return _.filter(this.configList,{group:"加收费用"})
+				return _.filter(this.configList, {
+					group: "加收费用"
+				})
 			}
 		},
 		watch: {
-			otherCost(newVal,oldVal){
-				this.form.expense.extra=newVal.map((ele,index)=>{
+			otherCost(newVal, oldVal) {
+				this.form.expense.extra = newVal.map((ele, index) => {
 					var extraCost = {
-						configId:ele.id,
-						name:ele.key,
-						type:'extra',
-						rent:'',
-						pattern:'withRent'
-					} 
-					if(extraCost.name==="电费"){
-						extraCost.pattern="prepaid"
+						configId: ele.id,
+						name: ele.key,
+						type: 'extra',
+						rent: '',
+						pattern: 'withRent'
+					}
+					if (extraCost.name === "电费") {
+						extraCost.pattern = "prepaid"
 					}
 					return extraCost
 				})
 			},
-			contractInfo(newVal,oldVal){
+			contractInfo(newVal, oldVal) {
 				console.log(newVal)
 			}
 		},
-		created(){
+		created() {
 			this.query()
 		},
 		data() {
@@ -69,32 +79,39 @@
 			return {
 				form: this.newModel(today),
 				changeuserdata: '',
-				configList:[],
-				contractInfo:'',
-				showUser:false,
+				configList: [],
+				contractInfo: '',
+				showUser: false,
 				loading: true
 			};
 		},
-		mounted(){
+		mounted() {
 			console.log(this.form)
 		},
 		methods: {
-			query(){
+			query() {
 				this.$model('config_list')
-				.query({},{projectId:this.projectId})
-				.then(res=>{this.$set(this,'configList',res)})
-				.catch(err=>console.log(err))
+					.query({}, {
+						projectId: this.projectId
+					})
+					.then(res => {
+						this.$set(this, 'configList', res)
+					})
+					.catch(err => console.log(err))
 				this.$model('contracts_info')
-                .query({},{projectId:this.projectId,contractId:this.contractsId})
-                .then(res=>{
-					this.$set(this,'contractInfo',res)
-					this.setUser()
-                })
-                .catch(err=>{
-                    console.log(err,'asdfa')
-                })
+					.query({}, {
+						projectId: this.projectId,
+						contractId: this.contractsId
+					})
+					.then(res => {
+						this.$set(this, 'contractInfo', res)
+						this.setUser()
+					})
+					.catch(err => {
+						console.log(err, 'asdfa')
+					})
 			},
-			setUser(){
+			setUser() {
 				this.form.user.name = this.contractInfo.user.name
 				this.form.user.accountName = this.contractInfo.user.accountName
 				this.form.user.mobile = this.contractInfo.user.mobile
@@ -104,7 +121,7 @@
 				this.showUser = true
 				this.loading = false
 			},
-			onselect(userdata){
+			onselect(userdata) {
 				console.log(1)
 				this.changeuserdata = userdata
 				console.log(this.changeuserdata)
@@ -114,8 +131,10 @@
 					if (valid) {
 						console.log('submit: ', this.translate(this.form));
 						this.$model('contracts')
-							.create(this.translate(this.form), {projectId: this.projectId})
-							.then( () => {
+							.create(this.translate(this.form), {
+								projectId: this.projectId
+							})
+							.then(() => {
 								this.closeDialog();
 								this.resetForm();
 								this.successMessage();
@@ -135,7 +154,7 @@
 			newModel(today) {
 				return {
 					user: {
-						
+
 					},
 					property: {
 						houseType: 'SOLE',
@@ -155,8 +174,7 @@
 							rent: 3600,
 							pattern: '6'
 						},
-						extra: [
-							{
+						extra: [{
 								configId: 2,
 								name: '电费',
 								type: 'extra',
@@ -204,26 +222,22 @@
 							"interval": "1/2/3/6/12",
 							"amount": 10000
 						},
-						"customer": [
-							{
-								"from": 1509976830,
-								"to": 1509976830,
-								"forFree": "0不免租金/1免租金",
-								"amount": 10000,
-								"interval": "1/2/3/6/12"
-							}
-						]
+						"customer": [{
+							"from": 1509976830,
+							"to": 1509976830,
+							"forFree": "0不免租金/1免租金",
+							"amount": 10000,
+							"interval": "1/2/3/6/12"
+						}]
 					}
 				}
 			},
 			createExpense(form) {
-				return [
-					{
-						"cfgId": "1/2/3...",
-						"amount": 10000,
-						"interval": "1/2/3/6/12"
-					}
-				]
+				return [{
+					"cfgId": "1/2/3...",
+					"amount": 10000,
+					"interval": "1/2/3/6/12"
+				}]
 			},
 			closeDialog() {
 				this.$refs['form'].resetFields();
@@ -231,9 +245,9 @@
 			},
 			successmessage() {
 				this.$message({
-          		message: '续租成功',
-          		type: 'success'
-        		});
+					message: '续租成功',
+					type: 'success'
+				});
 			}
 		},
 		components: {

@@ -17,14 +17,14 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="房源/租期" min-width="300" max-width="500">				
+			<el-table-column label="房源/租期" min-width="300" max-width="500">
 				<template slot-scope="scope">
-						<div slot="reference" class="name-wrapper cursorp" @click="rentuser('2',scope.row)">
-							<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber }}{{ scope.row.room.roomName }}</div>
-							<div class="rent-bottom">
-								<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>
-							</div>
+					<div slot="reference" class="name-wrapper cursorp" @click="rentuser('2',scope.row)">
+						<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber}}{{ scope.row.room.roomName }}</div>
+						<div class="rent-bottom">
+							<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>
 						</div>
+					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="租金" min-width="290">
@@ -142,10 +142,10 @@
 					<div v-if="showinf==2" class="triangle cursorsec">合同信息</div>
 					<div v-if="showinf==3" class="triangle cursorthi">账单信息</div>
 					<Rentinfo v-if="showinf==1" :form="updateData" />
-					<Rentmessasge v-if="showinf==2" :form="updateData"/>
-					<Rentmoney v-if="showinf==3&&showmoney==1" :form="updateData"/>
-					<Rentlease v-if="showinf==3&&showmoney==2" :form="contractbill"/>
-					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData"/>
+					<Rentmessasge v-if="showinf==2" :form="updateData" />
+					<Rentmoney v-if="showinf==3&&showmoney==1" :form="updateData" />
+					<Rentlease v-if="showinf==3&&showmoney==2" :form="contractbill" />
+					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData" />
 				</div>
 			</div>
 			<span slot="footer" class="dialog-footer">
@@ -154,26 +154,21 @@
 		</el-dialog>
 		<!-- 用户信息预览 -->
 		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%">
-			<Rentmessasge :form="updateData"/>
+			<Rentmessasge :form="updateData" />
 			<div style="height:30px">
 				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
 			</div>
 		</el-dialog>
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
-			<RentWithout :id="updateData.id" ref="operate"/>
+			<RentWithout :id="updateData.id" ref="operate" />
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible4 = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>
 			</span>
 		</el-dialog>
-		<el-pagination
-                :background="background"
-                layout="prev, pager, next"
-                :total='housesrentData.paging.count'
-                @current-change="handleCurrentChange"
-                style="margin-top:5px;text-align:right"
-                :page-size='20'>
-        </el-pagination>
+		<el-pagination :background="background" layout="prev, pager, next" :total='housesrentData.paging.count' @current-change="handleCurrentChange"
+		    style="margin-top:5px;text-align:right" :page-size='20'>
+		</el-pagination>
 	</div>
 </template>
 
@@ -210,13 +205,13 @@
 			}
 		},
 		props: {
-    		housesrentData: {
-    			required: true
-    		}
-    	},
+			housesrentData: {
+				required: true
+			}
+		},
 		data() {
 			return {
-				background:true,
+				background: true,
 				contractbill: '',
 				updateData: {},
 				dialogVisible: false,
@@ -274,27 +269,33 @@
 				}
 			};
 		},
-		created(){
+		created() {
 			this.updateData = this.userdatainfo;
 			this.$modal.$on('refresh', () => this.$emit('refresh'));
 		},
 		methods: {
 			price(data) {
-				return data/100
+				return data / 100
 			},
-			rentuser( value, item) {
+			rentuser(value, item) {
 				this.updateData.user = item.user;
 				this.$model('contracts_info')
-				.query({},{projectId: this.projectId,contractId:item.id})
-				.then(res=>{
-					this.updateData = res;
-				})
-				.catch(err=>{
-					console.log(err)
-				})
+					.query({}, {
+						projectId: this.projectId,
+						contractId: item.id
+					})
+					.then(res => {
+						this.updateData = res;
+					})
+					.catch(err => {
+						console.log(err)
+					})
 				this.$model('contract_bill')
-				.query({},{projectId: this.projectId,id:item.id})
-				.then(data=> this.$set(this,'contractbill',data))
+					.query({}, {
+						projectId: this.projectId,
+						id: item.id
+					})
+					.then(data => this.$set(this, 'contractbill', data))
 				this.dialogVisible = true;
 				this.showinf = value;
 			},
@@ -306,7 +307,7 @@
 					this.$modal.$emit('open', {
 						comp: Relet,
 						data: {
-							contractsId:data.id
+							contractsId: data.id
 						},
 						title: '续租'
 					});
@@ -321,24 +322,27 @@
 						console.log(this.projectId)
 						console.log(data.id)
 						this.$model('contracts')
-						.delete({},{projectId: this.projectId,id:data.id})
-						.then(data=> {
-							this.$message({
-								type: 'success',
-								message: '删除成功!'
-							});
-							this.$emit('refresh')
-						})
+							.delete({}, {
+								projectId: this.projectId,
+								id: data.id
+							})
+							.then(data => {
+								this.$message({
+									type: 'success',
+									message: '删除成功!'
+								});
+								this.$emit('refresh')
+							})
 					}).catch(err => {
 						this.mistake('取消删除')
 					});
-				} else if(value == 4){
+				} else if (value == 4) {
 					this.dialogVisible4 = true
-				}else {
+				} else {
 					this.dialogVisible3 = true;
 				}
 			},
-			operateRent(){
+			operateRent() {
 				this.$refs.operate.operateRent()
 				this.dialogVisible4 = false
 			},
@@ -370,8 +374,8 @@
 			paym(date) {
 				this.$modal.$emit('open', {
 					comp: Paym,
-					data:{
-						userInfo:date
+					data: {
+						userInfo: date
 					},
 					title: '充值'
 				})
@@ -379,15 +383,15 @@
 			successRefresh() {
 				this.$emit('refresh')
 			},
-			mistake(data){
+			mistake(data) {
 				this.$message({
-						type: 'info',
-						message: data
-					});
+					type: 'info',
+					message: data
+				});
 			},
-			handleCurrentChange(val){
-                this.$emit('pageSize',val)
-            }
+			handleCurrentChange(val) {
+				this.$emit('pageSize', val)
+			}
 		}
 	};
 </script>
@@ -428,14 +432,15 @@
 			height: 100px;
 		}
 	}
-	.userinfobot{
+
+	.userinfobot {
 		margin-left: 5px;
-		color:#888;
-		>div:first-child{
+		color: #888;
+		>div:first-child {
 			margin-top: 16px;
 		}
-		>div>p:nth-child(1){
-			color:#000;
+		>div>p:nth-child(1) {
+			color: #000;
 		}
 	}
 
@@ -467,7 +472,8 @@
 		display: block;
 		position: absolute;
 		top: -12px;
-	} 
+	}
+
 	.cursorfir:after {
 		left: 14px
 	}
@@ -488,7 +494,8 @@
 	.islosem {
 		color: #F03D53
 	}
-	.userCashAmount{
+
+	.userCashAmount {
 		display: inline-block;
 		width: 50px;
 		margin-left: 5px;

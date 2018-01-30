@@ -12,17 +12,17 @@
             <el-table-column label="归属账单" min-width="180">
                 <template slot-scope="scope">
                     <el-dropdown style="width:90%" @command="handleCommand">
-                    <span class="el-dropdown-link devicesuser">
-                        {{scope.row.user[0].label}}userId<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <!-- @@@需要返还userId -->
-                        <el-dropdown-item v-for="item in scope.row.user" :key="item.value" :command="item.value">
-                            {{item.label}} {{item.value}}
-                            <br>
-                            {{item.from}}至{{item.to}}
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
+                        <span class="el-dropdown-link devicesuser">
+                            {{scope.row.user[0].label}}userId
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <!-- @@@需要返还userId -->
+                            <el-dropdown-item v-for="item in scope.row.user" :key="item.value" :command="item.value">
+                                {{item.label}} {{item.value}}
+                                <br> {{item.from}}至{{item.to}}
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
                     </el-dropdown>
                     <br>
                     <!-- @@@时间，等数据传回来 -->
@@ -38,14 +38,9 @@
             </el-table-column>
             <el-table-column label="本次抄表" min-width="150">
                 <template slot-scope="scope">
-                        <el-date-picker
-                            v-model="scope.row.setdata"
-                            type="date"
-                            placeholder="选择日期"
-                            style="width:130px"
-                            :picker-options="scope.row.pickerOptions"
-                            @change="test">
-                        </el-date-picker>
+                    <el-date-picker v-model="scope.row.setdata" type="date" placeholder="选择日期" style="width:130px" :picker-options="scope.row.pickerOptions"
+                        @change="test">
+                    </el-date-picker>
                     <br>
                 </template>
             </el-table-column>
@@ -91,14 +86,14 @@
                         user: [{
                                 value: '1',
                                 label: '赵世浩',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                             {
                                 value: '0',
                                 label: '未分配',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                         ],
                         currentuser: '0',
@@ -130,9 +125,9 @@
                         differentnum: '111111',
                         unitprice: '2',
                         bill: '1200',
-                        create_start_date:'1480867200000',
+                        create_start_date: '1480867200000',
                         pickerOptions: {
-                            disabledDate:(time)=> {
+                            disabledDate: (time) => {
                                 return time.getTime() > Date.now() || time.getTime() < this.tableData[0].create_start_date;
                             }
                         },
@@ -143,14 +138,14 @@
                         user: [{
                                 value: '1',
                                 label: '赵世浩',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                             {
                                 value: '0',
                                 label: '未分配',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                         ],
                         currentuser: '1',
@@ -183,7 +178,7 @@
                         unitprice: '2',
                         bill: '1200',
                         pickerOptions: {
-                            disabledDate:(time)=> {
+                            disabledDate: (time) => {
                                 return time.getTime() > Date.now() || time.getTime() < this.create_start_date;
                             }
                         },
@@ -194,14 +189,14 @@
                         user: [{
                                 value: '1',
                                 label: '赵世浩',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                             {
                                 value: '0',
                                 label: '未分配',
-                                from:'2017-01-01',
-                                to:'2018-01-01'
+                                from: '2017-01-01',
+                                to: '2018-01-01'
                             },
                         ],
                         currentuser: '1',
@@ -233,7 +228,7 @@
                         differentnum: '111111',
                         unitprice: '2',
                         bill: '1200',
-                        create_start_date:'1480867200000',
+                        create_start_date: '1480867200000',
                         // pickerOptions: {
                         //     disabledDate:(time)=> {
                         //         return time.getTime() > Date.now() || time.getTime() < this.tableData[2].create_start_date;
@@ -243,12 +238,12 @@
                 ]
             }
         },
-        mounted () {
-            this.tableData[2].pickerOptions =   {
-                            disabledDate:(time)=> {
-                                return time.getTime() > Date.now() || time.getTime() < this.tableData[2].create_start_date;
-                            }
-                        }
+        mounted() {
+            this.tableData[2].pickerOptions = {
+                disabledDate: (time) => {
+                    return time.getTime() > Date.now() || time.getTime() < this.tableData[2].create_start_date;
+                }
+            }
         },
         methods: {
             test(date) {
@@ -257,7 +252,7 @@
             savech() {
                 console.log(this.tableData)
             },
-            handleCommand(command){
+            handleCommand(command) {
                 console.log(command)
             },
         }
@@ -265,11 +260,11 @@
 </script>
 
 <style lang="less" scoped>
-.devicesuser{
+    .devicesuser {
         display: inline-block;
         width: 100%;
-        i{
-            float:right;
+        i {
+            float: right;
         }
     }
 </style>

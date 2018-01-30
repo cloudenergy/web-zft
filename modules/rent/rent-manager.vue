@@ -8,8 +8,7 @@
 	export default {
 		data() {
 			return {
-				options: [
-					{
+				options: [{
 						value: 'laojiang',
 						label: '老蒋'
 					},
@@ -30,7 +29,6 @@
 
 <style lang="less" scoped>
 	.select {
-		margin-left: 30px;
-		// margin-top: 10px;
+		margin-left: 30px; // margin-top: 10px;
 	}
 </style>

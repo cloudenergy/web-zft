@@ -1,17 +1,17 @@
 <template>
-  <div class="myIcon cursorp">
-      随
-  </div>
+    <div class="myIcon cursorp">
+        随
+    </div>
 </template>
 
 <script>
-export default {
-  
-}
+    export default {
+
+    }
 </script>
 
 <style lang="less" scoped>
-    .myIcon{
+    .myIcon {
         width: 16px;
         height: 16px;
         border-radius: 100%;

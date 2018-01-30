@@ -47,11 +47,11 @@
             }
         },
         computed: {
-    		projectId() {
-    			return this.$store.state.user.projectId;
-    		}
+            projectId() {
+                return this.$store.state.user.projectId;
+            }
         },
-        created(){
+        created() {
             this.query()
         },
         data() {
@@ -61,39 +61,51 @@
                     "region": 1,
                     "desc": ''
                 },
-                payRoad:''
+                payRoad: ''
             }
         },
         methods: {
-            show(){
-                console.log(this.userInfo,this.payRoad)
+            show() {
+                console.log(this.userInfo, this.payRoad)
             },
-            query(data){
+            query(data) {
                 this.$model('fund_channel')
-                .query({category:'offline',flow:'receive'},{projectId: this.projectId})
-                .then(res=>this.$set(this,'payRoad',res))
+                    .query({
+                        category: 'offline',
+                        flow: 'receive'
+                    }, {
+                        projectId: this.projectId
+                    })
+                    .then(res => this.$set(this, 'payRoad', res))
             },
             onSubmit(formName) {
-                if(this.form.price==""){
+                if (this.form.price == "") {
                     this.$message.error('请填写金额');
-                }else{
+                } else {
                     this.$model('top_up')
-                    .patch({amount:this.form.price*100,contractId:this.userInfo.id,userId:this.userInfo.user.id},{projectId:this.projectId,id:this.form.region})
-                    .then(res=>{
-                        this.$message.success('充值成功');
-                        this.$refs[formName].resetFields();
-                        this.cleraboth();
-                    })
-                    .catch(err=>{
-                        this.$message('充值失败');
-                    })
+                        .patch({
+                            amount: this.form.price * 100,
+                            contractId: this.userInfo.id,
+                            userId: this.userInfo.user.id
+                        }, {
+                            projectId: this.projectId,
+                            id: this.form.region
+                        })
+                        .then(res => {
+                            this.$message.success('充值成功');
+                            this.$refs[formName].resetFields();
+                            this.cleraboth();
+                        })
+                        .catch(err => {
+                            this.$message('充值失败');
+                        })
                 }
             },
             onclose(formName) {
                 this.cleraboth()
                 this.$refs[formName].resetFields();
             },
-            cleraboth(){
+            cleraboth() {
                 this.$modal.$emit('dismiss');
                 this.form.desc = ""
             }

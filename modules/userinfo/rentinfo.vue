@@ -19,11 +19,11 @@
                     </el-col>
                 </el-row>
             </el-form-item>
-            
+
             <el-select v-model="form.user.documentType" class="id-type" style="width:120px;margin-right:10px">
                 <el-option v-for="t in idTypes" :label="t.name" :value="t.id" :key="t.id"></el-option>
             </el-select>
-        
+
             <el-input v-model="form.user.documentId" class="inputuser"></el-input>
         </el-form>
         <el-button type="primary" @click="updateuser()" style="margin-top:15px;margin-left:116px;">更改</el-button>
@@ -74,8 +74,8 @@
                 }]
             }
         },
-        mounted(){
-             
+        mounted() {
+
         },
         methods: {
             onSubmit() {

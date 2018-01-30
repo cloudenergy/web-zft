@@ -2,9 +2,7 @@
     <div class="house-profile">
         <el-row>
             <el-col :span="24">
-                <el-form-item
-                        prop="property.house"
-                        :rules="[
+                <el-form-item prop="property.house" :rules="[
       						{ required: true, message: '请选择房源', trigger: 'blur' }
     					]">
                     <div class="select-with-label el-input-group">
@@ -15,14 +13,8 @@
                             <el-option label="合租" value="SHARE"></el-option>
                             <el-option label="整幢" value="ENTIRE"></el-option>
                         </el-select>
-                        <el-autocomplete
-                                class="inline-input prepend-label"
-                                v-model="property.house"
-                                :fetch-suggestions="querySearch"
-                                placeholder="搜索房源编号、小区名称等关键字"
-                                :trigger-on-focus="false"
-                                @select="handleSelect"
-                                :disabled="property.disabled">
+                        <el-autocomplete class="inline-input prepend-label" v-model="property.house" :fetch-suggestions="querySearch" placeholder="搜索房源编号、小区名称等关键字"
+                            :trigger-on-focus="false" @select="handleSelect" :disabled="property.disabled">
                         </el-autocomplete>
                     </div>
                 </el-form-item>
@@ -35,45 +27,51 @@
     import _ from 'lodash'
     import fp from 'lodash/fp'
 
-	export default {
-		props: {
-			property: {
-				required: true
-			}
-		},
-		computed: {
-			projectId() {
-				return this.$store.state.user.projectId;
-			}
-		},
-		methods: {
-			translate (res) {
-				return {
-					value: `${res.locationName} ${res.building} ${res.unit} ${res.roomNumber} ${res.roomName}`,
+    export default {
+        props: {
+            property: {
+                required: true
+            }
+        },
+        computed: {
+            projectId() {
+                return this.$store.state.user.projectId;
+            }
+        },
+        methods: {
+            translate(res) {
+                return {
+                    value: `${res.locationName} ${res.building} ${res.unit} ${res.roomNumber} ${res.roomName}`,
                     id: res.id,
-                    houseId:res.houseId
+                    houseId: res.houseId
                 }
             },
-			filterFreeRoom (room) {
-				return room.status === 'IDLE'
+            filterFreeRoom(room) {
+                return room.status === 'IDLE'
             },
-			handleSelect(item) {
+            handleSelect(item) {
                 this.property.roomId = item.id
                 console.log(item)
                 this.$emit('roomChange', item.houseId)
-			},
-			querySearch(q, cb) {
-				const projectId = this.projectId;
-				this.$model('rooms').query({houseFormat: this.property.houseType, q, size: 100}, {projectId})
-                    .then( data => {
-						const rooms = _.get(data, 'data', []);
-                        console.log(rooms)
-						const displayRooms = fp.map(this.translate)(rooms)
-						cb(displayRooms);
+            },
+            querySearch(q, cb) {
+                const projectId = this.projectId;
+                this.$model('rooms').query({
+                        houseFormat: this.property.houseType,
+                        q,
+                        size: 100
+                    }, {
+                        projectId
                     })
-			}
-		}
-	}
+                    .then(data => {
+                        const rooms = _.get(data, 'data', []);
+                        console.log(rooms)
+                        const displayRooms = fp.map(this.translate)(rooms)
+                        cb(displayRooms);
+                    })
+            }
+        }
+    }
 </script>
 
 <style lang="less" scoped>
@@ -100,6 +98,7 @@
             }
         }
     }
+
     .el-row {
         margin-top: 18px;
     }
@@ -113,6 +112,7 @@
             border-left: none;
         }
     }
+
     .house-profile .el-form-item--mini .el-form-item__error {
         padding-left: 190px;
     }

@@ -9,16 +9,14 @@
 					<div class="select-with-label el-input-group">
 						<span class="el-input-group__prepend">账单</span>
 						<el-select v-model="expense.billPlan" class="bill-plan prepend-label">
-							<el-option v-for="item in availablePlans" :label="item.name" :value="item.plan"
-									:key="item.plan"></el-option>
+							<el-option v-for="item in availablePlans" :label="item.name" :value="item.plan" :key="item.plan"></el-option>
 						</el-select>
 					</div>
 				</el-col>
 				<el-col :span="9">
 					<div class="select-with-label el-input-group">
 						<el-select v-model="expense.offset" class="bill-plan-days">
-							<el-option v-for="item in dateRange" :label="item.label" :value="item.value"
-									:key="item.value"></el-option>
+							<el-option v-for="item in dateRange" :label="item.label" :value="item.value" :key="item.value"></el-option>
 						</el-select>
 						<span class="el-input-group__append">收租</span>
 					</div>
@@ -52,11 +50,7 @@
 				</el-input>
 			</el-col>
 		</el-row>
-		<el-dialog
-			width="30%"
-			title="选择要增加的收费选项"
-			:visible.sync="innerVisible"
-			append-to-body>
+		<el-dialog width="30%" title="选择要增加的收费选项" :visible.sync="innerVisible" append-to-body>
 			<el-checkbox v-model="otherCoste" :label="item.id" border v-for="item in otherCost" :key="item.id" @change="showOther" style="width:85px;margin:3px">{{item.key}}</el-checkbox>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="chooseCost">取 消</el-button>
@@ -102,47 +96,45 @@
 			return {
 				outerVisible: false,
 				innerVisible: false,
-				otherCoste:[
-					1041,1043
+				otherCoste: [
+					1041, 1043
 				],
 				// (开始前提前-02/开始后固定+02/开始前固定F02/开始前一个月固定M02)
-				availablePlans: [
-					{
-						name: '开始前提前',
-						unit: '天',
-						plan: '-',
-						min: 0,
-						max: 31
-					}, {
-						name: '开始后固定',
-						unit: '号',
-						plan: '+',
-						min: 1,
-						max: 31
-					}, {
-						name: '开始前固定',
-						unit: '号',
-						plan: 'F',
-						min: 1,
-						max: 31
-					}, {
-						name: '开始前一个月固定',
-						unit: '号',
-						plan: 'M',
-						min: 1,
-						max: 30
-					},
-				]
+				availablePlans: [{
+					name: '开始前提前',
+					unit: '天',
+					plan: '-',
+					min: 0,
+					max: 31
+				}, {
+					name: '开始后固定',
+					unit: '号',
+					plan: '+',
+					min: 1,
+					max: 31
+				}, {
+					name: '开始前固定',
+					unit: '号',
+					plan: 'F',
+					min: 1,
+					max: 31
+				}, {
+					name: '开始前一个月固定',
+					unit: '号',
+					plan: 'M',
+					min: 1,
+					max: 30
+				}, ]
 			}
 		},
 		methods: {
-			addCost(data){
-				
+			addCost(data) {
+
 			},
-			showOther(){
+			showOther() {
 				console.log(this.otherCoste)
 			},
-			chooseCost(){
+			chooseCost() {
 				this.innerVisible = false;
 			}
 		}
@@ -183,5 +175,5 @@
 
 	.extra-rent-row .el-row {
 		margin-bottom: 18px;
-	 }
+	}
 </style>

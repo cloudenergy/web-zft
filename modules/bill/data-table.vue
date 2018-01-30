@@ -18,8 +18,9 @@
             </el-table-column>
             <el-table-column label="房源/账期">
                 <template slot-scope="scope">
-                    <p>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber }}&nbsp;{{ scope.row.room.roomName }}</p>
-					<p>{{scope.row.startDateTime}}至{{scope.row.endDateTime}}</p>
+                    <p>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber
+                        }}&nbsp;{{ scope.row.room.roomName }}</p>
+                    <p>{{scope.row.startDateTime}}至{{scope.row.endDateTime}}</p>
                 </template>
             </el-table-column>
             <!-- TODO 增加租金期数 -->
@@ -37,127 +38,144 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination
-                background
-                layout="prev, pager, next"
-                :total='pagingSize'
-                @current-change="handleCurrentChange"
-                style="margin-top:5px;text-align:right"
-                :page-size='20'>
+        <el-pagination background layout="prev, pager, next" :total='pagingSize' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
+            :page-size='20'>
         </el-pagination>
-        <el-dialog
-        title="收款"
-        :visible.sync="dialogVisible"
-        width="40%">
-        <billCollection :data="tableData" :type="otherCost" ref="collect" @closeDialog='closeDialog()'/>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="collection()">确 定</el-button>
-        </span>
+        <el-dialog title="收款" :visible.sync="dialogVisible" width="40%">
+            <billCollection :data="tableData" :type="otherCost" ref="collect" @closeDialog='closeDialog()' />
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="collection()">确 定</el-button>
+            </span>
         </el-dialog>
     </div>
 </template>
 
 
 <script>
-import billCollection from './bill-collection.vue'
-import {differentTime} from '../../utils/date.js'
-export default {
-	props: {
-		pagingSize:{
-			type:Number
-		},
-		tableBill:{
-			type:Array
-		}
-	},
-    components: {
-        billCollection  
-    },
-	computed: {
-		projectId(){
-			return this.$store.state.user.projectId
-		},
-		nowTime() {
-            return Date.parse(new Date())/1000
-        }
-    },
-    created () {
-        this.query()  
-    },
-    watch: {
-        pagingSize(newVal,old) {
-            console.log(newVal,old)
-        }
-    },
-	data() {
-		return {
-			tableData:[],
-			paging:null,
-			dialogVisible: false,
-			dialogTitle: 'Tips',
-			type:[
-				{type:'bond',text:'押金'},
-				{type:'deposit',text:'定金'},
-				{type:'rent',text:'租金'},
-				{type:'extra',text:'加收'},
-				{type:'bond-refund',text:'退押金'},
-				{type:'deposit-refund',text:'退定金'},
-				{type:'rent-refund',text:'退租金'},
-				{type:'extra-refund',text:'退加收'},
-            ],
-            otherCost:[]
-		};
-	},
-	methods: {
-		/**@augments
-		 * max 传入实收最大的值
-		 * num 实收的值
-		 */
-		narrow(data) {
-			return data/100
-        },
-        handleReceive(index,data) {
-            this.tableData = data
-            console.log(this.tableData)
-            this.tableData.billItems.map((ele,index)=>{
-                ele.dueDateTime = data.dueDateTime
-                ele.endDateTime = data.endDateTime
-            })
-            this.dialogVisible = true
-        },
-        collection() {
-            this.$refs.collect.payRent()
-        },
-        closeDialog() {
-            this.$emit('refresh')
-            this.dialogVisible = false;
-        },
-        query(){
-			this.$store
-    		.dispatch('GET_OTHERCOST')
-    		.then(data => (this.otherCost = data));
-        },
-        chooseTime(data) {
-            return Date.parse(differentTime(data*1000))/1000
-        },
-        differentTimePoor(data,time) {
-            if(time>data){
-                return Math.ceil((time-(Date.parse(differentTime(data*1000)))/1000)/86400)
+    import billCollection from './bill-collection.vue'
+    import {
+        differentTime
+    } from '../../utils/date.js'
+    export default {
+        props: {
+            pagingSize: {
+                type: Number
+            },
+            tableBill: {
+                type: Array
             }
         },
-        handleCurrentChange(val){
-            this.$emit('sizeIndex',val)
+        components: {
+            billCollection
+        },
+        computed: {
+            projectId() {
+                return this.$store.state.user.projectId
+            },
+            nowTime() {
+                return Date.parse(new Date()) / 1000
+            }
+        },
+        created() {
+            this.query()
+        },
+        watch: {
+            pagingSize(newVal, old) {
+                console.log(newVal, old)
+            }
+        },
+        data() {
+            return {
+                tableData: [],
+                paging: null,
+                dialogVisible: false,
+                dialogTitle: 'Tips',
+                type: [{
+                        type: 'bond',
+                        text: '押金'
+                    },
+                    {
+                        type: 'deposit',
+                        text: '定金'
+                    },
+                    {
+                        type: 'rent',
+                        text: '租金'
+                    },
+                    {
+                        type: 'extra',
+                        text: '加收'
+                    },
+                    {
+                        type: 'bond-refund',
+                        text: '退押金'
+                    },
+                    {
+                        type: 'deposit-refund',
+                        text: '退定金'
+                    },
+                    {
+                        type: 'rent-refund',
+                        text: '退租金'
+                    },
+                    {
+                        type: 'extra-refund',
+                        text: '退加收'
+                    },
+                ],
+                otherCost: []
+            };
+        },
+        methods: {
+            /**@augments
+             * max 传入实收最大的值
+             * num 实收的值
+             */
+            narrow(data) {
+                return data / 100
+            },
+            handleReceive(index, data) {
+                this.tableData = data
+                console.log(this.tableData)
+                this.tableData.billItems.map((ele, index) => {
+                    ele.dueDateTime = data.dueDateTime
+                    ele.endDateTime = data.endDateTime
+                })
+                this.dialogVisible = true
+            },
+            collection() {
+                this.$refs.collect.payRent()
+            },
+            closeDialog() {
+                this.$emit('refresh')
+                this.dialogVisible = false;
+            },
+            query() {
+                this.$store
+                    .dispatch('GET_OTHERCOST')
+                    .then(data => (this.otherCost = data));
+            },
+            chooseTime(data) {
+                return Date.parse(differentTime(data * 1000)) / 1000
+            },
+            differentTimePoor(data, time) {
+                if (time > data) {
+                    return Math.ceil((time - (Date.parse(differentTime(data * 1000))) / 1000) / 86400)
+                }
+            },
+            handleCurrentChange(val) {
+                this.$emit('sizeIndex', val)
+            }
         }
-	}
-};
+    };
 </script>
 <style scoped>
     .table_collection2 {
-    	margin-top: 20px;
+        margin-top: 20px;
     }
+
     .input3 {
-    	margin-top: 20px;
+        margin-top: 20px;
     }
-   
 </style>

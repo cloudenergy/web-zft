@@ -89,8 +89,8 @@
                 // 要展开的行，数值的元素是row的key值
                 expands: [],
                 fundChannel: [],
-                otherCost:[],
-                item:{}
+                otherCost: [],
+                item: {}
             }
         },
         mounted() {
@@ -137,7 +137,7 @@
                     .then(res => this.$set(this, 'fundChannel', res))
                 this.$store
                     .dispatch('GET_OTHERCOST')
-                    .then(data => (this.otherCost = data));   
+                    .then(data => (this.otherCost = data));
             }
         }
     }
@@ -158,8 +158,8 @@
         margin-bottom: 0;
         width: 50%;
     }
-    
-    .billItems{
+
+    .billItems {
         display: flex;
         justify-content: space-around
     }

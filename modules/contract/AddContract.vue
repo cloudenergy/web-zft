@@ -22,17 +22,21 @@
 	import ContractDetail from './ContractDetail.vue';
 	import ExpenseSetting from './ExpenseSetting.vue';
 
-	import {addYears, format, getTime} from 'date-fns';
+	import {
+		addYears,
+		format,
+		getTime
+	} from 'date-fns';
 	import _ from 'lodash';
 	import fp from 'lodash/fp';
 
 	export default {
 		props: {
-			itemRoom:{
-				type:Object
+			itemRoom: {
+				type: Object
 			},
 			itemHouse: {
-				type:Object
+				type: Object
 			}
 		},
 		computed: {
@@ -41,22 +45,22 @@
 			}
 		},
 		watch: {
-			otherCost(newVal,oldVal){
-				this.form.expense.extra=newVal.map((ele,index)=>{
+			otherCost(newVal, oldVal) {
+				this.form.expense.extra = newVal.map((ele, index) => {
 					var extraCost = {
-						configId:ele.id,
-						name:ele.key,
-						type:'extra',
-						rent:'',
-						pattern:'withRent'
-					} 
-					if(extraCost.name==="电费"){
-						extraCost.pattern="prepaid"
-						if(this.itemHouse&&this.itemHouse.prices.length!==0){
+						configId: ele.id,
+						name: ele.key,
+						type: 'extra',
+						rent: '',
+						pattern: 'withRent'
+					}
+					if (extraCost.name === "电费") {
+						extraCost.pattern = "prepaid"
+						if (this.itemHouse && this.itemHouse.prices.length !== 0) {
 							console.log(this.itemHouse)
-							this.itemHouse.prices.forEach((element,index) => {
-								if(element.type==="ELECTRIC"){
-									extraCost.rent = element.price/100
+							this.itemHouse.prices.forEach((element, index) => {
+								if (element.type === "ELECTRIC") {
+									extraCost.rent = element.price / 100
 								}
 							});
 						}
@@ -65,32 +69,33 @@
 				})
 			}
 		},
-		created(){
+		created() {
 			this.query()
 		},
 		data() {
 			const today = new Date();
 			return {
 				form: this.newModel(today),
-				configList:[],
-				otherCost:[]
+				configList: [],
+				otherCost: []
 			};
 		},
 		mounted() {
-			if(!_.isUndefined(this.itemHouse)) {
-				if(this.itemRoom.contract.id!==undefined){
-					this.form = this.newModel(new Date((this.itemRoom.contract.to+1) * 1000))
+			if (!_.isUndefined(this.itemHouse)) {
+				if (this.itemRoom.contract.id !== undefined) {
+					this.form = this.newModel(new Date((this.itemRoom.contract.to + 1) * 1000))
 				}
-				this.form.property.house = `${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}${this.itemRoom.name}`
+				this.form.property.house =
+					`${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}${this.itemRoom.name}`
 				this.form.property.roomId = this.itemRoom.id
 				this.form.property.disabled = true
 			}
 		},
 		methods: {
-			query(){
+			query() {
 				this.$store
-    			.dispatch('GET_OTHERCOST')
-    			.then(data => (this.otherCost = data));
+					.dispatch('GET_OTHERCOST')
+					.then(data => (this.otherCost = data));
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
@@ -98,7 +103,9 @@
 						console.log('submit: ', this.translate(this.form));
 
 						this.$model('contracts')
-							.create(this.translate(this.form), {projectId: this.projectId})
+							.create(this.translate(this.form), {
+								projectId: this.projectId
+							})
 							.then((res) => {
 								this.closeDialog();
 								this.resetForm();
@@ -119,18 +126,23 @@
 			roomChange(data) {
 				console.log(data)
 				this.$model('house_info')
-				.query({houseFormat:this.form.property.houseType},{projectId:this.projectId,houseId:data})
-				.then(res=>{
-					res.price.forEach((item,index)=>{
-						if(item.type==='ELECTRIC'){
-							this.form.expense.extra.forEach((ele,list)=>{
-								if(ele.configId===1041){
-									ele.rent = item.price/100
-								}
-							})
-						}
+					.query({
+						houseFormat: this.form.property.houseType
+					}, {
+						projectId: this.projectId,
+						houseId: data
 					})
-				})
+					.then(res => {
+						res.price.forEach((item, index) => {
+							if (item.type === 'ELECTRIC') {
+								this.form.expense.extra.forEach((ele, list) => {
+									if (ele.configId === 1041) {
+										ele.rent = item.price / 100
+									}
+								})
+							}
+						})
+					})
 			},
 			newModel(today) {
 				return {
@@ -160,8 +172,7 @@
 							rent: 3600,
 							pattern: '6'
 						},
-						extra: [
-							{
+						extra: [{
 								configId: 1041,
 								name: '电费',
 								type: 'extra',
@@ -207,7 +218,10 @@
 				}
 			},
 			createExpense(form) {
-				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern','frequency']))(form.expense.extra),function(o){return o.rent});
+				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern', 'frequency']))(form.expense
+					.extra), function (o) {
+					return o.rent
+				});
 				return fp.map(this.unitAsCent)(extraExpense);
 			},
 			closeDialog() {
@@ -223,7 +237,9 @@
 			},
 			unitAsCent(obj) {
 				const rent = obj.rent * 100;
-				return fp.defaults(obj, {rent});
+				return fp.defaults(obj, {
+					rent
+				});
 			}
 		},
 		components: {

@@ -8,7 +8,7 @@
 	</div>
 </template>
 <style lang="less">
-	.marginleft{
+	.marginleft {
 		margin-left: 20px
 	}
 </style>
@@ -17,13 +17,13 @@
 	export default {
 		data() {
 			return {
-				'input':'',
-				'msgChild':'child'
+				'input': '',
+				'msgChild': 'child'
 			};
 		},
-		methods:{
-			searchrent(){
-				this.$emit('childinfo',this.input)
+		methods: {
+			searchrent() {
+				this.$emit('childinfo', this.input)
 			}
 		}
 	};

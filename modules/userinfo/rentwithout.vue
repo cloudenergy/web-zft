@@ -17,7 +17,7 @@
                 <span v-if="contractInfo.user.name">{{contractInfo.user.name}}</span>
             </div>
             <div>
-                
+
             </div>
         </div>
         <div class='flexc'>
@@ -56,109 +56,120 @@
 </template>
 
 <script>
-    import axios from 'axios' 
+    import axios from 'axios'
     export default {
         props: {
             id: {
-                type:String
+                type: String
             }
         },
         computed: {
-			projectId() {
-				return this.$store.state.user.projectId;
-			}
-		},
-        data() {
-            return {
-                withOutInfo:this.newModel(),
-                input: '',
-                textarea: '',
-                contractInfo:{
-                    user:''
-                },
-                payRoad:[]
+            projectId() {
+                return this.$store.state.user.projectId;
             }
         },
-        mounted () {
+        data() {
+            return {
+                withOutInfo: this.newModel(),
+                input: '',
+                textarea: '',
+                contractInfo: {
+                    user: ''
+                },
+                payRoad: []
+            }
+        },
+        mounted() {
             this.query(this.id)
         },
         methods: {
-            set(time){
+            set(time) {
                 return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
             },
-            newModel(){
+            newModel() {
                 return {
-                    toConfig:'IDIE',
-                    status:'TERMINATED',
-                    transaction:{
-                        fundChannelId:1,
-                        remake:''
+                    toConfig: 'IDIE',
+                    status: 'TERMINATED',
+                    transaction: {
+                        fundChannelId: 1,
+                        remake: ''
                     }
                 }
             },
-            query(data){
+            query(data) {
                 this.$model('contracts_info')
-                .query({},{projectId:this.projectId,contractId:data})
-                .then(res=>{
-                    
-                    this.$set(this,'contractInfo',res)
-                    console.log(this.contractInfo)
-                })
-                .catch(err=>{
-                    console.log(err,'asdfa')
-                })
+                    .query({}, {
+                        projectId: this.projectId,
+                        contractId: data
+                    })
+                    .then(res => {
+
+                        this.$set(this, 'contractInfo', res)
+                        console.log(this.contractInfo)
+                    })
+                    .catch(err => {
+                        console.log(err, 'asdfa')
+                    })
                 this.$model('fund_channel')
-                .query({category:'all',flow:'receive'},{projectId: this.projectId})
-                .then(res=>this.$set(this,'payRoad',res))
+                    .query({
+                        category: 'all',
+                        flow: 'receive'
+                    }, {
+                        projectId: this.projectId
+                    })
+                    .then(res => this.$set(this, 'payRoad', res))
             },
             onSubmit() {
                 console.log('submit!');
             },
-            operateRent(){
-                if(this.input>=0){
+            operateRent() {
+                if (this.input >= 0) {
                     this.withOutInfo.transaction.flow = 'receive'
                     this.withOutInfo.endDate = this.nowData()
-                    this.withOutInfo.transaction.amount = this.input*100
+                    this.withOutInfo.transaction.amount = this.input * 100
 
-                }else{
+                } else {
                     this.withOutInfo.transaction.flow = 'pay'
                     this.withOutInfo.endDate = this.nowData()
-                    this.withOutInfo.transaction.amount = -this.input*100
+                    this.withOutInfo.transaction.amount = -this.input * 100
                 }
                 this.input = ''
                 this.newModel()
                 this.$model('contracts')
-                .update(this.withOutInfo,{projectId:this.projectId,id:this.contractInfo.id})
-                .then(res=>{
-                    this.$emit('successInfo')
-                    this.$message.success('退租成功')
-                })
-                .catch(err=>{
-                    this.$message.info('退租失败')
-                    
-                })
+                    .update(this.withOutInfo, {
+                        projectId: this.projectId,
+                        id: this.contractInfo.id
+                    })
+                    .then(res => {
+                        this.$emit('successInfo')
+                        this.$message.success('退租成功')
+                    })
+                    .catch(err => {
+                        this.$message.info('退租失败')
+
+                    })
                 this.withOutInfo = this.newModel()
             },
-            nowData(){
-                return Date.parse(new Date())/1000
+            nowData() {
+                return Date.parse(new Date()) / 1000
             }
         }
     }
 </script>
 <style lang="less" scoped>
-    .flexc{
+    .flexc {
         margin-bottom: 15px;
-        .exit-house-left{
+        .exit-house-left {
             width: 50%;
         }
-        .set-width{
+        .set-width {
             display: inline-block;
-            width:130px;
+            width: 130px;
         }
-        .setInput{
+        .setInput {
             position: relative;
-            .hint{
-                color:#bbb;
+            .hint {
+                color: #bbb;
                 font-size: 12px;
                 position: absolute;
                 bottom: -22px;
@@ -168,11 +179,11 @@
     }
 </style>
 <style>
-    .flexc.setInput>.el-input.el-input--mini{
-        width:158px;
+    .flexc.setInput>.el-input.el-input--mini {
+        width: 158px;
     }
-    .setElementHeight .el-textarea__inner{
+
+    .setElementHeight .el-textarea__inner {
         height: 100%;
     }
 </style>
-

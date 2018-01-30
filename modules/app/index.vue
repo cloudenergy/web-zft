@@ -8,7 +8,7 @@
 			<div class="userInfo flexc">
 				<el-dropdown style="margin-right:20px">
 					<span type="primary">
-					<icon type="icon02" style="font-size:40px;color:#559ffd"/>
+						<icon type="icon02" style="font-size:40px;color:#559ffd" />
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item @click.native="create()">房源</el-dropdown-item>
@@ -27,13 +27,15 @@
 			</div>
 		</div>
 		<app-modal ref="modal"></app-modal>
-		
+
 	</div>
 </template>
 <script>
 	import site_nav from './site-nav';
 	import AddModal from '~/modules/house/add';
-    import { NewContract } from '~/modules/contract';
+	import {
+		NewContract
+	} from '~/modules/contract';
 	export default {
 		name: 'app',
 		components: {
@@ -41,19 +43,19 @@
 		},
 		methods: {
 			logout() {
-				
+
 			},
 			create(type) {
-    			this.$modal.$emit('open', {
-    				comp: AddModal,
-    				title: '新增房源'
-    			});
-    		},
-    		createContract() {
-    			this.$modal.$emit('open', {
-    				comp: NewContract,
-    				title: '新增合约'
-    			});
+				this.$modal.$emit('open', {
+					comp: AddModal,
+					title: '新增房源'
+				});
+			},
+			createContract() {
+				this.$modal.$emit('open', {
+					comp: NewContract,
+					title: '新增合约'
+				});
 			},
 		}
 	};
@@ -89,7 +91,7 @@
 
 	.app .userInfo {
 		position: absolute;
-		top:0px;
+		top: 0px;
 		right: 20px;
 		height: 60px;
 		z-index: 4;

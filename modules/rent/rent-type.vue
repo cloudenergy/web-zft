@@ -8,8 +8,7 @@
 	export default {
 		data() {
 			return {
-				options: [
-					{
+				options: [{
 						value: 'all',
 						label: '全部'
 					},
@@ -30,7 +29,6 @@
 
 <style lang="less" scoped>
 	.select {
-		margin-left: 10px;
-		// margin-top: 10px;
+		margin-left: 10px; // margin-top: 10px;
 	}
 </style>

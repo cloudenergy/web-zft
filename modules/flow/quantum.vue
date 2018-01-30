@@ -16,13 +16,10 @@
 					</div>
 					<span class="result-info">32项结果</span>
 				</div>
-
 			</el-form>
-
 		</div>
-		<quantumlist :mounthFlows='mounthFlows' :flowPaging='flowPaging' @pageIndex="pageIndex"/>
+		<quantumlist :mounthFlows='mounthFlows' :flowPaging='flowPaging' @pageIndex="pageIndex" />
 	</div>
-
 </template>
 
 <script>
@@ -61,9 +58,9 @@
 				},
 				mounthFlows: [],
 				flowPaging: '',
-				reqData:{
-					index:1,
-					size:20
+				reqData: {
+					index: 1,
+					size: 20
 				}
 			};
 		},

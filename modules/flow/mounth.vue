@@ -8,42 +8,41 @@
     </el-form>
 </template>
 <script>
-export default {
-    data() {
-        return{
-            formInline:{
-                type:''
-            },
-            formInlinetype:[
-                {
-                    value:1,
-                    label:'1990'
+    export default {
+        data() {
+            return {
+                formInline: {
+                    type: ''
                 },
-                {
-                    value:2,
-                    label:'1991'
-                },
-                {
-                    value:3,
-                    label:'1992'
-                }
-            ]
-        }
-    },
-    methods:{
-        changeflow(){
-            console.log(this.formInline.type)
+                formInlinetype: [{
+                        value: 1,
+                        label: '1990'
+                    },
+                    {
+                        value: 2,
+                        label: '1991'
+                    },
+                    {
+                        value: 3,
+                        label: '1992'
+                    }
+                ]
+            }
+        },
+        methods: {
+            changeflow() {
+                console.log(this.formInline.type)
+            }
         }
     }
-}
 </script>
 
 <style lang="less" scoped>
-.flexce{
-    align-items: center;
-  }
-  .minisel{
-    width: 100px;
-  }
-</style>
+    .flexce {
+        align-items: center;
+    }
 
+    .minisel {
+        width: 100px;
+    }
+</style>

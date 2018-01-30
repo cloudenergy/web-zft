@@ -8,42 +8,41 @@
     </el-form>
 </template>
 <script>
-export default {
-    data() {
-        return{
-            formInline:{
-                type:''
-            },
-            formInlinetype:[
-                {
-                    value:1,
-                    label:'全部'
+    export default {
+        data() {
+            return {
+                formInline: {
+                    type: ''
                 },
-                {
-                    value:2,
-                    label:'收入'
-                },
-                {
-                    value:3,
-                    label:'支出'
-                }
-            ]
-        }
-    },
-    methods:{
-        changeflow(){
-            console.log(this.formInline.type)
+                formInlinetype: [{
+                        value: 1,
+                        label: '全部'
+                    },
+                    {
+                        value: 2,
+                        label: '收入'
+                    },
+                    {
+                        value: 3,
+                        label: '支出'
+                    }
+                ]
+            }
+        },
+        methods: {
+            changeflow() {
+                console.log(this.formInline.type)
+            }
         }
     }
-}
 </script>
 
 <style lang="less" scoped>
-.flexce{
-    align-items: center;
-  }
-  .minisel{
-    width: 100px;
-  }
-</style>
+    .flexce {
+        align-items: center;
+    }
 
+    .minisel {
+        width: 100px;
+    }
+</style>

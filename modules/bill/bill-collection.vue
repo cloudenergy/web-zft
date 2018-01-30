@@ -65,19 +65,19 @@
         created() {
             this.query()
         },
-		watch: {
-			data(newVal, oldVal) {
-				this.form.fundChannelId = this.defaultFundChannel;
-				this.form.remake = '';
-				this.amountPrice = 0;
-			}
-		},
+        watch: {
+            data(newVal, oldVal) {
+                this.form.fundChannelId = this.defaultFundChannel;
+                this.form.remake = '';
+                this.amountPrice = 0;
+            }
+        },
         data() {
             return {
                 payRoad: [],
                 nowData: this.date(),
                 form: {
-					fundChannelId: 0,
+                    fundChannelId: 0,
                     remake: '',
                     amount: ''
                 },
@@ -92,7 +92,7 @@
                 return this.data.dueAmount
             },
             defaultFundChannel() {
-            	return fp.get('id')(fp.head(this.payRoad));
+                return fp.get('id')(fp.head(this.payRoad));
             }
         },
         methods: {
@@ -111,17 +111,17 @@
                         projectId: this.projectId
                     })
                     .then(res => {
-                    	this.$set(this, 'payRoad', res);
-						this.form.fundChannelId = this.defaultFundChannel;
-					})
+                        this.$set(this, 'payRoad', res);
+                        this.form.fundChannelId = this.defaultFundChannel;
+                    })
             },
             date() {
                 return new Date()
             },
-			payRent() {
+            payRent() {
                 console.log(Date.parse(new Date()))
-                console.log(Date.parse(new Date())/1000)
-                this.form.paidAt = Date.parse(new Date())/1000;
+                console.log(Date.parse(new Date()) / 1000)
+                this.form.paidAt = Date.parse(new Date()) / 1000;
                 this.form.amount = this.calculateNum
                 this.$model('bill_collection')
                     .create(this.form, {

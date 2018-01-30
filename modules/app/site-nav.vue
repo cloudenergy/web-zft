@@ -37,44 +37,46 @@
 </template>
 
 <script>
-export default {};
+    export default {};
 </script>
 
 <style lang="less" scoped>
-.logo {
-	flex: 0 1 auto;
-	flex-direction: column;
-	align-content: center;
-	align-items: center;
-	justify-content: center;
-	height: 60px;
-	background-color: #3c4d68;
-	img {
-		max-width: 100%;
-		width: 100%;
-		margin-top: 10px;
-	}
-}
-.el-menu-vertical {
-	border-right: 0;
-	background-color: #2f3c4d;
-}
-.el-menu-item {
-	height: 48px;
-	line-height: 48px;
-	color: #eee;
-	&:focus,
-	&:hover,
-	&.is-active {
-		background-color: @primary;
+    .logo {
+        flex: 0 1 auto;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+        background-color: #3c4d68;
+        img {
+            max-width: 100%;
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
 
-		i {
-			color: #fff;
-		}
-	}
-}
+    .el-menu-vertical {
+        border-right: 0;
+        background-color: #2f3c4d;
+    }
 
-.nav {
-	height: 100%;
-}
+    .el-menu-item {
+        height: 48px;
+        line-height: 48px;
+        color: #eee;
+        &:focus,
+        &:hover,
+        &.is-active {
+            background-color: @primary;
+
+            i {
+                color: #fff;
+            }
+        }
+    }
+
+    .nav {
+        height: 100%;
+    }
 </style>

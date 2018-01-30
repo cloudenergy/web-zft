@@ -1,18 +1,18 @@
 <template>
-    <div class="search-wrapper">
-        <div class="filter">
-            <house-status v-model="filters.status"/>
-            <rooms-select v-model="filters.rooms" @input='changeRoomsNum'></rooms-select>
-            <el-select v-model="filters.city" clearable placeholder="管理" size="small">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-        </div>
-        <div class="actions">
-            <el-button type="warning">
-                导出
-                <i class="el-icon-sort"></i>
-            </el-button>
-            <!-- <el-dropdown>
+	<div class="search-wrapper">
+		<div class="filter">
+			<house-status v-model="filters.status" />
+			<rooms-select v-model="filters.rooms" @input='changeRoomsNum'></rooms-select>
+			<el-select v-model="filters.city" clearable placeholder="管理" size="small">
+				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+			</el-select>
+		</div>
+		<div class="actions">
+			<el-button type="warning">
+				导出
+				<i class="el-icon-sort"></i>
+			</el-button>
+			<!-- <el-dropdown>
                 <el-button type="primary">
                     新增
                     <i class="el-icon-arrow-down"></i>
@@ -23,35 +23,39 @@
                     <el-dropdown-item>批量导入</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown> -->
-        </div>
-    </div>
+		</div>
+	</div>
 </template>
 
 <script>
-    import AddModal from './add';
-    import { NewContract } from '~/modules/contract';
+	import AddModal from './add';
+	import {
+		NewContract
+	} from '~/modules/contract';
 
-    export default {
-    	data() {
-    		return {
-    			filters: {},
-    			options: [],
-    			modal: {
-    				contract: false,
-    				house: false
-    			}
-    		};
+	export default {
+		data() {
+			return {
+				filters: {},
+				options: [],
+				modal: {
+					contract: false,
+					house: false
+				}
+			};
 		},
-		created () {
-			this.$modal.$on('refresh',()=>{this.refresh()})	
+		created() {
+			this.$modal.$on('refresh', () => {
+				this.refresh()
+			})
 		},
-    	components: {
-    		AddModal,
-    		NewContract
-    	},
-    	methods: {
+		components: {
+			AddModal,
+			NewContract
+		},
+		methods: {
 			changeRoomsNum(data) {
-				this.$emit('changeRoom',data)
+				this.$emit('changeRoom', data)
 			},
 			addHouse() {
 				this.$emit('successRefresh')
@@ -60,30 +64,29 @@
 				this.$emit('successRefresh')
 			}
 		},
-		
-    };
+
+	};
 </script>
 
 <style lang="less" scoped>
-    .search-wrapper {
+	.search-wrapper {
 		margin-bottom: 17px;
 		margin-top: 5px;
-    	display: flex;
-    	justify-content: space-between;
-    	align-items: center;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
-    	.el-input {
-    		width: 240px;
-    	}
+		.el-input {
+			width: 240px;
+		}
 
-    	.el-button {
-    		margin-left: 10px;
-    	}
+		.el-button {
+			margin-left: 10px;
+		}
 
-    	.el-input,
-    	.el-select {
-    		margin-right: 10px;
-    	}
-    }
+		.el-input,
+		.el-select {
+			margin-right: 10px;
+		}
+	}
 </style>
-

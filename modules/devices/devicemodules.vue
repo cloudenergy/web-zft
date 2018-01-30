@@ -5,29 +5,29 @@
 </template>
 <script>
 	export default {
-        props: {
-            form: {
-                type: Array
-            }
-        },
+		props: {
+			form: {
+				type: Array
+			}
+		},
 		data() {
 			return {};
 		},
 		methods: {
 			handleSelect(key, keyPath) {
-				this.$emit('showthat',key)
+				this.$emit('showthat', key)
 			}
 		}
 	};
 </script>
 
 <style lang="less" scoped>
-	.rent-menu{
+	.rent-menu {
 		display: inline-block;
 		margin-right: 10px;
-		li{
-			height:40px;
-			line-height:40px;
+		li {
+			height: 40px;
+			line-height: 40px;
 		}
 	}
 </style>

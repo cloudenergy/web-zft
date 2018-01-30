@@ -39,7 +39,7 @@
 				activeName: 'first',
 				loading: false,
 				activeIndex: 'quantum',
-				flowMounth:'adsf'
+				flowMounth: 'adsf'
 			};
 		},
 		methods: {

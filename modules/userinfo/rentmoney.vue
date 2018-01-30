@@ -14,8 +14,8 @@
 		</el-table-column>
 		<el-table-column label="金额">
 			<template slot-scope="scope">
-                <span>{{ price(scope.row.amount) }}</span>
-            </template>
+				<span>{{ price(scope.row.amount) }}</span>
+			</template>
 		</el-table-column>
 		<el-table-column prop="scale" label="读数">
 		</el-table-column>
@@ -60,8 +60,8 @@
 						this.$set(this, 'bills', res.data || []);
 					})
 			},
-			price(data){
-				return data/100
+			price(data) {
+				return data / 100
 			},
 			nowTime(data) {
 				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")

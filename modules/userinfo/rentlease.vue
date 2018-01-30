@@ -1,12 +1,6 @@
 <template>
-  <el-table 
-    :data="billItem" 
-    stripe 
-    :row-key="getRowKeys" 
-    :expand-row-keys="expands"     
-    @row-click='handleRowHandle'    
-    ref="tableData"
-    style="width:100%">
+  <el-table :data="billItem" stripe :row-key="getRowKeys" :expand-row-keys="expands"      @row-click='handleRowHandle'   
+    ref="tableData" style="width:100%">
     <el-table-column type="expand">
       <template slot-scope="props">
         <div class="hideMenu">
@@ -16,9 +10,9 @@
           <div>
             <div v-for="item in props.row.billItems" :key="item.id" class="setinline">
               <div>{{item.configId}}</div>
-             <div>{{item.amount}}</div>
-             <div>{{item.createdAtTime}}</div>
-             <div>{{item.id}}</div>
+              <div>{{item.amount}}</div>
+              <div>{{item.createdAtTime}}</div>
+              <div>{{item.id}}</div>
             </div>
           </div>
         </div>
@@ -35,7 +29,7 @@
               <div>{{item.status}}</div>
             </div>
           </div>
-          
+
         </div>
       </template>
     </el-table-column>
@@ -64,15 +58,16 @@
       }
     },
     computed: {
-      billItem: function(){
-        return this.form.map(function(item){
+      billItem: function () {
+        return this.form.map(function (item) {
           item.startDateNew = new Date(parseInt(item.startDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           // console.log(item.startDate)
           item.endDateNew = new Date(parseInt(item.endDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           item.dueDateNew = new Date(parseInt(item.dueDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
           item.createdAtNew = new Date(parseInt(item.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
-          item.billItems.map(function(newitem){
-            newitem.createdAtTime=new Date(parseInt(newitem.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
+          item.billItems.map(function (newitem) {
+            newitem.createdAtTime = new Date(parseInt(newitem.createdAt) * 1000).toLocaleDateString().replace(
+              /年|月/g, '-')
             return newitem
           })
           return item
@@ -82,7 +77,7 @@
     data() {
       return {
         getRowKeys(row) {
-                return row.id;
+          return row.id;
         },
         expands: []
       }
@@ -97,7 +92,7 @@
       toggle(flowi) {
         this.$refs.tableData.toggleRowExpansion(this.form.find(d => d.id == flowi))
       },
-      set(time){
+      set(time) {
         return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
       },
     }
@@ -105,26 +100,30 @@
 </script>
 
 <style lang="less" scoped>
-  .hideMenu:nth-child(1){
+  .hideMenu:nth-child(1) {
     border-bottom: 1px solid #aaa
   }
-  .hideMenu>div{
+
+  .hideMenu>div {
     display: inline-block;
   }
-  .hideMenu>div:nth-child(1){
+
+  .hideMenu>div:nth-child(1) {
     min-width: 80px;
   }
-  .hideMenu>div:nth-child(2){
+
+  .hideMenu>div:nth-child(2) {
     border-left: 1px solid #aaa
   }
-  .setinline>div{
+
+  .setinline>div {
     display: inline-block;
     padding: 0 10px;
-    &:nth-child(1){
+    &:nth-child(1) {
       width: 240px;
-      
+
     }
-    &:nth-child(2){
+    &:nth-child(2) {
       width: 80px;
     }
   }
