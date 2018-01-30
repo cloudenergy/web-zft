@@ -5,28 +5,29 @@
 		</div>
 		<div class="main">
 			<slot />
+			<div class="userInfo flexc">
+				<el-dropdown style="margin-right:20px">
+					<span type="primary">
+					<icon type="icon02" style="font-size:40px;color:#559ffd"/>
+					</span>
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item @click.native="create()">房源</el-dropdown-item>
+						<el-dropdown-item @click.native="createContract()">租户</el-dropdown-item>
+						<el-dropdown-item>批量导入</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+				<el-dropdown placement="bottom">
+					<span class="el-dropdown-link">
+						username
+					</span>
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+			</div>
 		</div>
 		<app-modal ref="modal"></app-modal>
-		<div class="userInfo flexc">
-			<el-dropdown style="margin-right:20px">
-                <span type="primary">
-                   <icon type="icon02" style="font-size:40px;color:#559ffd"/>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="create()">房源</el-dropdown-item>
-                    <el-dropdown-item @click.native="createContract()">租户</el-dropdown-item>
-                    <el-dropdown-item>批量导入</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-			<el-dropdown placement="bottom">
-				<span class="el-dropdown-link">
-					username
-				</span>
-				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
-				</el-dropdown-menu>
-			</el-dropdown>
-		</div>
+		
 	</div>
 </template>
 <script>
