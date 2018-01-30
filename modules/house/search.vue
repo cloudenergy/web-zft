@@ -12,7 +12,7 @@
                 导出
                 <i class="el-icon-sort"></i>
             </el-button>
-            <el-dropdown>
+            <!-- <el-dropdown>
                 <el-button type="primary">
                     新增
                     <i class="el-icon-arrow-down"></i>
@@ -22,7 +22,7 @@
                     <el-dropdown-item @click.native="createContract()">租户</el-dropdown-item>
                     <el-dropdown-item>批量导入</el-dropdown-item>
                 </el-dropdown-menu>
-            </el-dropdown>
+            </el-dropdown> -->
         </div>
     </div>
 </template>
@@ -50,19 +50,6 @@
     		NewContract
     	},
     	methods: {
-    		create(type) {
-    			this.$modal.$emit('open', {
-    				comp: AddModal,
-    				title: '新增房源'
-    			});
-    		},
-    		createContract() {
-    			this.modal.contract = true;
-    			this.$modal.$emit('open', {
-    				comp: NewContract,
-    				title: '新增合约'
-    			});
-			},
 			changeRoomsNum(data) {
 				this.$emit('changeRoom',data)
 			},

@@ -1,8 +1,9 @@
 <template>
     <div class="house-cell" :class="{leased: this.room.contract.id===undefined,willIn:this.room.contract.from*1000>nowDate}">
         <div class="cell" @click="view()">
-            <h3>{{room.name}}</h3>
+            <h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
 			<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
+			<h3  v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
             <p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
             <p v-if="room.contract.rent!==undefined">￥{{rentSmall}}/月</p>
             <p v-if="room.contract.rent===undefined">未出租</p>
@@ -256,7 +257,7 @@
 						this.$set(this,'roomAllContracts',res.data)
 					})
 					.catch(err=>{
-						consosle.log(err)
+						console.log(err)
 					})
 					this.visibility = true
 					this.loading = false

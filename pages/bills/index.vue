@@ -4,7 +4,7 @@
 			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
-			<el-header style="height:auto">
+			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter" style="width:800px">
 						<BillStatus class="status" @billStatus="billStatus" />
@@ -139,7 +139,7 @@
 	}
 
 	.result {
-		margin: 0 20px;
+		margin-left: 20px;
 		display: block;
 		&:before {
 			clear: both;

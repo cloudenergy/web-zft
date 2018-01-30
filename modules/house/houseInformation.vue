@@ -64,7 +64,7 @@
             <el-button @click.native="del" type="danger"  style="margin-top:100px;">删除此房源</el-button>
         </div>
         <el-dialog
-            title="选择要绑定的职能设备"
+            title="选择要绑定的智能设备"
             :visible.sync="dialogVisible"
             width="40%"
             append-to-body>

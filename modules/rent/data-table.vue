@@ -68,15 +68,15 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="余额(¥)" width="160">
+			<el-table-column label="余额(¥)" width="150">
 				<template slot-scope="scope">
-					<div class="flexcenter">
+					<div class="flexcenter" style="padding-right: 15px">
 						<span class="userCashAmount" style="color:#F03D53" v-if="scope.row.user.cashAccount.balance<2000">{{price(scope.row.user.cashAccount.balance)}}</span>
 						<span class="userCashAmount" v-if="scope.row.user.cashAccount.balance>=2000">{{price(scope.row.user.cashAccount.balance)}}</span>
 						<el-dropdown>
 							<span class="el-dropdown-link cursorp">
 								充值
-								<i class="el-icon-caret-bottom el-icon--right"></i>
+								<i class="el-icon-caret-bottom"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item @click.native="paym(scope.row)">充值</el-dropdown-item>

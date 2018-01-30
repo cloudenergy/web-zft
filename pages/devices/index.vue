@@ -6,7 +6,7 @@
 			</div>
 		</el-aside>
 		<el-container>
-			<el-header style="height:auto">
+			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<div style="margin-left:-20px">
@@ -14,7 +14,7 @@
 						</div>
 					</div>
 					<div class="flexcenter">
-						<span class="result-info">32项结果</span>
+						<span class="result-info">{{paging.count}}项结果</span>
 						<div class="actions">
 							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
 								导出
@@ -24,7 +24,7 @@
 					</div>
 				</div>
 			</el-header>
-			<el-main>
+			<el-main style="padding-right:0">
 				<electricit :houses="houses"/>
 			</el-main>
 		</el-container>
@@ -52,7 +52,8 @@
 		data() {
 			return {
 				houseFormat: 'SHARE',
-				houses:[]
+				houses:[],
+				paging:{}
 			};
 		},
 		computed : {
@@ -72,6 +73,7 @@
     				)
     				.then(res => {
     					this.$set(this, 'houses', res.data || []);
+						this.$set(this, 'paging', res.paging || []);
 					});
     		},
 			showmessage(data){
@@ -87,6 +89,8 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-
+	.result-info{
+		margin-right:5px;
+	}
  </style>
  

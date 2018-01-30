@@ -30,18 +30,19 @@
                         <!-- <span class="badge pull-right">{{house.rooms.length}}</span> -->
                     </div>
                     <div class="cells" v-if="!entire">
-                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh'/>
+                        <Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="houseFormat"/>
                     </div>
 					<div class="cells" v-if="entire">
 						<span v-for="(item, list) in house" :key="list">
-							<Room v-for="(room, index) in item.rooms" :key="index" :room="room" :house="item" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="reqData.houseFormat"/>
+							<Room v-for="(room, index) in item.rooms" :key="index" :room="room" :house="item" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="houseFormat"/>
 						</span>
                     </div>
                 </div>
+				<!-- 整租 -->
 				<div v-if="!tabCard" class="shareHouse ">
 					<div style="padding:10px 0 0 10px" class="flexc wrapHouse">
 						<span v-for="(house,lista) in houses" :key="lista">
-							<Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh'/>
+							<Room v-for="(room, index) in house.rooms" :key="index" :room="room" :house="house" class="cell" @view="showDrawer" @successRefresh='successRefresh' :houseFormat="houseFormat"/>
 						</span>
 					</div>
 				</div>
@@ -81,7 +82,8 @@
 				entireHouse:[],
 				testArray:[],
 				entire:false,
-				tabCard:true
+				tabCard:true,
+				houseFormat:'SHARE'
     		};
     	},
     	computed: {
@@ -161,6 +163,7 @@
 							this.tabCard = true
 							this.$set(this, 'houses', res.data || []);
 						}
+						this.houseFormat = this.reqData.houseFormat
 					})
 					.catch(err=>{
 						console.log(err)

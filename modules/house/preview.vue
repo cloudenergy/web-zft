@@ -62,7 +62,7 @@
             <el-button @click.native="del" type="danger">删除</el-button>
         </div>
         <el-dialog
-            title="选择要绑定的职能设备"
+            title="选择要绑定的智能设备"
             :visible.sync="dialogVisible"
             width="40%"
             append-to-body>

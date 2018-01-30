@@ -4,10 +4,10 @@
 			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
-			<el-header style="height:auto">
+			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter">
-						<RentStatus class="status" />
+						<RentStatus class="status" @leasingStatus="leasingStatus"/>
 						<RentManager class="manager" />
 					</div>
 					<div class="flexcenter">
@@ -56,7 +56,6 @@
 					size:20,
 					index:1
 				}
-				
 			};
 		},
 		computed: {
@@ -68,6 +67,14 @@
     		// this.query();
     	},
 		methods: {
+			leasingStatus(data) {
+				if(data!=='all'){
+					this.reqData.leasingStatus = data
+				}else{
+					delete this.reqData.leasingStatus
+				}
+				this.query()
+			},
 			communityChange(data) {
 				if(data==='0'){
 					delete this.reqData.locationId
@@ -85,7 +92,7 @@
 				this.query()
 			},
 			pageSize(val){
-				this.index = val
+				this.reqData.index = val
 				this.query()
 			},
 			query(){
@@ -127,7 +134,7 @@
 	}
 
 	.result {
-		margin: 0 20px;
+		margin-left: 20px;
 		display: block;
 		&:before {
 			clear: both;

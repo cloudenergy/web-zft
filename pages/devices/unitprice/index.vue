@@ -6,7 +6,7 @@
 			</div>
 		</el-aside>
 		<el-container>
-			<el-header style="height:auto">
+			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter searchset">
 						<RentSearch @childinfo="showmessage" class="setsearch"/>
@@ -15,7 +15,7 @@
 						<myIconNum/><span class="myiconintroduce">1号付费，其他数字以此类推</span>
 					</div>
 					<div class="flexcenter">
-						<span class="result-info">32项结果</span>
+						<span class="result-info">{{countInfo.count}}项结果</span>
 						<div class="actions">
 							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
 								导出
@@ -25,8 +25,8 @@
 					</div>
 				</div>
 			</el-header>
-			<el-main>
-				<setUnitPrice :homePrice="houses" @refresh="choose_refresh"/>
+			<el-main style="padding-right:0">
+				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh"/>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -57,7 +57,8 @@
 		data() {
 			return {
 				houseFormat: 'SHARE',
-				houses:[]
+				houses:[],
+				countInfo:{}
 			};
 		},
 		computed: {
@@ -80,6 +81,7 @@
     				)
     				.then(res => {
     					this.$set(this, 'houses', res.data || []);
+						this.$set(this, 'countInfo', res.paging)
 					});
     		},
 			showmessage(data){
@@ -98,6 +100,9 @@
 	.myiconintroduce{
 		margin-right: 30px;
 		font-weight: 350;
+	}
+	.result-info{
+		margin-right:5px;
 	}
  </style>
  <style>

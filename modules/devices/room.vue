@@ -2,11 +2,13 @@
     <div class="house-cell" :class="{leased: out}">
         <div class="cell">
             <div class="flexcenter between">
-				<h3 v-if="room.name!==undefined">{{room.name}}</h3>
+				<h3 v-if="room.name!==undefined&&houseFormat==='SHARE'">{{room.name}}</h3>
 				<h3 v-if="room.name===undefined">房屋公区表</h3>
+				<h3  v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
+				<h3  v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
 				<div v-if="room.devices!=''||null">
-					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='ONLINE'"/>
-					<icon type="jian" style="font-size:20px;" v-if="room.showEquipment.status.service==='OFFLINE'"/>
+					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='EMC_ONLINE'"/>
+					<icon type="jian" style="font-size:20px;" v-if="room.showEquipment.status.service==='EMC_OFFLINE'"/>
 				</div>
 			</div>
             <div v-if="room.devices!=''||null">
@@ -36,7 +38,7 @@
 		<div class="noneAdd cursorp" @click="edit(room)" v-if="room.devices ==''||null">
 				<icon type="icon02" style="font-size:16px;"/>
 			</div>
-        <el-dialog title="选择要绑定的职能设备" :visible.sync="dialogVisible" width="40%">
+        <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%">
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" style="min-height:337px"/>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -51,11 +53,17 @@
     export default {
     	props: {
     		room: Object,
-    		houseId: { required: true }
+    		houseId: {
+				required: true
+			},
+			house:Object,
+			houseFormat: {
+				type: String
+			}
     	},
     	components: {
     		conversion
-    	},
+		},
     	computed: {
     		projectId() {
     			return this.$store.state.user.projectId;
@@ -71,6 +79,7 @@
 				reqData:{
 					roomId:this.roomId()
 				},
+				roomDevices:{}
 				
     		};
 		},
@@ -107,7 +116,8 @@
     			this.dialogVisible = true;
 			},
     		setEquipmentid(data) {
-    			this.$model('room_devices')
+				if(this.room.status!==undefined){
+					this.$model('room_devices')
     				.update(
     					{},
     					{
@@ -125,6 +135,25 @@
     				.catch(err => {
     					this.$message.mistake('绑定失败');
     				});
+				}else{
+					this.$model('house_devices')
+    				.update(
+    					{public:1},
+    					{
+    						houseId: this.houseId,
+    						projectId: this.projectId,
+    						id: data
+    					}
+    				)
+    				.then(data => {
+    					this.$message.success('绑定成功');
+    					this.$emit('sendFloor');
+    					this.$refs.aaa.setNewList();
+    				})
+    				.catch(err => {
+    					this.$message.mistake('绑定失败');
+    				});
+				}
     		},
     		deleteequipment() {
 				this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
@@ -132,7 +161,8 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 					}).then(() => {
-						this.$model('room_devices')
+						if(this.room.status!==undefined){
+							this.$model('room_devices')
 						.delete({},{
 								projectId: this.projectId,
 								houseId: this.houseId,
@@ -141,13 +171,28 @@
 							}
 						)
 						.then(data => {
-							console.log(data)
 							this.$message.success('解绑成功');
 							this.$emit('sendFloor');
 						})
 						.catch(err => {
 							this.$message('解绑失败');
 						});
+						}else{
+							this.$model('room_devices')
+						.delete({},{
+								projectId: this.projectId,
+								houseId: this.houseId,
+								id: this.room.devices[0].deviceId
+							}
+						)
+						.then(data => {
+							this.$message.success('解绑成功');
+							this.$emit('sendFloor');
+						})
+						.catch(err => {
+							this.$message('解绑失败');
+						});
+						}
 					}).catch(() => {
 						this.$message({
 							type: 'info',

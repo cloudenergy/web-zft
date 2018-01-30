@@ -20,10 +20,10 @@
                 <i class="el-icon-tickets"></i>
                 <span slot="title">流水</span>
             </el-menu-item>
-            <el-menu-item index="/reports">
+            <!-- <el-menu-item index="/reports">
                 <i class="el-icon-picture"></i>
                 <span slot="title">报表</span>
-            </el-menu-item>
+            </el-menu-item> -->
             <el-menu-item index="/devices">
                 <i class="el-icon-printer"></i>
                 <span slot="title">抄表</span>

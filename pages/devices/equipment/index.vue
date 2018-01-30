@@ -4,11 +4,11 @@
     <el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab @change="refresh" :selected="houseFormat"/>
+				<Tab @change="refresh" :selected="houseFormat" @communityChange='communityChange'/>
 			</div>
 		</el-aside>
 		<el-container>
-			<el-header style="height:auto">
+			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<div class="flexcenter">
@@ -29,8 +29,8 @@
 					</div>
 				</div>
 			</el-header>
-			<el-main style="max-width:100%">
-				<equipmentset :houses="houses" @sendThird="sendThird"/>
+			<el-main style="max-width:100%;padding-right:0">
+				<equipmentset :houses="houses" @sendThird="sendThird" :entire='entire' :tabCard='tabCard' :houseFormat="houseFormat"/>
 			</el-main>
 		</el-container>
     </el-container>
@@ -61,7 +61,16 @@ export default {
 				manager:''
 			},
 			houses:[],
-			paging:''
+			paging:'',
+			testArray:[],
+			entire:false,
+			tabCard:true,
+			entireHouse:[],
+			reqData:{
+					houseFormat: 'SHARE',
+					size:200,
+					index:1
+			}
 		}
 	},
 	computed : {
@@ -70,21 +79,55 @@ export default {
 		}
 	},
 	methods: {
+		communityChange(data) {
+			if(data==='0'){
+				delete this.reqData.locationId
+				this.query()
+			}else{
+				this.reqData.locationId = data
+				this.query()
+			}
+		},
 		sendThird(data){
 			console.log(1)
 			this.query()
 		},
 		query() {
     		this.$model('houses')
-    			.query({
-					houseFormat: this.houseFormat,
-					size:200,
-					index:1
-				},{ projectId: this.projectId })
+    			.query(this.reqData,{ projectId: this.projectId })
     			.then(res => {
-    				this.$set(this, 'houses', res.data || []);
-    				this.$set(this, 'paging', res.paging || []);
-    			});
+						if(this.reqData.houseFormat==='ENTIRE'){
+							this.testArray = []
+							this.entireHouse = []
+							res.data.map((ele,index)=>{
+								if(!_.includes(this.entireHouse,ele.currentFloor)){
+									this.entireHouse.push(ele.currentFloor)
+									var newTset = []
+									newTset.push(ele)
+									this.testArray.push(newTset)
+								}else{
+									this.testArray[_.findIndex(this.entireHouse,function(o){
+										return o==ele.currentFloor
+									})].push(ele)
+								}
+							})
+							this.tabCard = true
+							this.entire = true
+							this.houses = this.testArray
+						}else if(this.reqData.houseFormat==='SOLE'){
+							this.tabCard = false
+							this.$set(this, 'houses', res.data || [])
+						}else{
+							this.entire = false
+							this.tabCard = true
+							this.$set(this, 'houses', res.data || []);
+						}
+						this.$set(this, 'paging', res.paging || []);
+						this.houseFormat = this.reqData.houseFormat
+					})
+					.catch(err=>{
+						console.log(err)
+					})
     		},
 		showmessage(data){
 			console.log(data)
@@ -98,10 +141,15 @@ export default {
 		manager(data){
 			console.log(data)
 		},
-		refresh(type) {
-    		this.houseFormat = type;
-			this.query()
-    		// this.query();
+		refresh(type,commiunityId) {
+			this.reqData.houseFormat = type
+			
+			if(commiunityId!==undefined){
+				this.reqData.locationId = commiunityId
+			}else{
+				delete this.reqData.locationId
+			}
+			this.query();
 		}
 	}
 }
@@ -113,6 +161,9 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+	.result-info{
+		margin-right:5px
 	}
  </style>
  

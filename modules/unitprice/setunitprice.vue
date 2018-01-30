@@ -2,8 +2,8 @@
     <div>
         <el-table :data="equipmentHouses" style="width: 100%" @selection-change="handleSelectionChange">
             <el-table-column
-                type="index"
-                width="50">
+                type="selection"
+                width="55">
             </el-table-column>
             <el-table-column label="房源">
                 <template slot-scope="scope">
@@ -63,7 +63,7 @@
             <!-- </el-table-column> -->
         </el-table>
         <!-- @@@暂时下线 -->
-        <!-- <el-button type="primary" plain @click="batchChange" :disabled="disabledShow" style="margin-top:15px">批量修改</el-button> -->
+        <el-button type="primary" plain @click="batchChange" :disabled="disabledShow" style="margin-top:15px">批量修改</el-button>
         <el-dialog title="单价设置" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose'/>
             <div slot="footer" class="dialog-footer">
@@ -91,6 +91,9 @@
         props: {
             homePrice: {
                 type: Array
+            },
+            countInfo: {
+                type: Object
             }
         },
         data() {
