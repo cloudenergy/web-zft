@@ -1,6 +1,23 @@
 <template>
 	<div id="rentinfo">
 		<el-table :data="housesRent" style="width: 100%">
+			<el-table-column label="承租状态" width="100">
+				<template slot-scope="scope">
+					<div slot="reference" class="contractStatus cursorp">
+						<div v-if="nowData<scope.row.from" class="willIn flexcenter">
+							<span class="willIn">待入</span>
+							<icon type="touxiang"/>
+						</div>
+						<div v-if="scope.row.from<nowData&&nowData<scope.row.to" class="inThere flexcenter">
+							<span class="inThere">在租</span>
+							<icon type="touxiang1"/>
+						</div>
+						<div v-if="nowData>scope.row.to" class="overdue flexcenter">
+							<span class="overdue">逾期</span>
+						</div>
+					</div>
+				</template>
+			</el-table-column>
 			<el-table-column label="姓名" width="120">
 				<template slot-scope="scope">
 					<div slot="reference" class="name-wrapper">
@@ -20,7 +37,8 @@
 			<el-table-column label="房源/租期" min-width="300" max-width="500">
 				<template slot-scope="scope">
 					<div slot="reference" class="name-wrapper cursorp" @click="rentuser('2',scope.row)">
-						<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber}}{{ scope.row.room.roomName }}</div>
+						<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber}}{{
+							scope.row.room.roomName }}</div>
 						<div class="rent-bottom">
 							<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>
 						</div>
@@ -202,6 +220,9 @@
 			},
 			housesRent() {
 				return this.housesrentData.data
+			},
+			nowData() {
+				return Date.parse(new Date())/1000
 			}
 		},
 		props: {
@@ -398,6 +419,21 @@
 
 
 <style lang="less" scoped>
+	.contractStatus{
+		.willIn {
+			color:#4CB774
+		}
+		.overdue {
+			color:rgb(219, 71, 71)
+		}
+		.inThere {
+			color:#84AEE5
+		}
+		i{
+			font-size:20px;
+			margin-right: -10px
+		}
+	}
 	.rent-bottom {
 		color: #aaa
 	}
