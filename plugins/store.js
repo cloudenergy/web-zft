@@ -2,12 +2,13 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-01-23 15:02:43
+ * @Last Modified time: 2018-01-31 11:48:02
  */
 
 import api from '~/plugins/api';
 import { fromPairs, merge, map } from 'lodash';
 import _ from 'lodash';
+import md5 from 'js-md5'
 
 let localUser = '';
 try {
@@ -33,7 +34,8 @@ export default {
 		communities: null,
 		othercost: null,
 		soleCommunities:null,
-		entireCommunities:null
+		entireCommunities:null,
+		successInfo:false
 	},
 	mutations: {
 		UPDATE_ENV(state, data) {
@@ -56,14 +58,24 @@ export default {
 		},
 		SAVE_CITY_AREA(state,data,) {
 			state.cityArea = data
+		},
+		Login_Info(state, data){
+			state.successInfo = data
 		}
 	},
 	actions: {
-		POST_LOGIN({ commit, state }) {
+		POST_LOGIN({ commit, state },{username,password}) {
 			return api('login', {
-				username: 'admin100',
-				password: '5f4dcc3b5aa765d61d8327deb882cf99'
-			});
+				username: username,
+				password: md5(password)
+			})
+			.then(res=>{
+				if(res.code===0){
+					commit('Login_Info', true)
+				}else{
+					commit('Login_Info', false)
+				}
+			})
 		},
 
 		GET_ENVIRONMENTS({ commit, state }) {
