@@ -99,7 +99,9 @@
                 tableData: [],
                 multipleSelection: [],
                 homeinfo: '',
-                showPrice: false
+                showPrice: false,
+                selectHouse: [],
+                volumeSet:false
             }
         },
         computed: {
@@ -141,43 +143,78 @@
                 } else {
                     this.disabledShow = true
                 }
-                console.log(this.multipleSelection)
             },
             setElectricit(data) {
+                console.log(data)
                 this.homeinfo = data
                 this.dialogVisible = true;
+                this.volumeSet = false
             },
             batchChange() {
-                // this.setPrice(this.multipleSelection)
-                this.homeinfo = this.multipleSelection
                 this.dialogVisible = true;
+                this.selectHouse = this.multipleSelection.map(ele => {
+                    return ele.houseId
+                })
+                this.homeinfo = this.multipleSelection[0]
+                this.volumeSet = true
             },
             notify() {
                 this.$refs.childinput.sendchange()
             },
             notclose(data) {
-                if (data === undefined) {
-                    alert('输入价格为空或者不是数字，请重新输入')
+                this.hidden()
+                if (this.volumeSet) {
+                    let a = this.$model('volume_set')
+                        .update({
+                            category: this.homeinfo.electricity[0].category,
+                            price: data,
+                            houseIds: this.selectHouse
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC',
+                            houseId: this.homeinfo.houseId
+                        })
+                        .then(res => {
+                            return data
+                        })
+                    let b = this.$model('volume_set')
+                        .update({
+                            category: this.homeinfo.electricity[1].category,
+                            price: data,
+                            houseIds: this.selectHouse
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC',
+                            houseId: this.homeinfo.houseId
+                        })
+                        .then(res => {
+                            return data
+                        })
+                    Promise.all([a, b]).then(res => {
+                        this.$emit('refresh')
+                        this.$message.success('修改成功')
+                    })
                 } else {
-                    this.hidden()
-                    let promise = data.electricity.map(element => {
-                        this.$model('set_electric_price')
+                    this.homeinfo.electricity.forEach((element,index) => {
+                        index = this.$model('set_electric_price')
                             .update({
                                 category: element.category,
-                                price: element.price
+                                price: data
                             }, {
                                 projectId: this.projectId,
                                 id: 'ELECTRIC',
-                                houseId: data.houseId
+                                houseId: this.homeinfo.houseId
                             })
-                    });
-                    Promise.all(promise).then(res=>{
-                        console.log(res)
-                        this.$emit('refresh')
-                        this.$message.success('修改成功')
-                    }).error(()=>{
-
+                            .then(res => {
+                                return data
+                            })
+                            Promise.all([index]).then(res => {
+                            this.$emit('refresh')
+                            this.$message.success('修改成功')
                     })
+                    });
+                      
+                    
                 }
             },
             setAllElectricit() {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flexc">
-            <el-input v-model="input" placeholder="请输入修改价格" style="width:80%"></el-input>
+            <el-input v-model="input" placeholder="请输入修改价格" style="width:80%" type="number"></el-input>
             &nbsp;&nbsp;&nbsp;
             <span style="line-height:28px;display:inline-block">元/度</span>
         </div>
@@ -24,20 +24,9 @@
         },
         methods: {
             sendchange() {
-                console.log(this.item)
-                if (!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(this.input)) {
-                    this.$emit('notclose')
-                } else {
-                    this.item.electricity.forEach((element, index) => {
-                        if (element.category === 'CLIENT') {
-                            element.price = this.input * 100
-                        } else {
-                            element.price = this.input * 100
-                        }
-                    });
-                    this.$emit('notclose', this.item)
-                    this.input = ''
-                }
+                this.input = this.input * 100
+                this.$emit('notclose', this.input)
+                this.input = ''
             }
         }
     }

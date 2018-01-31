@@ -58,7 +58,12 @@
 			return {
 				houseFormat: 'SHARE',
 				houses:[],
-				countInfo:{}
+				countInfo:{},
+				reqData:{
+					houseFormat:'SHARE',
+					size:'20',
+					index:1
+				}
 			};
 		},
 		computed: {
@@ -77,7 +82,7 @@
 			query() {
     			this.$model('houses')
     				.query(
-    					{houseFormat: this.houseFormat},{ projectId: this.projectId }
+    					this.reqData,{ projectId: this.projectId }
     				)
     				.then(res => {
     					this.$set(this, 'houses', res.data || []);
