@@ -5,7 +5,7 @@
 		</div>
 		<div class="main">
 			<slot />
-			<div class="userInfo flexc">
+			<div class="userInfo flexc cursorp">
 				<el-dropdown style="margin-right:20px">
 					<span type="primary">
 						<icon type="icon02" style="font-size:40px;color:#559ffd" />
@@ -18,7 +18,7 @@
 				</el-dropdown>
 				<el-dropdown placement="bottom">
 					<span class="el-dropdown-link">
-						username
+						{{userInfo.username}}
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
@@ -41,9 +41,16 @@
 		components: {
 			'site-nav': site_nav
 		},
+		computed: {
+			userInfo() {
+				return JSON.parse(localStorage.getItem('user'));
+			}	
+		},
 		methods: {
 			logout() {
-
+				localStorage.removeItem('user');
+				this.$message.success('退出成功')
+				this.$router.replace('/login');
 			},
 			create(type) {
 				this.$modal.$emit('open', {

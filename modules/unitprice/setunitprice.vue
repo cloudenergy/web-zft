@@ -159,7 +159,8 @@
                 if (data === undefined) {
                     alert('输入价格为空或者不是数字，请重新输入')
                 } else {
-                    data.electricity.forEach((element, index) => {
+                    this.hidden()
+                    let promise = data.electricity.map(element => {
                         this.$model('set_electric_price')
                             .update({
                                 category: element.category,
@@ -169,19 +170,14 @@
                                 id: 'ELECTRIC',
                                 houseId: data.houseId
                             })
-                            .then(data => {
-                                if (index === 1) {
-                                    this.hidden()
-                                    this.$emit('refresh')
-                                    this.$message.success('修改成功')
-                                }
-
-                            }).catch(err => {
-                                if (index === 1) {
-                                    this.$message.error('修改失败')
-                                }
-                            })
                     });
+                    Promise.all(promise).then(res=>{
+                        console.log(res)
+                        this.$emit('refresh')
+                        this.$message.success('修改成功')
+                    }).error(()=>{
+
+                    })
                 }
             },
             setAllElectricit() {
