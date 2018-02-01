@@ -33,93 +33,94 @@
 	</div>
 </template>
 <script>
-	import site_nav from './site-nav';
-	import AddModal from '~/modules/house/add';
-	import {
-		NewContract
-	} from '~/modules/contract';
-	export default {
-		name: 'app',
-		components: {
-			'site-nav': site_nav
-		},
-		computed: {
-			userInfo() {
-				return JSON.parse(localStorage.getItem('user'));
-			}	
-		},
-		methods: {
-			logout() {
-				localStorage.removeItem('user');
-				this.$message.success('退出成功')
-				this.$router.replace('/login');
-			},
-			create(type) {
-				this.$modal.$emit('open', {
-					comp: AddModal,
-					title: '新增房源'
-				});
-			},
-			createContract() {
-				this.$modal.$emit('open', {
-					comp: NewContract,
-					title: '新增合约'
-				});
-			},
+import site_nav from './site-nav';
+import AddModal from '~/modules/house/add';
+import { NewContract } from '~/modules/contract';
+export default {
+	name: 'app',
+	components: {
+		'site-nav': site_nav
+	},
+	computed: {
+		userInfo() {
+			return JSON.parse(localStorage.getItem('user'));
 		}
-	};
+	},
+	methods: {
+		logout() {
+			localStorage.removeItem('user');
+			this.$message.success('退出成功');
+			this.$router.replace('/login');
+		},
+		create(type) {
+			this.$modal.$emit('open', {
+				comp: AddModal,
+				title: '新增房源',
+				className: 'new-house'
+			});
+		},
+		createContract() {
+			this.$modal.$emit('open', {
+				comp: NewContract,
+				title: '新增合约',
+				className: 'new-contract'
+			});
+		}
+	}
+};
 </script>
 
 <style lang="less">
-	@top-height: 60px;
+@top-height: 60px;
 
-	.app {
-		display: flex;
-	}
+.app {
+	display: flex;
+}
 
-	.main {
-		overflow-y: scroll;
-	}
+.main {
+	overflow-y: scroll;
+}
 
-	.app,
-	.main {
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
+.app,
+.main {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
 
-	.app>.sider {
-		z-index: 2;
-		width: 120px;
-		background-color: #2f3c4d;
-		flex: 0 0 256px;
-		max-width: 256px;
-		min-width: 256px;
-		width: 256px;
-	}
+.app > .sider {
+	z-index: 2;
+	width: 120px;
+	background-color: #2f3c4d;
+	flex: 0 0 256px;
+	max-width: 256px;
+	min-width: 256px;
+	width: 256px;
+}
 
-	.app .userInfo {
-		position: absolute;
-		top: 0px;
-		right: 20px;
-		height: 60px;
-		z-index: 4;
-		align-items: center;
-	}
+.app .userInfo {
+	position: absolute;
+	top: 0px;
+	right: 20px;
+	height: 60px;
+	z-index: 4;
+	align-items: center;
+}
 
-	.add {
-		display: inline-block;
-		font-size:18px;
-		height:32px;
-		line-height: 32px;
-		width: 100px;
-		text-align: center;
-		background-color: rgb(81, 140, 224);
-		color: #FFF;
-		border-radius: 3px;
-		margin-right:-4px
-	}
+.add {
+	display: inline-block;
+	font-size: 18px;
+	height: 32px;
+	line-height: 32px;
+	width: 100px;
+	text-align: center;
+	background-color: rgb(81, 140, 224);
+	color: #fff;
+	border-radius: 3px;
+	margin-right: -4px;
+}
 </style>
 
 <style lang="less" scoped>
+
 </style>
