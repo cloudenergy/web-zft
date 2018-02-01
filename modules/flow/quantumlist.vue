@@ -36,6 +36,9 @@
                 </template>
             </el-table-column>
             <el-table-column label="费用类型" prop="category">
+                <template slot-scope="scope">
+                    <span v-for="(item, index) in costType" :key="index" v-if="item.type===scope.row.category">{{item.value}}</span>
+                </template>
             </el-table-column>
             <el-table-column label="支付方式" prop="fundChannelId">
                 <template slot-scope="scope">
@@ -77,6 +80,13 @@
         computed: {
             projectId() {
                 return this.$store.state.user.projectId
+            },
+            costType() {
+                return [
+                    {type:'rent',value:'租金'},
+                    {type:'topup',value:'充值'},
+                    {type:'final',value:'退租'}
+                ]
             }
         },
         data() {

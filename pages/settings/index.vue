@@ -13,9 +13,6 @@
 	   <el-menu-item index="Aptinfo">
         <span slot="title">公寓资料</span>
       </el-menu-item>
-	   <el-menu-item index="PassWord">
-        <span slot="title">账号密码</span>
-      </el-menu-item>
 	   <el-menu-item index="PayNew">
         <span slot="title">服务购买</span>
       </el-menu-item>
@@ -53,20 +50,10 @@ export default {
 			return this.$store.state.user.projectId;
 		}
 	},
-	created() {
-		this.query();
-	},
+	
 	methods: {
 		toggleComponents(index, path) {
 			this.currentView = index;
-		},
-
-		query() {
-			this.$model('credentials')
-				.query({}, { projectId: this.projectId })
-				.then(data => {
-					console.log(data);
-				});
 		}
 	}
 };

@@ -9,10 +9,11 @@
           </div>
           <div>
             <div v-for="item in props.row.billItems" :key="item.id" class="setinline">
-              <div>{{item.configId}}</div>
-              <div>{{item.amount}}</div>
+              <span v-for="(list,index) in otherCost" :key="index" v-if="list.id===item.configId">{{list.key}}</span>
+              <span v-if="item.configId===121">租金</span>
+              <span v-if="item.configId===123">押金</span>
+              <div>{{price(item.amount)}}</div>
               <div>{{item.createdAtTime}}</div>
-              <div>{{item.id}}</div>
             </div>
           </div>
         </div>
@@ -29,19 +30,24 @@
               <div>{{item.status}}</div>
             </div>
           </div>
-
         </div>
       </template>
     </el-table-column>
     <el-table-column prop="type" label="类型" width="80">
+      <template slot-scope="scope">
+        <span v-for="(item,index) in costType" :key="index" v-if="item.type===scope.row.type">{{item.value}}</span>
+      </template>
     </el-table-column>
-    <el-table-column label="账期" width="240">
+    <el-table-column label="账期" width="200">
       <template slot-scope="scope">
         <span>{{scope.row.startDateNew}}</span>至
         <span>{{scope.row.endDateNew}}</span>
       </template>
     </el-table-column>
     <el-table-column prop="dueAmount" label="金额" width="80">
+      <template slot-scope="scope">
+        <span>{{price(scope.row.dueAmount)}}</span>
+      </template>
     </el-table-column>
     <el-table-column prop="dueDateNew" label="时间">
     </el-table-column>
@@ -74,12 +80,24 @@
         })
       }
     },
+    created () {
+      this.$store
+                    .dispatch('GET_OTHERCOST')
+                    .then(data => (this.otherCost = data));
+    },
     data() {
       return {
         getRowKeys(row) {
           return row.id;
         },
-        expands: []
+        costType:[
+          {type:'rent',value:'租金'},
+          {type:'extra',value:'加收'},
+          {type:'bond',value:'押金'}
+        ],
+        expands: [],
+        otherCost:[],
+        
       }
     },
     methods: {
@@ -95,6 +113,9 @@
       set(time) {
         return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
       },
+      price(data) {
+        return data/100
+      }
     }
   }
 </script>
@@ -115,12 +136,19 @@
   .hideMenu>div:nth-child(2) {
     border-left: 1px solid #aaa
   }
-
+  .setinline{
+    span{
+      margin-left: 10px;
+      width: 187px;
+      display: inline-block
+    }
+  }
   .setinline>div {
     display: inline-block;
     padding: 0 10px;
+    
     &:nth-child(1) {
-      width: 240px;
+      width: 200px;
 
     }
     &:nth-child(2) {

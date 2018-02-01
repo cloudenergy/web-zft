@@ -5,11 +5,6 @@
 				{{dateTime(scope.row.time)}}
 			</template>
 		</el-table-column>
-		<el-table-column prop="time" label="类型" width="130">
-			<template>
-				充值
-			</template>
-		</el-table-column>
 		<el-table-column label="金额" color="green">
 			<template slot-scope="scope">
 				{{price(scope.row.amount)}}

@@ -120,9 +120,6 @@
 					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData" />
 				</div>
 			</div>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false;showinf=showmoney=1" type="primary">确定</el-button>
-			</span>
 		</el-dialog>
 	</div>
 </template>

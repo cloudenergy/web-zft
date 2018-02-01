@@ -1,125 +1,112 @@
 <template>
- <el-form ref="form" :model="form" label-width="80px">
-      <p class="formTit">基本信息</p>
+	<el-form ref="form" label-width="100px" label-position="left">
+		<p class="formTit">基本信息</p>
+		<div style="margin-left:40px">
+			<el-form-item label="登录账号">
+				<el-col :span="10">
+					<el-input v-model="form.username"></el-input>
+				</el-col>
+			</el-form-item>
+			<el-form-item :label='form.passwordName'>
+				<el-col :span="10">
+					<el-input v-model="form.password" type="password" @focus="changePassword"></el-input>
+				</el-col>
+			</el-form-item>
 
-  <el-form-item label="头像">
-    <img src="" alt="" v-on:click="upHeadPortrait
-">
-  </el-form-item>
+			<el-form-item label="确认密码" v-if="form.passwordName==='新密码'">
+				<el-col :span="10">
+					<el-input v-model="form.passwordAgain" type="password"></el-input>
+				</el-col>
+			</el-form-item>
 
-  <el-form-item label="姓名">
-      <el-col :span="10">
-   <el-input v-model="form.name"></el-input>
-      </el-col>
-  </el-form-item>
+			<el-form-item label="手机号">
+				<el-col :span="10">
+					<el-input v-model="form.mobile"></el-input>
+				</el-col>
+			</el-form-item>
 
-  <el-form-item label="昵称">
-      <el-col :span="10">
-   <el-input v-model="form.nickname"></el-input>    
-      </el-col>
-  </el-form-item>
+			<el-form-item label="邮箱">
+				<el-col :span="10">
+					<el-input v-model="form.email"></el-input>
+				</el-col>
+			</el-form-item>
 
-  <el-form-item label="性别">
-      <el-radio-group v-model="form.sex">
-      <el-radio-button label="妹子"></el-radio-button>
-      <el-radio-button label="汉子"></el-radio-button>
-    </el-radio-group>
-  </el-form-item>
-
-  <el-form-item label="国籍">
-   <el-select v-model="form.citizenship" class="sel">
-       <el-option label="c" value="1"></el-option>
-   </el-select>
-  </el-form-item>
-
-  <el-form-item label="证件">
-      <el-col :span="10">
-      <el-input placeholder="身份证号" v-model="form.certificate" class="input-with-select">
-    <el-select v-model="form.card" slot="prepend" placeholder="请选择">
-      <el-option label="身份证" value="1"></el-option>
-    </el-select>
-   
-  </el-input>
-    </el-col>
-
-  </el-form-item>
-  
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit" class="sel">保存</el-button>
-  </el-form-item>
-  <UploadImg :is-show='isShow' :title='title' :action='action' :multiple='multiple' :limit='limit' v-on:listenIsShow="uploadClose"/>
-
-</el-form>
-
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit" class="sel">保存</el-button>
+			</el-form-item>
+		</div>
+	</el-form>
 </template>
 
 <script>
-
-import UploadImg from "../uploadImg";
- export default {
-      components:{
-UploadImg
-  },
-   data () {
-     return {
-form: {
-				name: '',
-				nickname: '',
-                sex: '妹子',
-                citizenship:'',
-				certificate: '',
-				card:'1'
-            },
-            isShow:false,
-            title:'',
-            action:'',
-            multiple:false,
-            limit:1,
-            
-     }
-   },
-   methods:{
-       onSubmit() {
-			console.log('submit!');
-        },
-        upHeadPortrait(){
-      this.isShow=true;
-      this.title="请上传头像";
-      this.action='';
-      this.multiple=false;
-      this.limit=1;
-    },
-
-
-            uploadClose(data){
-              this.isShow=data;
-            } 
-   }
- }
+	export default {
+		created() {
+			this.form.passwordName = '登录密码'
+			this.form.password = '12345678'
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.user.projectId
+			}
+		},
+		created () {
+			this.newForm()	
+		},
+		data() {
+			return {
+				form: {
+					username:'',
+					password:"12345678"
+				}
+			}
+		},
+		methods: {
+			changePassword() {
+				this.form.passwordName = '新密码'
+				this.form.password = ''
+			},
+			newForm() {
+				this.form.username = JSON.parse(localStorage.getItem('user')).username
+				this.form.passwordName = '登录密码'
+			},
+			onSubmit() {
+				console.log(this.form)
+			}
+		}
+	}
 </script>
 
 <style scoped>
-.formTit{
-      background-color: #e0e7ec;
-    line-height: 52px;
-   padding-left:20px;
-   font-size:14px;
-    color: #000;
-    border-top: none;
-    margin-bottom:10px;
-}
- form{
-  background:#fff;
-  padding-bottom:10px;
-  margin-bottom:10px;
-}
- .el-input-group__prepend{
-     width: 100px;
- }
- .el-radio-group{
-     margin-left: 10px;
- }
- .sel{
-     margin-left: 10px;
- }
+	.formTit {
+		background-color: #e0e7ec;
+		line-height: 52px;
+		padding-left: 20px;
+		font-size: 14px;
+		color: #000;
+		border-top: none;
+		margin-bottom: 10px;
+	}
+
+	form {
+		background: #fff;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	}
+
+	.el-input-group__prepend {
+		width: 100px;
+	}
+
+	.el-radio-group {
+		margin-left: 10px;
+	}
+
+	.sel {
+		margin-left: 10px;
+	}
+
+	.change {
+		color: #84AEE7;
+		font-size: 12px
+	}
 </style>
