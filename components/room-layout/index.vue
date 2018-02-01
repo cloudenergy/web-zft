@@ -6,12 +6,12 @@
                 <template slot="append">室</template>
             </el-input>
             <el-input v-model="form.livingRoom">
-                <template slot="append">厅</template>
+                <template slot="append">&nbsp;&nbsp;厅&nbsp;</template>
             </el-input>
             <el-input v-model="form.bathRoom">
                 <template slot="append">卫</template>
             </el-input>
-            <el-select v-model="form.orientation" placeholder="方位">
+            <el-select v-model="form.orientation" placeholder="方位" style="opacity:0">
                 <el-option value="E" label="东">东</el-option>
                 <el-option value="S" label="南">南</el-option>
                 <el-option value="W" label="西">西</el-option>

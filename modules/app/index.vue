@@ -117,6 +117,7 @@
 		background-color: rgb(81, 140, 224);
 		color: #FFF;
 		border-radius: 3px;
+		margin-right:-4px
 	}
 </style>
 

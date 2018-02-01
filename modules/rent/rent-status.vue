@@ -21,7 +21,7 @@
 						value: 'overdue'
 					},
 					{
-						label: '待入',
+						label: '将搬入',
 						value: 'waiting'
 					},
 				],

@@ -4,17 +4,12 @@
 			<h3>房源信息</h3>
 			<base-info @change="mergeBaseInfo" :form="form" @houseTypeChange='houseTypeChange'></base-info>
 			<div class="group">
-				<el-autocomplete width="400" v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容"
-				    @select="handleSelect" auto-complete="off">
+				<el-autocomplete v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect"
+				    auto-complete="off">
 					<template slot="prepend">小区</template>
 				</el-autocomplete>
-			</div>
-			<div class="group">
 				<el-input v-model="form.location.address" auto-complete="off">
 					<template slot="prepend">地址</template>
-				</el-input>
-				<el-input v-model="form.layout.name" auto-complete="off">
-					<template slot="prepend">名称</template>
 				</el-input>
 			</div>
 			<div class="group" v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
@@ -24,7 +19,7 @@
 						<template slot="append">幢</template>
 					</el-input>
 					<el-input v-model="unit" @blur="changeUnit">
-						<template slot="append">单元</template>
+						<template slot="append" style="width:53px">单元</template>
 					</el-input>
 					<el-input v-model="form.roomNumber">
 						<template slot="append">室</template>
@@ -37,15 +32,32 @@
 			<room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
 			<building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]" :data="Entire"></building-floor>
 			<div class="group" v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
-				<el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
-					<template slot="prepend">面积</template>
-				</el-input>
-				<el-input v-model.number="form.currentFloor" auto-complete="off" placeholder="层高">
-					<template slot="prepend">层高</template>
-				</el-input>
-				<el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数">
-					<template slot="prepend">总层数</template>
-				</el-input>
+				<el-row>
+					<el-col :span="5" style="position:relative" class="roomInfo">
+						<div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">朝向</div>
+						<el-select v-model="form.orientation" placeholder="方位" class="direction">
+							<el-option value="E" label="东">东</el-option>
+							<el-option value="S" label="南">南</el-option>
+							<el-option value="W" label="西">西</el-option>
+							<el-option value="N" label="北">北</el-option>
+						</el-select>
+					</el-col>
+					<el-col :span="5" class="roomInfo">
+						<el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
+							<template slot="prepend">面积</template>
+						</el-input>
+					</el-col>
+					<el-col :span="5" class="roomInfo">
+						<el-input v-model.number="form.currentFloor" auto-complete="off" placeholder="层高">
+							<template slot="prepend">楼层</template>
+						</el-input>
+					</el-col>
+					<el-col :span="5" class="roomInfo">
+						<el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数">
+							<template slot="prepend">总层数</template>
+						</el-input>
+					</el-col>
+				</el-row>
 			</div>
 			<h3>房源配置</h3>
 			<house-facility class="checkboxes" v-model="form.config"></house-facility>
@@ -199,10 +211,10 @@
 <style lang="less">
 	.add-house-form {
 		.el-autocomplete {
-			width: 100%;
+			width: 56%;
 
 			.el-input-group {
-				width: 80%;
+				width: 96%;
 			}
 		}
 	}
@@ -214,5 +226,19 @@
 			width: 24%;
 			margin: 2px 10px 2px 0px;
 		}
+	}
+	.direction{
+		position: absolute;
+		width:100px;
+		top:0;
+		left:65px;
+	}
+	.addwidth{
+		width: 65px;
+		height: 28px;
+		line-height:28px
+	}
+	.roomInfo{
+		margin-right:10px
 	}
 </style>
