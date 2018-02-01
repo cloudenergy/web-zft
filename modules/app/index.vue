@@ -116,6 +116,7 @@
 		text-align: center;
 		background-color: rgb(81, 140, 224);
 		color: #FFF;
+		border-radius: 3px;
 	}
 </style>
 
