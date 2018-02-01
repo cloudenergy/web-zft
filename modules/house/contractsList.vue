@@ -9,9 +9,7 @@
                     <span>在租中</span>
                 </div>
             </div>
-            <div>
-                <img src="" alt="">
-            </div>
+                <icon type="touxiang1" style="font-size:60px;margin:24px 10px 0 0;"/>
             <div>
                 <div>{{list.user.name}}|
                     <span v-if="list.user.mobile!==''">{{list.user.mobile}}</span>

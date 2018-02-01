@@ -176,6 +176,7 @@
 				this.query();
 			},
     		query() {
+				// TODO ZHOUYI house接口size设置
     			this.$model('houses')
     				.query(
 						this.reqData,

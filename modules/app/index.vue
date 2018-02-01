@@ -6,22 +6,24 @@
 		<div class="main">
 			<slot />
 			<div class="userInfo flexc cursorp">
-				<el-dropdown style="margin-right:20px">
-					<span type="primary">
-						<icon type="icon02" style="font-size:40px;color:#559ffd" />
+				
+				<el-dropdown placement="bottom" style="margin-right:20px">
+					<span class="el-dropdown-link">
+						<icon type="logout-user" style="font-size:20px;margin-right:10px"/>
+						<span style="font-size:20px;">{{userInfo.username}}</span>
+					</span>
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+				<el-dropdown>
+					<span type="primary" class="add">
+						+ 添加
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item @click.native="create()">房源</el-dropdown-item>
 						<el-dropdown-item @click.native="createContract()">租户</el-dropdown-item>
 						<el-dropdown-item>批量导入</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
-				<el-dropdown placement="bottom">
-					<span class="el-dropdown-link">
-						{{userInfo.username}}
-					</span>
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 			</div>
@@ -103,6 +105,17 @@
 		height: 60px;
 		z-index: 4;
 		align-items: center;
+	}
+
+	.add {
+		display: inline-block;
+		font-size:18px;
+		height:32px;
+		line-height: 32px;
+		width: 100px;
+		text-align: center;
+		background-color: rgb(81, 140, 224);
+		color: #FFF;
 	}
 </style>
 

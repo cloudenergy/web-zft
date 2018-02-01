@@ -40,10 +40,11 @@
 				<span class="el-dropdown-link">
 					<icon type="gengduo1" style="margin:0 5px;font-size:18px" />
 				</span>
-				<ul>
+				<ul style="width:70px">
 					<li v-if="room.status==='INUSE'" @click="without()">退租</li>
 					<li v-if="room.status==='INUSE'" @click="renewal()">续租</li>
 					<li v-if="room.status==='INUSE'" @click="deleteContracts(room.contract)">删除合同</li>
+					<div style="height:1px;background:#ccc;margin:3px 0" v-if="room.status==='INUSE'"></div>
 					<li @click="deleteRoom()">删除房间</li>
 					<li>编辑房间</li>
 					<li @click="closeRoom()">关闭房间</li>
@@ -432,7 +433,7 @@
 				position: relative;
 				ul {
 					position: absolute;
-					bottom: 21px;
+					bottom: 25px;
 					right: -4px;
 					width: 60px;
 					background: #fff;

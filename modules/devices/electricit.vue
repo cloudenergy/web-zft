@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- TODO ZHOUYI  自动抄表接口返回 -->
         <el-table :data="tableData" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle'
             ref="tableData">
             <el-table-column type="expand">
@@ -33,8 +34,6 @@
                     <span class="el-dropdown-link devicesuser">
                         {{}}userId
                     </span>
-
-
                     <!-- @@@时间，等数据传回来 -->
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
                 </template>

@@ -24,7 +24,7 @@
 					<el-input v-model="form.mobile"></el-input>
 				</el-col>
 			</el-form-item>
-
+			<!-- TODO ZHOUYI  邮箱和手机号返回 -->
 			<el-form-item label="邮箱">
 				<el-col :span="10">
 					<el-input v-model="form.email"></el-input>
