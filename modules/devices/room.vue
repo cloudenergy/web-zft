@@ -8,7 +8,7 @@
 				<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
 				<div v-if="room.devices!=''||null">
 					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='EMC_ONLINE'" />
-					<icon type="jian" style="font-size:20px;" v-if="room.showEquipment.status.service==='EMC_OFFLINE'" />
+					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.showEquipment.status.service==='EMC_OFFLINE'" />
 				</div>
 			</div>
 			<div v-if="room.devices!=''||null">
@@ -25,7 +25,7 @@
 					<span>解绑</span>
 				</p>
 				<p class="setswitch">
-					<el-switch :width="num" v-model="room.showEquipment.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch">
+					<el-switch :width="num" :v-model="electricSwitch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch">
 					</el-switch>
 					<span>断电</span>
 				</p>
@@ -67,6 +67,10 @@
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;
+			},
+			electricSwitch() {
+				console.log(this.room.showEquipment.status.switch==='EMC_ON')
+				return this.room.showEquipment.status.switch==='EMC_ON'
 			}
 		},
 		data() {

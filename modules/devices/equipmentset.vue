@@ -63,11 +63,6 @@
 				roomId: ''
 			};
 		},
-		watch: {
-			equipmentHouses(newval, oldval) {
-				console.log(this.houseFormat)
-			}
-		},
 		computed: {
 			projectId() {
 				return this.$store.state.user.projectId;

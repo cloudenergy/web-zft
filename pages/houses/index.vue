@@ -5,7 +5,7 @@
             <Search @changeRoom='changeRoom'/>
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
-                <div class="room" v-for="house in houses" v-if="tabCard">
+                <div class="room" v-for="house in equipmentHouses" v-if="tabCard">
                     <div>
 						<span v-if="!entire">{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}</span>
 						<span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
@@ -89,7 +89,52 @@
     	computed: {
     		projectId() {
     			return this.$store.state.user.projectId;
-    		}
+    		},
+			equipmentHouses: function () {
+				if (this.houseFormat !== 'ENTIRE') {
+					return this.houses.map((element, index) => {
+						element.rooms.map((item, list) => {
+							if (item.devices != '' || null) {
+								item.devices.map((ele, num) => {
+									ele.updatedAtTime = new Date(parseInt(ele.updatedAt) * 1000).toLocaleDateString().replace(/\//g, "-")
+									item.devicesChooseElectricity = []
+									if (ele.type == 'ELECTRICITY') {
+										item.devicesChooseElectricity.push(ele)
+									}
+									return ele
+								})
+								item.showEquipment = item.devicesChooseElectricity[0]
+							}
+							return item
+						})
+						element.showEquipment = element.devices[0]
+						return element
+					})
+				} else {
+					return this.houses.map((element, index) => {
+						element.map((house) => {
+							house.rooms.map((item, list) => {
+								if (item.devices != '' || null) {
+									item.devices.map((ele, num) => {
+										ele.updatedAtTime = new Date(parseInt(ele.updatedAt) * 1000).toLocaleDateString().replace(/\//g, "-")
+										item.devicesChooseElectricity = []
+										if (ele.type == 'ELECTRICITY') {
+											item.devicesChooseElectricity.push(ele)
+										}
+										return ele
+									})
+									item.showEquipment = item.devicesChooseElectricity[0]
+								}
+								return item
+							})
+							house.showEquipment = house.devices[0]
+							return house
+						})
+						return element
+					})
+				}
+
+			}
     	},
     	created() {
 			// this.query();

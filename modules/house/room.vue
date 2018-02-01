@@ -1,13 +1,19 @@
 <template>
-	<div class="house-cell" :class="{leased: this.room.contract.id===undefined,willIn:this.room.contract.from*1000>nowDate}">
+	<div class="house-cell" :class="{leased: this.room.contract.id===undefined||this.room.contract.from*1000>nowDate}">
 		<div class="cell" @click="view()">
-			<h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
-			<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
-			<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
+			<div class="flexcenter between">
+				<h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
+				<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
+				<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
+				<div v-if="room.devices!=''||null">
+					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='EMC_ONLINE'" />
+					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.showEquipment.status.service==='EMC_OFFLINE'" />
+				</div>
+			</div>
 			<p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
-			<p v-if="room.contract.rent!==undefined">￥{{rentSmall}}/月</p>
+			<p v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">￥{{rentSmall}}/月</p>
 			<p v-if="room.contract.rent===undefined">未出租</p>
-			<p class="rentee" v-if="room.contract.rent!==undefined">
+			<p class="rentee" v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">
 				<span>
 					<icon type="yuangong" />{{room.contract.name}}</span>
 				<span>退: {{timeDate(room.contract.to)}}</span>

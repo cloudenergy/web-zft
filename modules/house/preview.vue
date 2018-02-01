@@ -12,7 +12,7 @@
         <div class="devices section">
             <h4 class="flexc" style="aline-item:center">
                 <span style="line-height:20px;margin-right:15px">
-                    职能设备
+                    智能设备
                 </span>
                 <i class="el-icon-circle-plus-outline" style="font-size:20px" @click="bindEleciricity"></i>
             </h4>
