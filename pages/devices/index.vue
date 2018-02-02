@@ -62,9 +62,14 @@
 			}	
 		},
 		methods:{
-			refresh(type) {
-    			this.houseFormat = type;
-    			this.query();
+			refresh(type,commiunityId) {
+				this.reqData.houseFormat = type
+				if(commiunityId!==undefined){
+					this.reqData.locationId = commiunityId
+				}else{
+					delete this.reqData.locationId
+				}
+				this.query();
 			},
 			query() {
     			this.$model('houses')

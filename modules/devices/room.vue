@@ -307,6 +307,9 @@
 			}
 		}
 	}
+	.flexcenter.between h3{
+		line-height: 20px
+	}
 </style>
 
 <style>

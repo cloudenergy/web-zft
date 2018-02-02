@@ -182,7 +182,6 @@
 					data.houseCountOnFloor = this.Entire.houseCountOnFloor
 					data.enabledFloors = this.Entire.enabledFloors
 				}
-				console.log(data)
 				this.$modal.$emit('dismiss');
 				this.$model('houses').create(data, {
 						projectId: this.user.projectId
@@ -190,6 +189,9 @@
 					.then(res => {
 						this.$message.success('创建成功')
 						this.$emit('addhouse')
+					})
+					.catch(err=>{
+						console.log('创建失败')
 					})
 			}
 		}

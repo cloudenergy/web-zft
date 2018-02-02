@@ -10,7 +10,7 @@
                 </div>
             </div>
                 <icon type="touxiang1" style="font-size:60px;margin:24px 10px 0 0;"/>
-            <div>
+            <div style="margin-left:40px">
                 <div>{{list.user.name}}|
                     <span v-if="list.user.mobile!==''">{{list.user.mobile}}</span>
                     <span v-if="list.user.mobile===''">暂无电话</span>

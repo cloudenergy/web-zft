@@ -72,9 +72,14 @@
 			}
 		},
 		methods:{
-			refresh(type) {
-    			this.houseFormat = type;
-    			this.query();
+			refresh(type,commiunityId) {
+				this.reqData.houseFormat = type
+				if(commiunityId!==undefined){
+					this.reqData.locationId = commiunityId
+				}else{
+					delete this.reqData.locationId
+				}
+				this.query();
 			},
 			choose_refresh(){
 				this.query()
@@ -85,6 +90,7 @@
     					this.reqData,{ projectId: this.projectId }
     				)
     				.then(res => {
+						console.log(res)
     					this.$set(this, 'houses', res.data || []);
 						this.$set(this, 'countInfo', res.paging)
 					});

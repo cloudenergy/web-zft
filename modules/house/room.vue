@@ -389,6 +389,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.flexcenter.between h3{
+		line-height: 20px
+	}
 .house-cell {
 	position: relative;
 	padding: 10px;
@@ -408,7 +411,6 @@ export default {
 	.cell {
 		cursor: pointer;
 		h3 {
-			margin-bottom: 10px;
 			overflow: hidden;
 			white-space: nowrap;
 		}

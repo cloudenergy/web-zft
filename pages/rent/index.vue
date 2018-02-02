@@ -84,12 +84,14 @@
 					this.query()
 				}
 			},
-			refresh(type) {
-				console.log(type)
-				if(type!==undefined){
-					this.reqData.houseFormat = type;
+			refresh(type,commiunityId) {
+				this.reqData.houseFormat = type
+				if(commiunityId!==undefined){
+					this.reqData.locationId = commiunityId
+				}else{
+					delete this.reqData.locationId
 				}
-				this.query()
+				this.query();
 			},
 			pageSize(val){
 				this.reqData.index = val

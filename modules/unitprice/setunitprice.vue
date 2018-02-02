@@ -211,10 +211,8 @@
                             Promise.all([index]).then(res => {
                             this.$emit('refresh')
                             this.$message.success('修改成功')
-                    })
+                        })
                     });
-                      
-                    
                 }
             },
             setAllElectricit() {

@@ -105,11 +105,14 @@
 						console.log(err)
 					})
 			},
-			refresh(type) {
-				if (type !== undefined) {
-					this.reqData.houseFormat = type;
+			refresh(type,commiunityId) {
+				this.reqData.houseFormat = type
+				if(commiunityId!==undefined){
+					this.reqData.locationId = commiunityId
+				}else{
+					delete this.reqData.locationId
 				}
-				this.query()
+				this.query();
 			},
 			billStatus(type) {
 				this.reqData.paid = type
