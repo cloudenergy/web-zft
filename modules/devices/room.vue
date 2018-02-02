@@ -25,11 +25,11 @@
 					<span>解绑</span>
 				</p>
 				<p class="setswitch">
-					<el-switch :width="num" :v-model="electricSwitch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch">
+					<el-switch :width="num" v-model="room.showEquipment.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch" active-value="EMC_ON" inactive-value="EMC_OFF">
 					</el-switch>
 					<span>断电</span>
 				</p>
-				<p class="add" @click="edit(room)">
+				<p class="ad" @click="edit(room)">
 					<icon type="icon02" style="font-size:16px;" />
 				</p>
 			</div>
@@ -69,7 +69,6 @@
 				return this.$store.state.user.projectId;
 			},
 			electricSwitch() {
-				console.log(this.room.showEquipment.status.switch==='EMC_ON')
 				return this.room.showEquipment.status.switch==='EMC_ON'
 			}
 		},
@@ -105,6 +104,7 @@
 					.catch(err => {});
 			},
 			eleciricitySwitch(data) {
+				console.log(this.room)
 				if (data) {
 					this.reqData.mode = 'EMC_ON'
 				} else {

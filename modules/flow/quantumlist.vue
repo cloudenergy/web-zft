@@ -6,13 +6,29 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-row>
-                        <el-col v-if="props.row.billItems!==null" :span="6">
+                        <el-col v-if="props.row.billItems!==null" :span="5">
                             <p v-for="item in props.row.billItems" class="flexcenter">
                                 <span v-for="(list,index) in otherCost" :key="index" v-if="list.id===item.configId">{{list.key}}</span>
                                 <span v-if="item.configId===121">租金</span>
                                 <span v-if="item.configId===123">押金</span>
                                 <span>
                                     {{price(item.amount)}}
+                                </span>
+                            </p>
+                        </el-col>
+                        <el-col v-if="props.row.category==='topup'" :span="5">
+                            <p class="flexcenter">
+                                <span>充值</span>
+                                <span>
+                                    {{price(props.row.amount)}}
+                                </span>
+                            </p>
+                        </el-col>
+                        <el-col v-if="props.row.category==='final'" :span="5">
+                            <p class="flexcenter">
+                                <span>退租</span>
+                                <span>
+                                    {{price(props.row.amount)}}
                                 </span>
                             </p>
                         </el-col>

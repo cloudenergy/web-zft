@@ -23,14 +23,8 @@
                 </el-table-column>
                 <el-table-column label="通讯状态" width="100">
                     <template slot-scope="scope">
-                        <span>正常</span>
-                        <span>异常</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="控制" width="100">
-                    <template slot-scope="scope">
-                        <el-switch style="display: block" v-model="value4" active-color="#13ce66" inactive-color="#ff4949">
-                        </el-switch>
+                        <span v-if="scope.row.status.service==='EMC_ONLINE'">在线</span>
+                        <span v-if="scope.row.status.service==='EMC_OFFLINE'">离线</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="管理" max-width="80">
@@ -40,21 +34,18 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="flexc setPrice">
+        <!-- TODO ZHOUYI 分摊有问题，暂时下线 -->
+        <!-- <div class="flexc setPrice">
             <span class="title">电费分摊</span>
             <div class="centerRoom">
-                <span>房间:a20</span>
-                <span>房间:a20</span>
-                <span>房间:a20</span>
-                <span>房间:a20</span>
-                <span>房间:a20</span>
+                <span v-for="item in apportionment" :key="item.value">房间{{item.room.name}}:{{item.value}}%</span>
             </div>
             <div class="write">
                 <i class="el-icon-edit-outline" @click="writePercent"></i>
             </div>
-        </div>
+        </div> -->
         <div>
-            <el-button @click.native="del" type="danger" style="margin-top:100px;">删除此房源</el-button>
+            <el-button @click.native="del" type="danger" style="margin-top:1px;">删除此房源</el-button>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
@@ -63,6 +54,13 @@
                 <el-button type="primary" @click="choosechange()">确 定</el-button>
             </span>
         </el-dialog>
+        <!-- <el-dialog title="设置分摊方式" :visible.sync="visibility" width="40%" append-to-body>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="visibility = false">取 消</el-button>
+                <el-button type="primary" @click="visibility = false">确 定</el-button>
+            </span>
+        </el-dialog> -->
+        
     </div>
 </template>
 
@@ -76,19 +74,11 @@
         data() {
             return {
                 dialogVisible: false,
-                value4: true
+                value4: true,
+                apportionment:[],
+                visibility:false
             }
         },
-        // created () {
-        //     this.$model('housedetail')
-        //             .query({houseFormat:this.houseType},{projectId:this.projectId,id:this.house.houseId})
-        //             .then(res=>{
-        //                 console.log(res)
-        //             })
-        //             .catch(err=>{
-        //                 console.log(err)
-        //             })  
-        // },
         components: {
             conversion
         },
@@ -102,7 +92,17 @@
                 console.log('change:', this.room, this.house);
             }
         },
+        created() {
+            this.query()
+        },
         methods: {
+            query() {
+                this.$model('apportionment')
+                .query({},{projectId:this.projectId,id:this.house.houseId})
+                .then(res=>{
+                    this.$set(this,'apportionment',res)
+                })
+            },
             writePercent() {
                 this.visibility = true;
             },
