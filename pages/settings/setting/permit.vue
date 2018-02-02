@@ -34,9 +34,6 @@
 				</el-table-column>
 
 				<el-table-column prop="operate" label="操作">
-					<template slot-scope="scope">
-						<el-button type="danger" @click="deleteUser(scope.row)">删除</el-button>
-					</template>
 				</el-table-column>
 			</el-table>
 			

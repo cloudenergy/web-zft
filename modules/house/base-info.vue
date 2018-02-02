@@ -1,22 +1,17 @@
 <template>
 	<div class="wrapper">
-			<el-row :gutter="20">
-				<el-col :span="6">
-				<div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">方式</div>
-				<rent-type-select v-model="model.houseFormat"></rent-type-select>
-				</el-col>
-				<el-col :span="6">
-				<el-input v-model="model.code" auto-complete="off" style="width:210px">
-					<template slot="prepend">编号</template>
-				</el-input>
-				</el-col>
-				<el-col :span="6">
-				<el-select v-model="model.houseKeeper" placeholder="管理员" style="width:210px">
+		<div class="group">
+			<rent-type-select v-model="model.houseFormat"></rent-type-select>
+			<el-form-item label="编号">
+				<el-input v-model="model.code" auto-complete="off"></el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-select v-model="model.houseKeeper" placeholder="管理员">
 					<el-option label="root" value="212231"></el-option>
 					<el-option label="admin" value="858494"></el-option>
 				</el-select>
-				</el-col>
-			</el-row>
+			</el-form-item>
+		</div>
 		<city-area :isForm="true" @change="cityAreaChange" class="group" />
 	</div>
 </template>
@@ -70,7 +65,4 @@
 	.mini-form .el-form-item__label {
 		margin-top: 1.5px;
 	}
-</style>
-<style scoped>
-	
 </style>

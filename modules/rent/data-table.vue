@@ -10,7 +10,7 @@
 						</div>
 						<div v-if="scope.row.from<nowData&&nowData<scope.row.to" class="inThere flexcenter">
 							<span class="inThere">在租</span>
-							<icon type="touxiang1"/>
+							<icon type="icon-test"/>
 						</div>
 						<div v-if="nowData>scope.row.to" class="overdue flexcenter">
 							<span class="overdue">逾期</span>
@@ -188,7 +188,19 @@
 </template>
 
 <script>
-	import {
+import {
+	Rentinfo,
+	Rentlease,
+	Rentmessasge,
+	Rentmoney,
+	Rentsendmoney,
+	Relet,
+	Showrent,
+	Paym,
+	RentWithout
+} from '../userinfo';
+export default {
+	components: {
 		Rentinfo,
 		Rentlease,
 		Rentmessasge,
@@ -198,339 +210,341 @@
 		Showrent,
 		Paym,
 		RentWithout
-	} from '../userinfo';
-	export default {
-		components: {
-			Rentinfo,
-			Rentlease,
-			Rentmessasge,
-			Rentmoney,
-			Rentsendmoney,
-			Relet,
-			Showrent,
-			Paym,
-			RentWithout
+	},
+	computed: {
+		projectId() {
+			return this.$store.state.user.projectId;
 		},
-		computed: {
-			projectId() {
-				return this.$store.state.user.projectId;
-			},
-			housesRent() {
-				return this.housesrentData.data
-			},
-			nowData() {
-				return Date.parse(new Date())/1000
-			}
+		housesRent() {
+			return this.housesrentData.data;
 		},
-		props: {
-			housesrentData: {
-				required: true
-			}
-		},
-		data() {
-			return {
-				background: true,
-				contractbill: '',
-				updateData: {},
-				dialogVisible: false,
-				dialogTitle: '详细信息',
-				dialogVisible2: false,
-				dialogTitle2: '用户续租',
-				dialogVisible3: false,
-				dialogTitle3: '预览租客合同',
-				dialogVisible4: false,
-				dialogTitle4: '退租结算',
-				showinf: 1,
-				showmoney: 1,
-				list1: [{
-						showlist: '租户详情',
-						value: 1
-					},
-					{
-						showlist: '租约信息',
-						value: 2
-					},
-					{
-						showlist: '费用清单',
-						value: 3
-					}
-				],
-				list2: [{
-						showlist: '续租',
-						value: 1
-					},
-					{
-						showlist: '删除',
-						value: 2
-					},
-					{
-						showlist: '退租',
-						value: 4
-					},
-					{
-						showlist: '预览',
-						value: 3
-					}
-				],
-				userdatainfo: {
-					"contractId": 1,
-					"roomId": 430000,
-					"user": {
-						"id": 111111111,
-						"accountName": "accountName",
-						"name": "username",
-						"mobile": "111111111111",
-						"documentId": "11111111111",
-						"documentType": 1,
-						"gender": "M"
-					}
+		nowData() {
+			return Date.parse(new Date()) / 1000;
+		}
+	},
+	props: {
+		housesrentData: {
+			required: true
+		}
+	},
+	data() {
+		return {
+			background: true,
+			contractbill: '',
+			updateData: {},
+			dialogVisible: false,
+			dialogTitle: '详细信息',
+			dialogVisible2: false,
+			dialogTitle2: '用户续租',
+			dialogVisible3: false,
+			dialogTitle3: '预览租客合同',
+			dialogVisible4: false,
+			dialogTitle4: '退租结算',
+			showinf: 1,
+			showmoney: 1,
+			list1: [
+				{
+					showlist: '租户详情',
+					value: 1
+				},
+				{
+					showlist: '租约信息',
+					value: 2
+				},
+				{
+					showlist: '费用清单',
+					value: 3
 				}
-			};
+			],
+			list2: [
+				{
+					showlist: '续租',
+					value: 1
+				},
+				{
+					showlist: '删除',
+					value: 2
+				},
+				{
+					showlist: '退租',
+					value: 4
+				},
+				{
+					showlist: '预览',
+					value: 3
+				}
+			],
+			userdatainfo: {
+				contractId: 1,
+				roomId: 430000,
+				user: {
+					id: 111111111,
+					accountName: 'accountName',
+					name: 'username',
+					mobile: '111111111111',
+					documentId: '11111111111',
+					documentType: 1,
+					gender: 'M'
+				}
+			}
+		};
+	},
+	created() {
+		this.updateData = this.userdatainfo;
+		this.$modal.$on('refresh', () => this.$emit('refresh'));
+	},
+	methods: {
+		price(data) {
+			return data / 100;
 		},
-		created() {
-			this.updateData = this.userdatainfo;
-			this.$modal.$on('refresh', () => this.$emit('refresh'));
-		},
-		methods: {
-			price(data) {
-				return data / 100
-			},
-			rentuser(value, item) {
-				this.updateData.user = item.user;
-				this.$model('contracts_info')
-					.query({}, {
+		rentuser(value, item) {
+			this.updateData.user = item.user;
+			this.$model('contracts_info')
+				.query(
+					{},
+					{
 						projectId: this.projectId,
 						contractId: item.id
-					})
-					.then(res => {
-						this.updateData = res;
-					})
-					.catch(err => {
-						console.log(err)
-					})
-				this.$model('contract_bill')
-					.query({}, {
+					}
+				)
+				.then(res => {
+					this.updateData = res;
+				})
+				.catch(err => {
+					console.log(err);
+				});
+			this.$model('contract_bill')
+				.query(
+					{},
+					{
 						projectId: this.projectId,
 						id: item.id
-					})
-					.then(data => this.$set(this, 'contractbill', data))
-				this.dialogVisible = true;
-				this.showinf = value;
-			},
-			rentuser2(data, value) {
-				var that = this;
-				this.updateData = data;
-				if (value == 1) {
-					// 打开续租页面
-					this.$modal.$emit('open', {
-						comp: Relet,
-						data: {
-							contractsId: data.id
-						},
-						title: '续租'
-					});
-
-				} else if (value == 2) {
-					// 删除租户
-					this.$confirm('此操作将删除该租户, 是否继续?', '提示', {
-						confirmButtonText: '确定',
-						cancelButtonText: '取消',
-						type: 'warning'
-					}).then(() => {
-						console.log(this.projectId)
-						console.log(data.id)
+					}
+				)
+				.then(data => this.$set(this, 'contractbill', data));
+			this.dialogVisible = true;
+			this.showinf = value;
+		},
+		rentuser2(data, value) {
+			var that = this;
+			this.updateData = data;
+			if (value == 1) {
+				// 打开续租页面
+				this.$modal.$emit('open', {
+					comp: Relet,
+					data: {
+						contractsId: data.id
+					},
+					title: '续租'
+				});
+			} else if (value == 2) {
+				// 删除租户
+				this.$confirm('此操作将删除该租户, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				})
+					.then(() => {
+						console.log(this.projectId);
+						console.log(data.id);
 						this.$model('contracts')
-							.delete({}, {
-								projectId: this.projectId,
-								id: data.id
-							})
+							.delete(
+								{},
+								{
+									projectId: this.projectId,
+									id: data.id
+								}
+							)
 							.then(data => {
 								this.$message({
 									type: 'success',
 									message: '删除成功!'
 								});
-								this.$emit('refresh')
-							})
-					}).catch(err => {
-						this.mistake('取消删除')
+								this.$emit('refresh');
+							});
+					})
+					.catch(err => {
+						this.mistake('取消删除');
 					});
-				} else if (value == 4) {
-					this.dialogVisible4 = true
-				} else {
-					this.dialogVisible3 = true;
-				}
-			},
-			operateRent() {
-				this.$refs.operate.operateRent()
-				this.dialogVisible4 = false
-			},
-			changeUserInfo(data) {
-				this.showinf = data;
-			},
-			rentPay(datanum) {
-				this.showmoney = datanum;
-			},
-			callMobilebile() {
-				console.log(1)
-				this.$confirm('将要发送催缴通知，是否继续？', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
+			} else if (value == 4) {
+				this.dialogVisible4 = true;
+			} else {
+				this.dialogVisible3 = true;
+			}
+		},
+		operateRent() {
+			this.$refs.operate.operateRent();
+			this.dialogVisible4 = false;
+		},
+		changeUserInfo(data) {
+			this.showinf = data;
+		},
+		rentPay(datanum) {
+			this.showmoney = datanum;
+		},
+		callMobilebile() {
+			console.log(1);
+			this.$confirm('将要发送催缴通知，是否继续？', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
 					this.$message({
 						type: 'success',
 						message: '提醒成功!'
 					});
-				}).catch(err => {
+				})
+				.catch(err => {
 					this.$message({
 						type: 'info',
 						message: '取消提醒'
 					});
 				});
-			},
-			// 除了电子支付其余的手段
-			paym(date) {
-				this.$modal.$emit('open', {
-					comp: Paym,
-					data: {
-						userInfo: date
-					},
-					title: '充值'
-				})
-			},
-			successRefresh() {
-				this.$emit('refresh')
-			},
-			mistake(data) {
-				this.$message({
-					type: 'info',
-					message: data
-				});
-			},
-			handleCurrentChange(val) {
-				this.$emit('pageSize', val)
-			}
+		},
+		// 除了电子支付其余的手段
+		paym(date) {
+			this.$modal.$emit('open', {
+				comp: Paym,
+				data: {
+					userInfo: date
+				},
+				title: '充值'
+			});
+		},
+		successRefresh() {
+			this.$emit('refresh');
+		},
+		mistake(data) {
+			this.$message({
+				type: 'info',
+				message: data
+			});
+		},
+		handleCurrentChange(val) {
+			this.$emit('pageSize', val);
 		}
-	};
+	}
+};
 </script>
 
 
 <style lang="less" scoped>
-	.contractStatus{
-		.willIn {
-			color:#4CB774
-		}
-		.overdue {
-			color:rgb(219, 71, 71)
-		}
-		.inThere {
-			color:#84AEE5
-		}
-		i{
-			font-size:20px;
-			margin-right: -10px
-		}
+.contractStatus {
+	.willIn {
+		color: #4cb774;
 	}
-	.rent-bottom {
-		color: #aaa
+	.overdue {
+		color: rgb(219, 71, 71);
 	}
+	.inThere {
+		color: #84aee5;
+	}
+	i {
+		font-size: 20px;
+		margin-right: -10px;
+	}
+}
+.rent-bottom {
+	color: #aaa;
+}
 
-	.rentMoneyshow {
-		font-size: 12px;
-		i.el-icon--right {
-			margin-left: 0;
-		}
+.rentMoneyshow {
+	font-size: 12px;
+	i.el-icon--right {
+		margin-left: 0;
 	}
+}
 
-	.dialog>div {
-		margin-right: 50px;
-	}
+.dialog > div {
+	margin-right: 50px;
+}
 
-	.menu-right {
-		flex: 1
-	}
+.menu-right {
+	flex: 1;
+}
 
-	.menu-rightthree div {
-		margin-left: 15px;
-	} // .textcenter{
-	// 	text-aline: center;
-	// }
-	.setborder {
-		border: 1px solid #ddd;
-		width: 225px;
-		.botborder {
-			border-bottom: 1px solid #ddd;
-		}
-		.others {
-			height: 100px;
-		}
+.menu-rightthree div {
+	margin-left: 15px;
+} // .textcenter{
+// 	text-aline: center;
+// }
+.setborder {
+	border: 1px solid #ddd;
+	width: 225px;
+	.botborder {
+		border-bottom: 1px solid #ddd;
 	}
+	.others {
+		height: 100px;
+	}
+}
 
-	.userinfobot {
-		margin-left: 5px;
-		color: #888;
-		>div:first-child {
-			margin-top: 16px;
-		}
-		>div>p:nth-child(1) {
-			color: #000;
-		}
+.userinfobot {
+	margin-left: 5px;
+	color: #888;
+	> div:first-child {
+		margin-top: 16px;
 	}
+	> div > p:nth-child(1) {
+		color: #000;
+	}
+}
 
-	.triangle {
-		line-height: 40px;
-		background-color: #f5f7fa;
-		margin: 10px 0;
-		position: relative;
-	}
+.triangle {
+	line-height: 40px;
+	background-color: #f5f7fa;
+	margin: 10px 0;
+	position: relative;
+}
 
-	.triangle:before {
-		content: '';
-		width: 20px;
-		height: 40px;
-		background-color: #f5f7fa;
-		display: inline-block;
-		position: absolute;
-		top: 0;
-		left: -20px;
-	}
+.triangle:before {
+	content: '';
+	width: 20px;
+	height: 40px;
+	background-color: #f5f7fa;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: -20px;
+}
 
-	.triangle:after {
-		content: '';
-		width: 0;
-		height: 0;
-		border-right: 12px solid transparent;
-		border-bottom: 12px solid #f5f7fa;
-		border-left: 12px solid transparent;
-		display: block;
-		position: absolute;
-		top: -12px;
-	}
+.triangle:after {
+	content: '';
+	width: 0;
+	height: 0;
+	border-right: 12px solid transparent;
+	border-bottom: 12px solid #f5f7fa;
+	border-left: 12px solid transparent;
+	display: block;
+	position: absolute;
+	top: -12px;
+}
 
-	.cursorfir:after {
-		left: 14px
-	}
+.cursorfir:after {
+	left: 14px;
+}
 
-	.cursorsec:after {
-		left: 120px
-	}
+.cursorsec:after {
+	left: 120px;
+}
 
-	.cursorthi:after {
-		left: 226px
-	}
+.cursorthi:after {
+	left: 226px;
+}
 
-	div.activerent,
-	span.activerent {
-		color: #000
-	}
+div.activerent,
+span.activerent {
+	color: #000;
+}
 
-	.islosem {
-		color: #F03D53
-	}
+.islosem {
+	color: #f03d53;
+}
 
-	.userCashAmount {
-		display: inline-block;
-		width: 50px;
-		margin-left: 5px;
-	}
+.userCashAmount {
+	display: inline-block;
+	width: 50px;
+	margin-left: 5px;
+}
 </style>

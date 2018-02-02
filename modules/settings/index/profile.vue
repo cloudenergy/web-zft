@@ -4,7 +4,7 @@
 		<div style="margin-left:40px">
 			<el-form-item label="登录账号">
 				<el-col :span="10">
-					<el-input v-model="form.username" disabled></el-input>
+					<el-input v-model="form.username"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item :label='form.passwordName' v-if="form.passwordName!=='新密码'">
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-	import md5 from 'js-md5'
 	export default {
 		created() {
 			this.form.passwordName = '登录密码'
