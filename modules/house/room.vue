@@ -14,8 +14,7 @@
 			<p v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">￥{{rentSmall}}/月</p>
 			<p v-if="room.contract.rent===undefined">未出租</p>
 			<p class="rentee" v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">
-				<span>
-					<icon type="yuangong" />{{room.contract.name}}</span>
+				<span><icon type="touxiang"/>{{room.contract.name}}</span>
 				<span>退: {{timeDate(room.contract.to)}}</span>
 			</p>
 		</div>
@@ -379,7 +378,7 @@
 		position: relative;
 		padding: 10px;
 		width: 240px;
-		height: 116px;
+		height: 123px;
 		border-radius: 4px;
 		border: 1px solid @light;
 		border-left: 4px solid @success;
@@ -408,11 +407,19 @@
 
 			.rentee {
 				border-top: 1px solid @light;
-				padding-top: 12px;
+				padding: 8px 0 3px 0;
 				margin-top: 8px;
-
+				margin-bottom:3px;
 				display: flex;
 				justify-content: space-between;
+				span{
+					display: flex;
+					line-height: 20px;
+				}
+				i svg{
+					width: 14px;
+					height: 14px;
+				}
 			}
 		}
 

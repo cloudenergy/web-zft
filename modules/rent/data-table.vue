@@ -3,18 +3,19 @@
 		<el-table :data="housesRent" style="width: 100%">
 			<el-table-column label="承租状态" width="100">
 				<template slot-scope="scope">
-					<div slot="reference" class="contractStatus cursorp">
-						<div v-if="nowData<scope.row.from" class="willIn flexcenter">
+					<div slot="reference" class="contractStatus cursorp flexcenter">
+						<div v-if="nowData<scope.row.from" class="willIn">
 							<span class="willIn">待入</span>
-							<icon type="icon-test1"  :symbol="true"/>
 						</div>
-						<div v-if="scope.row.from<nowData&&nowData<scope.row.to" class="inThere flexcenter">
+						<div v-if="scope.row.from<nowData&&nowData<scope.row.to" class="inThere">
 							<span class="inThere">在租</span>
-							<icon type="icon-test" :symbol="true" />
+							
 						</div>
-						<div v-if="nowData>scope.row.to" class="overdue flexcenter">
+						<div v-if="nowData>scope.row.to" class="overdue">
 							<span class="overdue">逾期</span>
 						</div>
+						<icon type="icon-test1"  :symbol="true" v-if="scope.row.user.gender==='M'"/>
+						<icon type="icon-test" :symbol="true" v-if="scope.row.user.gender==='F'"/>
 					</div>
 				</template>
 			</el-table-column>
@@ -548,3 +549,14 @@ span.activerent {
 	margin-left: 5px;
 }
 </style>
+<style>
+	.contractStatus i{
+		width: 35px;
+		height: 35px;
+	}
+	.contractStatus i svg{
+		width: 35px;
+		height: 35px;
+	}
+</style>
+

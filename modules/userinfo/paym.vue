@@ -8,7 +8,7 @@
                     <p @click="show">{{userInfo.user.name}}</p>
                     <p>{{userInfo.user.accountName}}</p>
                     <p>当前余额</p>
-                    <p>{{userInfo.user.cashAccount.balance}}</p>
+                    <p>{{price(userInfo.user.cashAccount.balance)}}</p>
                 </div>
             </div>
             <div class="paymway">
@@ -65,6 +65,9 @@
             }
         },
         methods: {
+            price(data) {
+                return data/100
+            },
             show() {
                 console.log(this.userInfo, this.payRoad)
             },

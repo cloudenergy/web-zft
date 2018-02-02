@@ -197,7 +197,7 @@
 				}).catch(() => {
 					this.$message({
 						type: 'info',
-						message: '已取消删除'
+						message: '已取消解绑'
 					});
 				});
 
@@ -269,6 +269,11 @@
 				position: absolute;
 				top: 2px;
 				right: -37px;
+			}
+			p:first-child {
+				position: absolute;
+				top: 4px;
+				left:-32px
 			}
 			p {
 				height: 21px;

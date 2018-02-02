@@ -9,7 +9,7 @@
 				
 				<el-dropdown placement="bottom" style="margin-right:20px">
 					<span class="el-dropdown-link">
-						<icon type="logout-user" style="font-size:20px;margin-right:10px"/>
+						<icon type="logout-user" style="font-size:30px;margin:-14px 20px 0 0"/>
 						<span style="font-size:20px;">{{userInfo.username}}</span>
 					</span>
 					<el-dropdown-menu slot="dropdown">
