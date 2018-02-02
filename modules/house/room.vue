@@ -125,12 +125,35 @@
 </template>
 
 <script>
-	import AddModal from './add';
-	import {
-		NewContract
-	} from '~/modules/contract';
-	import ContractsList from './contractsList'
-	import {
+import AddModal from './add';
+import { NewContract } from '~/modules/contract';
+import ContractsList from './contractsList';
+import {
+	Rentinfo,
+	Rentlease,
+	Rentmessasge,
+	Rentmoney,
+	Rentsendmoney,
+	Relet,
+	Showrent,
+	Paym,
+	RentWithout
+} from '../userinfo';
+const orientations = {
+	N: '北',
+	S: '南',
+	E: '东',
+	W: '西'
+};
+
+export default {
+	props: {
+		room: Object,
+		house: Object,
+		houseFormat: String
+	},
+	components: {
+		ContractsList,
 		Rentinfo,
 		Rentlease,
 		Rentmessasge,
@@ -140,417 +163,408 @@
 		Showrent,
 		Paym,
 		RentWithout
-	} from '../userinfo';
-	const orientations = {
-		N: '北',
-		S: '南',
-		E: '东',
-		W: '西'
-	};
-
-	export default {
-		props: {
-			room: Object,
-			house: Object,
-			houseFormat: String
+	},
+	filters: {
+		orientation(val) {
+			return orientations[val] || '';
+		}
+	},
+	computed: {
+		classOut() {
+			return this.room.status === 'IDLE';
 		},
-		components: {
-			ContractsList,
-			Rentinfo,
-			Rentlease,
-			Rentmessasge,
-			Rentmoney,
-			Rentsendmoney,
-			Relet,
-			Showrent,
-			Paym,
-			RentWithout
+		rentSmall() {
+			return this.room.contract.rent / 100;
 		},
-		filters: {
-			orientation(val) {
-				return orientations[val] || '';
-			}
+		projectId() {
+			return this.$store.state.user.projectId;
 		},
-		computed: {
-			classOut() {
-				return this.room.status === 'IDLE'
+		nowDate() {
+			return Date.parse(new Date());
+		}
+	},
+	created() {
+		this.updateData = this.userdatainfo;
+	},
+	data() {
+		return {
+			roomAllContracts: [],
+			visibility: false,
+			loading: true,
+			dialogVisibleWithout: false,
+			dialogVisible: false,
+			userdatainfo: {
+				contractId: 1,
+				roomId: 430000,
+				user: {
+					id: 111111111,
+					accountName: 'accountName',
+					name: 'username',
+					mobile: '111111111111',
+					documentId: '11111111111',
+					documentType: 1,
+					gender: 'M'
+				}
 			},
-			rentSmall() {
-				return this.room.contract.rent / 100
-			},
-			projectId() {
-				return this.$store.state.user.projectId
-			},
-			nowDate() {
-				return Date.parse(new Date())
-			}
+			updateData: {},
+			showinf: 1,
+			contractbill: '',
+			showmoney: 1
+		};
+	},
+	methods: {
+		successInfo() {
+			console.log('room.vue');
+			this.$emit('successRefresh');
 		},
-		created() {
-			this.updateData = this.userdatainfo;
+		rentPay(datanum) {
+			this.showmoney = datanum;
 		},
-		data() {
-			return {
-				roomAllContracts: [],
-				visibility: false,
-				loading: true,
-				dialogVisibleWithout: false,
-				dialogVisible: false,
-				userdatainfo: {
-					"contractId": 1,
-					"roomId": 430000,
-					"user": {
-						"id": 111111111,
-						"accountName": "accountName",
-						"name": "username",
-						"mobile": "111111111111",
-						"documentId": "11111111111",
-						"documentType": 1,
-						"gender": "M"
+		changeUserInfo(data) {
+			this.showinf = data;
+		},
+		timeDate(data) {
+			return new Date(parseInt(data) * 1000)
+				.toLocaleDateString()
+				.replace(/年|月/g, '-');
+		},
+		edit() {
+			// 编辑窗口
+			this.$modal.$emit('open', {
+				comp: AddModal,
+				data: {
+					item: {
+						...this.room
 					}
 				},
-				updateData: {},
-				showinf: 1,
-				contractbill: '',
-				showmoney: 1
-			};
+				title: '房源信息'
+			});
 		},
-		methods: {
-			successInfo() {
-				console.log('room.vue')
-				this.$emit('successRefresh')
-			},
-			rentPay(datanum) {
-				this.showmoney = datanum;
-			},
-			changeUserInfo(data) {
-				this.showinf = data;
-			},
-			timeDate(data) {
-				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-			},
-			edit() {
-				// 编辑窗口
-				this.$modal.$emit('open', {
-					comp: AddModal,
-					data: {
-						item: {
-							...this.room
-						}
-					},
-					title: '房源信息'
-				});
-			},
-			view() {
-				this.$emit('view', {
-					room: this.room,
-					house: this.house
-				});
-			},
-			addContracts() {
-				this.$modal.$emit('open', {
-					comp: NewContract,
-					data: {
-						itemRoom: this.room,
-						itemHouse: this.house
-					},
-					title: '新增合约'
-				});
-			},
-			viewContracts() {
-				if (this.room.contract.id === undefined) {
-					this.$message('暂无合约')
-				} else {
-					this.$model('room_contracts')
-						.query({}, {
+		view() {
+			this.$emit('view', {
+				room: this.room,
+				house: this.house
+			});
+		},
+		addContracts() {
+			this.$modal.$emit('open', {
+				comp: NewContract,
+				data: {
+					itemRoom: this.room,
+					itemHouse: this.house
+				},
+				title: '新增合约'
+			});
+		},
+		viewContracts() {
+			if (this.room.contract.id === undefined) {
+				this.$message('暂无合约');
+			} else {
+				this.$model('room_contracts')
+					.query(
+						{},
+						{
 							projectId: this.projectId,
 							roomId: this.room.id
-						})
-						.then(res => {
-							this.$set(this, 'roomAllContracts', res.data)
-						})
-						.catch(err => {
-							console.log(err)
-						})
-					this.visibility = true
-					this.loading = false
-				}
-
-			},
-			deleteRoom() {
-				this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
+						}
+					)
+					.then(res => {
+						this.$set(this, 'roomAllContracts', res.data);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+				this.visibility = true;
+				this.loading = false;
+			}
+		},
+		deleteRoom() {
+			this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
 					this.$model('delete_room')
-						.delete({}, {
-							projectId: this.projectId,
-							houseId: this.house.houseId,
-							id: this.room.id
-						})
+						.delete(
+							{},
+							{
+								projectId: this.projectId,
+								houseId: this.house.houseId,
+								id: this.room.id
+							}
+						)
 						.then(res => {
 							this.$message.success('删除成功!');
-							this.$emit('successRefresh')
+							this.$emit('successRefresh');
 						})
 						.catch(err => {
-							this.$message('删除失败')
-						})
-				}).catch(() => {
+							this.$message('删除失败');
+						});
+				})
+				.catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消删除'
 					});
 				});
-			},
-			// 退租
-			without() {
-				this.dialogVisibleWithout = true
-			},
-			// 续租
-			renewal() {
-				this.$modal.$emit('open', {
-					comp: Relet,
-					data: {
-						contractsId: this.room.contract.id
-					},
-					title: '续租'
-				});
-			},
-			// 删除合同
-			deleteContracts(data) {
-				this.$confirm('此操作将删除该合同, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
+		},
+		// 退租
+		without() {
+			this.dialogVisibleWithout = true;
+		},
+		// 续租
+		renewal() {
+			this.$modal.$emit('open', {
+				comp: Relet,
+				data: {
+					contractsId: this.room.contract.id
+				},
+				title: '续租'
+			});
+		},
+		// 删除合同
+		deleteContracts(data) {
+			this.$confirm('此操作将删除该合同, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
 					this.$model('contracts')
-						.delete({}, {
-							projectId: this.projectId,
-							id: data.id
-						})
+						.delete(
+							{},
+							{
+								projectId: this.projectId,
+								id: data.id
+							}
+						)
 						.then(data => {
 							this.$message({
 								type: 'success',
 								message: '删除成功!'
 							});
-							this.$emit('successRefresh')
-						})
-				}).catch(err => {
-					this.mistake('取消删除')
+							this.$emit('successRefresh');
+						});
+				})
+				.catch(err => {
+					this.mistake('取消删除');
 				});
-			},
-			// 关闭房间
-			closeRoom() {
-
-			},
-			operateRent() {
-				this.$refs.operate.operateRent()
-				this.dialogVisibleWithout = false
-			},
-			showUserInfo(item) {
-				this.$model('contracts_info')
-					.query({}, {
+		},
+		// 关闭房间
+		closeRoom() {},
+		operateRent() {
+			this.$refs.operate.operateRent();
+			this.dialogVisibleWithout = false;
+		},
+		showUserInfo(item) {
+			this.$model('contracts_info')
+				.query(
+					{},
+					{
 						projectId: this.projectId,
 						contractId: item.id
-					})
-					.then(res => {
-						console.log(res)
-						this.updateData = res;
-					})
-					.catch(err => {
-						console.log(err)
-					})
-				this.$model('contract_bill')
-					.query({}, {
+					}
+				)
+				.then(res => {
+					console.log(res);
+					this.updateData = res;
+				})
+				.catch(err => {
+					console.log(err);
+				});
+			this.$model('contract_bill')
+				.query(
+					{},
+					{
 						projectId: this.projectId,
 						id: item.id
-					})
-					.then(data => this.$set(this, 'contractbill', data))
-				this.dialogVisible = true
-			}
-
+					}
+				)
+				.then(data => this.$set(this, 'contractbill', data));
+			this.dialogVisible = true;
 		}
-	};
+	}
+};
 </script>
 
 <style lang="less" scoped>
-	.house-cell {
-		position: relative;
-		padding: 10px;
-		width: 240px;
-		height: 123px;
-		border-radius: 4px;
-		border: 1px solid @light;
-		border-left: 4px solid @success;
+.house-cell {
+	position: relative;
+	padding: 10px;
+	width: 240px;
+	height: 123px;
+	border-radius: 4px;
+	border: 1px solid @light;
+	border-left: 4px solid @success;
 
-		&.leased {
-			border-left-color: rgb(253, 109, 109);
+	&.leased {
+		border-left-color: rgb(253, 109, 109);
+	}
+	&.willIn {
+		border-left-color: #c8b9d4;
+	}
+
+	.cell {
+		cursor: pointer;
+		h3 {
+			margin-bottom: 10px;
+			overflow: hidden;
+			white-space: nowrap;
 		}
-		&.willIn {
-			border-left-color: #C8B9D4;
+
+		p {
+			margin-top: 10px;
+			color: @gray;
+			overflow: hidden;
+			white-space: nowrap;
 		}
 
-		.cell {
-			cursor: pointer;
-			h3 {
-				margin-bottom: 10px;
-				overflow: hidden;
-				white-space: nowrap;
-			}
-
-			p {
-				margin-top: 10px;
-				color: @gray;
-				overflow: hidden;
-				white-space: nowrap;
-			}
-
-			.rentee {
-				border-top: 1px solid @light;
-				padding: 8px 0 3px 0;
-				margin-top: 8px;
-				margin-bottom:3px;
+		.rentee {
+			border-top: 1px solid @light;
+			padding-top: 9px;
+			margin-top: 8px;
+			margin-bottom: 3px;
+			display: flex;
+			justify-content: space-between;
+			span {
 				display: flex;
-				justify-content: space-between;
-				span{
-					display: flex;
-					line-height: 20px;
-				}
-				i svg{
-					width: 14px;
-					height: 14px;
-				}
+				line-height: 20px;
 			}
-		}
-
-		.actions {
-			cursor: pointer;
-			position: absolute;
-			bottom: -17px;
-			background: #fff;
-			display: none;
-			text-align: center;
-			border: 1px solid #ddd;
-			border-radius: 2px;
-			right: 10%;
-			margin-left: -36px;
-			p {
-				padding: 5px;
-				display: inline-block;
-				position: relative;
-				ul {
-					position: absolute;
-					bottom: 25px;
-					right: -4px;
-					width: 60px;
-					background: #fff;
-					box-shadow: 0 0 1px #CCC;
-					display: none;
-					overflow: hidden;
-					li {
-						list-style: none;
-						margin: 4px 0;
-					}
-				}
-			}
-
-
-			p+p {
-				border-left: 1px solid #ddd;
-			}
-			.moreSet:hover ul {
-				display: block;
-				li:hover {
-					color: #409eff
-				}
-			}
-		}
-
-		&:hover {
-			.actions {
-				display: block;
+			i svg {
+				width: 14px;
+				height: 14px;
 			}
 		}
 	}
 
-	.setborder {
+	.actions {
+		cursor: pointer;
+		position: absolute;
+		bottom: -17px;
+		background: #fff;
+		display: none;
+		text-align: center;
 		border: 1px solid #ddd;
-		width: 225px;
-		.botborder {
-			border-bottom: 1px solid #ddd;
+		border-radius: 2px;
+		right: 10%;
+		margin-left: -36px;
+		p {
+			padding: 5px;
+			display: inline-block;
+			position: relative;
+			ul {
+				position: absolute;
+				bottom: 25px;
+				right: -4px;
+				width: 60px;
+				background: #fff;
+				box-shadow: 0 0 1px #ccc;
+				display: none;
+				overflow: hidden;
+				li {
+					list-style: none;
+					margin: 4px 0;
+				}
+			}
 		}
-		.others {
-			height: 100px;
+
+		p + p {
+			border-left: 1px solid #ddd;
 		}
-	}
-
-	.dialog>div {
-		margin-right: 50px;
-	}
-
-	.triangle {
-		line-height: 40px;
-		background-color: #f5f7fa;
-		margin: 10px 0;
-		position: relative;
-	}
-
-	.triangle:before {
-		content: '';
-		width: 20px;
-		height: 40px;
-		background-color: #f5f7fa;
-		display: inline-block;
-		position: absolute;
-		top: 0;
-		left: -20px;
-	}
-
-	.triangle:after {
-		content: '';
-		width: 0;
-		height: 0;
-		border-right: 12px solid transparent;
-		border-bottom: 12px solid #f5f7fa;
-		border-left: 12px solid transparent;
-		display: block;
-		position: absolute;
-		top: -12px;
-	}
-
-	.userinfobot {
-		margin-left: 5px;
-		color: #888;
-		>div:first-child {
-			margin-top: 16px;
-		}
-		>div>p:nth-child(1) {
-			color: #000;
+		.moreSet:hover ul {
+			display: block;
+			li:hover {
+				color: #409eff;
+			}
 		}
 	}
 
-	div.activerent,
-	span.activerent {
-		color: #000
+	&:hover {
+		.actions {
+			display: block;
+		}
 	}
+}
 
-	.menu-right {
-		flex: 1
+.setborder {
+	border: 1px solid #ddd;
+	width: 225px;
+	.botborder {
+		border-bottom: 1px solid #ddd;
 	}
+	.others {
+		height: 100px;
+	}
+}
 
-	.menu-rightthree div {
-		margin-left: 15px;
-	}
+.dialog > div {
+	margin-right: 50px;
+}
 
-	.cursorfir:after {
-		left: 14px
-	}
+.triangle {
+	line-height: 40px;
+	background-color: #f5f7fa;
+	margin: 10px 0;
+	position: relative;
+}
 
-	.cursorsec:after {
-		left: 120px
-	}
+.triangle:before {
+	content: '';
+	width: 20px;
+	height: 40px;
+	background-color: #f5f7fa;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: -20px;
+}
 
-	.cursorthi:after {
-		left: 226px
+.triangle:after {
+	content: '';
+	width: 0;
+	height: 0;
+	border-right: 12px solid transparent;
+	border-bottom: 12px solid #f5f7fa;
+	border-left: 12px solid transparent;
+	display: block;
+	position: absolute;
+	top: -12px;
+}
+
+.userinfobot {
+	margin-left: 5px;
+	color: #888;
+	> div:first-child {
+		margin-top: 16px;
 	}
+	> div > p:nth-child(1) {
+		color: #000;
+	}
+}
+
+div.activerent,
+span.activerent {
+	color: #000;
+}
+
+.menu-right {
+	flex: 1;
+}
+
+.menu-rightthree div {
+	margin-left: 15px;
+}
+
+.cursorfir:after {
+	left: 14px;
+}
+
+.cursorsec:after {
+	left: 120px;
+}
+
+.cursorthi:after {
+	left: 226px;
+}
 </style>

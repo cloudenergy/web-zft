@@ -56,6 +56,7 @@ export default {
 			<el-select
 				value={this.city}
 				size={this.isForm ? 'mini' : 'small'}
+				class='normal'
 				clearable={true}
 				filterable={true}
 				on-change={val => {
@@ -79,6 +80,7 @@ export default {
 			<el-select
 				value={this.area}
 				size={this.isForm ? 'mini' : 'small'}
+				class='normal'
 				on-change={val => {
 					this.area = val;
 					this.$emit('change', { area: this.area, city: this.city });
@@ -99,12 +101,12 @@ export default {
 		return (
 			<div class={{ inForm: this.isForm, filters: !this.isForm }}>
 				{this.isForm ? (
-					<el-form-item label="城市">{citySelect}</el-form-item>
+					<span style="margin-right:28px"><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block;margin-top:1px">城市</div>{citySelect}</span>
 				) : (
 					citySelect
 				)}
 				{this.isForm ? (
-					<el-form-item label="区域">{areaSelect}</el-form-item>
+					<span><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block;margin-top:1px">区域</div>{areaSelect}</span>
 				) : (
 					areaSelect
 				)}
@@ -128,5 +130,8 @@ export default {
 	.el-select {
 		width: 48%;
 	}
+}
+.normal{
+	width: 145px;
 }
 </style>

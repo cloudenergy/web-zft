@@ -99,7 +99,9 @@ const apis = {
 	districts: get('/districts'),
 	environments: get('/environments'),
 	contract_bill: resource('/projects/{projectId}/contracts/{id}/bills'),
-	set_electric_price: resource('/projects/{projectId}/houses/{houseId}/prices'),
+	set_electric_price: resource(
+		'/projects/{projectId}/houses/{houseId}/prices'
+	),
 	login: post('login'),
 	devices: resource('/projects/{projectId}/devices'),
 	room_devices: resource(

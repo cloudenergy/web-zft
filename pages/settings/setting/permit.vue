@@ -34,6 +34,9 @@
 				</el-table-column>
 
 				<el-table-column prop="operate" label="操作">
+					<template slot-scope="scope">
+						<el-button type="danger" @click="deleteUser(scope.row)">删除</el-button>
+					</template>
 				</el-table-column>
 			</el-table>
 			
@@ -66,103 +69,113 @@
 </template>
 
 <script>
-	import md5 from 'js-md5'
-	export default {
-		computed: {
-			projectId () {
-				return this.$store.state.user.projectId
-			}	
-		},
-		data() {
-			return {
-				addSteward:false,
-				addStewardForm: {
-					username: '',
-					level: '',
-					password:'',
-					email: '' //TODO: 必须提供email
-				},
-				tableData:[],
-				password:''
-			};
-		},
-		created () {
-			this.query()	
-		},
-		components: {},
-		methods: {
-			addJobs() {
-				if(JSON.parse(localStorage.getItem('user')).level==='ADMIN'){
-					this.addSteward = true
-				}else{
-					this.$message('权限不足，无法添加岗位')
-				}
+import md5 from 'js-md5';
+export default {
+	computed: {
+		projectId() {
+			return this.$store.state.user.projectId;
+		}
+	},
+	data() {
+		return {
+			addSteward: false,
+			addStewardForm: {
+				username: '',
+				level: '',
+				password: '',
+				email: '' //TODO: 必须提供email
 			},
-			add() {
-				var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g
-				if ( regex.test( this.addStewardForm.email ) ){
-					this.addSteward = false;
-					this.addStewardForm.password = md5(this.password);
-					this.$model('credentials')
+			tableData: [],
+			password: ''
+		};
+	},
+	created() {
+		this.query();
+	},
+	components: {},
+	methods: {
+		addJobs() {
+			if (JSON.parse(localStorage.getItem('user')).level === 'ADMIN') {
+				this.addSteward = true;
+			} else {
+				this.$message('权限不足，无法添加岗位');
+			}
+		},
+		add() {
+			var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+			if (regex.test(this.addStewardForm.email)) {
+				this.addSteward = false;
+				this.addStewardForm.password = md5(this.password);
+				this.$model('credentials')
 					.create(this.addStewardForm, {
 						projectId: this.projectId
 					})
-					.then(res=>{
-							this.$message.success('创建成功')
-							this.addStewardForm.username=this.addStewardForm.password=this.password=this.addStewardForm.email=''
-						}
-					)
-					.catch(err=>{
-						if(err.code===90000004){
-							this.$message('权限不足,创建失败')
-						}
+					.then(res => {
+						this.$message.success('创建成功');
+						this.addStewardForm.username = this.addStewardForm.password = this.password = this.addStewardForm.email =
+							'';
 					})
-				}else{
-					this.$message('邮箱格式错误')
-				}
-			},
-			query() {
-				this.$model('credentials')
+					.catch(err => {
+						if (err.code === 90000004) {
+							this.$message('权限不足,创建失败');
+						}
+					});
+			} else {
+				this.$message('邮箱格式错误');
+			}
+		},
+		query() {
+			this.$model('credentials')
 				.query({}, { projectId: this.projectId })
 				.then(res => {
-					if(JSON.parse(localStorage.getItem('user')).level==='ADMIN'){
-						this.$set(this, 'tableData', res || [])
+					if (
+						JSON.parse(localStorage.getItem('user')).level ===
+						'ADMIN'
+					) {
+						this.$set(this, 'tableData', res || []);
 					}
 				});
-			},
-			deleteUser(data) {
-				if(data.username===JSON.parse(localStorage.getItem('user')).usernmae){
-					this.$message('不可以删除自己的账号')
-				}else{
-					this.$confirm('将删除此管理员, 是否继续?', '提示', {
-						confirmButtonText: '确定',
-						cancelButtonText: '取消',
-						type: 'warning'
-						}).then(() => {
-							this.$model('administrator_change')
-							.delete({},{projectId:this.projectId,id:data.id})
-							.then(res=>console.log(res))
-						}).catch(() => {
+		},
+		deleteUser(data) {
+			if (
+				data.username ===
+				JSON.parse(localStorage.getItem('user')).usernmae
+			) {
+				this.$message('不可以删除自己的账号');
+			} else {
+				this.$confirm('将删除此管理员, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				})
+					.then(() => {
+						this.$model('administrator_change')
+							.delete(
+								{},
+								{ projectId: this.projectId, id: data.id }
+							)
+							.then(res => console.log(res));
+					})
+					.catch(() => {
 						this.$message({
 							type: 'info',
 							message: '已取消删除'
-						});          
+						});
 					});
-				}
-				
 			}
 		}
-	};
+	}
+};
 </script>
 
 <style lang='less' scoped>
-	.all {
-		.tit {
-			float: left;
-			width: 100%;
-			background-color: #e0e7ec;
-			padding: 10px 0;
-			margin-top: 10px;
-		}
+.all {
+	.tit {
+		float: left;
+		width: 100%;
+		background-color: #e0e7ec;
+		padding: 10px 0;
+		margin-top: 10px;
 	}
+}
 </style>
