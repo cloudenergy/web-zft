@@ -6,11 +6,11 @@
 					<div slot="reference" class="contractStatus cursorp">
 						<div v-if="nowData<scope.row.from" class="willIn flexcenter">
 							<span class="willIn">待入</span>
-							<icon type="touxiang"/>
+							<icon type="icon-test1"  :symbol="true"/>
 						</div>
 						<div v-if="scope.row.from<nowData&&nowData<scope.row.to" class="inThere flexcenter">
 							<span class="inThere">在租</span>
-							<icon type="icon-test"/>
+							<icon type="icon-test" :symbol="true" />
 						</div>
 						<div v-if="nowData>scope.row.to" class="overdue flexcenter">
 							<span class="overdue">逾期</span>
