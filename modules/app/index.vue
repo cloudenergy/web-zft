@@ -119,14 +119,8 @@ export default {
 	border-radius: 3px;
 	margin-right: -4px;
 }
-.new-house .el-dialog {
-	width: 975px;
-	.el-row{
-		margin-bottom: 20px;
-	}
-}
 </style>
 
 <style lang="less" scoped>
-	
+
 </style>

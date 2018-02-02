@@ -9,8 +9,8 @@
     	},
     	render() {
     		return (
-					<el-select
-						style="width:145px"
+    			<el-form-item label="方式">
+    				<el-select
     					on-input={val => {
     						this.model = val;
     						this.$emit('input', val);
@@ -27,6 +27,7 @@
     						);
     					})}
     				</el-select>
+    			</el-form-item>
     		);
     	},
     	data() {

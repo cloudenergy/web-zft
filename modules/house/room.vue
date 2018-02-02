@@ -408,7 +408,7 @@
 
 			.rentee {
 				border-top: 1px solid @light;
-				padding-top: 9px;
+				padding-top: 12px;
 				margin-top: 8px;
 
 				display: flex;

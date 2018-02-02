@@ -126,8 +126,7 @@ const apis = {
 	flow_mounth: resource('/projects/{projectId}/flows'),
 	house_info: resource('/projects/{projectId}/houses/{houseId}'),
 	electricity_instructions: resource('/project/{projectId}/instructions'),
-	volume_set: resource('/projects/{projectId}/prices'),
-	administrator_change: resource('/projects/{projectId}/credentials')
+	volume_set: resource('/projects/{projectId}/prices')
 };
 
 /**

@@ -30,9 +30,6 @@
 				</el-table-column>
 
 				<el-table-column prop="operate" label="操作">
-					<template slot-scope="scope">
-						<el-button type="danger" @click="deleteUser(scope.row)">删除</el-button>
-					</template>
 				</el-table-column>
 			</el-table>
 			
@@ -119,12 +116,6 @@
 				.then(res => {
 					this.$set(this, 'tableData', res || [])
 				});
-			},
-			deleteUser(data) {
-				console.log(data)
-				this.$model('administrator_change')
-				.delete({},{projectId:this.projectId,id:data.id})
-				.then(res=>console.log(res))
 			}
 		}
 	};

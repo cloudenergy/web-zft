@@ -4,7 +4,7 @@
 		<div style="margin-left:40px">
 			<el-form-item label="登录账号">
 				<el-col :span="10">
-					<el-input v-model="form.username" disabled></el-input>
+					<el-input v-model="form.username"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item :label='form.passwordName'>
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-	import md5 from 'js-md5'
 	export default {
 		created() {
 			this.form.passwordName = '登录密码'
@@ -71,15 +70,7 @@
 				this.form.passwordName = '登录密码'
 			},
 			onSubmit() {
-				// todo suoqin credentials is undefined
-				if(this.form.password===this.form.passwordAgain){
-					this.$model('administrator_change')
-					.patch({password:md5(this.form.password),mobile:this.form.mobile,email:this.form.email},{projectId:this.projectId,id:7})
-					.then(res=>{
-						console.log(res)
-					})
-				}
-				
+				console.log(this.form)
 			}
 		}
 	}
