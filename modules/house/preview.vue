@@ -16,21 +16,22 @@
                 </span>
                 <i class="el-icon-circle-plus-outline" style="font-size:20px" @click="bindEleciricity"></i>
             </h4>
-            <el-table :data="room.devices" stripe>
+            <el-table :data="room.devicesChooseElectricity" stripe>
                 <el-table-column prop="deviceId" label="ID" width="150">
                 </el-table-column>
                 <el-table-column prop="title" label="设备" min-width="200">
                 </el-table-column>
                 <el-table-column label="通讯状态" width="100">
                     <template slot-scope="scope">
-                        <span>正常</span>
-                        <span>异常</span>
+                        <span v-if="scope.row.status.service==='EMC_ONLINE'">在线</span>
+                        <span v-if="scope.row.status.service==='EMC_OFFLINE'">离线</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="控制" width="100">
                     <template slot-scope="scope">
-                        <el-switch style="display: block" v-model="value4" active-color="#13ce66" inactive-color="#ff4949">
-                        </el-switch>
+                        <el-switch :width="num" v-model="scope.row.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch" active-value="EMC_ON" inactive-value="EMC_OFF">
+					</el-switch>
+					</el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="管理" width="100">
@@ -41,7 +42,7 @@
             </el-table>
         </div>
         <div class="bills section">
-            <h4>租费设置</h4>
+            <h4 @click="test">租费设置</h4>
             <el-table :data="room.bills" stripe>
                 <el-table-column prop="name" label="名称" width="150">
                 </el-table-column>
@@ -91,7 +92,10 @@
         data() {
             return {
                 dialogVisible: false,
-                value4: true
+                value4: true,
+                reqData:{
+                    roomId:this.room.id
+                }
             }
         },
         components: {
@@ -112,6 +116,28 @@
             console.log('room:', this.room, this.house);
         },
         methods: {
+            test() {
+                console.log(this.room)
+            },
+            electricSwitch(data) {
+                console.log(data)
+				return data.status.switch==='EMC_ON'
+			},
+            eleciricitySwitch(data) {
+				if (data) {
+					this.reqData.mode = 'EMC_ON'
+				} else {
+					this.reqData.mode = 'EMC_OFF'
+				}
+				this.$model('electricity_instructions')
+					.patch(this.reqData, {
+						projectId: this.projectId,
+						id: 'switch'
+					})
+					.then(res => {
+						console.log(res)
+					})
+			},
             del(room) {
                 this.$model('rooms').delete(null, {
                     id: this.roomId
@@ -197,7 +223,8 @@
                         }
                         this.room.devices = res.devices
                     })
-            }
+            },
+            
         }
     };
 </script>

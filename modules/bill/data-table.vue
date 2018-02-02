@@ -23,7 +23,6 @@
                     <p>{{scope.row.startDateTime}}至{{scope.row.endDateTime}}</p>
                 </template>
             </el-table-column>
-            <!-- TODO 增加租金期数 -->
             <el-table-column label="金额(¥)/类型">
                 <template slot-scope="scope">
                     <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}</p>

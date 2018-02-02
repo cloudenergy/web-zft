@@ -44,7 +44,7 @@
 						console.log(this.$store.state.successInfo)
 						if (this.$store.state.successInfo === true) {
 							this.$message.success('登陆成功')
-							this.$router.push('/')
+							this.$router.push('/houses')
 						} else {
 							this.$message('账号或密码错误')
 						}

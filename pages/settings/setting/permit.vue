@@ -3,7 +3,7 @@
 		<h3>全部员工({{tableData.length}}人)</h3>
 		<div class="tit">
 			<el-col :span="3" style="margin-left:20px">
-				<el-button class="addBtn" size="medium" @click="addSteward=true">添加岗位</el-button>
+				<el-button class="addBtn" size="medium" @click="addJobs">添加岗位</el-button>
 			</el-col>
 		</div>
 		<!-- TODO ZHOUYI  邮箱和手机号返回 -->
@@ -14,13 +14,17 @@
 				<el-table-column prop="username" label="姓名">
 				</el-table-column>
 
-				<el-table-column prop="nub" label="手机号">
+				<el-table-column prop="mobile" label="手机号">
 				</el-table-column>
 
 				<el-table-column prop="email" label="邮箱">
 				</el-table-column>
 
-				<el-table-column prop="quarters" label="岗位">
+				<el-table-column prop="level" label="岗位">
+					<template slot-scope="scope">
+						<span v-if="scope.row.level==='MANAGER'">管理员</span>
+						<span v-if="scope.row.level==='ADMIN'">ADMIN</span>
+					</template>
 				</el-table-column>
 
 				<el-table-column prop="section" label="部门">
@@ -90,6 +94,13 @@
 		},
 		components: {},
 		methods: {
+			addJobs() {
+				if(JSON.parse(localStorage.getItem('user')).level==='ADMIN'){
+					this.addSteward = true
+				}else{
+					this.$message('权限不足，无法添加岗位')
+				}
+			},
 			add() {
 				var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g
 				if ( regex.test( this.addStewardForm.email ) ){
@@ -117,14 +128,31 @@
 				this.$model('credentials')
 				.query({}, { projectId: this.projectId })
 				.then(res => {
-					this.$set(this, 'tableData', res || [])
+					if(JSON.parse(localStorage.getItem('user')).level==='ADMIN'){
+						this.$set(this, 'tableData', res || [])
+					}
 				});
 			},
 			deleteUser(data) {
-				console.log(data)
-				this.$model('administrator_change')
-				.delete({},{projectId:this.projectId,id:data.id})
-				.then(res=>console.log(res))
+				if(data.username===JSON.parse(localStorage.getItem('user')).usernmae){
+					this.$message('不可以删除自己的账号')
+				}else{
+					this.$confirm('将删除此管理员, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+						}).then(() => {
+							this.$model('administrator_change')
+							.delete({},{projectId:this.projectId,id:data.id})
+							.then(res=>console.log(res))
+						}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						});          
+					});
+				}
+				
 			}
 		}
 	};

@@ -54,7 +54,7 @@
 					username: '',
 					level: '',
 					password:'',
-					email: '' //TODO: 必须提供email
+					email: '' 
 				},
 				dialogVisible: false,
 				password:'',

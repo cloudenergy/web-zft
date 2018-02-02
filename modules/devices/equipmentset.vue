@@ -72,9 +72,9 @@
 					return this.houses.map((element, index) => {
 						element.rooms.map((item, list) => {
 							if (item.devices != '' || null) {
+								item.devicesChooseElectricity = []
 								item.devices.map((ele, num) => {
 									ele.updatedAtTime = new Date(parseInt(ele.updatedAt) * 1000).toLocaleDateString().replace(/\//g, "-")
-									item.devicesChooseElectricity = []
 									if (ele.type == 'ELECTRICITY') {
 										item.devicesChooseElectricity.push(ele)
 									}
