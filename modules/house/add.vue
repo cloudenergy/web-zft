@@ -17,7 +17,7 @@
 							<el-option value="W" label="西">西</el-option>
 							<el-option value="N" label="北">北</el-option>
 						</el-select>
-						<span tabindex="0" class="el-input-group__append addwidth toward">朝向</span>
+						<span tabindex="0" class="el-input-group__append addwidth toward" style="padding:0 0 0 13px;width:53px">朝向</span>
 					</el-col>
 				</el-row>
 			<div v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
