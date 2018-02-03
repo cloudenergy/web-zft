@@ -72,5 +72,9 @@
 	}
 </style>
 <style scoped>
-	
+	.addwidth{
+		width: 65px;
+		height: 28px;
+		line-height:28px
+	}
 </style>
