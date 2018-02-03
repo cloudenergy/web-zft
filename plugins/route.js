@@ -4,6 +4,7 @@
  * @Last Modified by: insane.luojie
  * @Last Modified time: 2017-11-16 09:29:50
  */
+import { isBrowserSupport } from '~/utils/helper';
 function updateHeader(comp) {
 	const { meta } = comp;
 	if (meta && meta.title) {
@@ -33,7 +34,12 @@ function applyAsyncData(component) {
 }
 
 export default function(router) {
-	router.beforeEach((from, to, next) => {
+	router.beforeEach((to, from, next) => {
+		if (!isBrowserSupport()) {
+			if (to.name && to.name != 'upgrade') {
+				return next('/upgrade');
+			}
+		}
 		next();
 	});
 

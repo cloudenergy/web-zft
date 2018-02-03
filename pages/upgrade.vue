@@ -38,71 +38,67 @@
 </template>
 
 <script>
-export default {
-  
-}
+export default {};
 </script>
 
 <style lang="less" scoped>
-	.login {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		text-align: center;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
-		background-color: rgba(0, 0, 0, 0.25);
-		p{
-			font-family: SimHei
-		}
-		p.topline{
-			font-size: 20px;
-			margin-top: 40px;
-		}
-		p.bottomline{
-			font-size: 14px;
-			margin: 30px 0 60px 0;
-		}
-		p.link{
-			margin-bottom: 10px;
-			a{
-				color:#68a5f5;
-			}
-		}
-		.browser{
-			width: 430px;
-			margin: 0 auto;
-			.google,.firefox{
-				background-color: #fff;
-				width: 200px;
-				border-radius: 4px;
-				box-shadow: 0 0 10px #bbb;
-				img{
-					width: 60px;
-					height: 60px;
-					margin:10px 10px 0 10px;
-				}
-				.introduce {
-					margin-top: 17px;
-					p{
-						text-align: left;
-						font-size: 13px;
-					}
-					
-				}
-			}
-		}
-		
-		.container {
-			width: 800px;
-			padding: 40px 60px;
-			height: 450px;
-			background: #E1EBF6;
-			border-radius: 8px;
-		}
-
-		
+.login {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+	background-color: rgba(0, 0, 0, 0.25);
+	p {
+		font-family: SimHei;
 	}
+	p.topline {
+		font-size: 20px;
+		margin-top: 40px;
+	}
+	p.bottomline {
+		font-size: 14px;
+		margin: 30px 0 60px 0;
+	}
+	p.link {
+		margin-bottom: 10px;
+		a {
+			color: #68a5f5;
+		}
+	}
+	.browser {
+		width: 430px;
+		margin: 0 auto;
+		.google,
+		.firefox {
+			background-color: #fff;
+			width: 200px;
+			border-radius: 4px;
+			box-shadow: 0 0 10px #bbb;
+			img {
+				width: 60px;
+				height: 60px;
+				margin: 10px 10px 0 10px;
+			}
+			.introduce {
+				margin-top: 17px;
+				p {
+					text-align: left;
+					font-size: 13px;
+				}
+			}
+		}
+	}
+
+	.container {
+		width: 800px;
+		padding: 40px 60px;
+		height: 450px;
+		background: #e1ebf6;
+		border-radius: 8px;
+	}
+}
 </style>

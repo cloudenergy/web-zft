@@ -67,3 +67,19 @@ export const compose = function compose(f) {
 	};
 	return fn;
 };
+
+/**
+ * 判断是否为支持的浏览器
+ */
+export const isBrowserSupport = function() {
+	const userAgent = navigator.userAgent;
+	const isSafari =
+		userAgent.indexOf('Safari') > -1 && userAgent.indexOf('Chrome') == -1;
+	const isChrome =
+		userAgent.indexOf('Chrome') > -1 && userAgent.indexOf('Safari') > -1;
+	const isFF = userAgent.indexOf('Firefox') > -1;
+	console.log(isSafari, isChrome, isFF);
+	// 浏览器判断
+
+	return isChrome || isSafari || isFF;
+};
