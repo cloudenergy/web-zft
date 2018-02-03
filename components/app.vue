@@ -1,8 +1,11 @@
 <script>
     const defaultLayout = ['login', 'notFound'];
     import _ from 'lodash';
-
+	import browserPrompt from './browserPrompt.vue'
     export default {
+		components: {
+			browserPrompt
+		},
     	data() {
     		return {
     			loading: true
@@ -10,8 +13,16 @@
     	},
     	render() {
     		const matched = this.$route.matched;
-    		const last = matched[matched.length - 1];
-
+			const last = matched[matched.length - 1];
+			const userAgent = navigator.userAgent;
+			const isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; 
+			const isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1;
+			const isFF = userAgent.indexOf("Firefox") > -1;  
+			
+			// 浏览器判断
+			if(!(isChrome||isSafari||isFF)) {
+				return <browserPrompt/>
+			}
     		if (!last) {
     			return <div class="page" v-loading="loading" />;
     		}
@@ -21,7 +32,7 @@
     		}
 
     		return (
-    			<app>
+				<app>
     				<router-view />
     			</app>
     		);

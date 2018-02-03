@@ -11,7 +11,7 @@
 						<RentManager class="manager" />
 					</div>
 					<div class="flexcenter">
-						<span class="result-info">30项结果</span>
+						<span class="result-info" v-if="housesRent">{{housesRent.paging.count}}项结果</span>
 						<div class="actions">
 							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
 								导出
@@ -108,7 +108,7 @@
 						element.strategy.freq.rentprice = element.strategy.freq.rent/100
 						element.strategy.bondprice = element.strategy.bond/100
 					});
-					this.$set(this, 'housesRent', data);
+					this.$set(this, 'housesRent', data)
 				})
 			},
 			showmessage(data) {

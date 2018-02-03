@@ -4,6 +4,7 @@
             <RentSearch style="width:300px" class="clearmargin" />
             <p>{{listInfo.count}}</p>
         </div>
+        <!-- TODO ZHOUYI 设备管理绑定电表增加条件查询 -->
         <div class="newchoose prevent" v-loading="loading">
             <div v-for="list in item" :key="list.index">
                 <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()">

@@ -85,6 +85,7 @@
                 if (this.form.price == "") {
                     this.$message.error('请填写金额');
                 } else {
+                    console.log(this.form.price)
                     this.$model('top_up')
                         .patch({
                             amount: this.form.price * 100,
