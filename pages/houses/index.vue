@@ -1,6 +1,6 @@
 <template>
     <div class="page-house-index">
-        <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation"/>
+        <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab"/>
         <div class="main-container">
             <Search @changeRoom='changeRoom'/>
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
@@ -332,5 +332,7 @@
     			}
 		}
 		
+	}
+	.communityTab{
 	}
 </style>
