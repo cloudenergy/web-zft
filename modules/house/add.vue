@@ -10,7 +10,7 @@
 						<template slot="prepend">小区</template>
 					</el-autocomplete>
 					</el-col>
-					<el-col :span="6" style="position:relative" class="roomInfo">
+					<el-col :span="6" style="position:relative" class="roomInfo flexc">
 						<el-select v-model="form.layout.orientation" placeholder="方位" style="display:inline-block;width:163px">
 							<el-option value="E" label="东">东</el-option>
 							<el-option value="S" label="南">南</el-option>
