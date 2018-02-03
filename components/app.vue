@@ -18,7 +18,7 @@
 			const isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; 
 			const isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1;
 			const isFF = userAgent.indexOf("Firefox") > -1;  
-			
+			console.log(isSafari,isChrome,isFF)
 			// 浏览器判断
 			if(!(isChrome||isSafari||isFF)) {
 				return <browserPrompt/>
