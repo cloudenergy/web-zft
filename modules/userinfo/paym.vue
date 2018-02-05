@@ -90,10 +90,12 @@
                         .patch({
                             amount: this.form.price * 100,
                             contractId: this.userInfo.id,
-                            userId: this.userInfo.user.id
+                            fundChannelId: this.form.region
+                            
                         }, {
                             projectId: this.projectId,
-                            id: this.form.region
+                            userId: this.userInfo.user.id,
+                            id:'balance'
                         })
                         .then(res => {
                             this.$message.success('充值成功');

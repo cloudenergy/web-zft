@@ -53,7 +53,11 @@
 			return {
 				houseFormat: 'SHARE',
 				houses:[],
-				paging:{}
+				paging:{},
+				reqData:{
+					size:20,
+					index:1
+				}
 			};
 		},
 		computed : {
