@@ -2,7 +2,7 @@
 	<div>
 		<div class="block" style="margin-bottom:10px">
 			<el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
-				<goend/>
+				<goend @from-toTime='chooseFlowTime'/>
 				<water-source class="marsp marspa" />
 				<tenant-way class="marsp marspa" />
 				<city-area style="width:220px" class="flexce" />
@@ -28,6 +28,9 @@
 	} from '../rent'
 	import quantumlist from './quantumlist.vue';
 	import goend from './goend.vue';
+	import startOfMonth from 'date-fns/start_of_month'
+	let startOfMounth = Date.parse(startOfMonth(new Date()))/1000
+	let nowDate = Date.parse(new Date())/1000
 	export default {
 		props: {
 			flowMounth: {
@@ -60,7 +63,9 @@
 				flowPaging: '',
 				reqData: {
 					index: 1,
-					size: 20
+					size: 10,
+					from: startOfMounth,
+					to: nowDate
 				}
 			};
 		},
@@ -83,6 +88,11 @@
 			},
 			pageIndex(data) {
 				this.reqData.index = data
+				this.query()
+			},
+			chooseFlowTime(data) {
+				this.reqData.from=data[0]/1000
+				this.reqData.to=data[1]/1000
 				this.query()
 			}
 		}

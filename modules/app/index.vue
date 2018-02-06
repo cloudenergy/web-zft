@@ -6,7 +6,6 @@
 		<div class="main">
 			<slot />
 			<div class="userInfo flexc cursorp">
-				
 				<el-dropdown placement="bottom" style="margin-right:20px">
 					<span class="el-dropdown-link">
 						<icon type="logout-user" style="font-size:30px;margin:-14px 20px 0 0"/>
@@ -29,7 +28,6 @@
 			</div>
 		</div>
 		<app-modal ref="modal"></app-modal>
-
 	</div>
 </template>
 <script>

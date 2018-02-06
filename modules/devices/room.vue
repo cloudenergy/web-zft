@@ -227,7 +227,7 @@
 		// }
 		.noneAdd {
 			display: none;
-			margin-top: 73px;
+			margin-top:65px;
 			text-align: right;
 		}
 		.cell {

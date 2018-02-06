@@ -12,7 +12,6 @@
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<div class="flexcenter">
-							<RentSearch @childinfo="showmessage" />
 							<room-search @input="roomSearch" v-model="info.search"></room-search>
 							<rooms-select @input="search" v-model="info.room"></rooms-select>
 							<room-manager @input="manager" v-model="info.manager"/>

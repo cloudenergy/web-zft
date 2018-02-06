@@ -21,23 +21,23 @@
 		<div class="actions cursorp">
 			<el-tooltip content="房源预览" placement="top">
 				<p @click="view()">
-					<icon type="iconupload" style="margin:0 5px;font-size:18px" />
+					<icon type="iconupload" style="font-size:18px" class="flexdirection"/>
 				</p>
 			</el-tooltip>
 			<el-tooltip content="合同列表" placement="top">
 				<p @click="viewContracts()">
-					<icon type="gerenjianli" style="margin:0 5px;font-size:16px" />
+					<icon type="gerenjianli" style="font-size:16px"  class="flexdirection viewContracts"/>
 				</p>
 			</el-tooltip>
 			<el-tooltip content="添加合同" placement="top">
 				<p @click="addContracts()">
-					<icon type="shebeiguanli4" style="margin:0 5px;font-size:15px" />
+					<icon type="shebeiguanli4" style="font-size:15px"  class="flexdirection addContracts"/>
 				</p>
 			</el-tooltip>
 
 			<p class="moreSet">
 				<span class="el-dropdown-link">
-					<icon type="gengduo1" style="margin:0 5px;font-size:18px" />
+					<icon type="gengduo1" style="font-size:18px"  class="flexdirection"/>
 				</span>
 				<ul style="width:70px">
 					<li v-if="room.status==='INUSE'" @click="without()">退租</li>
@@ -455,6 +455,13 @@ export default {
 			padding: 5px;
 			display: inline-block;
 			position: relative;
+			i::before{
+				display: flex;
+				justify-content: space-around;
+			}
+			i.viewContracts::before,i.addContracts::before{
+				margin-top:2px;
+			}
 			ul {
 				position: absolute;
 				bottom: 25px;

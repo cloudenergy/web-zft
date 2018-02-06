@@ -3,7 +3,7 @@
         <div style="position:relative;display:inline-block;" class="settimeEnd">
 
             <el-date-picker v-model="value3" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width:200px;padding:3px;over-flow:hidden"
-                class="datach" @change="oldTime(value3)" size="small">
+                class="datach" @change="oldTime(value3)" size="small" :clearable="false">
             </el-date-picker>
             <span style="position: absolute;" class="shabi">至</span>
         </div>
@@ -11,15 +11,19 @@
 </template>
 
 <script>
+    import startOfMonth from 'date-fns/start_of_month'
+    let startOfMounth = startOfMonth(new Date())
     export default {
         data() {
             return {
-                value3: [new Date(), new Date()],
+                value3: [startOfMounth, new Date()],
             }
         },
         methods: {
             oldTime(data) {
-                console.log(data)
+                this.$emit('from-toTime',(data.map((ele,index)=>{
+                    return Date.parse(ele)
+                })))
             }
         }
     }

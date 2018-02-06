@@ -12,12 +12,12 @@
                         <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
                                 <span @click="showHouse(house)">
-									<icon type='iconupload'/>
+									<icon type='iconupload' style="font-size:16px;margin-top:-1px"/>
 								</span>
                             </el-tooltip>
 							<el-dropdown placement="bottom-start">
-								<span class="el-dropdown-link">
-									<icon type="gengduo1" />
+								<span>
+									<icon type="gengduo1" style="font-size:15px;margin-top:3px"/>
 								</span>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item>编辑房源</el-dropdown-item>
