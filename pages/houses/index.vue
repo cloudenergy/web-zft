@@ -1,6 +1,6 @@
 <template>
     <div class="page-house-index">
-        <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab"/>
+        <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab" @cityArea="cityArea"/>
         <div class="main-container">
             <Search @changeRoom='changeRoom'/>
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
@@ -141,6 +141,20 @@
 			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
     	methods: {
+			cityArea(data) {
+				if(_.isUndefined(data)){
+					delete this.reqData.city
+					delete this.reqData.area
+				}
+				else{
+					if(data.area){
+						this.reqData.area = data.area
+					}else{
+						this.reqData.city = data.city
+					}
+				}
+				this.query()
+			},
 			setSearch(data) {
 				console.log(typeof(data))
 				console.log(data)

@@ -3,13 +3,13 @@
 		<el-tabs v-model="type" @tab-click="change">
 			<el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
 		</el-tabs>
-		<city-area @change="districtChanged" />
+		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange"/>
 		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
 			<el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
 				<!-- <i class="el-icon-menu"></i> -->
 				<span slot="title">全部小区</span>
 			</el-menu-item>
-			<el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.locationId)" :class="{'is-active':typeNum==item.locationId}">
+			<el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.geoLocationId)" :class="{'is-active':typeNum==item.geoLocationId}">
 				<span slot="title">{{item.name}}</span>
 			</el-menu-item>
 		</el-menu>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import _ from 'lodash'
 	import {
 		mapState
 	} from 'vuex';
@@ -41,7 +42,8 @@
 				typeNum: 0,
 				firNum: 0,
 				index: '0',
-				communityType: 'SHARE'
+				communityType: 'SHARE',
+				showCommunity:''
 			};
 		},
 		created() {
@@ -58,10 +60,29 @@
 				this.clickType = tab.name
 				this.firNum = 0
 				this.updateCommunity()
+				this.$refs.cityChoose.houseFormatChange(tab.name)
 			},
 			districtChanged(filters) {
-				this.filters = filters;
-				this.updateCommunity(true);
+				if(filters.area!==''){
+					this.$emit('cityArea',{area:filters.area})
+					this.community = this.showCommunity.filter((ele)=>{
+						return ele.areaId == filters.area
+					})
+				}else{
+					this.$emit('cityArea')
+				}
+				
+			},
+			cityChange(data) {
+				if(data.city===''){
+					this.$emit('cityArea')
+					this.community = this.showCommunity
+				}else{
+					this.$emit('cityArea',{city:data.city})
+					this.community = this.showCommunity.filter((ele)=>{
+						return ele.cityId == data.city
+					})
+				}
 			},
 			handleSelect(key, keyPath) {
 				this.typeNum = 'a'
@@ -80,11 +101,11 @@
 						force
 					})
 					.then(data => {
-						this.community = data
+						this.community = this.showCommunity = data
 						this.communityType = this.type
 						if (this.type == 'ENTIRE') {
-							this.typeNum = data[0].locationId
-							this.$emit('change', this.clickType, data[0].locationId)
+							this.typeNum = data[0].geoLocationId
+							this.$emit('change', this.clickType, data[0].geoLocationId)
 						} else {
 							this.typeNum = '0'
 							this.$emit('change', this.clickType)

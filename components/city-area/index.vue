@@ -1,4 +1,5 @@
 <script>
+import _ from 'lodash'
 import Vue from 'vue';
 
 function isCity(city) {
@@ -17,10 +18,21 @@ function mapper(item) {
 }
 
 export default {
-	created() {
-			this.$store.dispatch('GET_CITY_AREA').then(({ result }) => {
-				this.list.city = result.map(mapper);
-			});
+	computed: {
+		listCity() {
+			return this.$store.state.businessCity
+		}	
+	},
+	created () {
+		this.houseFormatChange('SHARE')	
+	},
+	watch: {
+		listCity(newVal,oldVal) {
+			var city = newVal.filter((item)=>{return item.houseFormat===this.clickType})
+			this.list.city = city.map((ele)=>{
+				return ele.city
+			}).map(mapper)
+		}	
 	},
 	data() {
 		return {
@@ -34,14 +46,16 @@ export default {
 	},
 	methods: {
 		cityChange() {
-			this.$model('districts', { level: 3, cityId: this.city }).then(
-				({ result }) => {
-					this.list.area = result;
-					console.log('list', this.list);
-				}
-			);
+			this.$store.dispatch('GET_DISTRICTS',{
+				city:this.city
+			}).then(data=>{
+				this.list.area = data[0].area
+			})
 			this.area = null;
-			this.$emit('change', { city: this.city, area: this.area });
+		},
+		houseFormatChange(data) {
+			this.city=this.area=""
+			this.list.city = this.listCity.filter((item)=>{return item.houseFormat===data}).map((ele)=>{return ele.city}).map(mapper)
 		}
 	},
 	render() {
@@ -51,7 +65,6 @@ export default {
 			city,
 			area
 		};
-
 		let citySelect = (
 			<el-select
 				value={this.city}
@@ -62,6 +75,7 @@ export default {
 				on-change={val => {
 					this.city = val;
 					this.cityChange();
+					this.$emit('cityChange', { city: this.city });
 				}}
 				placeholder="请选择城市"
 			>
@@ -101,12 +115,12 @@ export default {
 		return (
 			<div class={{ inForm: this.isForm, filters: !this.isForm }}>
 				{this.isForm ? (
-					<span style="margin-right:28px"><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block;margin-top:1px">城市</div>{citySelect}</span>
+					<span style="margin-right:28px"><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">城市</div>{citySelect}</span>
 				) : (
 					citySelect
 				)}
 				{this.isForm ? (
-					<span><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block;margin-top:1px">区域</div>{areaSelect}</span>
+					<span><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">区域</div>{areaSelect}</span>
 				) : (
 					areaSelect
 				)}
@@ -118,6 +132,9 @@ export default {
 		isForm: {
 			type: Boolean,
 			default: false
+		},
+		clickType: {
+			required:true
 		}
 	}
 };

@@ -1,6 +1,7 @@
 <template>
     <div>
         <div>
+            <!-- TODO ZHOUYI 提现接口 -->
             <el-tabs v-model="type" @tab-click="change">
                 <el-tab-pane label="我的账户" name="myContracts"></el-tab-pane>
                 <el-tab-pane label="提现设置" name="reflectSet"></el-tab-pane>

@@ -1,8 +1,8 @@
 /*
  * @Author: insane.luojie
  * @Date:   2017-09-30 09:33:33
- * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-11-16 09:29:50
+ * @Last Modified by: mikey.other
+ * @Last Modified time: 2018-02-07 10:09:29
  */
 import { isBrowserSupport } from '~/utils/helper';
 function updateHeader(comp) {

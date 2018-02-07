@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-01-31 11:48:02
+ * @Last Modified time: 2018-02-07 16:15:01
  */
 
 import api from '~/plugins/api';
@@ -35,7 +35,10 @@ export default {
 		othercost: null,
 		soleCommunities:null,
 		entireCommunities:null,
-		successInfo:false
+		successInfo:false,
+		businessCity:[],
+		businessArea:null,
+		communitiesChoose:{}
 	},
 	mutations: {
 		UPDATE_ENV(state, data) {
@@ -44,14 +47,43 @@ export default {
 			});
 		},
 		SAVE_COMMUNITIES(state, data) {
+			_.values(data.data).forEach(ele=>{
+				var city = {}
+				city.id = ele.districtId
+				city.name = ele.name
+				state.businessCity.push({'houseFormat':data.houseType,city})
+			})
+			state.businessArea=_.values(data.data).map(ele=>{
+				var cityArea = _.values(ele.districts).map(item=>{
+					var area = {}
+					area.id = item.districtId
+					area.name = item.name
+					return area
+				})
+				var test = {}
+				test.id=ele.districtId
+				test.area = cityArea
+				return test
+			})
+			state.communitiesChoose = {}
+			state.communitiesChoose.houseFormat = data.houseType
+			state.communitiesChoose.data = []
+			_.values(data.data).forEach(ele=>{
+				_.values(ele.districts).forEach(item=>{
+					item.communities.forEach(communities=>{
+						communities.cityId = ele.districtId
+						communities.areaId = item.districtId
+						state.communitiesChoose.data.push(communities)
+					})
+				})
+			})
 			if(data.houseType==='SHARE'){
-				state.communities = data.data;
+				state.communities = state.communitiesChoose.data;
 			}else if(data.houseType==='SOLE'){
-				state.soleCommunities = data.data
+				state.soleCommunities = state.communitiesChoose.data
 			}else{
-				state.entireCommunities = data.data
+				state.entireCommunities = state.communitiesChoose.data
 			}
-			
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.othercost = _.filter(data, { group: '加收费用' });
@@ -96,15 +128,15 @@ export default {
 			{ houseType, districtsCode, force }
 		) {
 			if(houseType==='SHARE'){
-				if (state.communities && !force) {
+				if (state.communities ) {
 					return Promise.resolve(state.communities);
 				}
 			}else if(houseType==='SOLE'){
-				if (state.soleCommunities && !force) {
+				if (state.soleCommunities ) {
 					return Promise.resolve(state.soleCommunities);
 				}
 			}else {
-				if (state.entireCommunities && !force) {
+				if (state.entireCommunities ) {
 					return Promise.resolve(state.entireCommunities);
 				}
 			}
@@ -115,10 +147,30 @@ export default {
 				)
 				.then(data => {
 					commit('SAVE_COMMUNITIES', {data,houseType});
-					return data;
-				});
+				})
+				.then(()=>{
+					return state.communitiesChoose.data
+				})
+		},
+		GET_DISTRICTS(
+			{ commit, state },
+			{ city }
+		){	
+			return state.businessArea.filter(ele=>{
+				return ele.id===city
+			})
 		},
 		GET_CITY_AREA({ commit, state }) {
+			if (Object.keys(state.cityArea).length) {
+				return state.cityArea;
+			}
+			return api('districts', { level: 2 })
+					.then(data => {
+						commit('SAVE_CITY_AREA', data);
+						return data;
+					})
+		},
+		GET_COMMUNITY_CITY_AREA({commit,state}) {
 			if (Object.keys(state.cityArea).length) {
 				return state.cityArea;
 			}

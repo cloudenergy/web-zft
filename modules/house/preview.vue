@@ -1,6 +1,7 @@
 <template>
     <div class="preview">
-        <h3 class="title">{{room.name}} {{room.area}} {{room.orientation}}</h3>
+        <h3 class="title" v-if="room.name!==''">{{room.name}} {{room.area}} {{room.orientation}}</h3>
+        <h3 class="title" v-if="room.name===''">{{house.location.name}} {{house.roomNumber}}{{room.orientation}}</h3>
         <div class="base section">
             <h4>房间信息</h4>
             <p>房间: 次卧 18平 东</p>
@@ -30,7 +31,6 @@
                 <el-table-column label="控制" width="100">
                     <template slot-scope="scope">
                         <el-switch :width="num" v-model="scope.row.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch" active-value="EMC_ON" inactive-value="EMC_OFF">
-					</el-switch>
 					</el-switch>
                     </template>
                 </el-table-column>
@@ -95,7 +95,8 @@
                 value4: true,
                 reqData:{
                     roomId:this.room.id
-                }
+                },
+                num: 30
             }
         },
         components: {
@@ -105,15 +106,6 @@
             projectId() {
                 return this.$store.state.user.projectId;
             }
-        },
-        watch: {
-            room(val) {
-                console.log('change:', this.room, this.house);
-            }
-        },
-        created() {
-            // 获取房间数据
-            console.log('room:', this.room, this.house);
         },
         methods: {
             test() {

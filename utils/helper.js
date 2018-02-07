@@ -78,7 +78,6 @@ export const isBrowserSupport = function() {
 	const isChrome =
 		userAgent.indexOf('Chrome') > -1 && userAgent.indexOf('Safari') > -1 && parseInt(userAgent.substring(userAgent.indexOf('Chrome'),userAgent.indexOf(' Safari')).replace(/Chrome\//,""))>=62;
 	const isFF = userAgent.indexOf('Firefox') > -1;
-	console.log(isSafari, isChrome, isFF);
 	// 浏览器判断
 
 	return isChrome || isSafari || isFF;
