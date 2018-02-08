@@ -61,7 +61,7 @@
 				countInfo:{},
 				reqData:{
 					houseFormat:'SHARE',
-					size:'20',
+					size:'200',
 					index:1
 				}
 			};

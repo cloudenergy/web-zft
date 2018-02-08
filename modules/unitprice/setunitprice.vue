@@ -1,9 +1,9 @@
 <template>
     <div>
-        <el-table :data="equipmentHouses" style="width: 100%" @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55">
+        <el-table :data="equipmentHouses" style="width: 100%" @selection-change="handleSelectionChange" v-if="!copyHouseExtra">
+            <el-table-column type="" width="20">
             </el-table-column>
-            <el-table-column label="房源" width="200">
+            <el-table-column label="房源" width="300">
                 <template slot-scope="scope">
                     <div>
                         <span>{{scope.row.location.name}}</span>
@@ -46,8 +46,7 @@
             </el-table-column> -->
         </el-table>
         <!-- @@@暂时下线 -->
-        <el-button type="primary" plain @click="batchChange" :disabled="disabledShow" style="margin-top:15px">批量修改</el-button>
-        <copyExtra :data="equipmentHouses"/>
+        <copyExtra :data="equipmentHouses" v-if="copyHouseExtra" @refresh="copyCost"/>
         <el-dialog title="单价设置" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose' />
             <div slot="footer" class="dialog-footer">
@@ -94,7 +93,9 @@
                 homeinfo: '',
                 showPrice: false,
                 selectHouse: [],
-                volumeSet:false
+                volumeSet:false,
+                copyHouseExtra:false,
+                copyExtraElectric:null
             }
         },
         computed: {
@@ -122,8 +123,42 @@
             }
         },
         methods: {
+            copyCost(data) {
+                if(data!==undefined){
+                    let a = this.$model('volume_set')
+                        .update({
+                            category: this.copyExtraElectric[0].category,
+                            price: this.copyExtraElectric[0].price,
+                            houseIds: data
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC'
+                        })
+                        .then(res => {
+                            return data
+                        })
+                    let b = this.$model('volume_set')
+                        .update({
+                            category: this.copyExtraElectric[1].category,
+                            price: this.copyExtraElectric[0].price,
+                            houseIds: data
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC'
+                        })
+                        .then(res => {
+                            return data
+                        })
+                    Promise.all([a, b]).then(res => {
+                        this.$emit('refresh')
+                        this.$message.success('修改成功')
+                    })
+                }
+                this.copyHouseExtra = !this.copyHouseExtra
+            },
             copyExtra(data) {
-                console.log(data)
+                this.copyExtraElectric = data.electricity
+                this.copyHouseExtra = !this.copyHouseExtra
             },
             price(data) {
                 if (isNaN(data)) {
@@ -146,50 +181,21 @@
                 this.dialogVisible = true;
                 this.volumeSet = false
             },
-            batchChange() {
-                this.dialogVisible = true;
-                this.selectHouse = this.multipleSelection.map(ele => {
-                    return ele.houseId
-                })
-                this.homeinfo = this.multipleSelection[0]
-                this.volumeSet = true
-            },
+            // batchChange() {
+            //     this.dialogVisible = true;
+            //     this.selectHouse = this.multipleSelection.map(ele => {
+            //         return ele.houseId
+            //     })
+            //     this.homeinfo = this.multipleSelection[0]
+            //     this.volumeSet = true
+            // },
             notify() {
                 this.$refs.childinput.sendchange()
             },
             notclose(data) {
                 this.hidden()
                 if (this.volumeSet) {
-                    let a = this.$model('volume_set')
-                        .update({
-                            category: this.homeinfo.electricity[0].category,
-                            price: data,
-                            houseIds: this.selectHouse
-                        }, {
-                            projectId: this.projectId,
-                            id: 'ELECTRIC',
-                            houseId: this.homeinfo.houseId
-                        })
-                        .then(res => {
-                            return data
-                        })
-                    let b = this.$model('volume_set')
-                        .update({
-                            category: this.homeinfo.electricity[1].category,
-                            price: data,
-                            houseIds: this.selectHouse
-                        }, {
-                            projectId: this.projectId,
-                            id: 'ELECTRIC',
-                            houseId: this.homeinfo.houseId
-                        })
-                        .then(res => {
-                            return data
-                        })
-                    Promise.all([a, b]).then(res => {
-                        this.$emit('refresh')
-                        this.$message.success('修改成功')
-                    })
+                    
                 } else {
                     this.homeinfo.electricity.forEach((element,index) => {
                         index = this.$model('set_electric_price')
