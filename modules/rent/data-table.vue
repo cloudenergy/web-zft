@@ -176,7 +176,7 @@
 			</div>
 		</el-dialog>
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
-			<RentWithout :id="updateData.id" ref="operate" />
+			<RentWithout :id="updateData.id" ref="operate" @successInfo="successInfo"/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible4 = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>
@@ -297,6 +297,9 @@ export default {
 	methods: {
 		price(data) {
 			return data / 100;
+		},
+		successInfo() {
+			this.$emit('rentWithout')
 		},
 		rentuser(value, item) {
 			this.updateData.user = item.user;

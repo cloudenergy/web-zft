@@ -143,21 +143,14 @@
     	methods: {
 			cityArea(data) {
 				if(_.isUndefined(data)){
-					delete this.reqData.city
-					delete this.reqData.area
+					delete this.reqData.divisionId
 				}
 				else{
-					if(data.area){
-						this.reqData.area = data.area
-					}else{
-						this.reqData.city = data.city
-					}
+					this.reqData.districtId = data.area || data.city
 				}
 				this.query()
 			},
 			setSearch(data) {
-				console.log(typeof(data))
-				console.log(data)
 				if(data!==''){
 					this.reqData.q=data
 				}
@@ -169,12 +162,10 @@
 			communityChange(data) {
 				if(data==='0'){
 					delete this.reqData.locationId
-					this.query()
 				}else{
 					this.reqData.locationId = data
-					this.query()
 				}
-				
+				this.query()
 			},
 			changeRoom(data) {
 				this.reqData.bedRooms = data

@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-07 16:15:01
+ * @Last Modified time: 2018-02-08 09:55:45
  */
 
 import api from '~/plugins/api';
@@ -55,15 +55,15 @@ export default {
 			})
 			state.businessArea=_.values(data.data).map(ele=>{
 				var cityArea = _.values(ele.districts).map(item=>{
-					var area = {}
-					area.id = item.districtId
-					area.name = item.name
-					return area
+					return {
+						id:item.districtId,
+						name:item.name
+					}
 				})
-				var test = {}
-				test.id=ele.districtId
-				test.area = cityArea
-				return test
+				return {
+					id:ele.districtId,
+					area:cityArea
+				}
 			})
 			state.communitiesChoose = {}
 			state.communitiesChoose.houseFormat = data.houseType
@@ -74,6 +74,7 @@ export default {
 						communities.cityId = ele.districtId
 						communities.areaId = item.districtId
 						state.communitiesChoose.data.push(communities)
+						return
 					})
 				})
 			})

@@ -134,7 +134,7 @@ export default {
 			default: false
 		},
 		clickType: {
-			required:true
+			type: String
 		}
 	}
 };
