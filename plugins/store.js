@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-08 09:55:45
+ * @Last Modified time: 2018-02-08 14:14:20
  */
 
 import api from '~/plugins/api';
@@ -22,7 +22,7 @@ try {
 export default {
 	state: {
 		user: {
-			...localUser
+			...localUser	
 		},
 		cityArea: {},
 		houseTypes: {

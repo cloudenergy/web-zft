@@ -3,7 +3,7 @@
         <el-table :data="equipmentHouses" style="width: 100%" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
-            <el-table-column label="房源">
+            <el-table-column label="房源" width="200">
                 <template slot-scope="scope">
                     <div>
                         <span>{{scope.row.location.name}}</span>
@@ -23,23 +23,17 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="冷水">
+            <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
-                    <div class="showicon">
-                        <myIconNum /> {{ scope.row.agoread }}
-                        <!-- <div style="display:inline-block">
-                            <i class="el-icon-edit cursorp hideicon"></i>
-                        </div> -->
+                    <div class="showicon cursorp" @click="copyExtra(scope.row)">
+                        <span v-if="scope.row.electricity[0].price!=='未设置'">复制到</span>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="热水">
+            <!-- <el-table-column label="热水">
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconNum /> {{ scope.row.paytime }}
-                        <!-- <div style="display:inline-block">
-                            <i class="el-icon-edit cursorp hideicon"></i>
-                        </div> -->
                     </div>
                 </template>
             </el-table-column>
@@ -47,17 +41,13 @@
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconZujin /> {{ scope.row.stype }}
-                        <!-- <div style="display:inline-block">
-                            <i class="el-icon-edit cursorp hideicon"></i>
-                        </div> -->
                     </div>
                 </template>
-            </el-table-column>
-            <!-- <el-table-column prop="stype" label="操作"> -->
-            <!-- </el-table-column> -->
+            </el-table-column> -->
         </el-table>
         <!-- @@@暂时下线 -->
         <el-button type="primary" plain @click="batchChange" :disabled="disabledShow" style="margin-top:15px">批量修改</el-button>
+        <copyExtra :data="equipmentHouses"/>
         <el-dialog title="单价设置" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose' />
             <div slot="footer" class="dialog-footer">
@@ -65,6 +55,7 @@
                 <el-button type="primary" @click="notify()">确 定</el-button>
             </div>
         </el-dialog>
+        
     </div>
 </template>
 
@@ -73,6 +64,7 @@
     import myIconYufu from './myiconyufu.vue'
     import myIconZujin from './myiconzujin.vue'
     import setPrice from './setprice.vue'
+    import copyExtra from './copyExtra.vue'
     import {
         success_message
     } from '~/utils/date'
@@ -82,7 +74,8 @@
             myIconNum,
             myIconYufu,
             myIconZujin,
-            setPrice
+            setPrice,
+            copyExtra
         },
         props: {
             homePrice: {
@@ -129,6 +122,9 @@
             }
         },
         methods: {
+            copyExtra(data) {
+                console.log(data)
+            },
             price(data) {
                 if (isNaN(data)) {
                     return '未设置'
