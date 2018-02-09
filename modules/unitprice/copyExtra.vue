@@ -51,14 +51,21 @@
 </script>
 
 <style lang="less" scoped>
-    .copyExtra{
-        height: 40px;
-        display: flex;
-        align-items: center;
+    .unitPrice{
+        background-color: #fff;
+        padding: 20px;
+        .copyExtra{
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .dialog-footer{
+            text-align: right;
+            display: block;
+        }
     }
-    .dialog-footer{
-        float: right;
-    }
+    
+    
 </style>
 <style>
     .unitPrice .el-checkbox__input.is-checked+.el-checkbox__label{

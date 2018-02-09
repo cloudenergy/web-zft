@@ -2,7 +2,7 @@
 	<el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab @change="refresh" :selected="houseFormat"/>
+				<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' @cityArea="cityArea"/>
 			</div>
 		</el-aside>
 		<el-container>
@@ -10,9 +10,14 @@
 				<div class="ops-bills">
 					<div class="flexcenter searchset">
 						<RentSearch @childinfo="showmessage" class="setsearch"/>
-						<myIconYufu style="margin-left:20px"/><span class="myiconintroduce">预付费</span>
-						<myIconZujin/><span class="myiconintroduce">随租金付</span>
-						<myIconNum/><span class="myiconintroduce">1号付费，其他数字以此类推</span>
+						<span v-if="!configurationStatus">
+							<myIconYufu style="margin-left:20px"/><span class="myiconintroduce">预付费</span>
+							<myIconZujin/><span class="myiconintroduce">随租金付</span>
+							<myIconNum/><span class="myiconintroduce">1号付费，其他数字以此类推</span>
+						</span>
+						<span v-if="configurationStatus">
+							12
+						</span>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">{{countInfo.count}}项结果</span>
@@ -25,14 +30,15 @@
 					</div>
 				</div>
 			</el-header>
-			<el-main style="padding-right:0">
-				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh"/>
+			<el-main style="padding-right:0;overflow:hidden">
+				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh" @copyStatusChange='copyStatusChange'/>
 			</el-main>
 		</el-container>
 	</el-container>
 </template>
 
 <script>
+	import _ from 'lodash'
 	import {
 		Tab
 	} from '~/modules/house';
@@ -63,7 +69,8 @@
 					houseFormat:'SHARE',
 					size:'200',
 					index:1
-				}
+				},
+				configurationStatus:false
 			};
 		},
 		computed: {
@@ -72,6 +79,9 @@
 			}
 		},
 		methods:{
+			copyStatusChange(data) {
+				this.configurationStatus=data
+			},
 			refresh(type,commiunityId) {
 				this.reqData.houseFormat = type
 				if(commiunityId!==undefined){
@@ -90,14 +100,30 @@
     					this.reqData,{ projectId: this.projectId }
     				)
     				.then(res => {
-						console.log(res)
     					this.$set(this, 'houses', res.data || []);
 						this.$set(this, 'countInfo', res.paging)
 					});
     		},
 			showmessage(data){
 				console.log(data)
-			}
+			},
+			communityChange(data) {
+				if(data==='0'){
+					delete this.reqData.locationId
+				}else{
+					this.reqData.locationId = data
+				}
+				this.query()
+			},
+			cityArea(data) {
+				if(_.isUndefined(data)){
+					delete this.reqData.divisionId
+				}
+				else{
+					this.reqData.districtId = data.area || data.city
+				}
+				this.query()
+			},
 		}
 	};
 </script>

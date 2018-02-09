@@ -30,23 +30,12 @@
                     </div>
                 </template>
             </el-table-column>
-            <!-- <el-table-column label="热水">
-                <template slot-scope="scope">
-                    <div class="showicon">
-                        <myIconNum /> {{ scope.row.paytime }}
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column label="燃气">
-                <template slot-scope="scope">
-                    <div class="showicon">
-                        <myIconZujin /> {{ scope.row.stype }}
-                    </div>
-                </template>
-            </el-table-column> -->
         </el-table>
         <!-- @@@暂时下线 -->
-        <copyExtra :data="equipmentHouses" v-if="copyHouseExtra" @refresh="copyCost"/>
+        <div class="copyHouseExtra" v-if="copyHouseExtra">
+            <copyExtra :data="equipmentHouses" @refresh="copyCost" />
+        </div>
+
         <el-dialog title="单价设置" :visible.sync="dialogVisible" width="30%">
             <set-price :item='homeinfo' ref="childinput" @notclose='notclose' />
             <div slot="footer" class="dialog-footer">
@@ -54,7 +43,7 @@
                 <el-button type="primary" @click="notify()">确 定</el-button>
             </div>
         </el-dialog>
-        
+
     </div>
 </template>
 
@@ -93,9 +82,9 @@
                 homeinfo: '',
                 showPrice: false,
                 selectHouse: [],
-                volumeSet:false,
-                copyHouseExtra:false,
-                copyExtraElectric:null
+                volumeSet: false,
+                copyExtraElectric: null,
+                copyHouseExtra: false
             }
         },
         computed: {
@@ -124,7 +113,7 @@
         },
         methods: {
             copyCost(data) {
-                if(data!==undefined){
+                if (data !== undefined) {
                     let a = this.$model('volume_set')
                         .update({
                             category: this.copyExtraElectric[0].category,
@@ -155,10 +144,12 @@
                     })
                 }
                 this.copyHouseExtra = !this.copyHouseExtra
+                this.$emit('copyStatusChange', this.copyHouseExtra)
             },
             copyExtra(data) {
                 this.copyExtraElectric = data.electricity
                 this.copyHouseExtra = !this.copyHouseExtra
+                this.$emit('copyStatusChange', this.copyHouseExtra)
             },
             price(data) {
                 if (isNaN(data)) {
@@ -181,23 +172,15 @@
                 this.dialogVisible = true;
                 this.volumeSet = false
             },
-            // batchChange() {
-            //     this.dialogVisible = true;
-            //     this.selectHouse = this.multipleSelection.map(ele => {
-            //         return ele.houseId
-            //     })
-            //     this.homeinfo = this.multipleSelection[0]
-            //     this.volumeSet = true
-            // },
             notify() {
                 this.$refs.childinput.sendchange()
             },
             notclose(data) {
                 this.hidden()
                 if (this.volumeSet) {
-                    
+
                 } else {
-                    this.homeinfo.electricity.forEach((element,index) => {
+                    this.homeinfo.electricity.forEach((element, index) => {
                         index = this.$model('set_electric_price')
                             .update({
                                 category: element.category,
@@ -210,7 +193,7 @@
                             .then(res => {
                                 return data
                             })
-                            Promise.all([index]).then(res => {
+                        Promise.all([index]).then(res => {
                             this.$emit('refresh')
                             this.$message.success('修改成功')
                         })
@@ -238,5 +221,23 @@
                 display: block;
             }
         }
+    }
+
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translate3d(100%, 0, 0);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    /*添加动画*/
+
+    .copyHouseExtra {
+        animation: fadeInLeft .4s ease;
     }
 </style>
