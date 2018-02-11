@@ -282,7 +282,7 @@
 		},
 		created() {
 			this.updateData = this.userdatainfo;
-			this.$modal.$on('refresh', () => this.$emit('refresh'));
+			this.$modal.$on('refresh', () => this.$emit('paymFresh'));
 		},
 		methods: {
 			price(data) {
