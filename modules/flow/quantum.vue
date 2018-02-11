@@ -29,8 +29,9 @@
 	import quantumlist from './quantumlist.vue';
 	import goend from './goend.vue';
 	import startOfMonth from 'date-fns/start_of_month'
+	import endOfDay from 'date-fns/end_of_day'
 	let startOfMounth = Date.parse(startOfMonth(new Date()))/1000
-	let nowDate = Date.parse(new Date())/1000
+	let nowDate = Date.parse(endOfDay(new Date()))/1000
 	export default {
 		props: {
 			flowMounth: {

@@ -12,17 +12,28 @@
 
 <script>
     import startOfMonth from 'date-fns/start_of_month'
+    import endOfDay from 'date-fns/end_of_day'
     let startOfMounth = startOfMonth(new Date())
+    let endOfDate = endOfDay(new Date())
     export default {
         data() {
             return {
-                value3: [startOfMounth, new Date()],
+                value3: [startOfMounth, endOfDate],
             }
         },
         methods: {
             oldTime(data) {
                 this.$emit('from-toTime',(data.map((ele,index)=>{
-                    return Date.parse(ele)
+                    switch (index) 
+                    {   
+                        case 0:
+                            return Date.parse(ele)
+                            break
+                        case 1:
+                            return Date.parse(endOfDay(ele))
+                            break
+                    }
+                    
                 })))
             }
         }

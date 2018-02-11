@@ -101,8 +101,11 @@
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						console.log('submit: ', this.translate(this.form));
-
-						this.$model('contracts')
+						console.log(this.form)
+						if(this.form.expense.standard.rent<=0){
+							this.$message.error('租金不可以小于0')
+						}else{
+							this.$model('contracts')
 							.create(this.translate(this.form), {
 								projectId: this.projectId
 							})
@@ -111,6 +114,8 @@
 								this.resetForm();
 								this.successMessage();
 							});
+						}
+						
 					} else {
 						console.log('error in submitting ...');
 						return false;
