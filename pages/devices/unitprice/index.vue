@@ -31,7 +31,7 @@
 				</div>
 			</el-header>
 			<el-main style="padding-right:0;overflow:hidden">
-				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh" @copyStatusChange='copyStatusChange'/>
+				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh" @copyStatusChange='copyStatusChange' :houseFormat='houseFormat'/>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -102,6 +102,7 @@
     				.then(res => {
     					this.$set(this, 'houses', res.data || []);
 						this.$set(this, 'countInfo', res.paging)
+						this.houseFormat = this.reqData.houseFormat
 					});
     		},
 			showmessage(data){

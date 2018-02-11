@@ -10,6 +10,8 @@
                         <span>{{scope.row.building}}</span>
                         <span>{{scope.row.unit}}</span>
                         <span>{{scope.row.roomNumber}}</span>
+                        <span v-if="houseFormat==='SHARE'&&scope.row.name===undefined">公区</span>
+                        <span v-if="houseFormat==='SHARE'&&scope.row.name!==undefined">{{scope.row.name}}</span>
                     </div>
                 </template>
             </el-table-column>
@@ -71,6 +73,9 @@
             },
             countInfo: {
                 type: Object
+            },
+            houseFormat: {
+                type:String
             }
         },
         data() {
@@ -92,7 +97,37 @@
                 return this.$store.state.user.projectId;
             },
             equipmentHouses: function () {
-                return this.homePrice.map((element, index) => {
+                while(this.houseFormat==='SHARE'){
+                    return _.flatten(this.homePrice.map((element, index) => {
+                        if (element.prices.length !== 0) {
+                            element.electricity = []
+                            element.prices.map((item, list) => {
+                                if (item.type === 'ELECTRIC') {
+                                    element.electricity.push(item)
+                                }
+                            })
+                        } else {
+                            element.electricity = []
+                            element.electricity.push({
+                                price: '未设置',
+                                type: 'ELECTRIC'
+                            })
+                        }
+                        function Foo() {
+                            this.houseId = element.houseId
+                            this.electricity = element.electricity
+                            this.location = element.location
+                            this.roomNumber = element.roomNumber
+                            this.building = element.building
+                            this.unit = element.unit
+                        }
+                        return (_.flatten(_.concat(element,_.pick(element,['rooms']).rooms).map(ele=>{
+                            return _.assignIn( ele , new Foo)
+                        })))
+                    }))
+                }
+                while(this.houseFormat!=='SHARE'){ 
+                    return this.homePrice.map((element, index) => {
                     if (element.prices.length !== 0) {
                         element.electricity = []
                         element.prices.map((item, list) => {
@@ -109,6 +144,7 @@
                     }
                     return element
                 })
+                }
             }
         },
         methods: {
@@ -147,6 +183,7 @@
                 this.$emit('copyStatusChange', this.copyHouseExtra)
             },
             copyExtra(data) {
+                console.log(this.equipmentHouses)
                 this.copyExtraElectric = data.electricity
                 this.copyHouseExtra = !this.copyHouseExtra
                 this.$emit('copyStatusChange', this.copyHouseExtra)
