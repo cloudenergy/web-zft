@@ -183,7 +183,6 @@
                 this.$emit('copyStatusChange', this.copyHouseExtra)
             },
             copyExtra(data) {
-                console.log(this.equipmentHouses)
                 this.copyExtraElectric = data.electricity
                 this.copyHouseExtra = !this.copyHouseExtra
                 this.$emit('copyStatusChange', this.copyHouseExtra)
@@ -204,7 +203,6 @@
                 }
             },
             setElectricit(data) {
-                console.log(data)
                 this.homeinfo = data
                 this.dialogVisible = true;
                 this.volumeSet = false
