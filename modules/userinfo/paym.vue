@@ -89,13 +89,14 @@
                     this.$model('top_up')
                         .patch({
                             amount: this.form.price * 100,
-                            contractId: this.userInfo.id,
+                            //TODO: fundChannelId == region ?
                             fundChannelId: this.form.region
-                            
                         }, {
                             projectId: this.projectId,
                             userId: this.userInfo.user.id,
-                            id:'balance'
+							//TODO: bad naming, userInfo => contractInfo
+							contractId: this.userInfo.id,
+                            id: 'balance'
                         })
                         .then(res => {
                             this.$message.success('充值成功');
