@@ -5,10 +5,10 @@
                 <!-- <img src="../../public/icon.png" alt=""> -->
                 <img src="" alt="">
                 <div style="text-align:center">
-                    <p @click="show">{{userInfo.user.name}}</p>
-                    <p>{{userInfo.user.accountName}}</p>
+                    <p @click="show">{{contractInfo.user.name}}</p>
+                    <p>{{contractInfo.user.accountName}}</p>
                     <p>当前余额</p>
-                    <p>{{price(userInfo.user.cashAccount.balance)}}</p>
+                    <p>{{price(contractInfo.user.cashAccount.balance)}}</p>
                 </div>
             </div>
             <div class="paymway">
@@ -42,7 +42,7 @@
     import axios from 'axios'
     export default {
         props: {
-            userInfo: {
+            contractInfo: {
                 type: Object
             }
         },
@@ -69,7 +69,7 @@
                 return data/100
             },
             show() {
-                console.log(this.userInfo, this.payRoad)
+                console.log(this.contractInfo, this.payRoad)
             },
             query(data) {
                 this.$model('fund_channel')
@@ -89,13 +89,11 @@
                     this.$model('top_up')
                         .patch({
                             amount: this.form.price * 100,
-                            //TODO: fundChannelId == region ?
                             fundChannelId: this.form.region
                         }, {
                             projectId: this.projectId,
-                            userId: this.userInfo.user.id,
-							//TODO: bad naming, userInfo => contractInfo
-							contractId: this.userInfo.id,
+                            userId: this.contractInfo.user.id,
+							contractId: this.contractInfo.id,
                             id: 'balance'
                         })
                         .then(res => {

@@ -392,7 +392,7 @@
 				this.$modal.$emit('open', {
 					comp: Paym,
 					data: {
-						userInfo: date
+						contractInfo: date
 					},
 					title: '充值'
 				});
