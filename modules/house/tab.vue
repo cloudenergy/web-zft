@@ -54,7 +54,10 @@
 		},
 		methods: {
 			menuStyle() {
-				return 'height:' + this.h + 'px'
+				if((!_.isUndefined(this.$refs.menuLocation))&&this.community.length!==0){
+					var b = (this.community.length+1)*42+30
+					return 'height:' + this.h<b?b:this.h + 'px'
+				}
 			},
 			change(tab, event) {
 				this.clickType = tab.name
