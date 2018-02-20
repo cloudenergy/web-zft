@@ -104,7 +104,6 @@
 						force
 					})
 					.then(data => {
-						console.log(data)
 						this.community = this.showCommunity = data
 						this.communityType = this.type
 						if (this.type == 'ENTIRE'&&data.length!==0) {
