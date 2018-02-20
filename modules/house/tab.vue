@@ -104,9 +104,10 @@
 						force
 					})
 					.then(data => {
+						console.log(data)
 						this.community = this.showCommunity = data
 						this.communityType = this.type
-						if (this.type == 'ENTIRE') {
+						if (this.type == 'ENTIRE'&&data.length!==0) {
 							this.typeNum = data[0].geoLocationId
 							this.$emit('change', this.clickType, data[0].geoLocationId)
 						} else {
