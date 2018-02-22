@@ -5,7 +5,7 @@
             <Search @changeRoom='changeRoom'/>
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
-                <div class="room" v-for="house in equipmentHouses" v-if="tabCard">
+                <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
                     <div>
 						<span v-if="!entire">{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}</span>
 						<span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>

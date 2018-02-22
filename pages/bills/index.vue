@@ -82,6 +82,10 @@
 				})
 			}
 		},
+		created() {
+			// this.query();
+			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
+    	},
 		methods: {
 			communityChange(data) {
 				if(data==='0'){
@@ -91,6 +95,15 @@
 					this.reqData.locationId = data
 					this.query()
 				}
+			},
+			setSearch(data) {
+				if(data!==''){
+					this.reqData.q=data
+				}
+				else{
+					delete this.reqData.q
+				}
+				this.query()
 			},
 			query() {
 				this.$model('all_user_bills')
