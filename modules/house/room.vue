@@ -39,7 +39,7 @@
 				<span class="el-dropdown-link">
 					<icon type="gengduo1" style="font-size:18px"  class="flexdirection"/>
 				</span>
-				<ul style="width:70px">
+				<ul style="width:140px">
 					<li v-if="room.status==='INUSE'" @click="without()">退租</li>
 					<li v-if="room.status==='INUSE'" @click="renewal()">续租</li>
 					<li v-if="room.status==='INUSE'" @click="deleteContracts(room.contract)">删除合同</li>
@@ -446,7 +446,6 @@ export default {
 		bottom: -17px;
 		background: #fff;
 		display: none;
-		text-align: center;
 		border: 1px solid #ddd;
 		border-radius: 2px;
 		right: 10%;
@@ -464,16 +463,15 @@ export default {
 			}
 			ul {
 				position: absolute;
-				bottom: 25px;
-				right: -4px;
-				width: 60px;
+				bottom: 30px;
+				right: 0px;
 				background: #fff;
 				box-shadow: 0 0 1px #ccc;
 				display: none;
 				overflow: hidden;
 				li {
 					list-style: none;
-					margin: 4px 0;
+					margin: 8px 20px;
 				}
 			}
 		}
