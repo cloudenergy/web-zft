@@ -27,7 +27,7 @@
 								<p v-if="scope.row.user.mobile!=''">{{ scope.row.user.mobile }}</p>
 								<p v-if="scope.row.user.mobile==''">暂无信息</p>
 								<span slot="reference" class="name-wrapper">
-									<i class="el-icon-phone"></i>
+									<i class="el-icon-phone" style="color:#aaa"></i>
 								</span>
 							</el-popover>
 						</span>
