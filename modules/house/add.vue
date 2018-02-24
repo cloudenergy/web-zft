@@ -67,6 +67,7 @@
 		</el-form>
 		<div slot="footer" class="dialog-footer">
 			<el-button @click="dismiss()">取 消</el-button>
+			<el-button @click="saveAndcontinueToAdd()">保存并继续添加</el-button>
 			<el-button type="primary" @click="save()">保存</el-button>
 		</div>
 	</div>
@@ -173,6 +174,13 @@
 				this.$modal.$emit('dismiss');
 			},
 			save() {
+				this.$modal.$emit('dismiss');
+				this.saveCloseQ()
+			},
+			saveAndcontinueToAdd() {
+				this.saveCloseQ()
+			},
+			saveCloseQ() {
 				const data = {
 					projectId: this.$store.state.user.projectId,
 					...this.form
@@ -182,7 +190,6 @@
 					data.houseCountOnFloor = this.Entire.houseCountOnFloor
 					data.enabledFloors = this.Entire.enabledFloors
 				}
-				this.$modal.$emit('dismiss');
 				this.$model('houses').create(data, {
 						projectId: this.user.projectId
 					})
@@ -191,7 +198,7 @@
 						this.$emit('addhouse')
 					})
 					.catch(err=>{
-						console.log('创建失败')
+						this.$message('创建失败')
 					})
 			}
 		}
