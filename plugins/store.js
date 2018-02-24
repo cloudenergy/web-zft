@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-24 16:02:00
+ * @Last Modified time: 2018-02-24 16:21:43
  */
 
 import api from '~/plugins/api';
@@ -85,7 +85,6 @@ export default {
 			}else{
 				state.entireCommunities = state.communitiesChoose.data
 			}
-			console.log(state)
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.othercost = _.filter(data, { group: '加收费用' });

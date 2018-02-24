@@ -7,7 +7,7 @@
             <div class="houses">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
                     <div>
-						<span v-if="!entire">{{house.location.name}} {{house.building}} {{house.unit}} {{house.roomNumber}}</span>
+						<span v-if="!entire">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
 						<span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
                         <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
