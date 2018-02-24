@@ -45,6 +45,7 @@
 						if (this.$store.state.successInfo === true) {
 							this.$message.success('登陆成功')
 							this.$router.push('/houses')
+							this.$router.go(0)
 						} else {
 							this.$message('账号或密码错误')
 						}

@@ -56,7 +56,7 @@
 			menuStyle() {
 				if((!_.isUndefined(this.$refs.menuLocation))&&this.community.length!==0){
 					var b = (this.community.length+1)*42+30
-					return 'height:' + this.h<b?b:this.h + 'px'
+					return `${'height:'}${this.h<b?b:this.h}${'px'}`
 				}
 			},
 			change(tab, event) {
