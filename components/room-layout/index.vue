@@ -1,18 +1,18 @@
 <template>
 	<div>
 		<el-row :gutter="20">
-			<el-col :span="6">
+			<el-col :span="8">
 				<el-input v-model="form.bedRoom">
 					<template slot="prepend">户型</template>
 					<template slot="append">室</template>
 				</el-input>
 			</el-col>
-			<el-col :span="6">
+			<el-col :span="8">
 				<el-input v-model="form.livingRoom">
 					<template slot="append">&nbsp;&nbsp;厅&nbsp;</template>
 				</el-input>
 			</el-col>
-			<el-col :span="6">
+			<el-col :span="8">
 				<el-input v-model="form.bathRoom">
 					<template slot="append">卫</template>
 				</el-input>

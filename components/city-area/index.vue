@@ -24,14 +24,21 @@ export default {
 		}	
 	},
 	created () {
+		if(this.isForm){
+			this.$store.dispatch('GET_CITY_AREA').then(({ result }) => {
+				this.list.city = result.map(mapper);
+			})
+		}
 		this.houseFormatChange('SHARE')	
 	},
 	watch: {
 		listCity(newVal,oldVal) {
 			var city = newVal.filter((item)=>{return item.houseFormat===this.clickType})
-			this.list.city = city.map((ele)=>{
-				return ele.city
-			}).map(mapper)
+			if(!this.isForm) {
+				this.list.city = city.map((ele)=>{
+					return ele.city
+				}).map(mapper)
+			}
 		}	
 	},
 	data() {
@@ -47,9 +54,10 @@ export default {
 	methods: {
 		cityChange() {
 			this.$store.dispatch('GET_DISTRICTS',{
-				city:this.city
+				city:this.city,
+				isForm:this.isForm
 			}).then(data=>{
-				this.list.area = data[0].area
+				this.list.area = this.isForm?data.result:data[0].area
 			})
 			this.area = null;
 		},

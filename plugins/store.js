@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-08 14:14:20
+ * @Last Modified time: 2018-02-24 16:02:00
  */
 
 import api from '~/plugins/api';
@@ -85,6 +85,7 @@ export default {
 			}else{
 				state.entireCommunities = state.communitiesChoose.data
 			}
+			console.log(state)
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.othercost = _.filter(data, { group: '加收费用' });
@@ -130,14 +131,17 @@ export default {
 		) {
 			if(houseType==='SHARE'){
 				if (state.communities ) {
+					console.log(state.communities)
 					return Promise.resolve(state.communities);
 				}
 			}else if(houseType==='SOLE'){
 				if (state.soleCommunities ) {
+					console.log(state.soleCommunities)
 					return Promise.resolve(state.soleCommunities);
 				}
 			}else {
 				if (state.entireCommunities ) {
+					console.log(state.entireCommunities)
 					return Promise.resolve(state.entireCommunities);
 				}
 			}
@@ -155,11 +159,19 @@ export default {
 		},
 		GET_DISTRICTS(
 			{ commit, state },
-			{ city }
+			{ city,isForm }
 		){	
-			return state.businessArea.filter(ele=>{
-				return ele.id===city
-			})
+			if(isForm) {
+				return api('districts', { level: 3,cityId: city })
+					.then(data => {
+						return data;
+					})
+			}else {
+				return state.businessArea.filter(ele=>{
+					return ele.id===city
+				})
+			}
+			
 		},
 		GET_CITY_AREA({ commit, state }) {
 			if (Object.keys(state.cityArea).length) {

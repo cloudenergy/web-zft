@@ -143,7 +143,7 @@
     	methods: {
 			cityArea(data) {
 				if(_.isUndefined(data)){
-					delete this.reqData.divisionId
+					delete this.reqData.districtId
 				}
 				else{
 					this.reqData.districtId = data.area || data.city
@@ -178,6 +178,7 @@
 				}else{
 					delete this.reqData.locationId
 				}
+				delete this.reqData.districtId
 				this.query();
 			},
     		query() {
@@ -337,7 +338,5 @@
     			}
 		}
 		
-	}
-	.communityTab{
 	}
 </style>

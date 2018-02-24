@@ -6,7 +6,7 @@
 		<div class="main">
 			<slot />
 			<div class="userInfo flexc cursorp">
-				<el-dropdown placement="bottom" style="margin-right:20px">
+				<el-dropdown placement="bottom" style="margin-right:20px" size="medium">
 					<span class="el-dropdown-link">
 						<icon type="logout-user" style="font-size:30px;margin:-14px 20px 0 0"/>
 						<span style="font-size:20px;">{{userInfo.username}}</span>
@@ -15,7 +15,7 @@
 						<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
-				<el-dropdown>
+				<el-dropdown size="medium">
 					<span type="primary" class="add">
 						+ 添加
 					</span>
@@ -119,7 +119,7 @@ export default {
 	margin-right: -4px;
 }
 .new-house .el-dialog {
-	width: 975px;
+	width: 730px;
 	.el-row{
 		margin-bottom: 20px;
 	}

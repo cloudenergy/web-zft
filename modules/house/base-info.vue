@@ -1,16 +1,16 @@
 <template>
 	<div class="wrapper">
 			<el-row :gutter="20">
-				<el-col :span="6">
+				<el-col :span="8">
 				<div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">方式</div>
 				<rent-type-select v-model="model.houseFormat"></rent-type-select>
 				</el-col>
-				<el-col :span="6">
+				<el-col :span="8">
 				<el-input v-model="model.code" auto-complete="off" style="width:210px">
 					<template slot="prepend">编号</template>
 				</el-input>
 				</el-col>
-				<el-col :span="6">
+				<el-col :span="8">
 				<el-select v-model="model.houseKeeper" placeholder="管理员" style="width:210px">
 					<el-option label="root" value="212231"></el-option>
 					<el-option label="admin" value="858494"></el-option>
