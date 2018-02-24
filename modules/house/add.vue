@@ -109,8 +109,14 @@
 					totalFloor: 7,
 					houseCountOnFloor: '',
 					enabledFloors: []
-				}
+				},
+				houseCode:null
 			};
+		},
+		watch:{
+			houseCode(newVal,oldVal) {
+				console.log(newVal,oldVal)
+			}
 		},
 		components: {
 			BaseInfo
@@ -124,9 +130,6 @@
 			}
 		},
 		methods: {
-			refresh() {
-				console.log(1)
-			},
 			houseTypeChange() {
 
 			},
@@ -181,25 +184,31 @@
 				this.saveCloseQ()
 			},
 			saveCloseQ() {
+				
 				const data = {
 					projectId: this.$store.state.user.projectId,
 					...this.form
 				};
-				if (data.houseFormat === 'ENTIRE') {
-					data.totalFloor = this.Entire.totalFloor
-					data.houseCountOnFloor = this.Entire.houseCountOnFloor
-					data.enabledFloors = this.Entire.enabledFloors
+				if(data.code!==this.houseCode) {
+					this.houseCode = data.code
+					if (data.houseFormat === 'ENTIRE') {
+						data.totalFloor = this.Entire.totalFloor
+						data.houseCountOnFloor = this.Entire.houseCountOnFloor
+						data.enabledFloors = this.Entire.enabledFloors
+					}
+					this.$model('houses').create(data, {
+							projectId: this.user.projectId
+						})
+						.then(res => {
+							this.$message.success('创建成功')
+							this.$emit('addhouse')
+						})
+						.catch(err=>{
+							this.$message('创建失败')
+						})
+				}else{
+					this.$message('房源编号未更改')
 				}
-				this.$model('houses').create(data, {
-						projectId: this.user.projectId
-					})
-					.then(res => {
-						this.$message.success('创建成功')
-						this.$emit('addhouse')
-					})
-					.catch(err=>{
-						this.$message('创建失败')
-					})
 			}
 		}
 	};
