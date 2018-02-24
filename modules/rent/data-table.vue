@@ -31,7 +31,7 @@
 								</span>
 							</el-popover>
 						</span>
-						<p style="margin-left: 10px">{{ scope.row.user.accountName }}</p>
+						<p>{{ scope.row.user.accountName }}</p>
 					</div>
 				</template>
 			</el-table-column>

@@ -50,7 +50,7 @@
 				<span>{{price(scope.row.dueAmount)}}</span>
 			</template>
 		</el-table-column>
-		<el-table-column prop="dueDateNew" label="时间">
+		<el-table-column prop="dueDateNew" label="应付日期">
 		</el-table-column>
 		<el-table-column prop="createdAtNew" label="状态" width="120">
 		</el-table-column>
