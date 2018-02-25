@@ -79,11 +79,6 @@
         created() {
             this.query()
         },
-        watch: {
-            pagingSize(newVal, old) {
-                console.log(newVal, old)
-            }
-        },
         data() {
             return {
                 tableData: [],

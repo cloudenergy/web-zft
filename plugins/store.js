@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-24 16:21:43
+ * @Last Modified time: 2018-02-25 10:32:17
  */
 
 import api from '~/plugins/api';
@@ -130,17 +130,14 @@ export default {
 		) {
 			if(houseType==='SHARE'){
 				if (state.communities ) {
-					console.log(state.communities)
 					return Promise.resolve(state.communities);
 				}
 			}else if(houseType==='SOLE'){
 				if (state.soleCommunities ) {
-					console.log(state.soleCommunities)
 					return Promise.resolve(state.soleCommunities);
 				}
 			}else {
 				if (state.entireCommunities ) {
-					console.log(state.entireCommunities)
 					return Promise.resolve(state.entireCommunities);
 				}
 			}
