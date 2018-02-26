@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-25 10:32:17
+ * @Last Modified time: 2018-02-26 15:05:51
  */
 
 import api from '~/plugins/api';
@@ -18,11 +18,14 @@ try {
 		projectId: 100
 	};
 }
-
-export default {
-	state: {
+function userInfo() {
+	localUser = '';
+	if(localStorage.user!==undefined) {
+		localUser = JSON.parse(localStorage.user);
+	}
+	return {
 		user: {
-			...localUser	
+			...localUser
 		},
 		cityArea: {},
 		houseTypes: {
@@ -39,11 +42,17 @@ export default {
 		businessCity:[],
 		businessArea:null,
 		communitiesChoose:{}
+	}
+}
+
+export default {
+	state: {
+		userInfo:userInfo()
 	},
 	mutations: {
 		UPDATE_ENV(state, data) {
 			Object.keys(data).forEach(item => {
-				state[item] = data[item];
+				state.userInfo[item] = data[item];
 			});
 		},
 		SAVE_COMMUNITIES(state, data) {
@@ -51,9 +60,9 @@ export default {
 				var city = {}
 				city.id = ele.districtId
 				city.name = ele.name
-				state.businessCity.push({'houseFormat':data.houseType,city})
+				state.userInfo.businessCity.push({'houseFormat':data.houseType,city})
 			})
-			state.businessArea=_.values(data.data).map(ele=>{
+			state.userInfo.businessArea=_.values(data.data).map(ele=>{
 				var cityArea = _.values(ele.districts).map(item=>{
 					return {
 						id:item.districtId,
@@ -65,35 +74,38 @@ export default {
 					area:cityArea
 				}
 			})
-			state.communitiesChoose = {}
-			state.communitiesChoose.houseFormat = data.houseType
-			state.communitiesChoose.data = []
+			state.userInfo.communitiesChoose = {}
+			state.userInfo.communitiesChoose.houseFormat = data.houseType
+			state.userInfo.communitiesChoose.data = []
 			_.values(data.data).forEach(ele=>{
 				_.values(ele.districts).forEach(item=>{
 					item.communities.forEach(communities=>{
 						communities.cityId = ele.districtId
 						communities.areaId = item.districtId
-						state.communitiesChoose.data.push(communities)
+						state.userInfo.communitiesChoose.data.push(communities)
 						return
 					})
 				})
 			})
 			if(data.houseType==='SHARE'){
-				state.communities = state.communitiesChoose.data;
+				state.userInfo.communities = state.userInfo.communitiesChoose.data;
 			}else if(data.houseType==='SOLE'){
-				state.soleCommunities = state.communitiesChoose.data
+				state.userInfo.soleCommunities = state.userInfo.communitiesChoose.data
 			}else{
-				state.entireCommunities = state.communitiesChoose.data
+				state.userInfo.entireCommunities = state.userInfo.communitiesChoose.data
 			}
 		},
 		SAVE_OTHERCOST(state, data) {
-			state.othercost = _.filter(data, { group: '加收费用' });
+			state.userInfo.othercost = _.filter(data, { group: '加收费用' });
 		},
 		SAVE_CITY_AREA(state,data,) {
-			state.cityArea = data
+			state.userInfo.cityArea = data
 		},
-		Login_Info(state, data){
-			state.successInfo = data
+		Login_Info(state, data) {
+			state.userInfo.successInfo = data
+		},
+		CLEAR_USER(state, data) {
+			state.userInfo = userInfo()
 		}
 	},
 	actions: {
@@ -103,6 +115,7 @@ export default {
 				password: md5(password)
 			})
 			.then(res=>{
+				console.log(res)
 				if(res.code===0){
 					commit('Login_Info', true)
 				}else{
@@ -116,12 +129,15 @@ export default {
 				.then(env => fromPairs(map(env, i => [i.key, i.value])))
 				.then(env => {
 					commit('UPDATE_ENV', env);
-
+					
 					// sync user
 					localStorage.user = JSON.stringify({
 						auth: true,
 						...env.user
 					});
+					const successInfo = state.userInfo.successInfo
+					state.userInfo = userInfo()
+					state.userInfo.successInfo = successInfo
 				});
 		},
 		GET_COMMUNITIES(
@@ -129,28 +145,28 @@ export default {
 			{ houseType, districtsCode, force }
 		) {
 			if(houseType==='SHARE'){
-				if (state.communities ) {
-					return Promise.resolve(state.communities);
+				if (state.userInfo.communities ) {
+					return Promise.resolve(state.userInfo.communities);
 				}
 			}else if(houseType==='SOLE'){
-				if (state.soleCommunities ) {
-					return Promise.resolve(state.soleCommunities);
+				if (state.userInfo.soleCommunities ) {
+					return Promise.resolve(state.userInfo.soleCommunities);
 				}
 			}else {
-				if (state.entireCommunities ) {
-					return Promise.resolve(state.entireCommunities);
+				if (state.userInfo.entireCommunities ) {
+					return Promise.resolve(state.userInfo.entireCommunities);
 				}
 			}
 			return api('communities')
 				.query(
 					{ houseFormat: houseType, districtsCode },
-					{ projectId: state.user.projectId }
+					{ projectId: state.userInfo.user.projectId }
 				)
 				.then(data => {
 					commit('SAVE_COMMUNITIES', {data,houseType});
 				})
 				.then(()=>{
-					return state.communitiesChoose.data
+					return state.userInfo.communitiesChoose.data
 				})
 		},
 		GET_DISTRICTS(
@@ -163,15 +179,15 @@ export default {
 						return data;
 					})
 			}else {
-				return state.businessArea.filter(ele=>{
+				return state.userInfo.businessArea.filter(ele=>{
 					return ele.id===city
 				})
 			}
 			
 		},
 		GET_CITY_AREA({ commit, state }) {
-			if (Object.keys(state.cityArea).length) {
-				return state.cityArea;
+			if (Object.keys(state.userInfo.cityArea).length) {
+				return state.userInfo.cityArea;
 			}
 			return api('districts', { level: 2 })
 					.then(data => {
@@ -180,8 +196,8 @@ export default {
 					})
 		},
 		GET_COMMUNITY_CITY_AREA({commit,state}) {
-			if (Object.keys(state.cityArea).length) {
-				return state.cityArea;
+			if (Object.keys(state.userInfo.cityArea).length) {
+				return state.userInfo.cityArea;
 			}
 			return api('districts', { level: 2 })
 					.then(data => {
@@ -190,15 +206,18 @@ export default {
 					})
 		},
 		GET_OTHERCOST({ commit, state }) {
-			if (state.othercost) {
-				return Promise.resolve(state.othercost);
+			if (state.userInfo.othercost) {
+				return Promise.resolve(state.userInfo.othercost);
 			}
 			return api('config_list')
-				.query({}, { projectId: state.user.projectId })
+				.query({}, { projectId: state.userInfo.user.projectId })
 				.then(data => {
 					commit('SAVE_OTHERCOST', data);
 					return _.filter(data, { group: '加收费用' });
 				});
+		},
+		CLEAR_USER_INFO({commit,state}) {
+			commit('CLEAR_USER')
 		}
 	}
 };

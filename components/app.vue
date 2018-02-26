@@ -27,7 +27,7 @@ export default {
 	},
 	created() {
 		// read cookie or storage
-		_.isUndefined(this.$store.state.user.auth) ? this.stubLogin() : '';
+		_.isUndefined(this.$store.state.userInfo.user.auth) ? this.stubLogin() : '';
 	},
 	methods: {
 		stubLogin() {

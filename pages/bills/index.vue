@@ -71,7 +71,7 @@
 		},
 		computed: {
 			projectId() {
-				return this.$store.state.user.projectId
+				return this.$store.state.userInfo.user.projectId
 			},
 			tableBill() {
 				return this.tableData.map((list, index) => {

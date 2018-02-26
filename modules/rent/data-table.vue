@@ -206,7 +206,7 @@
 		},
 		computed: {
 			projectId() {
-				return this.$store.state.user.projectId;
+				return this.$store.state.userInfo.user.projectId;
 			},
 			housesRent() {
 				return this.housesrentData.data;

@@ -1,7 +1,7 @@
 <template>
 	<div class="secondary-side">
 		<el-tabs v-model="type" @tab-click="change">
-			<el-tab-pane v-for="item in houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
+			<el-tab-pane v-for="item in userInfo.houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
 		</el-tabs>
 		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange"/>
 		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
@@ -23,7 +23,7 @@
 	} from 'vuex';
 	export default {
 		computed: {
-			...mapState(['houseTypes', 'defaultHouseType'])
+			...mapState(['userInfo', 'defaultHouseType'])
 		},
 		props: {
 			selected: null

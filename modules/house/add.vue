@@ -181,7 +181,7 @@
 			saveCloseQ() {
 				console.log(this.form)
 				const data = {
-					projectId: this.$store.state.user.projectId,
+					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form
 				};
 				if(data.code!==this.houseCode) {

@@ -20,7 +20,7 @@ function mapper(item) {
 export default {
 	computed: {
 		listCity() {
-			return this.$store.state.businessCity
+			return this.$store.state.userInfo.businessCity
 		}	
 	},
 	created () {

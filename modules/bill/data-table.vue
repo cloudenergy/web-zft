@@ -70,7 +70,7 @@
         },
         computed: {
             projectId() {
-                return this.$store.state.user.projectId
+                return this.$store.state.userInfo.user.projectId
             },
             nowTime() {
                 return Date.parse(new Date()) / 1000

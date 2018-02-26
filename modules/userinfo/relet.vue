@@ -43,7 +43,7 @@
 		},
 		computed: {
 			projectId() {
-				return this.$store.state.user.projectId;
+				return this.$store.state.userInfo.user.projectId;
 			},
 			otherCost() {
 				return _.filter(this.configList, {

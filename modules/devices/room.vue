@@ -66,7 +66,7 @@
 		},
 		computed: {
 			projectId() {
-				return this.$store.state.user.projectId;
+				return this.$store.state.userInfo.user.projectId;
 			},
 			electricSwitch() {
 				return this.room.showEquipment.status.switch==='EMC_ON'

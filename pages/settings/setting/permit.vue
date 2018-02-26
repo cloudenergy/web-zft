@@ -73,7 +73,7 @@ import md5 from 'js-md5';
 export default {
 	computed: {
 		projectId() {
-			return this.$store.state.user.projectId;
+			return this.$store.state.userInfo.user.projectId;
 		}
 	},
 	data() {

@@ -26,7 +26,9 @@
 	} from '~/utils/date';
 	import _ from 'lodash';
 	export default {
-		created() {},
+		created() {
+			console.log(this.$store.state)
+		},
 		data() {
 			return {
 				user: {}
@@ -41,8 +43,7 @@
 					})
 					.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
 					.then(() => {
-						console.log(this.$store.state.successInfo)
-						if (this.$store.state.successInfo === true) {
+						if (this.$store.state.userInfo.successInfo === true) {
 							this.$message.success('登陆成功')
 							this.$router.push('/houses')
 						} else {

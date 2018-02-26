@@ -75,7 +75,7 @@
 		},
 		computed: {
 			projectId() {
-				return this.$store.state.user.projectId;
+				return this.$store.state.userInfo.user.projectId;
 			}
 		},
 		methods:{
