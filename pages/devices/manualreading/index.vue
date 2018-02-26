@@ -1,39 +1,5 @@
 <template>
 	<el-container>
-		<!-- <el-aside class="page-bill-index" width="auto">
-			<div>
-				<Tab/>
-			</div>
-		</el-aside>
-		<el-container>
-			<el-header style="height:auto">
-				<div class="ops-bills">
-					<div class="flexcenter">
-						<div class="flexcenter">
-							<deviceModules @showthat="showwhat" :form="devicesstatus" />
-							<deviceModules @showthat="showelec" v-if="devicesstate=='all1'" :form="electricitystatus" />
-							<deviceModules @showthat="showcold" v-if="devicesstate=='all2'" :form="coldwater" />
-							<deviceModules @showthat="showhotw" v-if="devicesstate=='all3'" :form="hotwater" />
-							<deviceModules @showthat="shownatu" v-if="devicesstate=='all4'" :form="naturalgas" />
-							<RentSearch @childinfo="showmessage" />
-						</div>
-						
-					</div>
-					<div class="flexcenter">
-						<span class="result-info">32项结果</span>
-						<div class="actions">
-							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
-								导出
-								<i class="el-icon-sort"></i>
-							</el-button>
-						</div>
-					</div>
-				</div>
-			</el-header>
-			<el-main>
-				<electrictwater/>
-			</el-main>
-		</el-container> -->
 		<div class="loaDing">敬请期待</div>
 	</el-container>
 </template>
@@ -131,23 +97,8 @@
 			};
 		},
 		methods:{
-      showwhat(data){
+      		showwhat(data){
 				this.devicesstate = data;
-			},
-			showelec(data){
-				console.log(data)
-			},
-			showcold(data){
-				console.log(data)
-			},
-			showhotw(data){
-				console.log(data)
-			},
-			shownatu(data){
-				console.log(data)
-			},
-			showmessage(data){
-				console.log(data)
 			}
 		}
 	};

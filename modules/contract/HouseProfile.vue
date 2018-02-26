@@ -51,7 +51,6 @@
             },
             handleSelect(item) {
                 this.property.roomId = item.id
-                console.log(item)
                 this.$emit('roomChange', item.houseId)
             },
             querySearch(q, cb) {
@@ -65,7 +64,6 @@
                     })
                     .then(data => {
                         const rooms = _.get(data, 'data', []);
-                        console.log(rooms)
                         const displayRooms = fp.map(this.translate)(rooms)
                         cb(displayRooms);
                     })

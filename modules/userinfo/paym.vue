@@ -5,7 +5,7 @@
                 <!-- <img src="../../public/icon.png" alt=""> -->
                 <img src="" alt="">
                 <div style="text-align:center">
-                    <p @click="show">{{contractInfo.user.name}}</p>
+                    <p>{{contractInfo.user.name}}</p>
                     <p>{{contractInfo.user.accountName}}</p>
                     <p>当前余额</p>
                     <p>{{price(contractInfo.user.cashAccount.balance)}}</p>
@@ -68,9 +68,6 @@
             price(data) {
                 return data/100
             },
-            show() {
-                console.log(this.contractInfo, this.payRoad)
-            },
             query(data) {
                 this.$model('fund_channel')
                     .query({
@@ -85,7 +82,6 @@
                 if (this.form.price == "") {
                     this.$message.error('请填写金额');
                 } else {
-                    console.log(this.form.price)
                     this.$model('top_up')
                         .patch({
                             amount: this.form.price * 100,

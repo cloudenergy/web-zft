@@ -119,8 +119,6 @@
                 return new Date()
             },
             payRent() {
-                console.log(Date.parse(new Date()))
-                console.log(Date.parse(new Date()) / 1000)
                 this.form.paidAt = Date.parse(new Date()) / 1000;
                 this.form.amount = this.calculateNum
                 this.$model('bill_collection')

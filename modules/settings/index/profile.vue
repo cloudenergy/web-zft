@@ -87,7 +87,6 @@ export default {
 			this.form.mobile = JSON.parse(localStorage.getItem('user')).mobile;
 		},
 		onSubmit() {
-			console.log(this.form);
 			if (this.form.password === '12345678') {
 				this.$model('administrator_change')
 					.patch(

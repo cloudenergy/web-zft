@@ -87,11 +87,6 @@
                 return this.$store.state.userInfo.user.projectId;
             }
         },
-        watch: {
-            room(val) {
-                console.log('change:', this.room, this.house);
-            }
-        },
         created() {
             this.query()
         },

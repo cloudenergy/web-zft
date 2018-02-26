@@ -50,7 +50,6 @@ export default {
 			localStorage.removeItem('user');
 			this.$message.success('退出成功');
 			this.$router.replace('/login');
-			console.log(localStorage.user)
 			this.$store.dispatch('CLEAR_USER_INFO')
 		},
 		create(type) {

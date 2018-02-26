@@ -42,7 +42,7 @@
             </el-table>
         </div>
         <div class="bills section">
-            <h4 @click="test">租费设置</h4>
+            <h4>租费设置</h4>
             <el-table :data="room.bills" stripe>
                 <el-table-column prop="name" label="名称" width="150">
                 </el-table-column>
@@ -108,11 +108,7 @@
             }
         },
         methods: {
-            test() {
-                console.log(this.room)
-            },
             electricSwitch(data) {
-                console.log(data)
 				return data.status.switch==='EMC_ON'
 			},
             eleciricitySwitch(data) {
@@ -136,7 +132,6 @@
                 });
             },
             handleDelete(data) {
-                console.log(1)
                 this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -150,7 +145,6 @@
                             id: data.deviceId
                         })
                         .then((res) => {
-                            // console.log(res)
                             this.queryAgain('unbundling')
                         })
                 }).catch(err => {

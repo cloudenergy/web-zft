@@ -64,12 +64,10 @@
                     .then((data) => {
                         this.$set(this, 'item', data.data || [])
                         this.$set(this, 'listInfo', data.paging || [])
-                        console.log(this.listInfo)
                         this.loading = false
                     })
             },
             equipmentId() {
-                console.log(this.radio)
             },
             setNewList() {
                 this.query()

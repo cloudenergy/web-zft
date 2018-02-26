@@ -249,9 +249,6 @@
                 data.differentnum = this.computations(data.thisnum, data.lastnum)
                 data.bill = this.computationsPrice(data.differentnum, data.unitprice)
             },
-            handleCommand(command) {
-                console.log(command)
-            },
             computations(newnum, oldnum) {
                 return newnum - oldnum;
             },

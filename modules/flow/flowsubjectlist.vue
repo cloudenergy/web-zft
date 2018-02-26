@@ -129,15 +129,12 @@
         },
         methods: {
             handleRowHandle(row) {                
-                console.log(row.id)
                 if (row.id != this.upflowi) {
                     this.toggle(row.id)
                     if (this.upflowi != 0) {
                         this.toggle(this.upflowi)
                         this.upflowi = row.id
                     }
-
-                    console.log(this.upflowi)
                 } else {
                     this.toggle(row.id)
                 }

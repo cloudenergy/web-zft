@@ -56,7 +56,6 @@
 						contractId: this.form.id
 					})
 					.then(res => {
-						console.log(res)
 						this.$set(this, 'bills', res.data || []);
 					})
 			},

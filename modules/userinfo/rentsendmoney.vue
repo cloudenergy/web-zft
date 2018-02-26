@@ -53,7 +53,6 @@
 						contractId: this.form.id
 					})
 					.then(res => {
-						console.log(res)
 						this.$set(this, 'tableData', res.data || []);
 					})
 			}

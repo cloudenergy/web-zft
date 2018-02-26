@@ -376,9 +376,6 @@ export default {
 				type: 'warning'
 			})
 				.then(() => {
-					// console.log(name)
-					// console.log(index)
-					// console.log(name[index])
 					this.del(name, index);
 					this.$message({
 						type: 'success',
@@ -393,7 +390,6 @@ export default {
 				});
 		},
 		save() {
-			console.log('save');
 		}
 	}
 };

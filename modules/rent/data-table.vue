@@ -333,8 +333,6 @@
 							type: 'warning'
 						})
 						.then(() => {
-							console.log(this.projectId);
-							console.log(data.id);
 							this.$model('contracts')
 								.delete({}, {
 									projectId: this.projectId,
@@ -368,7 +366,6 @@
 				this.showmoney = datanum;
 			},
 			callMobilebile() {
-				console.log(1);
 				this.$confirm('将要发送催缴通知，是否继续？', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',

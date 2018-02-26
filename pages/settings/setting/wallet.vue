@@ -57,7 +57,6 @@
         },
         methods: {
             change() {
-                console.log('change')
             }
         }
     }

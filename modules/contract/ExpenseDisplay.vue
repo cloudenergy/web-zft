@@ -98,7 +98,6 @@
 				}
 			},
 			deductionDate(data) {
-				console.log(data)
 				if (data !== "1") {
 					console.log(1)
 				} else {

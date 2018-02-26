@@ -57,7 +57,6 @@
 					if (extraCost.name === "电费") {
 						extraCost.pattern = "prepaid"
 						if (this.itemHouse && this.itemHouse.prices.length !== 0) {
-							console.log(this.itemHouse)
 							this.itemHouse.prices.forEach((element, index) => {
 								if (element.type === "ELECTRIC") {
 									extraCost.rent = element.price / 100
@@ -100,8 +99,6 @@
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						console.log('submit: ', this.translate(this.form));
-						console.log(this.form)
 						if(this.form.expense.standard.rent<=0){
 							this.$message.error('租金不可以小于0')
 						}else{
@@ -129,7 +126,6 @@
 				return addYears(now, 1);
 			},
 			roomChange(data) {
-				console.log(data)
 				this.$model('house_info')
 					.query({
 						houseFormat: this.form.property.houseType

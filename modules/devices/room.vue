@@ -104,7 +104,6 @@
 					.catch(err => {});
 			},
 			eleciricitySwitch(data) {
-				console.log(this.room)
 				if (data) {
 					this.reqData.mode = 'EMC_ON'
 				} else {

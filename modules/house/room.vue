@@ -214,7 +214,6 @@ export default {
 	},
 	methods: {
 		successInfo() {
-			console.log('room.vue');
 			this.$emit('successRefresh');
 		},
 		rentPay(datanum) {
@@ -367,7 +366,6 @@ export default {
 					}
 				)
 				.then(res => {
-					console.log(res);
 					this.updateData = res;
 				})
 				.catch(err => {

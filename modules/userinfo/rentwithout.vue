@@ -103,12 +103,10 @@
                         contractId: data
                     })
                     .then(res => {
-
                         this.$set(this, 'contractInfo', res)
-                        console.log(this.contractInfo)
                     })
                     .catch(err => {
-                        console.log(err, 'asdfa')
+                        console.log(err)
                     })
                 this.$model('fund_channel')
                     .query({

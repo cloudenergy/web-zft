@@ -66,9 +66,6 @@
 					}
 					return extraCost
 				})
-			},
-			contractInfo(newVal, oldVal) {
-				console.log(newVal)
 			}
 		},
 		created() {
@@ -84,9 +81,6 @@
 				showUser: false,
 				loading: true
 			};
-		},
-		mounted() {
-			console.log(this.form)
 		},
 		methods: {
 			query() {
@@ -108,7 +102,7 @@
 						this.setUser()
 					})
 					.catch(err => {
-						console.log(err, 'asdfa')
+						console.log(err)
 					})
 			},
 			setUser() {
@@ -122,14 +116,11 @@
 				this.loading = false
 			},
 			onselect(userdata) {
-				console.log(1)
 				this.changeuserdata = userdata
-				console.log(this.changeuserdata)
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						console.log('submit: ', this.translate(this.form));
 						this.$model('contracts')
 							.create(this.translate(this.form), {
 								projectId: this.projectId

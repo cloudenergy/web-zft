@@ -68,7 +68,6 @@
 			billItem: function () {
 				return this.form.map(function (item) {
 					item.startDateNew = new Date(parseInt(item.startDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
-					// console.log(item.startDate)
 					item.endDateNew = new Date(parseInt(item.endDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
 					item.dueDateNew = new Date(parseInt(item.dueDate) * 1000).toLocaleDateString().replace(/年|月/g, '-')
 					item.createdAtNew = new Date(parseInt(item.createdAt) * 1000).toLocaleDateString().replace(/年|月/g, '-')
@@ -113,7 +112,6 @@
 			// 展开方法参考https://segmentfault.com/q/1010000007828282
 			// quantumlist.vue里也有使用，也可以参考
 			handleRowHandle(row) {              
-				// console.log(row.id)
 				this.toggle(row.id)
 			},
 			toggle(flowi) {

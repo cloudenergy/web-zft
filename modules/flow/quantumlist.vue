@@ -150,7 +150,6 @@
                 return data / 100
             },
             handleCurrentChange(val) {
-                console.log(1)
                 this.$emit('pageIndex', val)
             },
             getFundChannel() {

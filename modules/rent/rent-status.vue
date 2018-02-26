@@ -29,9 +29,6 @@
 			};
 		},
 		methods: {
-			handleSelect(key, keyPath) {
-				console.log(key, keyPath);
-			},
 			change(tab, event) {
 				this.$emit('leasingStatus', tab.name)
 			}

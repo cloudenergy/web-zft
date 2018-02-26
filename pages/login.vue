@@ -26,9 +26,6 @@
 	} from '~/utils/date';
 	import _ from 'lodash';
 	export default {
-		created() {
-			console.log(this.$store.state)
-		},
 		data() {
 			return {
 				user: {}

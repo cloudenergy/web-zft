@@ -213,19 +213,15 @@
 		methods: {
 			handleNodeClick(data) {
 				this.currentView = data.index;
-				console.log(data);
-
 			},
 			add() {
 				this.addSteward = false;
 				this.addStewardForm.password = md5(this.password);
-				console.log(this.addStewardForm.password)
 				this.$model('credentials')
 				.create(this.addStewardForm, {
 					projectId: this.projectId
 				})
 				.then(res=>{
-					console.log(res)
 					if(res.status!=200){
 						this.$message('创建失败')
 					}else{

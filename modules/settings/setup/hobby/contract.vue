@@ -683,34 +683,6 @@
             },
             tra(name) {
                 let _obj = name;
-                // switch (name) {
-                //     case 'nonMonth':
-                //         _obj = this.wholeRent.nonMonth;
-                //         break;
-                //     case 'feature':
-                //         _obj = this.wholeRent.wholeMonth;
-                //         break;
-
-                //     case 'common':
-                //         _obj = this.jointRent.payment;
-                //         break;
-                //     case 'room':
-                //         _obj = this.jointRent.room;
-                //         break;
-                //     case 'roomFeatures':
-                //         _obj = this.jointRent.roomFeatures;
-                //         break;
-
-                //     case 'detachedCommon':
-                //         _obj = this.detached.detachedCommon;
-                //         break;
-                //     case 'detachedRoom':
-                //         _obj = this.detached.detachedRoom;
-                //         break;
-                //     case 'detachedRoomFeatures':
-                //         _obj = this.detached.detachedRoomFeatures;
-                //         break;
-                // }
                 return _obj;
             },
             add(path) {
@@ -718,7 +690,6 @@
                 let extraChargesDialogVal = this.extraChargesDialogVal;
 
                 for (let i = 0; i < extraChargesDialogSelect.length; i++) {
-                    // console.log(extraChargesDialogSelect[i].children.value)
                     if (
                         extraChargesDialogSelect[i].value ==
                         extraChargesDialogVal[0]
@@ -740,10 +711,6 @@
                                         .children[k].value ==
                                         extraChargesDialogVal[2]
                                     ) {
-                                        console.log(
-                                            extraChargesDialogSelect[i].children[j]
-                                            .children[k].label
-                                        );
                                         path.push({
                                             name: extraChargesDialogSelect[i]
                                                 .children[j].children[k].label,
@@ -771,7 +738,6 @@
 
                     model.push(key[index].name)
                 }
-                console.log(model)
 
             },
             checkDefault(key, index, model, belong) {
@@ -810,11 +776,8 @@
             },
 
             save() {
-                console.log('save');
             },
             handleChange(value, label) {
-                console.log(value);
-                console.log(label);
             }
         }
     };

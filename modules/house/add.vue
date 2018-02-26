@@ -113,11 +113,6 @@
 				houseCode:null
 			};
 		},
-		watch:{
-			houseCode(newVal,oldVal) {
-				console.log(newVal,oldVal)
-			}
-		},
 		components: {
 			BaseInfo
 		},
@@ -179,7 +174,6 @@
 				this.saveCloseQ()
 			},
 			saveCloseQ() {
-				console.log(this.form)
 				const data = {
 					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form
@@ -191,16 +185,6 @@
 						data.houseCountOnFloor = this.Entire.houseCountOnFloor
 						data.enabledFloors = this.Entire.enabledFloors
 					}
-					// this.$model('houses').create(data, {
-					// 		projectId: this.user.projectId
-					// 	})
-					// 	.then(res => {
-					// 		this.$message.success('创建成功')
-					// 		this.$emit('addhouse')
-					// 	})
-					// 	.catch(err=>{
-					// 		this.$message('创建失败')
-					// 	})
 				}else{
 					this.$message('房源编号未更改')
 				}

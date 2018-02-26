@@ -416,9 +416,6 @@
 			};
 		},
 		methods: {
-			onSubmit() {
-				console.log('submit!');
-			},
 			handleChange(value) {
 				console.log(value);
 			}

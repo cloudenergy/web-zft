@@ -403,10 +403,6 @@
 			}
 		},
 		created: function () {
-			// 		if(this.tableData=='运营数据'){
-			// alert(this.tableData)
-			// 		}
-			// 		console.log(this.tableData)
 			switch (this.tableData) {
 				case '运营数据':
 					this.tableTab = this.tableTab1;

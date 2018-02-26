@@ -31,7 +31,6 @@
         },
         computed: {
             nowData() {
-                console.log(Date.parse(new Date()))
                 return Date.parse(new Date())
             }
         },

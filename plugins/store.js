@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-26 15:05:51
+ * @Last Modified time: 2018-02-26 15:11:29
  */
 
 import api from '~/plugins/api';
@@ -115,7 +115,6 @@ export default {
 				password: md5(password)
 			})
 			.then(res=>{
-				console.log(res)
 				if(res.code===0){
 					commit('Login_Info', true)
 				}else{

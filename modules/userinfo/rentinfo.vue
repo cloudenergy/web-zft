@@ -78,9 +78,6 @@
 
         },
         methods: {
-            onSubmit() {
-                console.log('submit!');
-            },
             updateuser() {
                 console.log(JSON.stringify(this.form))
             }

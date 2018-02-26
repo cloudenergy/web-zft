@@ -88,7 +88,6 @@ export default {
 			}
 		},
 		sendThird(data){
-			console.log(1)
 			this.query()
 		},
 		query() {
