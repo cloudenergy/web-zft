@@ -20,7 +20,7 @@
 						<span tabindex="0" class="el-input-group__append addwidth toward" style="padding:0 0 0 13px;width:53px">朝向</span>
 					</el-col>
 				</el-row>
-			<div v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
+			<div v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">
 				<el-row :gutter="20">
 					<el-col :span="8">
 					<el-input v-model="building" @blur="changeBuilding">
@@ -41,8 +41,8 @@
 				</el-row>
 			</div>
 			<room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
-			<building-floor v-if="form.houseFormat==houseTypes.ENTIRE[0]" :data="Entire"></building-floor>
-			<div v-if="form.houseFormat!==houseTypes.ENTIRE[0]">
+			<building-floor v-if="form.houseFormat==userInfo.houseTypes.ENTIRE[0]" :data="Entire"></building-floor>
+			<div v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">
 				<el-row :gutter="20">
 					<el-col :span="8" class="roomInfo">
 						<el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
@@ -85,8 +85,9 @@
 				type: Object
 			}
 		},
+		// todo i
 		computed: {
-			...mapState(['houseTypes', 'user'])
+			...mapState(['userInfo', 'user'])
 		},
 		data() {
 			return {

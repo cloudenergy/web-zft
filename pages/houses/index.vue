@@ -2,7 +2,7 @@
     <div class="page-house-index">
         <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab" @cityArea="cityArea"/>
         <div class="main-container">
-            <Search @changeRoom='changeRoom' :houseKeeper='houseKeeper'/>
+            <Search @changeRoom='changeRoom' @changeRoomsStatus='changeRoomsStatus' @changeHouseKeeper='changeHouseKeeper' :houseKeeper='houseKeeper' />
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
@@ -171,7 +171,19 @@
 				this.query()
 			},
 			changeRoom(data) {
-				this.reqData.bedRooms = data
+				if(data!==0) {
+					this.reqData.bedRooms = data
+				}else{
+					delete this.reqData.bedRooms
+				}
+				this.query()
+			},
+			changeRoomsStatus(data) {
+				this.reqData.status = data
+				this.query()
+			},
+			changeHouseKeeper(data) {
+				this.reqData.houseKeeper = data
 				this.query()
 			},
     		refresh(type,commiunityId) {

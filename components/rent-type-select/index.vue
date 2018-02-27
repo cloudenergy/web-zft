@@ -4,7 +4,7 @@
     export default {
     	computed: {
     		...mapState({
-    			houseTypes: state => state.houseTypes
+    			houseTypes: state => state.userInfo.houseTypes
     		})
     	},
     	render() {

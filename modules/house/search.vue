@@ -1,9 +1,9 @@
 <template>
 	<div class="search-wrapper">
 		<div class="filter">
-			<house-status v-model="filters.status" />
+			<house-status v-model="filters.status" @input='changeRoomsStatus'/>
 			<rooms-select v-model="filters.rooms" @input='changeRoomsNum'></rooms-select>
-			<el-select v-model="filters.city" clearable placeholder="管理员" size="small">
+			<el-select v-model="filters.city" clearable placeholder="管理员" size="small" @change='changeHouseKeeper'>
 				<el-option v-for="item in houseKeeper" :key="item.id" :label="item.username" :value="item.id"></el-option>
 			</el-select>
 		</div>
@@ -60,6 +60,13 @@
 		methods: {
 			changeRoomsNum(data) {
 				this.$emit('changeRoom', data)
+			},
+			changeRoomsStatus(data) {
+				this.$emit('changeRoomsStatus', data)
+			},
+			changeHouseKeeper(data) {
+				console.log(data)
+				this.$emit('changeHouseKeeper', data)
 			},
 			addHouse() {
 				this.$emit('successRefresh')
