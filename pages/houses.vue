@@ -12,7 +12,7 @@
     	data() {
     		return {
     			links: [
-    				{ url: '/houses', text: '出租管理' }
+    				{ url: '/houses', text: '房源管理' }
     			]
     		};
     	}

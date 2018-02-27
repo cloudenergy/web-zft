@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-26 15:11:29
+ * @Last Modified time: 2018-02-27 10:24:18
  */
 
 import api from '~/plugins/api';
@@ -41,7 +41,8 @@ function userInfo() {
 		successInfo:false,
 		businessCity:[],
 		businessArea:null,
-		communitiesChoose:{}
+		communitiesChoose:{},
+		houseKeeper:null
 	}
 }
 
@@ -106,6 +107,9 @@ export default {
 		},
 		CLEAR_USER(state, data) {
 			state.userInfo = userInfo()
+		},
+		SAVE_HOUSE_KEERER(state,data) {
+			state.userInfo.houseKeeper = data
 		}
 	},
 	actions: {
@@ -217,6 +221,18 @@ export default {
 		},
 		CLEAR_USER_INFO({commit,state}) {
 			commit('CLEAR_USER')
+		},
+		HOUSE_KEERER({commit,state},{projectId}) {
+			if(state.userInfo.houseKeeper) {
+				return Promise.resolve(state.userInfo.houseKeeper);
+			}
+			return api('credentials')
+				.query({},{projectId})
+				.then(data=>{
+					commit('SAVE_HOUSE_KEERER',data)
+					console.log(_.filter(data,{'level':'ADMIN'}))
+					return data
+				})
 		}
 	}
 };

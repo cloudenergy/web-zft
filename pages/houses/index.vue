@@ -2,7 +2,7 @@
     <div class="page-house-index">
         <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab" @cityArea="cityArea"/>
         <div class="main-container">
-            <Search @changeRoom='changeRoom'/>
+            <Search @changeRoom='changeRoom' :houseKeeper='houseKeeper'/>
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
             <div class="houses">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
@@ -83,7 +83,8 @@
 				testArray:[],
 				entire:false,
 				tabCard:true,
-				houseFormat:'SHARE'
+				houseFormat:'SHARE',
+				houseKeeper:null
     		};
     	},
     	computed: {
@@ -221,6 +222,11 @@
 					})
 					.catch(err=>{
 						console.log(err)
+					})
+					this.$store.dispatch('HOUSE_KEERER',{
+						projectId:this.projectId
+					}).then(data=>{
+						this.$set(this,'houseKeeper',data)
 					})
     		},
     		showDrawer({ room, house }) {

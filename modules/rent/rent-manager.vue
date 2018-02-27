@@ -1,27 +1,18 @@
 <template>
-	<el-select v-model="manager" size="mini" filterable placeholder="管理" class="select">
-		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-		</el-option>
+	<el-select v-model="manager" clearable placeholder="管理员" size="small" class="select">
+		<el-option v-for="item in houseKeeper" :key="item.id" :label="item.username" :value="item.id"></el-option>
 	</el-select>
 </template>
 <script>
 	export default {
+		props:{
+			houseKeeper:{
+				required:true
+			}
+		},
 		data() {
 			return {
-				options: [{
-						value: 'laojiang',
-						label: '老蒋'
-					},
-					{
-						value: 'laowang',
-						label: '老王'
-					},
-					{
-						value: 'laozhang',
-						label: '老张'
-					}
-				],
-				manager: 'laojiang'
+				manager:''
 			};
 		}
 	};

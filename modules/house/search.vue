@@ -3,8 +3,8 @@
 		<div class="filter">
 			<house-status v-model="filters.status" />
 			<rooms-select v-model="filters.rooms" @input='changeRoomsNum'></rooms-select>
-			<el-select v-model="filters.city" clearable placeholder="管理" size="small">
-				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+			<el-select v-model="filters.city" clearable placeholder="管理员" size="small">
+				<el-option v-for="item in houseKeeper" :key="item.id" :label="item.username" :value="item.id"></el-option>
 			</el-select>
 		</div>
 		<div class="actions">
@@ -34,10 +34,14 @@
 	} from '~/modules/contract';
 
 	export default {
+		props: {
+			houseKeeper:{
+				required:true
+			}
+		},
 		data() {
 			return {
 				filters: {},
-				options: [],
 				modal: {
 					contract: false,
 					house: false

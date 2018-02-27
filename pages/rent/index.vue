@@ -8,7 +8,7 @@
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<RentStatus class="status" @leasingStatus="leasingStatus"/>
-						<RentManager class="manager" />
+						<RentManager class="manager" :houseKeeper='houseKeeper'/>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info" v-if="housesRent">{{housesRent.paging.count}}项结果</span>
@@ -55,7 +55,8 @@
 					houseFormat:'SHARE',
 					size:20,
 					index:1
-				}
+				},
+				houseKeeper:null
 			};
 		},
 		computed: {
@@ -122,6 +123,11 @@
 					});
 					this.$set(this, 'housesRent', data)
 				})
+				this.$store.dispatch('HOUSE_KEERER',{
+						projectId:this.projectId
+					}).then(data=>{
+						this.$set(this,'houseKeeper',data)
+					})
 			},
 			showmessage(data) {
 				console.log(data)
