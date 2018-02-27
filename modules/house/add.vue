@@ -62,12 +62,12 @@
 					</el-col>
 				</el-row>
 			</div>
-			<h3>房源配置</h3>
+			<h3 style="margin-top:30px">房源配置</h3>
 			<house-facility class="checkboxes" v-model="form.config"></house-facility>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
 			<el-button @click="dismiss()">取 消</el-button>
-			<el-button @click="saveAndcontinueToAdd()">保存并继续添加</el-button>
+			<el-button @click="saveAndcontinueToAdd()" v-if="form.houseFormat==userInfo.houseTypes.ENTIRE[0]">保存并继续添加</el-button>
 			<el-button type="primary" @click="save()">保存</el-button>
 		</div>
 	</div>
@@ -102,7 +102,11 @@
 					roomNumber: '',
 					location: {},
 					layout: {
-						name: ''
+						name: '',
+						orientation:'S',
+						bedRoom: 2,
+						livingRoom: 1,
+						bathRoom: 1,
 					},
 					houseFormat: 'SHARE'
 				},
@@ -179,7 +183,6 @@
 					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form
 				};
-				console.log(data)
 				if(data.code!==this.houseCode) {
 					this.houseCode = data.code
 					if (data.houseFormat === 'ENTIRE') {

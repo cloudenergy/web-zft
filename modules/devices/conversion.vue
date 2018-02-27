@@ -2,14 +2,14 @@
     <div>
         <div class="flexcenter">
             <RentSearch style="width:300px" class="clearmargin" />
-            <p>{{listInfo.count}}</p>
+            <p>数量/{{listInfo.count}}</p>
         </div>
         <!-- TODO ZHOUYI 设备管理绑定电表增加条件查询 -->
         <div class="newchoose prevent" v-loading="loading">
             <div v-for="list in item" :key="list.index">
                 <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()">
-                    <span>{{list.title}}</span>
-                    <span style="float:right;display:inline-block">{{list.deviceId}}</span>
+                    <span>电表:{{list.title}}</span>
+                    <span style="float:right;padding-right:10px">{{list.deviceId}}</span>
                 </el-radio>
             </div>
             <el-pagination :background="background" layout="prev, pager, next" :total="listInfo.count" @current-change="handleCurrentChange"

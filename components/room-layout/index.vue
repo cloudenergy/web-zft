@@ -31,7 +31,7 @@
 				type: Object,
 				default () {
 					return {
-						bedRoom: 1,
+						bedRoom: 2,
 						livingRoom: 1,
 						bathRoom: 1,
 						orientation: 'N'

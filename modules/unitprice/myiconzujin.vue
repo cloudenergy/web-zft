@@ -18,8 +18,8 @@
         display: inline-block;
         text-align: center;
         line-height: 16px;
-        border: 1px solid #50E3C2;
-        color: #50E3C2;
+        border: 1px solid #F6A623;
+        color: #F6A623;
         margin: 0 3px;
     }
 </style>

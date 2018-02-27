@@ -6,7 +6,7 @@
 		<el-container>
 			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
-					<div class="flexcenter" style="width:800px">
+					<div class="flexcenter" style="width:735px">
 						<BillStatus class="status" @billStatus="billStatus" />
 						<bill-type/>
 						<ReportPeriod class="period" />

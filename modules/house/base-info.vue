@@ -11,7 +11,7 @@
 				</el-input>
 			</el-col>
 			<el-col :span="8">
-				<el-select v-model="model.houseKeeper" placeholder="管理员" style="width:210px">
+				<el-select v-model="model.houseKeeper" placeholder="管家" style="width:210px">
 					<el-option v-for="item in houseKeepers" :label="item.username" :value="item.id" :key="item.id"></el-option>
 				</el-select>
 			</el-col>

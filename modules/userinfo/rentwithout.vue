@@ -3,7 +3,7 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>合同周期 </span>
-                <span>{{set(contractInfo.from)}}-{{set(contractInfo.to)}}</span>
+                <span class="gray"> {{set(contractInfo.from)}}-{{set(contractInfo.to)}}</span>
             </div>
             <div>
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
@@ -14,7 +14,7 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户姓名 </span>
-                <span v-if="contractInfo.user.name">{{contractInfo.user.name}}</span>
+                <span v-if="contractInfo.user.name" class="gray"> {{contractInfo.user.name}}</span>
             </div>
             <div>
 
@@ -23,7 +23,7 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>租户账号 </span>
-                <span v-if="contractInfo.user.name">{{contractInfo.user.accountName}}</span>
+                <span v-if="contractInfo.user.name" class="gray"> {{contractInfo.user.accountName}}</span>
             </div>
             <div>
                 <span class="set-width">支付方式</span>
@@ -35,7 +35,7 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>当前余额 </span>
-                <span>{}</span>
+                <span class="gray"> {}</span>
             </div>
             <div class="flexc setInput">
                 <span class="set-width">结算余额</span>
@@ -173,6 +173,9 @@
                 bottom: -22px;
                 right: 0;
             }
+        }
+        .gray{
+            color:#aaa
         }
     }
 </style>

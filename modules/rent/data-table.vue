@@ -60,7 +60,7 @@
 			<el-table-column label="余额操作" width="100">
 				<template slot-scope="scope">
 					<div class="flexcenter" style="padding-right: 15px">
-						<el-dropdown>
+						<el-dropdown  size="medium">
 							<span class="el-dropdown-link cursorp">
 								充值
 								<i class="el-icon-caret-bottom"></i>
@@ -75,7 +75,7 @@
 			</el-table-column>
 			<el-table-column label="合同操作" width="100">
 				<template slot-scope="scope">
-					<el-dropdown>
+					<el-dropdown size="medium">
 						<span class="el-dropdown-link cursorp">
 							续租
 							<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -90,7 +90,7 @@
 				<template slot-scope="scope">
 					<div class="flexcenter">
 						<div class="rentMoneyshow">
-							<span class="el-dropdown-link cursorp" @click="rentuser(3,scope.row)">
+							<span class="el-dropdown-link cursorp bigSize" @click="rentuser(3,scope.row)">
 								查看
 							</span>
 						</div>
@@ -450,7 +450,9 @@
 	.menu-right {
 		flex: 1;
 	}
-
+	.bigSize{
+		font-size: 14px;
+	}
 	.menu-rightthree div {
 		margin-left: 15px;
 	} // .textcenter{
