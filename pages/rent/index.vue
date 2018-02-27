@@ -64,9 +64,21 @@
 			}
 		},
 		created() {
-    		// this.query();
+			// this.query();
+			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
 		methods: {
+			setSearch(data) {
+				if(/rent/.test(location.pathname)){
+					if(data!==''){
+						this.reqData.q=data
+					}
+					else{
+						delete this.reqData.q
+					}
+					this.query()
+				}
+			},
 			leasingStatus(data) {
 				if(data!=='all'){
 					this.reqData.leasingStatus = data

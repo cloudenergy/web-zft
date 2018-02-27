@@ -97,13 +97,15 @@
 				}
 			},
 			setSearch(data) {
-				if(data!==''){
-					this.reqData.q=data
+				if(/bills/.test(location.pathname)){
+					if(data!==''){
+						this.reqData.q=data
+					}
+					else{
+						delete this.reqData.q
+					}
+					this.query()
 				}
-				else{
-					delete this.reqData.q
-				}
-				this.query()
 			},
 			query() {
 				this.$model('all_user_bills')

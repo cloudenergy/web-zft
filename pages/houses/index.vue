@@ -151,13 +151,15 @@
 				this.query()
 			},
 			setSearch(data) {
-				if(data!==''){
-					this.reqData.q=data
+				if(/house/.test(location.pathname)){
+					if(data!==''){
+						this.reqData.q=data
+					}
+					else{
+						delete this.reqData.q
+					}
+					this.query()
 				}
-				else{
-					delete this.reqData.q
-				}
-				this.query()
 			},
 			communityChange(data) {
 				if(data==='0'){

@@ -2,7 +2,7 @@
 	<el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab @change="refresh" :selected="houseFormat"/>
+				<Tab @change="refresh" :selected="houseFormat" />
 			</div>
 		</el-aside>
 		<el-container>
@@ -25,7 +25,8 @@
 				</div>
 			</el-header>
 			<el-main style="padding-right:0">
-				<electricit :houses="houses"/>
+				<electricit :houses="houses" />
+				<!-- <div id="myChart" :style="{width: '1000px', height: '500px'}"></div> -->
 			</el-main>
 		</el-container>
 	</el-container>
@@ -52,54 +53,120 @@
 		data() {
 			return {
 				houseFormat: 'SHARE',
-				houses:[],
-				paging:{},
-				reqData:{
-					size:20,
-					index:1
+				houses: [],
+				paging: {},
+				reqData: {
+					size: 20,
+					index: 1
 				}
 			};
 		},
-		computed : {
-			projectId(){
+		computed: {
+			projectId() {
 				return this.$store.state.userInfo.user.projectId;
-			}	
+			}
 		},
-		methods:{
-			refresh(type,commiunityId) {
+		mounted() {
+			this.drawLine();
+		},
+		methods: {
+			drawLine() {
+				// 基于准备好的dom，初始化echarts实例
+				let myChart = this.$echarts.init(document.getElementById('myChart'))
+				// 绘制图表
+				myChart.setOption({
+    title : {
+        text: '未来一周气温变化',
+        subtext: '纯属虚构'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['最高气温','最低气温']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : ['周一','周二','周三','周四','周五','周六','周日']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} °C'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'最高气温',
+            type:'line',
+            data:[11, 11, 15, 13, 12, 13, 10],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        }
+    ]
+});
+			},
+			refresh(type, commiunityId) {
 				this.reqData.houseFormat = type
-				if(commiunityId!==undefined){
+				if (commiunityId !== undefined) {
 					this.reqData.locationId = commiunityId
-				}else{
+				} else {
 					delete this.reqData.locationId
 				}
 				this.query();
 			},
 			query() {
-    			this.$model('houses')
-    				.query(
-    					{houseFormat: this.houseFormat},{ projectId: this.projectId }
-    				)
-    				.then(res => {
-    					this.$set(this, 'houses', res.data || []);
+				this.$model('houses')
+					.query({
+						houseFormat: this.houseFormat
+					}, {
+						projectId: this.projectId
+					})
+					.then(res => {
+						this.$set(this, 'houses', res.data || []);
 						this.$set(this, 'paging', res.paging || []);
 					});
-    		},
-			showmessage(data){
+			},
+			showmessage(data) {
 				console.log(data)
 			}
 		}
 	};
 </script>
- <style lang="less" scoped>
+<style lang="less" scoped>
 	.ops-bills {
 		// margin-bottom: 20px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
-	.result-info{
-		margin-right:5px;
+
+	.result-info {
+		margin-right: 5px;
 	}
- </style>
- 
+</style>

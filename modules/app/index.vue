@@ -92,10 +92,10 @@ export default {
 	z-index: 2;
 	width: 120px;
 	background-color: #2f3c4d;
-	flex: 0 0 256px;
-	max-width: 256px;
-	min-width: 256px;
-	width: 256px;
+	flex: 0 0 200px;
+	max-width: 200px;
+	min-width: 200px;
+	width: 200px;
 }
 
 .app .userInfo {

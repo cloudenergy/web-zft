@@ -1,21 +1,24 @@
 /*
  * @Author: insane.luojie
  * @Date:   2017-09-30 09:33:33
- * @Last Modified by: insane.luojie
- * @Last Modified time: 2017-12-01 09:39:25
+ * @Last Modified by: mikey.other
+ * @Last Modified time: 2018-02-26 17:20:04
  */
 import api from './api';
 import mixin from './mixins';
 import 'element-ui/lib/theme-chalk/index.css';
 import '../static/style';
 import Element from 'element-ui';
+import echarts from 'echarts'
+
+
 
 export default function(vue) {
 	/**
 	 * element ui
 	 */
 	// [Select, Option, Loading, Dialog, Menu, Submenu, MenuItem, RadioButton, RadioGroup].map(el => vue.use(el));
-
+	vue.prototype.$echarts = echarts 
 	vue.use(Element);
 
 	// 设置api

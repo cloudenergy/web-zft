@@ -2,7 +2,7 @@
 	<el-table :data="bills" stripe style="width: 100%">
 		<el-table-column label="日期" width="130">
 			<template slot-scope="scope">
-				<span>{{ nowTime(scope.row.time) }}</span>
+				<span>{{ nowTime(scope.row.createdAt) }}</span>
 			</template>
 		</el-table-column>
 		<!-- <el-table-column
@@ -10,11 +10,14 @@
       label="姓名"
       width="130">
     </el-table-column> -->
-		<el-table-column prop="type" label="类型" width="130">
+		<el-table-column label="类型" width="130">
+			<template slot-scope="scope">
+				<span v-if="scope.row.type==='ELECTRICITY'">电费</span>
+			</template>
 		</el-table-column>
 		<el-table-column label="金额">
 			<template slot-scope="scope">
-				<span>{{ price(scope.row.amount) }}</span>
+				<span>{{ price(scope.row.amount) }}元</span>
 			</template>
 		</el-table-column>
 		<el-table-column prop="scale" label="读数">
@@ -63,6 +66,7 @@
 				return data / 100
 			},
 			nowTime(data) {
+				console.log(data,new Date(parseInt(data) * 1000).toLocaleDateString())
 				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 			}
 		}

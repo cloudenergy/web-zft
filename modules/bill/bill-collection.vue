@@ -17,14 +17,14 @@
                 <el-table-column label="费用周期" min-width="230">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
-                            {{scope.row.dueDateTime}}-{{scope.row.endDateTime}}
+                            {{scope.row.dueDateTime}}至{{scope.row.endDateTime}}
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column label="金额">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
-                            {{price(scope.row.amount)}}
+                            {{price(scope.row.amount)}}元
                         </div>
                     </template>
                 </el-table-column>

@@ -32,7 +32,7 @@
                 <template slot-scope="scope">
 
                     <span class="el-dropdown-link devicesuser">
-                        {{}}userId
+                        {}userId
                     </span>
                     <!-- @@@时间，等数据传回来 -->
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>

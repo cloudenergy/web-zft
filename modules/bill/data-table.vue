@@ -25,7 +25,7 @@
             </el-table-column>
             <el-table-column label="金额(¥)/类型">
                 <template slot-scope="scope">
-                    <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}</p>
+                    <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}元</p>
                     <p style="margin-left: 10px;color:grey" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type">{{ item.text }}{{scope.row.index}}<span v-if="scope.row.type==='rent'">期</span></p>
                 </template>
             </el-table-column>
