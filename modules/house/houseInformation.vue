@@ -1,13 +1,9 @@
 <template>
     <div class="preview">
-        <h3 class="title">{{house.location.name}}{{house.building}}{{house.ubit}}{{house.roomNumber}}</h3>
+        <h3 class="title">{{house.location.name}}{{house.building}}幢{{house.unit}}单元{{house.roomNumber}}</h3>
         <div class="base section">
             <h4>房源信息</h4>
-            <p>朝向:{{house.layout.orientation}}</p>
-        </div>
-        <div class="facilities section">
-            <h4>房间配置</h4>
-            <house-facility></house-facility>
+            <p>朝向:<span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span></p>
         </div>
         <div class="devices section">
             <h4 class="flexc" style="aline-item:center">

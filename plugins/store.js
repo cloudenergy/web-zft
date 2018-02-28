@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-02-27 10:24:18
+ * @Last Modified time: 2018-02-28 14:30:58
  */
 
 import api from '~/plugins/api';
@@ -42,7 +42,17 @@ function userInfo() {
 		businessCity:[],
 		businessArea:null,
 		communitiesChoose:{},
-		houseKeeper:null
+		houseKeeper:null,
+		toward:[
+			{EN:'S', CH:'南'},
+			{EN:'N', CH:'北'},
+			{EN:'W', CH:'西'},
+			{EN:'E', CH:'东'},
+			{EN:'NE',CH:'东北'},
+			{EN:'SE',CH:'东南'},
+			{EN:'SW',CH:'西南'},
+			{EN:'NW',CH:'西北'}
+		]
 	}
 }
 

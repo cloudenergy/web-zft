@@ -1,5 +1,5 @@
 <template>
-	<div class="house-cell" :class="{leased: this.room.contract.id===undefined||this.room.contract.from*1000>nowDate}">
+	<div class="house-cell" :class="{leased: this.room.contract.id!==undefined||this.room.contract.from*1000<=nowDate}">
 		<div class="cell" @click="view()">
 			<div class="flexcenter between">
 				<h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
@@ -397,10 +397,12 @@ export default {
 	height: 123px;
 	border-radius: 4px;
 	border: 1px solid @light;
-	border-left: 4px solid @success;
+	border-left: 4px solid rgb(253, 109, 109);
+
 
 	&.leased {
-		border-left-color: rgb(253, 109, 109);
+		border-left-color: @success;
+		background-color: #F5F5F5;
 	}
 	&.willIn {
 		border-left-color: #c8b9d4;
@@ -415,13 +417,13 @@ export default {
 
 		p {
 			margin-top: 10px;
-			color: @gray;
+			color: #888;
 			overflow: hidden;
 			white-space: nowrap;
 		}
 
 		.rentee {
-			border-top: 1px solid @light;
+			border-top: 1px solid #ccc;
 			padding-top: 9px;
 			margin-top: 8px;
 			margin-bottom: 3px;

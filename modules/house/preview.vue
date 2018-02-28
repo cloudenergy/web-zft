@@ -1,10 +1,10 @@
 <template>
     <div class="preview">
-        <h3 class="title" v-if="room.name!==''">{{room.name}} {{room.area}} {{room.orientation}}</h3>
+        <h3 class="title" v-if="room.name!==''">{{house.location.name}}{{house.building}}幢{{house.unit}}单元{{house.roomNumber}} {{room.name}}</h3>
         <h3 class="title" v-if="room.name===''">{{house.location.name}} {{house.roomNumber}}{{room.orientation}}</h3>
         <div class="base section">
             <h4>房间信息</h4>
-            <p>房间: 次卧 18平 东</p>
+            <p>朝向:<span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span></p>
         </div>
         <div class="facilities section">
             <h4>房间配置</h4>
@@ -43,12 +43,21 @@
         </div>
         <div class="bills section">
             <h4>租费设置</h4>
-            <el-table :data="room.bills" stripe>
+            <el-table :data="contracts" stripe>
                 <el-table-column prop="name" label="名称" width="150">
+                    <template slot-scope="scope">
+					    <span>租金</span>
+				    </template>
                 </el-table-column>
                 <el-table-column prop="amount" label="金额">
+                    <template slot-scope="scope">
+					    <span>{{price(scope.row.rent)}}</span>
+				    </template>
                 </el-table-column>
                 <el-table-column prop="period" label="周期">
+                    <template slot-scope="scope">
+					    <span>{{date(scope.row.from)}}至{{date(scope.row.to)}}</span>
+				    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -96,11 +105,17 @@
                 reqData:{
                     roomId:this.room.id
                 },
-                num: 30
+                num: 30,
+                contracts:[]
             }
         },
         components: {
             conversion
+        },
+        created () {
+            if(this.room.contract.from!==undefined) {
+                this.contracts.push(this.room.contract)
+            }
         },
         computed: {
             projectId() {
@@ -217,7 +232,12 @@
                         this.room.devices = res.devices
                     })
             },
-            
+            date(data) {
+                return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/\//g, "-")
+            },
+            price(data) {
+                return data/100
+            }
         }
     };
 </script>
