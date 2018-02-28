@@ -45,7 +45,7 @@
 				<span>{{scope.row.endDateNew}}</span>
 			</template>
 		</el-table-column>
-		<el-table-column prop="dueAmount" label="金额" width="80">
+		<el-table-column prop="dueAmount" label="金额￥" width="80">
 			<template slot-scope="scope">
 				<span>{{price(scope.row.dueAmount)}}</span>
 			</template>

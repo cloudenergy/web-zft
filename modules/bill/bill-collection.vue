@@ -1,5 +1,7 @@
 <template>
     <div>
+        <p>{{ data.room.locationName }}{{ data.room.building }}幢{{ data.room.unit }}单元{{ data.room.roomNumber}}&nbsp;{{ data.room.roomName }}</p>
+        <p>{{data.user.name}} {{data.user.accountName}}</p>
         <div>
             <div class="title">应支付日:{{set(data.dueDate)}}</div>
         </div>
@@ -64,6 +66,7 @@
         },
         created() {
             this.query()
+            console.log(this.data)
         },
         watch: {
             data(newVal, oldVal) {

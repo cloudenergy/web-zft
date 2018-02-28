@@ -66,7 +66,6 @@
 				return data / 100
 			},
 			nowTime(data) {
-				console.log(data,new Date(parseInt(data) * 1000).toLocaleDateString())
 				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 			}
 		}

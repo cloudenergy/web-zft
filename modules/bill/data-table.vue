@@ -1,10 +1,12 @@
 <template>
     <div>
         <el-table :data="tableBill" style="width: 100%">
+            <el-table-column type="index" width="50">
+            </el-table-column>
             <el-table-column label="应支付日" width="200">
                 <template slot-scope="scope">
-                    <p style="margin-left: 10px;color:red" v-if="scope.row.payments.length===0&&nowTime>chooseTime(scope.row.dueDate)">已逾期{{differentTimePoor(scope.row.dueDate,nowTime)}}天</p>
-                    <p style="margin-left: 10px">{{ scope.row.dueDateTime }}</p>
+                    <p style="color:red" v-if="scope.row.payments.length===0&&nowTime>chooseTime(scope.row.dueDate)">已逾期{{differentTimePoor(scope.row.dueDate,nowTime)}}天</p>
+                    <p style="" class="gray">{{ scope.row.dueDateTime }}</p>
                 </template>
             </el-table-column>
             <el-table-column label="住户姓名/帐号">
@@ -12,21 +14,21 @@
                     <div slot="reference" class="name-wrapper">
                         <i class="el-icon-phone"></i>
                         <span size="medium">{{ scope.row.user.name }}</span>
-                        <p style="margin-left: 10px">{{ scope.row.user.accountName }}</p>
+                        <p style="margin-left: 10px" class="gray">{{ scope.row.user.accountName }}</p>
                     </div>
                 </template>
             </el-table-column>
             <el-table-column label="房源/账期">
                 <template slot-scope="scope">
-                    <p>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber
+                    <p>{{ scope.row.room.locationName }}{{ scope.row.room.building }}幢{{ scope.row.room.unit }}单元{{ scope.row.room.roomNumber
                         }}&nbsp;{{ scope.row.room.roomName }}</p>
-                    <p>{{scope.row.startDateTime}}至{{scope.row.endDateTime}}</p>
+                    <p class="gray">{{scope.row.startDateTime}} 至 {{scope.row.endDateTime}}</p>
                 </template>
             </el-table-column>
             <el-table-column label="金额(¥)/类型">
                 <template slot-scope="scope">
                     <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}元</p>
-                    <p style="margin-left: 10px;color:grey" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type">{{ item.text }}{{scope.row.index}}<span v-if="scope.row.type==='rent'">期</span></p>
+                    <p style="margin-left: 10px;" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type" class="gray">{{ item.text }}{{scope.row.index}}<span v-if="scope.row.type==='rent'">期</span></p>
                 </template>
             </el-table-column>
             <el-table-column label="操作">
@@ -171,5 +173,8 @@
 
     .input3 {
         margin-top: 20px;
+    }
+    .gray{
+        color:#999
     }
 </style>

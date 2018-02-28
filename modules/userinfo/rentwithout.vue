@@ -5,7 +5,7 @@
                 <span>合同周期 </span>
                 <span class="gray"> {{set(contractInfo.from)}}-{{set(contractInfo.to)}}</span>
             </div>
-            <div>
+            <div class="right-menu">
                 <span style="margin-right:10px;">退租后房间转为关闭状态</span>
                 <el-radio v-model="withOutInfo.toConfig" label="PAUSED">是</el-radio>
                 <el-radio v-model="withOutInfo.toConfig" label="IDIE">否</el-radio>
@@ -25,9 +25,9 @@
                 <span>租户账号 </span>
                 <span v-if="contractInfo.user.name" class="gray"> {{contractInfo.user.accountName}}</span>
             </div>
-            <div>
+            <div class="right-menu">
                 <span class="set-width">支付方式</span>
-                <el-select v-model="withOutInfo.transaction.fundChannelId" placeholder="请选择">
+                <el-select v-model="withOutInfo.transaction.fundChannelId" placeholder="请选择" style="width:220px">
                     <el-option :label='item.name' :value="item.id" v-for="item in payRoad" :key="item.id"></el-option>
                 </el-select>
             </div>
@@ -35,11 +35,13 @@
         <div class='flexc'>
             <div class="exit-house-left">
                 <span>当前余额 </span>
-                <span class="gray"> {}</span>
+                <span class="gray"> {{price(cashAccount.balance)}}</span>
             </div>
-            <div class="flexc setInput">
+            <div class="flexc setInput right-menu">
                 <span class="set-width">结算余额</span>
-                <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number"></el-input>
+                <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number">
+                    <template slot="append">￥</template>
+                </el-input>
                 <span class="hint">正数表示收款，负数表示退款</span>
             </div>
         </div>
@@ -61,6 +63,9 @@
         props: {
             id: {
                 type: String
+            },
+            cashAccount: {
+                required:true
             }
         },
         computed: {
@@ -83,6 +88,9 @@
             this.query(this.id)
         },
         methods: {
+            price(data) {
+                return data/100
+            },
             set(time) {
                 return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
             },
@@ -160,6 +168,9 @@
         .exit-house-left {
             width: 50%;
         }
+        .right-menu{
+            width: 350px;
+        }
         .set-width {
             display: inline-block;
             width: 130px;
@@ -181,7 +192,7 @@
 </style>
 <style>
     .flexc.setInput>.el-input.el-input--mini {
-        width: 158px;
+        width: 220px;
     }
 
     .setElementHeight .el-textarea__inner {

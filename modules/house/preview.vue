@@ -112,19 +112,26 @@
 				return data.status.switch==='EMC_ON'
 			},
             eleciricitySwitch(data) {
-				if (data) {
+                // this.$confirm('此操作将送/断电表, 是否继续?', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                // }).then(()=>{
+                    if (data) {
 					this.reqData.mode = 'EMC_ON'
-				} else {
-					this.reqData.mode = 'EMC_OFF'
-				}
-				this.$model('electricity_instructions')
-					.patch(this.reqData, {
-						projectId: this.projectId,
-						id: 'switch'
-					})
-					.then(res => {
-						console.log(res)
-					})
+                    } else {
+                        this.reqData.mode = 'EMC_OFF'
+                    }
+                    this.$model('electricity_instructions')
+                        .patch(this.reqData, {
+                            projectId: this.projectId,
+                            id: 'switch'
+                        })
+                        .then(res => {
+                            this.$message.success('成功')
+                        })
+                // }).catch(err=>{
+                // })
 			},
             del(room) {
                 this.$model('rooms').delete(null, {

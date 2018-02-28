@@ -1,6 +1,8 @@
 <template>
 	<div id="rentinfo">
 		<el-table :data="housesRent" style="width: 100%">
+			<el-table-column type="index" width="50">
+            </el-table-column>
 			<el-table-column label="承租状态" width="100">
 				<template slot-scope="scope">
 					<div slot="reference" class="contractStatus cursorp flexcenter">
@@ -21,8 +23,8 @@
 			</el-table-column>
 			<el-table-column label="姓名" min-width="120">
 				<template slot-scope="scope">
-					<div slot="reference" class="name-wrapper">
-						<span size="medium" @click="rentuser('1',scope.row)" class="cursorp">{{ scope.row.user.name }}
+					<div slot="reference" class="name-wrapper cursorp" @click="rentuser('1',scope.row)">
+						<span size="medium">{{ scope.row.user.name }}
 							<el-popover trigger="hover" placement="top">
 								<p v-if="scope.row.user.mobile!=''">{{ scope.row.user.mobile }}</p>
 								<p v-if="scope.row.user.mobile==''">暂无信息</p>
@@ -124,12 +126,12 @@
 						<div>
 							<p>身份证号</p>
 							<p>{{updateData.user.documentId}}</p>
-							<p v-if="updateData.user.documentId==''">暂无信息</p>
+							<p v-if="updateData.user.documentId===null">暂无信息</p>
 						</div>
 						<div>
 							<p>手机号</p>
 							<p>{{updateData.user.mobile}}</p>
-							<p v-if="updateData.user.mobile==''">暂无信息</p>
+							<p v-if="updateData.user.mobile===null">暂无信息</p>
 						</div>
 						<div class="others"></div>
 					</div>
@@ -168,7 +170,7 @@
 			</div>
 		</el-dialog>
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
-			<RentWithout :id="updateData.id" ref="operate" @successInfo="successInfo" />
+			<RentWithout :id="updateData.id" :cashAccount="updateData.user.cashAccount" ref="operate" @successInfo="successInfo" />
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible4 = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>
@@ -259,10 +261,6 @@
 					{
 						showlist: '退租',
 						value: 4
-					},
-					{
-						showlist: '预览',
-						value: 3
 					}
 				],
 				userdatainfo: {

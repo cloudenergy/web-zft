@@ -7,7 +7,7 @@
 		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
 			<el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
 				<!-- <i class="el-icon-menu"></i> -->
-				<span slot="title">全部小区</span>
+				<div slot="title" class="flexcenter"><span>全部小区</span><span class="communityNumber">小区数量:{{community.length}}</span></div>
 			</el-menu-item>
 			<el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.geoLocationId)" :class="{'is-active':typeNum==item.geoLocationId}">
 				<span slot="title">{{item.name}}</span>
@@ -161,6 +161,9 @@
 					background-color: @primary;
 				}
 			}
+		}
+		.communityNumber {
+			text-align: right;
 		}
 	}
 </style>
