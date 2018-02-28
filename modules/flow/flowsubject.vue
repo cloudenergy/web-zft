@@ -16,12 +16,16 @@
 				</div>
 			</el-form>
 		</div>
-		<flowsubjectlist/>
+		<flowsubjectlist :subjectFlows="subjectFlows"/>
 	</div>
 </template>
 <script>
 	import flowsubjectlist from './flowsubjectlist.vue'
 	import goend from './goend.vue'
+	import startOfMonth from 'date-fns/start_of_month'
+	import endOfDay from 'date-fns/end_of_day'
+	let startOfMounth = Date.parse(startOfMonth(new Date()))/1000
+	let nowDate = Date.parse(endOfDay(new Date()))/1000
 	export default {
 		components: {
 			flowsubjectlist,
@@ -35,8 +39,33 @@
 					type: '',
 					city: '',
 					community: ''
-				}
+				},
+				reqData: {
+					index: 1,
+					size: 10,
+					from: startOfMounth,
+					to: nowDate,
+					view: 'category'
+				},
+				subjectFlows:null
 			}
+		},
+		created () {
+			this.query()
+		},
+		methods: {
+			query() {
+				this.$model('flow_mounth')
+					.query(this.reqData, {
+						projectId: this.projectId
+					})
+					.then(res => {
+						this.$set(this, 'subjectFlows', res)
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
 		}
 	}
 </script>

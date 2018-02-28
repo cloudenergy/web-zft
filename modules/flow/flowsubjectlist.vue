@@ -1,7 +1,7 @@
 <template lang="html">
-    <el-table :data="tableData5" :row-key="getRowKeys" :expand-row-keys="expands"         @row-click='handleRowHandle'         ref="tableData5">
+    <el-table :data="subjectFlows" :row-key="getRowKeys" :expand-row-keys="expands"         @row-click='handleRowHandle'         ref="tableData5">
         <el-table-column type="expand">
-            <template slot-scope="props">
+            <!-- <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
                     <el-form-item label="商品名称">
                         <span>{{ props.row.folwm }}</span>
@@ -25,94 +25,68 @@
                         <span>{{ props.row.username }}</span>
                     </el-form-item>
                 </el-form>
+            </template> -->
+        </el-table-column>
+        <el-table-column label="小区/房源" prop="name">
+        </el-table-column>
+        <el-table-column label="押金收入" prop="rent">
+            <template slot-scope="props">
+                <span>{{price(props.row.rent)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="小区/房源" prop="datetime">
-        </el-table-column>
-        <el-table-column label="押金收入" prop="folwm">
-        </el-table-column>
         <el-table-column label="押金支出" prop="username">
+            <template slot-scope="props">
+                <span>{{price(props.row.rent)}}</span>
+            </template>
         </el-table-column>
-        <el-table-column label="押金结余" prop="houseresource">
+        <el-table-column label="押金结余" prop="rentFee">
+            <template slot-scope="props">
+                <span>{{price(props.row.rentFee)}}</span>
+            </template>
         </el-table-column>
         <el-table-column label="租金收入" prop="waym">
+            <template slot-scope="props">
+                <span>{{price(props.row.rent)}}</span>
+            </template>
         </el-table-column>
         <el-table-column label="租金支出" prop="payway">
+           <template slot-scope="props">
+                <span>{{price(props.row.rent)}}</span>
+            </template>
         </el-table-column>
         <el-table-column label="租金结余" prop="handlem">
+            <template slot-scope="props">
+                <span>{{price(props.row.rent)}}</span>
+            </template>
         </el-table-column>
-        <el-table-column label="预付费收入" prop="remark">
+        <el-table-column label="预付费收入" prop="topup">
+            <template slot-scope="props">
+                <span>{{price(props.row.topup)}}</span>
+            </template>
         </el-table-column>
         <el-table-column label="预付费支出" prop="remark">
+            <template slot-scope="props">
+                <span>{{price(props.row.rent)}}</span>
+            </template>
         </el-table-column>
-        <el-table-column label="预付费结余" prop="remark">
+        <el-table-column label="预付费结余" prop="topupFee">
+            <template slot-scope="props">
+                <span>{{price(props.row.topupFee)}}</span>
+            </template>
         </el-table-column>
     </el-table>
 </template>
 
 <script>
     export default {
+        props:{
+            subjectFlows:{
+                required:true
+            }
+        },
         data() {
             return {
-                upflowi: 0,
-                tableData5: [{
-                    id: 11110,
-                    datetime: '88888',
-                    folwm: '￥1000',
-                    category: '88888',
-                    username: '99999',
-                    address: '00000',
-                    shop: '11111',
-                    shopId: '10333',
-                    houseresource: '22222',
-                    payway: '支付宝',
-                    waym: '缴费',
-                    handlem: '老王',
-                    remark: '3年没有缴费了'
-                }, {
-                    id: 11111,
-                    datetime: '88888',
-                    folwm: '￥1000',
-                    category: '88888',
-                    username: '99999',
-                    address: '00000',
-                    shop: '11111',
-                    shopId: '10333',
-                    houseresource: '22222',
-                    payway: '微信',
-                    waym: '缴费',
-                    handlem: '',
-                    remark: '3年没有缴费了'
-                }, {
-                    id: 11112,
-                    datetime: '88888',
-                    folwm: '￥1000',
-                    category: '88888',
-                    username: '99999',
-                    address: '00000',
-                    shop: '11111',
-                    shopId: '10333',
-                    houseresource: '22222',
-                    payway: '现金',
-                    waym: '结余',
-                    handlem: '老王',
-                    remark: '3年没有缴费了'
-                }, {
-                    id: 11113,
-                    datetime: '88888',
-                    folwm: '￥1000',
-                    category: '88888',
-                    username: '99999',
-                    address: '00000',
-                    shop: '11111',
-                    shopId: '10333',
-                    houseresource: '22222',
-                    payway: '银行卡',
-                    waym: '缴费',
-                    handlem: '老王',
-                    remark: '3年没有缴费了'            
-                }],
-                            
+                upflowi: 0,        
                 // 获取row的key值
                 getRowKeys(row) {
                     return row.id;
@@ -143,6 +117,9 @@
             },
             toggle(flowi) {
                 this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == flowi))
+            },
+            price(data) {
+                return data/100
             }
         }
     }

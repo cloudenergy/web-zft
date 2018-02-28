@@ -1,6 +1,6 @@
 <template>
     <el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
-            <el-select v-model="formInline.type" placeholder="流水来源" class="minisel" @change="changeflow">
+            <el-select v-model="formInline.type" placeholder="流水来源" class="minisel" @change="changeflow" size="small">
                 <el-option :label="item.label" v-for="item in formInlinetype" :key="item.value" :value="item.value"></el-option>
             </el-select>
     </el-form>
