@@ -29,49 +29,34 @@
         </el-table-column>
         <el-table-column label="小区/房源" prop="name">
         </el-table-column>
-        <el-table-column label="押金收入" prop="rent">
+        <el-table-column label="租约收入" prop="rent">
             <template slot-scope="props">
                 <span>{{price(props.row.rent)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="押金支出" prop="username">
-            <template slot-scope="props">
-                <span>{{price(props.row.rent)}}</span>
-            </template>
-        </el-table-column>
-        <el-table-column label="押金结余" prop="rentFee">
+        <el-table-column label="服务费" prop="username">
             <template slot-scope="props">
                 <span>{{price(props.row.rentFee)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="租金收入" prop="waym">
-            <template slot-scope="props">
-                <span>{{price(props.row.rent)}}</span>
-            </template>
-        </el-table-column>
-        <el-table-column label="租金支出" prop="payway">
-           <template slot-scope="props">
-                <span>{{price(props.row.rent)}}</span>
-            </template>
-        </el-table-column>
-        <el-table-column label="租金结余" prop="handlem">
-            <template slot-scope="props">
-                <span>{{price(props.row.rent)}}</span>
-            </template>
-        </el-table-column>
-        <el-table-column label="预付费收入" prop="topup">
+        <el-table-column label="预付费收入" prop="waym">
             <template slot-scope="props">
                 <span>{{price(props.row.topup)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="预付费支出" prop="remark">
+        <el-table-column label="服务费" prop="payway">
+           <template slot-scope="props">
+                <span>{{price(props.row.topupFee)}}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="退租结算" prop="remark">
             <template slot-scope="props">
                 <span>{{price(props.row.rent)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="预付费结余" prop="topupFee">
+        <el-table-column label="结余" prop="topupFee">
             <template slot-scope="props">
-                <span>{{price(props.row.topupFee)}}</span>
+                <span>{{price(props.row.final)}}</span>
             </template>
         </el-table-column>
     </el-table>

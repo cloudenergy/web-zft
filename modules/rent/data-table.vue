@@ -107,28 +107,28 @@
 			<div class="flexc rgbc">
 				<div class="setborder">
 					<div class="flexdirection botborder">
-						<img src="" alt="" style="width:100px;height:100px;">
+						<icon type="icon-test1" :symbol="true"/>
 						<p>{{updateData.user.name}}</p>
 						<p>{{updateData.user.mobile}}</p>
 					</div>
 					<div class="userinfobot">
-						<div>
+						<div class="border-bottom">
 							<p>姓名</p>
 							<p>{{updateData.user.name}}</p>
 							<p v-if="updateData.user.name==''">暂无信息</p>
 						</div>
-						<div>
+						<div class="border-bottom">
 							<p>性别</p>
 							<p v-if="updateData.user.gender=='M'">男</p>
 							<p v-if="updateData.user.gender=='F'">女</p>
 							<p v-if="updateData.user.gender==''">暂无信息</p>
 						</div>
-						<div>
+						<div class="border-bottom">
 							<p>身份证号</p>
 							<p>{{updateData.user.documentId}}</p>
 							<p v-if="updateData.user.documentId===null">暂无信息</p>
 						</div>
-						<div>
+						<div class="border-bottom">
 							<p>手机号</p>
 							<p>{{updateData.user.mobile}}</p>
 							<p v-if="updateData.user.mobile===null">暂无信息</p>
@@ -461,15 +461,24 @@
 		width: 225px;
 		.botborder {
 			border-bottom: 1px solid #ddd;
+			i{
+				margin: 25px 0 10px 0;
+				width: 75px;
+				height: 75px;
+			}
 		}
 		.others {
 			height: 100px;
+		}
+		.border-bottom{
+			margin-bottom:3px;
+
 		}
 	}
 
 	.userinfobot {
 		margin-left: 5px;
-		color: #888;
+		color: rgb(170, 170, 170);
 		>div:first-child {
 			margin-top: 16px;
 		}
@@ -545,5 +554,9 @@
 	.contractStatus i svg {
 		width: 35px;
 		height: 35px;
+	}
+	.botborder i svg {
+		width: 75px;
+		height: 75px;
 	}
 </style>

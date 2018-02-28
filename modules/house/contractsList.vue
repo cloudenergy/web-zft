@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="contractList">
         <div class="flexc" v-for="list in item" :key="list.to">
             <div>
                 <div v-if="nowData<=list.from*1000" class="setAuto flexdirection willIn">
@@ -9,8 +9,8 @@
                     <span>在租中</span>
                 </div>
             </div>
-                <icon type="touxiang1" style="font-size:60px;margin:24px 10px 0 0;"/>
-            <div style="margin-left:40px">
+            <icon type="icon-test1" :symbol="true" />
+            <div style="margin:2px 0 0 10px">
                 <div>{{list.user.name}}|
                     <span v-if="list.user.mobile!==''">{{list.user.mobile}}</span>
                     <span v-if="list.user.mobile===''">暂无电话</span>
@@ -46,41 +46,53 @@
 </script>
 
 <style lang="less" scoped>
-    .setAuto {
+    .contractList {
+        .setAuto {
+            height: 72px;
+            width: 80px;
+            span {
+                width: 50px;
+                height: 27px;
+                margin-left: -10px;
+                position: relative;
+                display: inline-block;
+                background: #67c23a;
+                color: #fff;
+                font-size: 12px;
+                padding-left: 5px;
+                line-height: 28px;
+            }
+            span:after {
+                position: absolute;
+                bottom: 0;
+                width: 0;
+                height: 0;
+                right: -16px;
+                margin-left: -10px;
+                content: " ";
+                border-top: 14px solid transparent;
+                border-left: 16px solid #67c23a;
+                border-bottom: 13px solid transparent;
+            }
+
+        }
+
+        .willIn span.willIn {
+            background: #d2d2d2;
+        }
+
+        .willIn span.willIn:after {
+            border-left: 16px solid #d2d2d2;
+        }
+        i{
+            width: 72px;
+            height: 72px;
+        }
+    }
+</style>
+<style>
+    .contractList i svg{
+        width: 72px;
         height: 72px;
-        width: 80px;
-        span {
-            width: 50px;
-            height: 27px;
-            margin-left: -10px;
-            position: relative;
-            display: inline-block;
-            background: #67c23a;
-            color: #fff;
-            font-size: 12px;
-            padding-left: 5px;
-            line-height: 28px;
-        }
-        span:after {
-            position: absolute;
-            bottom: 0;
-            width: 0;
-            height: 0;
-            right: -16px;
-            margin-left: -10px;
-            content: " ";
-            border-top: 14px solid transparent;
-            border-left: 16px solid #67c23a;
-            border-bottom: 13px solid transparent;
-        }
-
-    }
-
-    .willIn span.willIn {
-        background: #d2d2d2;
-    }
-
-    .willIn span.willIn:after {
-        border-left: 16px solid #d2d2d2;
     }
 </style>
