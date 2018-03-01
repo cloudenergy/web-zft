@@ -6,7 +6,6 @@
 				<el-button class="addBtn" size="medium" @click="addJobs">添加岗位</el-button>
 			</el-col>
 		</div>
-		<!-- TODO ZHOUYI  邮箱和手机号返回 -->
 		<div>
 			<el-table :data="tableData" style="width: 100%">
 				<el-table-column prop="" label="" width='20'>
@@ -39,16 +38,18 @@
 					</template>
 				</el-table-column>
 			</el-table>
-			
+
 		</div>
 		<el-dialog title="提示" :visible.sync="addSteward" width="30%">
-			<el-form ref="addStewardForm" :model="addStewardForm" label-width="80px">
-
+			<el-form ref="addStewardForm" :model="addStewardForm" label-width="80px" :rules="rules">
 				<el-form-item label="管家姓名">
 					<el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
 				</el-form-item>
-				<el-form-item label="账户密码">
+				<el-form-item label="账户密码" prop="pass">
 					<el-input v-model="password" placeholder="密码" type="password"></el-input>
+				</el-form-item>
+				<el-form-item label="确认密码" prop="checkPass">
+					<el-input v-model="passwordAgain" placeholder="" type="password"></el-input>
 				</el-form-item>
 				<el-form-item label="权限">
 					<el-select v-model="addStewardForm.level" placeholder="请选择">
@@ -57,7 +58,7 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item label="电子邮件">
-					<el-input v-model="addStewardForm.email" placeholder="电子邮件" type="email"></el-input>
+					<el-input v-model="addStewardForm.email" placeholder="电子邮件"></el-input>
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
@@ -69,113 +70,152 @@
 </template>
 
 <script>
-import md5 from 'js-md5';
-export default {
-	computed: {
-		projectId() {
-			return this.$store.state.userInfo.user.projectId;
-		}
-	},
-	data() {
-		return {
-			addSteward: false,
-			addStewardForm: {
-				username: '',
-				level: '',
-				password: '',
-				email: '' //TODO: 必须提供email
-			},
-			tableData: [],
-			password: ''
-		};
-	},
-	created() {
-		this.query();
-	},
-	components: {},
-	methods: {
-		addJobs() {
-			if (JSON.parse(localStorage.getItem('user')).level === 'ADMIN') {
-				this.addSteward = true;
-			} else {
-				this.$message('权限不足，无法添加岗位');
+	import md5 from 'js-md5';
+	export default {
+		computed: {
+			projectId() {
+				return this.$store.state.userInfo.user.projectId;
 			}
 		},
-		add() {
-			var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
-			if (regex.test(this.addStewardForm.email)) {
-				this.addSteward = false;
-				this.addStewardForm.password = md5(this.password);
+		data() {
+			var checkPassword = (rule, value, callback) => {
+				if (this.password === '') {
+					callback(new Error('请输入密码'));
+				} else {
+					if (this.passwordAgain !== '') {
+						console.log(this.passwordAgain)
+						this.$refs.addStewardForm.validateField('checkPass');
+					}
+					callback();
+				}
+			};
+			var checkPasswordAgain = (rule, value, callback) => {
+				if (this.passwordAgain === '') {
+					callback(new Error('请再次输入密码'));
+				} else if (this.passwordAgain !== this.password) {
+					callback(new Error('两次输入密码不一致!'));
+				} else {
+					callback();
+				}
+			};
+			return {
+				addSteward: false,
+				addStewardForm: {
+					username: '',
+					level: '',
+					password: '',
+					email: '' //TODO: 必须提供email
+				},
+				tableData: [],
+				password: '',
+				passwordAgain: '',
+				rules: {
+					pass: [{
+						validator: checkPassword,
+						trigger: 'blur'
+					}],
+					checkPass: [{
+						validator: checkPasswordAgain,
+						trigger: 'blur'
+					}]
+				}
+			};
+		},
+		created() {
+			this.query();
+		},
+		components: {},
+		methods: {
+			addJobs() {
+				if (JSON.parse(localStorage.getItem('user')).level === 'ADMIN') {
+					this.addSteward = true;
+				} else {
+					this.$message('权限不足，无法添加岗位');
+				}
+			},
+			add() {
+				this.$refs['addStewardForm'].validate((valid) => {
+					if(valid) {
+						var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+						if (regex.test(this.addStewardForm.email)) {
+							this.addSteward = false;
+							this.addStewardForm.password = md5(this.password);
+							this.$model('credentials')
+								.create(this.addStewardForm, {
+									projectId: this.projectId
+								})
+								.then(res => {
+									this.$message.success('创建成功');
+									this.addStewardForm.username = this.addStewardForm.password = this.password = this.addStewardForm.email =
+										'';
+								})
+								.catch(err => {
+									if (err.code === 90000004) {
+										this.$message('权限不足,创建失败');
+									}
+								});
+						} else {
+							this.$message('邮箱格式错误');
+						}
+					}else {
+						console.log('error submit!!');
+            			return false;
+					}
+				})
+			},
+			query() {
 				this.$model('credentials')
-					.create(this.addStewardForm, {
+					.query({}, {
 						projectId: this.projectId
 					})
 					.then(res => {
-						this.$message.success('创建成功');
-						this.addStewardForm.username = this.addStewardForm.password = this.password = this.addStewardForm.email =
-							'';
-					})
-					.catch(err => {
-						if (err.code === 90000004) {
-							this.$message('权限不足,创建失败');
+						if (
+							JSON.parse(localStorage.getItem('user')).level ===
+							'ADMIN'
+						) {
+							this.$set(this, 'tableData', res || []);
 						}
 					});
-			} else {
-				this.$message('邮箱格式错误');
-			}
-		},
-		query() {
-			this.$model('credentials')
-				.query({}, { projectId: this.projectId })
-				.then(res => {
-					if (
-						JSON.parse(localStorage.getItem('user')).level ===
-						'ADMIN'
-					) {
-						this.$set(this, 'tableData', res || []);
-					}
-				});
-		},
-		deleteUser(data) {
-			if (
-				data.username ===
-				JSON.parse(localStorage.getItem('user')).usernmae
-			) {
-				this.$message('不可以删除自己的账号');
-			} else {
-				this.$confirm('将删除此管理员, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				})
-					.then(() => {
-						this.$model('administrator_change')
-							.delete(
-								{},
-								{ projectId: this.projectId, id: data.id }
-							)
-							.then(res => console.log(res));
-					})
-					.catch(() => {
-						this.$message({
-							type: 'info',
-							message: '已取消删除'
+			},
+			deleteUser(data) {
+				if (
+					data.username === JSON.parse(localStorage.getItem('user')).usernmae
+				) {
+					this.$message('不可以删除自己的账号');
+				} else {
+					this.$confirm('将删除此管理员, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						})
+						.then(() => {
+							this.$model('administrator_change')
+								.delete({}, {
+									projectId: this.projectId,
+									id: data.id
+								})
+								.then(res => console.log(res));
+						})
+						.catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消删除'
+							});
 						});
-					});
+				}
 			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang='less' scoped>
-.all {
-	.tit {
-		float: left;
-		width: 100%;
-		background-color: #e0e7ec;
-		padding: 10px 0;
-		margin-top: 10px;
+	.all {
+		.tit {
+			float: left;
+			width: 100%;
+			background-color: #e0e7ec;
+			padding: 10px 0;
+			margin-top: 10px;
+		}
 	}
-}
 </style>

@@ -2,7 +2,7 @@
 	<div>
 		<div class="block" style="margin-bottom:10px">
 			<el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
-				<goend/>
+				<goend @from-toTime="fromtoTime"/>
 				<tenant-way class="marsp marspa" />
 				<city-area style="width:220px" class="flexce" />
 				<div class="importres">
@@ -31,6 +31,11 @@
 			flowsubjectlist,
 			goend,
 		},
+		computed: {
+			projectId() {
+				return this.$store.state.userInfo.user.projectId;
+			}	
+		},
 		data() {
 			return {
 				formInline: {
@@ -41,10 +46,8 @@
 					community: ''
 				},
 				reqData: {
-					index: 1,
-					size: 10,
-					from: startOfMounth,
-					to: nowDate,
+					// from: startOfMounth,
+					// to: nowDate,
 					view: 'category'
 				},
 				subjectFlows:null
@@ -66,6 +69,11 @@
 						console.log(err)
 					})
 			},
+			fromtoTime(data) {
+				this.reqData.from = data[0]/1000
+				this.reqData.to = data[1]/1000
+				this.query()
+			}
 		}
 	}
 </script>

@@ -88,15 +88,15 @@
         },
         methods: {
             handleRowHandle(row) {                
-                if (row.id != this.upflowi) {
-                    this.toggle(row.id)
-                    if (this.upflowi != 0) {
-                        this.toggle(this.upflowi)
-                        this.upflowi = row.id
-                    }
-                } else {
-                    this.toggle(row.id)
-                }
+                // if (row.id != this.upflowi) {
+                //     this.toggle(row.id)
+                //     if (this.upflowi != 0) {
+                //         this.toggle(this.upflowi)
+                //         this.upflowi = row.id
+                //     }
+                // } else {
+                //     this.toggle(row.id)
+                // }
 
                         
             },

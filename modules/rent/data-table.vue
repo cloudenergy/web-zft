@@ -1,7 +1,7 @@
 <template>
 	<div id="rentinfo">
 		<el-table :data="housesRent" style="width: 100%">
-			<el-table-column type="index" width="50">
+			<el-table-column type="index" width="50" :index="indexMethod">
             </el-table-column>
 			<el-table-column label="承租状态" width="100">
 				<template slot-scope="scope">
@@ -169,12 +169,8 @@
 				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
 			</div>
 		</el-dialog>
-		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="50%">
-			<RentWithout :id="updateData.id" :cashAccount="updateData.user.cashAccount" ref="operate" @successInfo="successInfo" />
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible4 = false">取 消</el-button>
-				<el-button type="primary" @click="operateRent">确 定</el-button>
-			</span>
+		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="800px">
+			<RentWithout :id="updateData.id" :cashAccount="updateData.user.cashAccount" ref="operate" @successInfo="successInfo" @operateRent="operateRent"/>
 		</el-dialog>
 		<el-pagination :background="background" layout="prev, pager, next" :total='housesrentData.paging.count' @current-change="handleCurrentChange"
 		    style="margin-top:5px;text-align:right" :page-size='20'>
@@ -220,6 +216,9 @@
 		props: {
 			housesrentData: {
 				required: true
+			},
+			index: {
+				required:true
 			}
 		},
 		data() {
@@ -283,6 +282,9 @@
 			this.$modal.$on('refresh', () => this.$emit('paymFresh'));
 		},
 		methods: {
+			indexMethod(data) {
+				return (this.index-1)*20+data+1
+			},
 			price(data) {
 				return data / 100;
 			},
@@ -354,7 +356,6 @@
 				}
 			},
 			operateRent() {
-				this.$refs.operate.operateRent();
 				this.dialogVisible4 = false;
 			},
 			changeUserInfo(data) {
@@ -389,6 +390,7 @@
 					data: {
 						contractInfo: date
 					},
+					className:'paym',
 					title: '充值'
 				});
 			},
@@ -558,5 +560,8 @@
 	.botborder i svg {
 		width: 75px;
 		height: 75px;
+	}
+	.paym>div.el-dialog {
+		width: 800px;
 	}
 </style>

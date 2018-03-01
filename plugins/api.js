@@ -130,7 +130,8 @@ const apis = {
 	electricity_instructions: resource('/project/{projectId}/instructions'),
 	volume_set: resource('/projects/{projectId}/prices'),
 	administrator_change: resource('/projects/{projectId}/credentials'),
-	apportionment: resource('/projects/{projectId}/houses/{id}/apportionment')
+	apportionment: resource('/projects/{projectId}/houses/{id}/apportionment'),
+	reading_equipment: resource('/projects/{projectId}/devices/reading')
 };
 
 /**

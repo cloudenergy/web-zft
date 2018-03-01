@@ -51,7 +51,7 @@
                 </el-table-column>
                 <el-table-column prop="amount" label="金额">
                     <template slot-scope="scope">
-					    <span>{{price(scope.row.rent)}}</span>
+					    <span>{{price(scope.row.rent)}}元/期</span>
 				    </template>
                 </el-table-column>
                 <el-table-column prop="period" label="周期">

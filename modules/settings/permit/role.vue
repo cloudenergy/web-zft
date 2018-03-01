@@ -9,13 +9,16 @@
 		</el-col>
 
 		<el-dialog title="提示" :visible.sync="addSteward" width="30%">
-			<el-form ref="addStewardForm" :model="addStewardForm" label-width="80px">
+			<el-form ref="addStewardForm" :model="addStewardForm" label-width="80px" :rules="rules" >
 
 				<el-form-item label="管家姓名">
 					<el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
 				</el-form-item>
-				<el-form-item label="账户密码">
+				<el-form-item label="账户密码" prop="pass">
 					<el-input v-model="password" placeholder="密码" type="password"></el-input>
+				</el-form-item>
+				<el-form-item label="确认密码" prop="checkPass">
+					<el-input v-model="passwordAgain" placeholder="" type="password"></el-input>
 				</el-form-item>
 				<el-form-item label="权限">
 					<el-select v-model="addStewardForm.level" placeholder="请选择">
@@ -48,166 +51,53 @@
 			Medics
 		},
 		data() {
+			var validatePass = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入密码'));
+				} else {
+					if (this.ruleForm2.checkPass !== '') {
+						this.$refs.addStewardForm.validateField('checkPass');
+					}
+					callback();
+				}
+			};
+			var validatePass2 = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请再次输入密码'));
+				} else if (value !== this.ruleForm2.pass) {
+					callback(new Error('两次输入密码不一致!'));
+				} else {
+					callback();
+				}
+			};
 			return {
 				addSteward: false,
 				addStewardForm: {
 					username: '',
 					level: '',
-					password:'',
-					email: '' 
+					password: '',
+					email: '',
+					passwordAgain: ''
 				},
 				dialogVisible: false,
-				password:'',
+				password: '',
 				currentView: 'all',
 				selectedOptions: [],
 				value: [],
 				number: '0',
 				postName: '',
-				dialogTable: [{
-					name: '工作台',
-					jurisdiction: [{
-							label: '公告',
-							checked: ['浏览', '新增']
-						},
-						{
-							label: '首页报表',
-							checked: ['收支情况', '入住情况', '续租率', '月度统计', '今日账务']
-						},
-						{
-							label: '待收账单',
-							checked: ['浏览', '忽略', '催租']
-						},
-						{
-							label: '待付账单',
-							checked: ['浏览', '忽略', '通知']
-						},
-						{
-							label: '即将搬入',
-							checked: ['浏览', '忽略', '通知']
-						},
-						{
-							label: '即将退房',
-							checked: ['浏览', '忽略', '通知']
-						},
-						{
-							label: '预定',
-							checked: ['浏览', '新增', '删除', '撤销+退定', '撤销+预约退定']
-						},
-						{
-							label: '在线签约',
-							checked: [
-								'浏览',
-								'接受签约',
-								'拒绝签约',
-								'发送预准',
-								'取消预准',
-								'发起绑定'
-							]
-						},
-						{
-							label: '财务审批',
-							checked: ['浏览', '通过', '驳回', '导出']
-						},
-						{
-							label: '统计',
-							checked: ['浏览']
-						}
-					]
-				}, {
-					name: '工作台',
-					jurisdiction: [{
-							label: '公告',
-							checked: ['浏览', '新增']
-						},
-						{
-							label: '首页报表',
-							checked: ['收支情况', '入住情况', '续租率', '月度统计', '今日账务']
-						},
-						{
-							label: '待收账单',
-							checked: ['浏览', '忽略', '催租']
-						},
-						{
-							label: '待付账单',
-							checked: ['浏览', '忽略', '通知']
-						},
-						{
-							label: '即将搬入',
-							checked: ['浏览', '忽略', '通知']
-						},
-						{
-							label: '即将退房',
-							checked: ['浏览', '忽略', '通知']
-						},
-						{
-							label: '预定',
-							checked: ['浏览', '新增', '删除', '撤销+退定', '撤销+预约退定']
-						},
-						{
-							label: '在线签约',
-							checked: [
-								'浏览',
-								'接受签约',
-								'拒绝签约',
-								'发送预准',
-								'取消预准',
-								'发起绑定'
-							]
-						},
-						{
-							label: '财务审批',
-							checked: ['浏览', '通过', '驳回', '导出']
-						},
-						{
-							label: '统计',
-							checked: ['浏览']
-						}
-					]
-				}, ],
-
-				options: [{
-						label: '本人',
-						value: '1'
-					},
-					{
-						label: '本部',
-						value: '10'
-					},
-					{
-						label: '所有',
-						value: '20'
-					}
-				],
-				rentReduction: [{
-						label: 'a',
-						value: 'a'
-					},
-					{
-						label: 'b',
-						value: 'b',
-						children: [{
-							label: 'bb',
-							value: 'bb'
-						}]
-					}
-				],
-				tree: [{
-						label: '所有岗位(1人)',
-						index: 'All'
-					},
-					{
-						label: '管理员(1人)',
-						index: 'Root'
-					},
-					{
-						label: '卫生员(0人)',
-						index: 'Medics'
-					}
-				],
 				defaultProps: {
 					children: 'children',
 					label: 'label'
-				}
+				},
+				rules: {
+          pass: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: validatePass2, trigger: 'blur' }
+          ]
+        }
 			};
 		},
 		methods: {
@@ -218,17 +108,17 @@
 				this.addSteward = false;
 				this.addStewardForm.password = md5(this.password);
 				this.$model('credentials')
-				.create(this.addStewardForm, {
-					projectId: this.projectId
-				})
-				.then(res=>{
-					if(res.status!=200){
-						this.$message('创建失败')
-					}else{
-						this.$message.success('创建成功')
-						this.addStewardForm.username=this.addStewardForm.password=this.password=''
-					}
-				})
+					.create(this.addStewardForm, {
+						projectId: this.projectId
+					})
+					.then(res => {
+						if (res.status != 200) {
+							this.$message('创建失败')
+						} else {
+							this.$message.success('创建成功')
+							this.addStewardForm.username = this.addStewardForm.password = this.password = ''
+						}
+					})
 			}
 		},
 		computed: {

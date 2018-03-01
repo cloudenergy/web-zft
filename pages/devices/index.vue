@@ -25,8 +25,7 @@
 				</div>
 			</el-header>
 			<el-main style="padding-right:0">
-				<electricit :houses="houses" />
-				<!-- <div id="myChart" :style="{width: '1000px', height: '500px'}"></div> -->
+				<electricit :readingElectric="readingElectric" />
 			</el-main>
 		</el-container>
 	</el-container>
@@ -43,6 +42,8 @@
 	import {
 		RentSearch
 	} from '../../modules/rent'
+	import startOfYesterday from 'date-fns/start_of_yesterday'
+	console.log(startOfYesterday())
 	export default {
 		components: {
 			Tab,
@@ -53,11 +54,14 @@
 		data() {
 			return {
 				houseFormat: 'SHARE',
-				houses: [],
+				readingElectric: [],
 				paging: {},
 				reqData: {
-					size: 20,
-					index: 1
+					houseFormat:this.houseFormat,
+					startDate:Date.parse(startOfYesterday())/1000-100*24*60*60,
+					endDate:Date.parse(new Date())/1000-100*24*60*60,
+					size:10,
+					index:1
 				}
 			};
 		},
@@ -153,15 +157,18 @@
 				this.query();
 			},
 			query() {
-				this.$model('houses')
-					.query({
-						houseFormat: this.houseFormat
-					}, {
+				this.$model('reading_equipment')
+					.query(this.reqData, {
 						projectId: this.projectId
 					})
 					.then(res => {
-						this.$set(this, 'houses', res.data || []);
-						this.$set(this, 'paging', res.paging || []);
+						res.map(ele=>{
+							ele.startDate = Date.parse(startOfYesterday())
+							ele.endDate = Date.parse(new Date())
+							return ele
+						})
+						this.$set(this, 'readingElectric', res || []);
+						// this.$set(this, 'paging', res.paging || []);
 					});
 			},
 			showmessage(data) {

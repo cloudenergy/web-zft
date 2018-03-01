@@ -67,7 +67,7 @@
 		</el-form>
 		<div slot="footer" class="dialog-footer">
 			<el-button @click="dismiss()">取 消</el-button>
-			<el-button @click="saveAndcontinueToAdd()" v-if="form.houseFormat==userInfo.houseTypes.ENTIRE[0]">保存并继续添加</el-button>
+			<el-button @click="saveAndcontinueToAdd()" v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">保存并继续添加</el-button>
 			<el-button type="primary" @click="save()">保存</el-button>
 		</div>
 	</div>
@@ -87,7 +87,10 @@
 		},
 		// todo i
 		computed: {
-			...mapState(['userInfo', 'user'])
+			...mapState(['userInfo', 'user']),
+			projectId() {
+    			return this.$store.state.userInfo.user.projectId;
+    		},
 		},
 		data() {
 			return {
@@ -172,8 +175,8 @@
 				this.$modal.$emit('dismiss');
 			},
 			save() {
-				this.$modal.$emit('dismiss');
 				this.saveCloseQ()
+				this.$modal.$emit('dismiss');
 			},
 			saveAndcontinueToAdd() {
 				this.saveCloseQ()
@@ -183,6 +186,7 @@
 					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form
 				};
+				console.log(data)
 				if(data.code!==this.houseCode) {
 					this.houseCode = data.code
 					if (data.houseFormat === 'ENTIRE') {
@@ -191,7 +195,7 @@
 						data.enabledFloors = this.Entire.enabledFloors
 					}
 					this.$model('houses').create(data, {
-						projectId: this.user.projectId
+						projectId: this.projectId
 					})
 					.then(res => {
 						this.$message.success('创建成功')

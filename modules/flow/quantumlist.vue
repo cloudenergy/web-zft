@@ -49,7 +49,7 @@
             </el-table-column>
             <el-table-column label="房源" prop="houseresource" min-width="180" max-width="200">
                 <template slot-scope="scope">
-                    <span>{{scope.row.room.locationName}}{{scope.row.room.building}}{{scope.row.room.unit}}{{scope.row.room.roomNumber}}{{scope.row.room.roomName}}</span>
+                    <span>{{scope.row.room.locationName}}{{scope.row.room.building}}幢{{scope.row.room.unit}}单元{{scope.row.room.roomNumber}} {{scope.row.room.roomName}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="费用类型" prop="category">
