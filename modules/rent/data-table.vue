@@ -105,38 +105,8 @@
 		<el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="65%" class="">
 			<div></div>
 			<div class="flexc rgbc">
-				<div class="setborder">
-					<div class="flexdirection botborder">
-						<icon type="icon-test1" :symbol="true"/>
-						<p>{{updateData.user.name}}</p>
-						<p>{{updateData.user.mobile}}</p>
-					</div>
-					<div class="userinfobot">
-						<div class="border-bottom">
-							<p>姓名</p>
-							<p>{{updateData.user.name}}</p>
-							<p v-if="updateData.user.name==''">暂无信息</p>
-						</div>
-						<div class="border-bottom">
-							<p>性别</p>
-							<p v-if="updateData.user.gender=='M'">男</p>
-							<p v-if="updateData.user.gender=='F'">女</p>
-							<p v-if="updateData.user.gender==''">暂无信息</p>
-						</div>
-						<div class="border-bottom">
-							<p>身份证号</p>
-							<p>{{updateData.user.documentId}}</p>
-							<p v-if="updateData.user.documentId===null">暂无信息</p>
-						</div>
-						<div class="border-bottom">
-							<p>手机号</p>
-							<p>{{updateData.user.mobile}}</p>
-							<p v-if="updateData.user.mobile===null">暂无信息</p>
-						</div>
-						<div class="others"></div>
-					</div>
-				</div>
-				<div style="width:100%;margin-left:30px;">
+				<userInfoImage :contractInfo="updateData"/>
+				<div style="flex:1;margin-left:30px;">
 					<div class="flexc dialog" style="color:#aaa">
 						<div @click="changeUserInfo(1)" class="cursorp" :class="{activerent:showinf==1}">租户详情</div>
 						<div @click="changeUserInfo(2)" class="cursorp" :class="{activerent:showinf==2}">租约信息</div>
@@ -163,12 +133,6 @@
 			</div>
 		</el-dialog>
 		<!-- 用户信息预览 -->
-		<el-dialog :title="dialogTitle3" :visible.sync="dialogVisible3" width="50%">
-			<Rentmessasge :form="updateData" />
-			<div style="height:30px">
-				<el-button type="primary" @click="dialogVisible3 = false" style="float:right;margin-top:10px">确 定</el-button>
-			</div>
-		</el-dialog>
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="800px">
 			<RentWithout :id="updateData.id" :cashAccount="updateData.user.cashAccount" ref="operate" @successInfo="successInfo" @operateRent="operateRent"/>
 		</el-dialog>
@@ -190,6 +154,7 @@
 		Paym,
 		RentWithout
 	} from '../userinfo';
+	import userInfoImage from '../userinfo/userInfoImage.vue'
 	export default {
 		components: {
 			Rentinfo,
@@ -200,7 +165,8 @@
 			Relet,
 			Showrent,
 			Paym,
-			RentWithout
+			RentWithout,
+			userInfoImage
 		},
 		computed: {
 			projectId() {
@@ -286,7 +252,7 @@
 				return (this.index-1)*20+data+1
 			},
 			price(data) {
-				return data / 100;
+				return (data / 100).toFixed(2);
 			},
 			successInfo() {
 				this.$emit('rentWithout')

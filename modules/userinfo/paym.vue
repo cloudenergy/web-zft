@@ -2,15 +2,15 @@
     <div>
         <div class="flexc doublechec">
             <userInfoImage :contractInfo="contractInfo"/>
-            <div class="paymway">
+            <div class="paymway flexc">
                 <el-form ref="form" :model="form" label-width="80px" :rules="rules">
                     <el-form-item label="当前余额" prop="price">
                         <p :style="{color:contractInfo.user.cashAccount.balance<2000?'#f03d53':'#000'}">{{price(contractInfo.user.cashAccount.balance)}}</p>
                     </el-form-item>
-                    <el-form-item label="缴费金额" prop="price">
+                    <el-form-item label="充值金额" prop="price">
                         <el-input v-model.number="form.price" auto-complete="off" type="number" size="small"></el-input>
                     </el-form-item>
-                    <el-form-item label="缴费方式">
+                    <el-form-item label="充值方式">
                         <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%" size="small">
                             <el-option :label='item.name' :value='item.id' v-for="item in payRoad" :key="item.id"></el-option>
                         </el-select>
@@ -19,12 +19,13 @@
                         <el-input type="textarea" v-model="form.desc" size="medium"></el-input>
                     </el-form-item>
                 </el-form>
+                <div class="flexc onsub">
+                    <el-button type="primary" @click="onSubmit('form')">立即充值</el-button>
+                    <el-button @click="onclose('form')">取消</el-button>
+                </div>
             </div>
         </div>
-        <div class="flexc onsub">
-            <el-button @click="onclose('form')">取消</el-button>
-            <el-button type="primary" @click="onSubmit('form')">立即缴费</el-button>
-        </div>
+        
     </div>
 </template>
 
@@ -76,7 +77,7 @@
         },
         methods: {
             price(data) {
-                return data / 100
+                return (data / 100).toFixed(2)
             },
             query(data) {
                 this.$model('fund_channel')
@@ -157,14 +158,15 @@
 
     .paymway {
         flex: 1;
-        margin-left:30px
+        margin-left:30px;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .onsub {
         flex-direction: row-reverse;
-        margin-top: 20px;
         button {
-            margin: 0 10px;
+            margin-left:20px;
         }
     }
 </style>

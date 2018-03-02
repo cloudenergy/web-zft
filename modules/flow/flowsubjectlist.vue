@@ -49,14 +49,19 @@
                 <span>{{price(props.row.topupFee)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="退租结算" prop="remark">
+        <el-table-column label="退租收入" prop="remark">
             <template slot-scope="props">
-                <span>{{price(props.row.rent)}}</span>
+                <span>{{price(props.row.finalReceive)}}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="退租支出" prop="remark">
+            <template slot-scope="props">
+                <span>{{price(props.row.finalPay)}}</span>
             </template>
         </el-table-column>
         <el-table-column label="结余" prop="topupFee">
             <template slot-scope="props">
-                <span>{{price(props.row.final)}}</span>
+                <span>{{price(props.row.balance)}}</span>
             </template>
         </el-table-column>
     </el-table>
@@ -104,7 +109,7 @@
                 this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == flowi))
             },
             price(data) {
-                return data/100
+                return (data / 100).toFixed(2)
             }
         }
     }

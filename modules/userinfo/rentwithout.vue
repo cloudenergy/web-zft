@@ -4,10 +4,16 @@
         <div style="flex:1" class="flexc right-box">
             <el-form ref="form" label-width="80px" style="width:100%">
                 <el-form-item label="合同周期">
-                    <span class="gray"> {{set(contractInfo.from)}}-{{set(contractInfo.to)}}</span>
+                    <span class="gray"> {{set(contractInfo.from)}}至{{set(contractInfo.to)}}</span>
                 </el-form-item>
                 <el-form-item label="账户余额">
-                    <span class="gray"> {{price(cashAccount.balance)}}</span>
+                    <span class="gray"> {{price(cashAccount.balance)}}元</span>
+                </el-form-item>
+                <el-form-item label="结算类型">
+                    <el-radio-group v-model="radio">
+                        <el-radio :label="1">收款</el-radio>
+                        <el-radio :label="2">退款</el-radio>
+                    </el-radio-group>
                 </el-form-item>
                 <el-form-item label="结算金额">
                     <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number">
@@ -32,7 +38,7 @@
                 </div>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="operateRent(false)">取 消</el-button>
-                    <el-button type="primary" @click="operateRent(true)">确 定</el-button>
+                    <el-button type="primary" @click="operateRent(true)">退 租</el-button>
                 </div>
             </div>
         </div>
@@ -67,7 +73,8 @@
                 contractInfo: {
                     user: ''
                 },
-                payRoad: []
+                payRoad: [],
+                radio:2
             }
         },
         mounted() {
@@ -75,7 +82,7 @@
         },
         methods: {
             price(data) {
-                return data / 100
+                return (data / 100).toFixed(2)
             },
             set(time) {
                 return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
@@ -115,19 +122,20 @@
                 console.log('submit!');
             },
             operateRent(data) {
-                this.$emit('closeDialog')
+                this.$emit('operateRent')
+                console.log(this.radio)
                 if (data) {
-                    if (this.input >= 0) {
+                    if (this.radio === 1) {
                         this.withOutInfo.transaction.flow = 'receive'
                         this.withOutInfo.endDate = this.nowData()
-                        this.withOutInfo.transaction.amount = this.input * 100
-
+                       
                     } else {
                         this.withOutInfo.transaction.flow = 'pay'
                         this.withOutInfo.endDate = this.nowData()
-                        this.withOutInfo.transaction.amount = -this.input * 100
                     }
+                    this.withOutInfo.transaction.amount = this.input * 100
                     this.input = ''
+                    this.radio = 2
                     this.newModel()
                     this.$model('contracts')
                         .update(this.withOutInfo, {

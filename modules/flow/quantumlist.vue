@@ -42,7 +42,10 @@
             </el-table-column>
             <el-table-column label="金额" prop="folwm" width="80px">
                 <template slot-scope="scope">
-                    <span>{{ price(scope.row.amount) }}</span>
+                    <div :style="{color:scope.row.direction==='pay'?'#fd6d6d':'#67c23a'}">
+                        <span v-if="scope.row.direction==='pay'">-</span>
+                        <span>{{ price(scope.row.amount) }}</span>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column label="姓名" prop="user.name" min-width="100">
@@ -147,7 +150,7 @@
                 return new Date(parseInt(data * 1000)).toLocaleDateString()
             },
             price(data) {
-                return data / 100
+                return (data / 100).toFixed(2)
             },
             handleCurrentChange(val) {
                 this.$emit('pageIndex', val)

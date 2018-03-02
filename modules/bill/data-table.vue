@@ -129,7 +129,7 @@
              * num 实收的值
              */
             narrow(data) {
-                return data / 100
+                return (data / 100).toFixed(2)
             },
             handleReceive(index, data) {
                 this.tableData = data

@@ -32,7 +32,7 @@
                     <span class="el-dropdown-link devicesuser" v-if="scope.row.details.length!==0">
                         {{ scope.row.details[0].contract.userName }}
                     </span>
-                    <span style="margin-left: 2px;margin-top:5px">{{ scope.row.userid }}</span>
+                    <span style="margin-left: 2px;margin-top:5px"  v-if="scope.row.details.length!==0">{{ scope.row.details[0].contract.userId }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="往次抄表" min-width="160">
@@ -40,7 +40,7 @@
                     <el-date-picker v-model="scope.row.startDate" type="date" placeholder="选择日期" style="width:160px" @input="oldTime(scope.row)" @blur="dateTest()">
                     </el-date-picker>
                     <br/>
-                    <span style="margin-left: 30px;margin-top:5px">{{ scope.row.lastnum }}</span>
+                    <span style="margin-left: 30px;margin-top:5px"  v-if="scope.row.details.length!==0">{{ scope.row.details[0].startScale }}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -49,7 +49,7 @@
                     <el-date-picker v-model="scope.row.endDate" type="date" placeholder="选择日期" style="width:160px" @change="newTime(scope.row)">
                     </el-date-picker>
                     <br>
-                    <span style="margin-left: 30px;margin-top:5px">{{ scope.row.thisnum }}</span>
+                    <span style="margin-left: 30px;margin-top:5px" v-if="scope.row.details.length!==0">{{ scope.row.details[0].endScale }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="差值">

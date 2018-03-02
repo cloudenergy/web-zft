@@ -40,7 +40,7 @@
 				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/\//g, "-")
 			},
 			price(data) {
-				return data / 100
+				return (data / 100).toFixed(2)
 			},
 			query() {
 				this.$model('paid_bills')

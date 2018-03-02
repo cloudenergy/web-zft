@@ -121,7 +121,7 @@
 				return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
 			},
 			price(data) {
-				return data / 100
+				return (data / 100).toFixed(2)
 			}
 		}
 	}

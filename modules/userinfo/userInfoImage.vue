@@ -10,23 +10,23 @@
                 <div>
                     <p>姓名</p>
                     <p>{{contractInfo.user.name}}</p>
-                    <p v-if="contractInfo.user.name==''">暂无信息</p>
+                    <p v-if="contractInfo.user.name===null">暂无信息</p>
                 </div>
                 <div>
                     <p>性别</p>
                     <p v-if="contractInfo.user.gender=='M'">男</p>
                     <p v-if="contractInfo.user.gender=='F'">女</p>
-                    <p v-if="contractInfo.user.gender==''">暂无信息</p>
+                    <p v-if="contractInfo.user.gender===null">暂无信息</p>
                 </div>
                 <div>
                     <p>身份证号</p>
                     <p>{{contractInfo.user.documentId}}</p>
-                    <p v-if="contractInfo.user.documentId==''|| null">暂无信息</p>
+                    <p v-if="contractInfo.user.documentId===null">暂无信息</p>
                 </div>
                 <div>
                     <p>手机号</p>
                     <p>{{contractInfo.user.mobile}}</p>
-                    <p v-if="contractInfo.user.mobile==''">暂无信息</p>
+                    <p v-if="contractInfo.user.mobile===null">暂无信息</p>
                 </div>
                 <div class="others"></div>
             </div>
@@ -47,6 +47,9 @@
             contractInfo: {
                 required:true
             }
+        },
+        created () {
+            console.log(this.contractInfo.user.documentId)
         }
     }
 </script>
@@ -69,7 +72,7 @@
             }
         }
         .others{
-            height: 100px;
+            height: 30px;
         }
     }
 </style>

@@ -191,7 +191,7 @@
                 if (isNaN(data)) {
                     return '未设置'
                 } else {
-                    return data / 100
+                    return (data / 100).toFixed(2)
                 }
             },
             handleSelectionChange(val) {

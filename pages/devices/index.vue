@@ -59,7 +59,7 @@
 				reqData: {
 					houseFormat:this.houseFormat,
 					startDate:Date.parse(startOfYesterday())/1000-100*24*60*60,
-					endDate:Date.parse(new Date())/1000-100*24*60*60,
+					endDate:Date.parse(new Date())/1000-10*24*60*60,
 					size:10,
 					index:1
 				}

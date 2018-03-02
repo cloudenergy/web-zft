@@ -63,7 +63,7 @@
 					})
 			},
 			price(data) {
-				return data / 100
+				return (data / 100).toFixed(2)
 			},
 			nowTime(data) {
 				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
