@@ -14,6 +14,11 @@ describe('DataTable', () => {
 					}
 				}
 			}
+		},
+		propsData: {
+			pagingSize: {
+				count:100
+			}
 		}
 	})
 
