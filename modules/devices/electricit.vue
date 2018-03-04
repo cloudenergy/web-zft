@@ -27,12 +27,11 @@
                 </template>
             </el-table-column>
             <el-table-column label="归属账单" min-width="160">
-                <template slot-scope="scope">
-
-                    <span class="el-dropdown-link devicesuser" v-if="scope.row.details.length!==0">
+                <template slot-scope="scope"  v-if="scope.row.details.length!==0&&scope.row.details[0].contract!==undefined">
+                    <span class="el-dropdown-link devicesuser">
                         {{ scope.row.details[0].contract.userName }}
                     </span>
-                    <span style="margin-left: 2px;margin-top:5px"  v-if="scope.row.details.length!==0">{{ scope.row.details[0].contract.userId }}</span>
+                    <span style="margin-left: 2px;margin-top:5px">{{ scope.row.details[0].contract.userId }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="往次抄表" min-width="160">

@@ -1,13 +1,18 @@
 <template>
 	<div class="secondary-side">
-		<el-tabs v-model="type" @tab-click="change">
+		<el-tabs v-model="type" @tab-click="change" v-if="!urlLocation">
 			<el-tab-pane v-for="item in userInfo.houseTypes" :key="item[0]" :label="item[1]" :name="item[0]" />
+		</el-tabs>
+		<el-tabs v-model="bindEquipment" @tab-click="change" v-if="urlLocation">
+			<el-tab-pane label="已绑定" name="first"/>
+			<el-tab-pane label="" name="first" />
+			<el-tab-pane label="未绑定" name="second"/>
 		</el-tabs>
 		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange"/>
 		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
 			<el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
 				<!-- <i class="el-icon-menu"></i> -->
-				<div slot="title" class="flexcenter"><span>全部小区</span><span class="communityNumber">小区数量:{{community.length}}</span></div>
+				<div slot="title" class="flexcenter"><span>全部小区</span><span class="communityNumber">数量:{{community.length}}</span></div>
 			</el-menu-item>
 			<el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.geoLocationId)" :class="{'is-active':typeNum==item.geoLocationId}">
 				<span slot="title">{{item.name}}</span>
@@ -24,7 +29,13 @@
 	export default {
 		// todo i
 		computed: {
-			...mapState(['userInfo', 'defaultHouseType'])
+			...mapState(['userInfo', 'defaultHouseType']),
+			projectId() {
+				return this.$store.state.userInfo.projectId
+			},
+			urlLocation() {
+				return /equipment/.test(window.location.pathname)
+			}
 		},
 		props: {
 			selected: null
@@ -44,7 +55,8 @@
 				firNum: 0,
 				index: '0',
 				communityType: 'SHARE',
-				showCommunity:''
+				showCommunity:'',
+				bindEquipment:'first'
 			};
 		},
 		created() {
@@ -55,6 +67,7 @@
 		},
 		methods: {
 			menuStyle() {
+				console.log(this.community.length)
 				if((!_.isUndefined(this.$refs.menuLocation))&&this.community.length!==0){
 					var b = (this.community.length+1)*42+30
 					return `height:${this.h < b ? b : this.h}px`
@@ -105,19 +118,25 @@
 						force
 					})
 					.then(data => {
-						this.community = this.showCommunity = data
-						this.communityType = this.type
-						if (this.type == 'ENTIRE'&&data.length!==0) {
-							this.typeNum = data[0].geoLocationId
-							this.$emit('change', this.clickType, data[0].geoLocationId)
-						} else {
-							this.typeNum = '0'
-							this.$emit('change', this.clickType)
+						if(this.urlLocation){
+							this.community = this.$store.state.userInfo.allCommunity
+							this.$emit('change',this.clickType)
+						}else{
+							this.community = this.showCommunity = data
+							this.communityType = this.type
+							if (this.type == 'ENTIRE'&&data.length!==0) {
+								this.typeNum = data[0].geoLocationId
+								this.$emit('change', this.clickType, data[0].geoLocationId)
+							} else {
+								this.typeNum = '0'
+								this.$emit('change', this.clickType)
+							}
+							if (this.firNum !== 0) {
+								this.setChoose()
+							}
+							this.firNum++
 						}
-						if (this.firNum !== 0) {
-							this.setChoose()
-						}
-						this.firNum++
+						
 					});
 			},
 		}
@@ -134,6 +153,9 @@
 			height: 42px;
 			line-height: 40px;
 			text-align: left;
+		}
+		.el-tabs__item{
+			height: auto;
 		}
 	}
 </style>

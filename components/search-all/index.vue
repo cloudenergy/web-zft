@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         show(el) {
-            if(el.keyCode==13){
+            if(el.keyCode===13){
                 this.$modal.$emit('keyup',this.searchInput)
             }
         }

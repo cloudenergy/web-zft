@@ -128,6 +128,7 @@
 import AddModal from './add';
 import { NewContract } from '~/modules/contract';
 import ContractsList from './contractsList';
+import format from 'date-fns/format'
 import {
 	Rentinfo,
 	Rentlease,
@@ -223,9 +224,7 @@ export default {
 			this.showinf = data;
 		},
 		timeDate(data) {
-			return new Date(parseInt(data) * 1000)
-				.toLocaleDateString()
-				.replace(/年|月/g, '-');
+			return format(new Date(data*1000),'YYYY-MM-DD')
 		},
 		edit() {
 			// 编辑窗口

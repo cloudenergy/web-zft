@@ -58,8 +58,8 @@
 				paging: {},
 				reqData: {
 					houseFormat:this.houseFormat,
-					startDate:Date.parse(startOfYesterday())/1000-100*24*60*60,
-					endDate:Date.parse(new Date())/1000-10*24*60*60,
+					startDate:1506787200,
+					endDate:1512057600,
 					size:10,
 					index:1
 				}
@@ -162,12 +162,12 @@
 						projectId: this.projectId
 					})
 					.then(res => {
-						res.map(ele=>{
+						res.data.map(ele=>{
 							ele.startDate = Date.parse(startOfYesterday())
 							ele.endDate = Date.parse(new Date())
 							return ele
 						})
-						this.$set(this, 'readingElectric', res || []);
+						this.$set(this, 'readingElectric', res.data || []);
 						// this.$set(this, 'paging', res.paging || []);
 					});
 			},

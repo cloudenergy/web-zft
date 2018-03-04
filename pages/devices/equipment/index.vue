@@ -29,7 +29,7 @@
 				</div>
 			</el-header>
 			<el-main style="max-width:100%;padding-right:0">
-				<equipmentset :devices="devices"/>
+				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading"/>
 			</el-main>
 		</el-container>
     </el-container>
@@ -71,7 +71,8 @@ export default {
 				idnex:20,
 				mode:'BIND'
 			},
-			devices:[]
+			devices:[],
+			loading:1
 		}
 	},
 	computed : {
@@ -96,8 +97,10 @@ export default {
     		this.$model('devices')
     			.query(this.reqData,{ projectId: this.projectId })
     			.then(res=>{
+					this.loading = this.reqData.mode==='FREE'?2:1
+					console.log(this.loading)
 					this.$set(this,'devices',_.chunk(res.data,20)[0])
-					console.log(res)
+					this.$set(this,'paging',res.paging)
 				})
 				.catch(err=>{
 					console.log(err)
@@ -116,12 +119,19 @@ export default {
 			console.log(data)
 		},
 		refresh(type,commiunityId) {
-			// this.reqData.houseFormat = type
-			if(commiunityId!==undefined){
-				this.reqData.locationId = commiunityId
-			}else{
-				delete this.reqData.locationId
+			if(type==='first') {
+				this.reqData.mode='BIND'
+			}else if(type==='second') {
+				this.reqData.mode='FREE'
+			}else {
+				this.reqData.houseFormat = type
+				if(commiunityId!==undefined){
+					this.reqData.locationId = commiunityId
+				}else{
+					delete this.reqData.locationId
+				}
 			}
+			delete this.reqData.houseFormat
 			this.query();
 		}
 	}

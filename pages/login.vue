@@ -9,7 +9,7 @@
 					<el-input placeholder="账户" type="text" v-model="user.mobile" auto-complete="off"></el-input>
 				</el-form-item>
 				<el-form-item prop="user.pass">
-					<el-input placeholder="密码" type="password" v-model="user.pass" auto-complete="off"></el-input>
+					<el-input placeholder="密码" type="password" v-model="user.pass" auto-complete="off" @keyup.native="keyLogin($event)"></el-input>
 				</el-form-item>
 				<el-form-item class="bottom-btn">
 					<el-button style="width: 100%" type="primary" @click.native="login()">登录</el-button>
@@ -32,6 +32,11 @@
 			};
 		},
 		methods: {
+			keyLogin(el) {
+				if(el.keyCode===13){
+					this.login()
+				}
+			},
 			login() {
 				this.$store
 					.dispatch('POST_LOGIN', {
