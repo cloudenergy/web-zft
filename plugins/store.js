@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-03-02 15:00:06
+ * @Last Modified time: 2018-03-04 16:50:24
  */
 
 import api from '~/plugins/api';
@@ -208,19 +208,22 @@ export default {
 		}, {
 			houseType,
 			districtsCode,
-			force
+			force,
+			val
 		}) {
-			if (houseType === 'SHARE') {
-				if (state.userInfo.communities) {
-					return Promise.resolve(state.userInfo.communities);
-				}
-			} else if (houseType === 'SOLE') {
-				if (state.userInfo.soleCommunities) {
-					return Promise.resolve(state.userInfo.soleCommunities);
-				}
-			} else {
-				if (state.userInfo.entireCommunities) {
-					return Promise.resolve(state.userInfo.entireCommunities);
+			if(val!==true) {
+				if (houseType === 'SHARE') {
+					if (state.userInfo.communities) {
+						return Promise.resolve(state.userInfo.communities);
+					}
+				} else if (houseType === 'SOLE') {
+					if (state.userInfo.soleCommunities) {
+						return Promise.resolve(state.userInfo.soleCommunities);
+					}
+				} else {
+					if (state.userInfo.entireCommunities) {
+						return Promise.resolve(state.userInfo.entireCommunities);
+					}
 				}
 			}
 			api('communities')

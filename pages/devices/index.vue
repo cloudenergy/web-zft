@@ -2,7 +2,7 @@
 	<el-container>
 		<el-aside class="page-bill-index" width="auto">
 			<div>
-				<Tab @change="refresh" :selected="houseFormat" />
+				<Tab @change="refresh" :selected="houseFormat" @communityChange='communityChange'/>
 			</div>
 		</el-aside>
 		<el-container>
@@ -73,6 +73,15 @@
 			// this.drawLine();
 		},
 		methods: {
+			communityChange(data) {
+				if(data==='0'){
+					delete this.reqData.locationId
+					this.query()
+				}else{
+					this.reqData.locationId = data
+					this.query()
+				}
+			},
 			refresh(type, commiunityId) {
 				this.reqData.houseFormat = type
 				if (commiunityId !== undefined) {
@@ -80,6 +89,7 @@
 				} else {
 					delete this.reqData.locationId
 				}
+				console.log(type,commiunityId)
 				this.query();
 			},
 			query() {

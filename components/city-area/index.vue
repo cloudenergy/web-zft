@@ -35,9 +35,9 @@ export default {
 		listCity(newVal,oldVal) {
 			var city = newVal.filter((item)=>{return item.houseFormat===this.clickType})
 			if(!this.isForm) {
-				this.list.city = city.map((ele)=>{
+				this.list.city = _.uniqBy(city.map((ele)=>{
 					return ele.city
-				}).map(mapper)
+				}).map(mapper),'value')
 			}
 		}	
 	},
@@ -63,7 +63,8 @@ export default {
 		},
 		houseFormatChange(data) {
 			this.city=this.area=""
-			this.list.city = this.listCity.filter((item)=>{return item.houseFormat===data}).map((ele)=>{return ele.city}).map(mapper)
+			this.list.city =  _.uniqBy(this.listCity.filter((item)=>{return item.houseFormat===data}).map((ele)=>{return ele.city}).map(mapper),'value')
+			
 		}
 	},
 	render() {

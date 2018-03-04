@@ -125,6 +125,9 @@ export default {
 		margin-bottom: 20px;
 	}
 }
+.new-contract .el-dialog {
+	width: 780px;
+}
 </style>
 
 <style lang="less" scoped>

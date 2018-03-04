@@ -35,6 +35,9 @@
 			},
 			urlLocation() {
 				return /equipment/.test(window.location.pathname)
+			},
+			communities() {
+				return this.$store.state.userInfo.communities
 			}
 		},
 		props: {
@@ -56,7 +59,8 @@
 				index: '0',
 				communityType: 'SHARE',
 				showCommunity:'',
-				bindEquipment:'first'
+				bindEquipment:'first',
+				addHouse:false
 			};
 		},
 		created() {
@@ -64,6 +68,17 @@
 			var a = 0;
 			a = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 			this.h = a - 177
+			this.$modal.$on('refresh', () => {
+				this.refresh('SHARE')
+			})
+		},
+		watch: {
+			communities(newVal,oldVal) {
+				if(this.addHouse){
+					this.community = newVal
+				}
+				this.addHouse = false
+			}
 		},
 		methods: {
 			menuStyle() {
@@ -109,12 +124,19 @@
 					item.$el.classList.value = "el-menu-item"
 				})
 			},
-			updateCommunity(force = false) {
+			refresh() {
+				if(/houses/.test(document.location.pathname)) {
+					this.updateCommunity(false,true)
+				}
+				this.addHouse = true
+			},
+			updateCommunity(force = false,val) {
 				this.$store
 					.dispatch('GET_COMMUNITIES', {
 						houseType: this.type,
 						districtsCode: this.filters.area || this.filters.city,
-						force
+						force,
+						val
 					})
 					.then(data => {
 						if(this.urlLocation){

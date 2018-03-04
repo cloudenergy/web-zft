@@ -175,13 +175,13 @@
 				this.$modal.$emit('dismiss');
 			},
 			save() {
-				this.saveCloseQ()
+				this.saveCloseQ('close')
 				this.$modal.$emit('dismiss');
 			},
 			saveAndcontinueToAdd() {
-				this.saveCloseQ()
+				this.saveCloseQ('noCLose')
 			},
-			saveCloseQ() {
+			saveCloseQ(val) {
 				const data = {
 					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form

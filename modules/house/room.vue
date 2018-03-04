@@ -53,8 +53,8 @@
 			<ContractsList :item="roomAllContracts" style="min-height:72px" v-loading="loading" @click.native="showUserInfo(room.contract)"
 			    class="cursorp" />
 		</el-dialog>
-		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="50%">
-			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo' />
+		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="800px">
+			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo'/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>

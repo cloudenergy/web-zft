@@ -138,8 +138,11 @@
     	},
     	created() {
 			// this.query();
-			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
-    	},
+			this.$modal.$on('keyup',(data)=>{this.setSearch(data)}),
+			this.$modal.$on('refresh', () => {
+				this.refresh('SHARE')
+			})
+		},
     	methods: {
 			cityArea(data) {
 				if(_.isUndefined(data)){
@@ -186,14 +189,16 @@
 				this.query()
 			},
     		refresh(type,commiunityId) {
-				this.reqData.houseFormat = type;
-				if(commiunityId!==undefined){
-					this.reqData.locationId = commiunityId
-				}else{
-					delete this.reqData.locationId
+				if(/houses/.test(document.location.pathname)) {
+					this.reqData.houseFormat = type;
+					if(commiunityId!==undefined){
+						this.reqData.locationId = commiunityId
+					}else{
+						delete this.reqData.locationId
+					}
+					delete this.reqData.districtId
+					this.query();
 				}
-				delete this.reqData.districtId
-				this.query();
 			},
     		query() {
 				// TODO ZHOUYI house接口size设置
