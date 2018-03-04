@@ -115,8 +115,8 @@
 				.query(this.reqData, {projectId: this.projectId})
 				.then((data) =>{
 					data.data.forEach(element => {
-						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/年|月/g, "-")
-						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/年|月/g, "-")
+						element.toDate = new Date(parseInt(element.to) * 1000).toLocaleDateString().replace(/\//g, "-")
+						element.fromDate = new Date(parseInt(element.from) * 1000).toLocaleDateString().replace(/\//g, "-")
 						element.allM = readableDuration(element.to - element.from)
 						element.strategy.freq.rentprice = element.strategy.freq.rent/100
 						element.strategy.bondprice = element.strategy.bond/100

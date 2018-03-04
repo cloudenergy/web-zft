@@ -20,7 +20,6 @@
 									<icon type="gengduo1" style="font-size:15px;margin-top:3px"/>
 								</span>
 								<el-dropdown-menu slot="dropdown">
-									<el-dropdown-item>编辑房源</el-dropdown-item>
 									<el-dropdown-item @click.native="addRoom(house)">添加房间</el-dropdown-item>
 									<el-dropdown-item @click.native="deleteHouse(house)">删除房源</el-dropdown-item>
 									<el-dropdown-item>关闭房源</el-dropdown-item>

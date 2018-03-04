@@ -7,9 +7,9 @@
                 <template slot-scope="scope">
                     <div>
                         <span>{{scope.row.location.name}}</span>
-                        <span>{{scope.row.building}}</span>
-                        <span>{{scope.row.unit}}</span>
-                        <span>{{scope.row.roomNumber}}</span>
+                        <span>{{scope.row.building}}幢</span>
+                        <span>{{scope.row.unit}}单元</span>
+                        <span>{{scope.row.roomNumber}} </span>
                         <span v-if="houseFormat==='SHARE'&&scope.row.name===undefined">公区</span>
                         <span v-if="houseFormat==='SHARE'&&scope.row.name!==undefined">{{scope.row.name}}</span>
                     </div>

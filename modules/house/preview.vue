@@ -15,12 +15,12 @@
                 <span style="line-height:20px;margin-right:15px">
                     智能设备
                 </span>
-                <i class="el-icon-circle-plus-outline" style="font-size:20px" @click="bindEleciricity"></i>
+                <i class="el-icon-circle-plus-outline" style="font-size:20px;color:#409eff" @click="bindEleciricity"></i>
             </h4>
             <el-table :data="room.devicesChooseElectricity" stripe>
                 <el-table-column prop="deviceId" label="ID" width="150">
                 </el-table-column>
-                <el-table-column prop="title" label="设备" min-width="200">
+                <el-table-column prop="title" label="设备备注" min-width="200">
                 </el-table-column>
                 <el-table-column label="通讯状态" width="100">
                     <template slot-scope="scope">
@@ -62,7 +62,7 @@
             </el-table>
         </div>
         <div>
-            <el-button @click.native="del" type="danger">删除</el-button>
+            <el-button @click.native="del" type="danger">删除单间</el-button>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />

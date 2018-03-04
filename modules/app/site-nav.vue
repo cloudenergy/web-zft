@@ -52,7 +52,7 @@
         img {
             max-width: 100%;
             width: 100%;
-            margin-top: 10px;
+            margin: 8px 0 0 -20px;
         }
     }
 

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-table :data="devices" style="width: 100%">
+		<el-table :data="devices" style="width: 100%" @row-click='handleRowHandle'>
 			<el-table-column type="index" :index="indexMethod">
             </el-table-column>
 			<el-table-column label="设备id" width="130" prop="deviceId">
@@ -27,7 +27,7 @@
 			</el-table-column>
 			<el-table-column label="租户" v-if="loading===1">
 				<template slot-scope="scope">
-					<div v-if="scope.row.contract.user">
+					<div v-if="scope.row.contract&&scope.row.contract.user">
 						{{scope.row.contract.user.name}} {{scope.row.contract.userId}}
 					</div>
 				</template>
@@ -47,7 +47,8 @@
 						active-color="#13ce66"
 						inactive-color="#ff4949"
 						active-value="EMC_ON"
-						inactive-value="EMC_OFF">
+						inactive-value="EMC_OFF"
+						@change="eleciricitySwitch">
 					</el-switch>
 				</template>
 			</el-table-column >
@@ -74,13 +75,48 @@
 				type:Number
 			}
 		},
+		data() {
+			return {
+				reqData:{
+					mode:'',
+					devicesIds:[]
+				}
+			}
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.userInfo.user.projectId
+			}
+		},
 		methods: {
 			indexMethod(data) {
 				return (1-1)*20+data+1
 			},
 			dateTime(data) {
 				return format(new Date(data),'YYYY-MM-DD  HH:mm:ss')
-			}
+			},
+			eleciricitySwitch(data) {
+				if (data) {
+					this.reqData.mode = 'EMC_ON'
+				} else {
+					this.reqData.mode = 'EMC_OFF'
+				}
+			},
+			handleRowHandle(row, event) {
+				if(event.screenX!==0&&event.srcElement.className==='el-switch__core'){
+					this.reqData.devicesIds=[]
+					this.reqData.devicesIds.push(row.deviceId)
+					this.$model('electricity_instructions')
+					.patch(this.reqData, {
+						projectId: this.projectId,
+						id: 'switch'
+					})
+					.then(res => {
+						console.log(res)
+					})
+				}
+				
+            },
 		},
 		watch: {
 			

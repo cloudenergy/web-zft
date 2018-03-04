@@ -45,7 +45,6 @@
 					<li v-if="room.status==='INUSE'" @click="deleteContracts(room.contract)">删除合同</li>
 					<div style="height:1px;background:#ccc;margin:3px 0" v-if="room.status==='INUSE'"></div>
 					<li @click="deleteRoom()">删除房间</li>
-					<li>编辑房间</li>
 					<li @click="closeRoom()">关闭房间</li>
 				</ul>
 			</p>

@@ -127,7 +127,7 @@ const apis = {
 	bill_collection: resource('/projects/{projectId}/bills/{billId}/payments'),
 	flow_mounth: resource('/projects/{projectId}/flows'),
 	house_info: resource('/projects/{projectId}/houses/{houseId}'),
-	electricity_instructions: resource('/project/{projectId}/instructions'),
+	electricity_instructions: resource('/projects/{projectId}/instructions'),
 	volume_set: resource('/projects/{projectId}/prices'),
 	administrator_change: resource('/projects/{projectId}/credentials'),
 	apportionment: resource('/projects/{projectId}/houses/{id}/apportionment'),

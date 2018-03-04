@@ -43,7 +43,6 @@
 		RentSearch
 	} from '../../modules/rent'
 	import startOfYesterday from 'date-fns/start_of_yesterday'
-	console.log(startOfYesterday())
 	export default {
 		components: {
 			Tab,
@@ -60,7 +59,7 @@
 					houseFormat:this.houseFormat,
 					startDate:1506787200,
 					endDate:1512057600,
-					size:10,
+					size:20,
 					index:1
 				}
 			};
@@ -74,79 +73,6 @@
 			// this.drawLine();
 		},
 		methods: {
-			// drawLine() {
-			// 	// 基于准备好的dom，初始化echarts实例
-			// 	let myChart = this.$echarts.init(document.getElementById('myChart'))
-			// 	// 绘制图表
-			// 	myChart.setOption({
-			// 		title: {
-			// 			text: '未来一周气温变化',
-			// 			subtext: '纯属虚构'
-			// 		},
-			// 		tooltip: {
-			// 			trigger: 'axis'
-			// 		},
-			// 		legend: {
-			// 			data: ['最高气温', '最低气温']
-			// 		},
-			// 		toolbox: {
-			// 			show: true,
-			// 			feature: {
-			// 				mark: {
-			// 					show: true
-			// 				},
-			// 				dataView: {
-			// 					show: true,
-			// 					readOnly: false
-			// 				},
-			// 				magicType: {
-			// 					show: true,
-			// 					type: ['line', 'bar']
-			// 				},
-			// 				restore: {
-			// 					show: true
-			// 				},
-			// 				saveAsImage: {
-			// 					show: true
-			// 				}
-			// 			}
-			// 		},
-			// 		calculable: true,
-			// 		xAxis: [{
-			// 			type: 'category',
-			// 			boundaryGap: false,
-			// 			data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-			// 		}],
-			// 		yAxis: [{
-			// 			type: 'value',
-			// 			axisLabel: {
-			// 				formatter: '{value} °C'
-			// 			}
-			// 		}],
-			// 		series: [{
-			// 			name: '最高气温',
-			// 			type: 'line',
-			// 			data: [11, 11, 15, 13, 12, 13, 10],
-			// 			markPoint: {
-			// 				data: [{
-			// 						type: 'max',
-			// 						name: '最大值'
-			// 					},
-			// 					{
-			// 						type: 'min',
-			// 						name: '最小值'
-			// 					}
-			// 				]
-			// 			},
-			// 			markLine: {
-			// 				data: [{
-			// 					type: 'average',
-			// 					name: '平均值'
-			// 				}]
-			// 			}
-			// 		}]
-			// 	});
-			// },
 			refresh(type, commiunityId) {
 				this.reqData.houseFormat = type
 				if (commiunityId !== undefined) {
@@ -168,6 +94,7 @@
 							return ele
 						})
 						this.$set(this, 'readingElectric', res.data || []);
+						this.$set(this, 'paging', res.paging || []);
 						// this.$set(this, 'paging', res.paging || []);
 					});
 			},
