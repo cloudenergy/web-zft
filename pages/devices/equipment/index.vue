@@ -29,7 +29,17 @@
 				</div>
 			</el-header>
 			<el-main style="max-width:100%;padding-right:0">
-				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading"/>
+				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh("second")'/>
+				<div class="flexcenter batch">
+					<div class="flexc cursorp">
+						<span @click="electric('EMC_ON')">批量送电</span>
+						<span @click="electric('EMC_OFF')">批量断电</span>
+						<span v-if="loading===2" @click="deleteElectric">批量删除</span>
+					</div>
+					<el-pagination :background="background" layout="prev, pager, next" :total='paging.count' @current-change="handleCurrentChange"
+						style="margin-top:5px;text-align:right" :page-size='20'>
+					</el-pagination>
+				</div>
 			</el-main>
 		</el-container>
     </el-container>
@@ -54,6 +64,7 @@ export default {
 	},
 	data(){
 		return{
+			background:true,
 			houseFormat: 'SHARE',
 			info:{
 				search:'',
@@ -67,8 +78,8 @@ export default {
 			tabCard:true,
 			entireHouse:[],
 			reqData:{
-				size:1,
-				idnex:20,
+				size:20,
+				index:1,
 				mode:'BIND'
 			},
 			devices:[],
@@ -81,6 +92,16 @@ export default {
 		}
 	},
 	methods: {
+		electric(data) {
+			this.$refs.equipmentset.setElectricSwitch(data)
+		},
+		deleteElectric() {
+			this.$refs.equipmentset.deleteElectric()
+		},
+		handleCurrentChange(val) {
+			this.reqData.index = val;
+			this.query()
+		},
 		communityChange(data) {
 			if(data==='0'){
 				delete this.reqData.locationId
@@ -147,6 +168,12 @@ export default {
 	}
 	.result-info{
 		margin-right:5px
+	}
+	.batch {
+		span {
+			margin-right:30px;
+			color:#409eff;
+		}
 	}
  </style>
  

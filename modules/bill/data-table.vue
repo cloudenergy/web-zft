@@ -39,7 +39,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="prev, pager, next" :total='pagingSize' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
+        <el-pagination background layout="prev, pager, next" :total='pagingSize.count' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
             :page-size='20'>
         </el-pagination>
         <el-dialog title="收款" :visible.sync="dialogVisible" width="40%">
@@ -61,7 +61,7 @@
     export default {
         props: {
             pagingSize: {
-                type: Number
+                required:true
             },
             tableBill: {
                 type: Array

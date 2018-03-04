@@ -104,6 +104,7 @@ const apis = {
 	),
 	login: post('login'),
 	devices: resource('/projects/{projectId}/devices'),
+	delDevices: resource('/projects/{projectId}'),
 	room_devices: resource(
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}/devices'
 	),

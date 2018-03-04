@@ -26,6 +26,9 @@
 			</el-header>
 			<el-main style="padding-right:0">
 				<electricit :readingElectric="readingElectric" />
+				<el-pagination :background="background" layout="prev, pager, next" :total='paging.count' @current-change="handleCurrentChange"
+				style="margin-top:5px;text-align:right" :page-size='20'>
+			</el-pagination>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -52,6 +55,7 @@
 		},
 		data() {
 			return {
+				background:true,
 				houseFormat: 'SHARE',
 				readingElectric: [],
 				paging: {},
@@ -73,6 +77,10 @@
 			// this.drawLine();
 		},
 		methods: {
+			handleCurrentChange(val) {
+				this.reqData.index = val;
+				this.query()
+			},
 			communityChange(data) {
 				if(data==='0'){
 					delete this.reqData.locationId

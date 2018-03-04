@@ -1,9 +1,18 @@
 <template>
 	<div>
-		<el-table :data="devices" style="width: 100%" @row-click='handleRowHandle'>
+		<el-table :data="devices" style="width: 100%" @row-click='handleRowHandle' @select="select" @select-all="selectAll">
+			<el-table-column
+				type="selection"
+				width="55">
+    		</el-table-column>
 			<el-table-column type="index" :index="indexMethod">
             </el-table-column>
 			<el-table-column label="设备id" width="130" prop="deviceId">
+				<template slot-scope="scope">
+					<div>
+						{{delYTL(scope.row.deviceId)}}
+					</div>
+				</template>
 			</el-table-column>
 			<el-table-column label="状态">
 				<template slot-scope="scope">
@@ -11,7 +20,7 @@
 					<div v-if="scope.row.status.service==='EMC_OFFLINE'">异常</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="读数" prop="scale">
+			<el-table-column label="读数(KWH)" prop="scale">
 			</el-table-column>
 			<el-table-column label="通信时间">
 				<template slot-scope="scope">
@@ -52,9 +61,9 @@
 					</el-switch>
 				</template>
 			</el-table-column >
-			<el-table-column label="删除"  v-if="loading===2">
+			<el-table-column label="删除">
 				<template slot-scope="scope">
-					<!-- <div>删除</div> -->
+					<el-button @click="delElectric(scope.row)" :disabled="loading===1"><i class="el-icon-delete" style="font-size:16px"></i></el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -89,6 +98,41 @@
 			}
 		},
 		methods: {
+			delYTL(val) {
+				return val.replace(/YTL/g,'')
+			},
+			setElectricSwitch(data) {
+				this.reqData.mode = data
+				this.sendElectric()
+			},
+			delElectric(data) {
+				console.log(data.deviceId)
+				this.reqData.devicesIds=[]
+				this.reqData.devicesIds.push(data.deviceId)
+				this.deleteElectric()
+			},
+			deleteElectric() {
+				this.$model('delDevices')
+				.delete({deviceIds:this.reqData.devicesIds},{projectId:this.projectId,id:'devices'})
+				.then(res=>{
+					this.$message.success('删除成功')
+					this.$emit('refresh')
+				})
+				.catch(err=>{
+					console.log(err)
+					this.$message('删除失败')
+				})
+			},
+			select(val,b) {
+				this.reqData.devicesIds = val.map(ele=>{
+					return ele.deviceId
+				})
+			},
+			selectAll(val) {
+				this.reqData.devicesIds = val.map(ele=>{
+					return ele.deviceId
+				})
+			},
 			indexMethod(data) {
 				return (1-1)*20+data+1
 			},
@@ -106,17 +150,23 @@
 				if(event.screenX!==0&&event.srcElement.className==='el-switch__core'){
 					this.reqData.devicesIds=[]
 					this.reqData.devicesIds.push(row.deviceId)
-					this.$model('electricity_instructions')
-					.patch(this.reqData, {
-						projectId: this.projectId,
-						id: 'switch'
-					})
-					.then(res => {
-						console.log(res)
-					})
+					this.sendElectric()
 				}
-				
-            },
+			},
+			sendElectric() {
+				this.$model('electricity_instructions')
+				.patch(this.reqData, {
+					projectId: this.projectId,
+					id: 'switch'
+				})
+				.then(res => {
+					this.$message.success('切换状态成功')
+				})
+				.catch(err=>{
+					console.log(err)
+					this.$message('切换状态失败')
+				})
+			}
 		},
 		watch: {
 			

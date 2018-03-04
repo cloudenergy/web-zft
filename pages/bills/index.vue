@@ -13,7 +13,7 @@
 						<room-manager/>
 					</div>
 					<div class="flexcenter">
-						<span class="result-info">32项结果</span>
+						<span class="result-info">{{pagingSize.count}}项结果</span>
 						<div class="actions">
 							<el-button type="warning" size="mini">
 								导出
@@ -60,7 +60,7 @@
 			return {
 				input: '',
 				tableData: [],
-				pagingSize: 0,
+				pagingSize: {},
 				reqData:{
 					houseFormat: 'SHARE',
 					paid: false,
@@ -114,7 +114,7 @@
 					})
 					.then(res => {
 						this.$set(this, 'tableData', res.data)
-						this.$set(this, 'pagingSize', res.paging.count)
+						this.$set(this, 'pagingSize', res.paging)
 					})
 					.catch(err => {
 						console.log(err)
