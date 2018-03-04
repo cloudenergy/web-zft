@@ -264,7 +264,14 @@
     					this.$model('houses').delete(null, {
     						id: house.houseId,
     						projectId: this.projectId
-    					});
+						})
+						.then(res=>{
+							this.$message.success('删除成功')
+							this.query()
+						})
+						.catch(e=>{
+							this.$message('删除失败')
+						})
     				})
     				.catch(e => {
     					console.log(e);
