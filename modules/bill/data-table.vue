@@ -61,7 +61,7 @@
     export default {
         props: {
             pagingSize: {
-                required:true
+                type:Object
             },
             tableBill: {
                 type: Array
