@@ -147,7 +147,8 @@
 		},
     	methods: {
 			scrollFunc() {
-				console.log(this.$refs.house.scrollHeight)
+				// console.log(this.$refs.house.scrollHeight)
+				// console.log(this.$refs.house.scrollTop)
 			},
 			cityArea(data) {
 				if(_.isUndefined(data)){

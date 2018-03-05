@@ -18,17 +18,12 @@
 					</div>
 				</div>
 				<div class="hideMenu">
-					<!-- TODO SUOQIN  支付记录回调 -->
 					<div style="vertical-align:top">
-						支付记录
+						支付时间
 					</div>
 					<div>
-						<div v-for="item in props.row.paymentHistory" :key="item.amount" class="setinline">
-							<div>{{item.createdAt}}</div>
-							<div>{{item.paymentChannel}}</div>
-							<div>{{item.amount}}</div>
-							<div>{{item.operator}}</div>
-							<div>{{item.status}}</div>
+						<div v-for="item in props.row.billItems" :key="item.amount" class="setinline">
+							<div>{{date(item.createdAt)}}</div>
 						</div>
 					</div>
 				</div>
@@ -52,12 +47,17 @@
 		</el-table-column>
 		<el-table-column prop="dueDateNew" label="应付日期">
 		</el-table-column>
-		<el-table-column prop="createdAtNew" label="状态" width="120">
+		<el-table-column label="状态" width="120">
+			<template slot-scope="scope">
+				<span v-if="scope.row.billItems.length!==0">已支付</span>
+				<span v-if="scope.row.billItems.length===0">未支付</span>
+			</template>
 		</el-table-column>
 	</el-table>
 </template>
 
 <script>
+	import format from 'date-fns/format'
 	export default {
 		props: {
 			form: {
@@ -109,6 +109,9 @@
 			}
 		},
 		methods: {
+			date(val) {
+				return format(new Date(val*1000),'YYYY-MM-DD  HH:mm:ss')
+			},
 			// 展开方法参考https://segmentfault.com/q/1010000007828282
 			// quantumlist.vue里也有使用，也可以参考
 			handleRowHandle(row) {              

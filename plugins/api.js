@@ -133,7 +133,8 @@ const apis = {
 	administrator_change: resource('/projects/{projectId}/credentials'),
 	apportionment: resource('/projects/{projectId}/houses/{id}/apportionment'),
 	reading_equipment: resource('/projects/{projectId}/devices/reading'),
-	logout: resource('/logout')
+	logout: resource('/logout'),
+	user_info: resource('/projects/{projectId}/users/{userInfoId}')
 };
 
 /**

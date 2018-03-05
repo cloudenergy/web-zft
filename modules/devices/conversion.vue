@@ -50,6 +50,10 @@
             this.query()
         },
         methods: {
+            childinfo(val) {
+                this.room.q = val;
+                this.query()
+            },
             log() {
                 this.radio = ''
             },

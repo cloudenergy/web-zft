@@ -14,7 +14,7 @@
 			<p v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">￥{{rentSmall}}/月</p>
 			<p v-if="room.contract.rent===undefined">未出租</p>
 			<p class="rentee" v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">
-				<span><icon type="touxiang"/>{{room.contract.name}}</span>
+				<span @click.stop="showUserInfo(room.contract)"><icon type="icon-test1" :symbol="true"/>{{room.contract.name}}</span>
 				<span>退: {{timeDate(room.contract.to)}}</span>
 			</p>
 		</div>
@@ -54,7 +54,7 @@
 			    class="cursorp" />
 		</el-dialog>
 		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="800px">
-			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo'/>
+			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo' :userId="room.contract"/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>
@@ -423,7 +423,7 @@ export default {
 		.rentee {
 			border-top: 1px solid #ccc;
 			padding-top: 9px;
-			margin-top: 8px;
+			margin-top: 10px;
 			margin-bottom: 3px;
 			display: flex;
 			justify-content: space-between;

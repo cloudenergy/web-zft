@@ -31,7 +31,7 @@
                 <el-table-column label="控制" width="100">
                     <template slot-scope="scope">
                         <el-switch :width="num" v-model="scope.row.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch" active-value="EMC_ON" inactive-value="EMC_OFF">
-					</el-switch>
+					    </el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="管理" width="100">

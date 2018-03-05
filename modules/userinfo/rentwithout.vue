@@ -7,7 +7,7 @@
                     <span class="gray"> {{set(contractInfo.from)}}至{{set(contractInfo.to)}}</span>
                 </el-form-item>
                 <el-form-item label="账户余额">
-                    <span class="gray"> {{price(cashAccount.balance)}}元</span>
+                    <span class="gray"> {{price(userInfo.cashAccount.balance)}}元</span>
                 </el-form-item>
                 <el-form-item label="结算类型">
                     <el-radio-group v-model="radio">
@@ -53,7 +53,7 @@
             id: {
                 type: String
             },
-            cashAccount: {
+            userId: {
                 required: true
             }
         },
@@ -74,7 +74,11 @@
                     user: ''
                 },
                 payRoad: [],
-                radio:2
+                radio:2,
+                userInfo:{
+                    cashAccount:{}
+                },
+                contractbill:{}
             }
         },
         mounted() {
@@ -99,24 +103,42 @@
             },
             query(data) {
                 this.$model('contracts_info')
-                    .query({}, {
-                        projectId: this.projectId,
-                        contractId: data
-                    })
-                    .then(res => {
-                        this.$set(this, 'contractInfo', res)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                .query({}, {
+                    projectId: this.projectId,
+                    contractId: data
+                })
+                .then(res => {
+                    this.$set(this, 'contractInfo', res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
                 this.$model('fund_channel')
-                    .query({
-                        category: 'all',
-                        flow: 'receive'
-                    }, {
-                        projectId: this.projectId
-                    })
-                    .then(res => this.$set(this, 'payRoad', res))
+                .query({
+                    category: 'all',
+                    flow: 'receive'
+                }, {
+                    projectId: this.projectId
+                })
+                .then(res => this.$set(this, 'payRoad', res))
+                this.$model('user_info')
+                .query({},{
+                    projectId:this.projectId,
+                    userInfoId:this.userId.userId||this.userId.id
+                })
+                .then(res=>{
+                    this.$set(this,'userInfo',res)
+                })
+                console.log(this.userId)
+                this.$model('contract_bill')
+				.query(
+					{},
+					{
+						projectId: this.projectId,
+						id: this.userId.id
+					}
+				)
+                .then(data => this.$set(this, 'contractbill', data));
             },
             onSubmit() {
                 console.log('submit!');

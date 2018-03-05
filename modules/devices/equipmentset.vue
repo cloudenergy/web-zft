@@ -52,7 +52,7 @@
 			<el-table-column label="开关状态">
 				<template slot-scope="scope">
 					<el-switch
-						v-model="scope.row.status.status"
+						v-model="scope.row.status.switch"
 						active-color="#13ce66"
 						inactive-color="#ff4949"
 						active-value="EMC_ON"
@@ -102,8 +102,10 @@
 				return val.replace(/YTL/g,'')
 			},
 			setElectricSwitch(data) {
-				this.reqData.mode = data
-				this.sendElectric()
+				if(this.reqData.devicesIds.length!==0) {
+					this.reqData.mode = data
+					this.sendElectric()
+				}
 			},
 			delElectric(data) {
 				console.log(data.deviceId)
@@ -112,16 +114,18 @@
 				this.deleteElectric()
 			},
 			deleteElectric() {
-				this.$model('delDevices')
-				.delete({deviceIds:this.reqData.devicesIds},{projectId:this.projectId,id:'devices'})
-				.then(res=>{
-					this.$message.success('删除成功')
-					this.$emit('refresh')
-				})
-				.catch(err=>{
-					console.log(err)
-					this.$message('删除失败')
-				})
+				if(this.reqData.devicesIds.length!==0) {
+					this.$model('delDevices')
+					.delete({deviceIds:this.reqData.devicesIds},{projectId:this.projectId,id:'devices'})
+					.then(res=>{
+						this.$message.success('删除成功')
+						this.$emit('refresh')
+					})
+					.catch(err=>{
+						console.log(err)
+						this.$message('删除失败')
+					})
+				}
 			},
 			select(val,b) {
 				this.reqData.devicesIds = val.map(ele=>{

@@ -11,11 +11,11 @@
             </div>
             <icon type="icon-test1" :symbol="true" />
             <div style="margin:2px 0 0 10px">
-                <div>{{list.user.name}}|
+                <div>{{list.user.name}} |
                     <span v-if="list.user.mobile!==''">{{list.user.mobile}}</span>
                     <span v-if="list.user.mobile===''">暂无电话</span>
                 </div>
-                <div>{{setTime(list.from)}}—{{setTime(list.to)}}</div>
+                <div>{{setTime(list.from)}}至{{setTime(list.to)}}</div>
                 <div>{{price(list.strategy.freq.rent)}}/月·{{list.strategy.freq.pattern}}月一付</div>
             </div>
         </div>

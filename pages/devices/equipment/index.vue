@@ -11,11 +11,9 @@
 			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter">
-						<div class="flexcenter">
-							<room-search @input="roomSearch" v-model="info.search"></room-search>
-							<rooms-select @input="search" v-model="info.room"></rooms-select>
-							<room-manager @input="manager" v-model="info.manager"/>
-						</div>
+						<room-search @input="roomSearch" v-model="info.search"></room-search>
+						<rooms-select @input="search" v-model="info.room"></rooms-select>
+						<room-manager @input="manager" v-model="info.manager"/>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">{{paging.count}}项结果</span>
@@ -27,8 +25,9 @@
 						</div>
 					</div>
 				</div>
+				<search-all :title="'搜索'"></search-all>
 			</el-header>
-			<el-main style="max-width:100%;padding-right:0">
+			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:20px">
 				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh("second")'/>
 				<div class="flexcenter batch">
 					<div class="flexc cursorp">
@@ -91,7 +90,14 @@ export default {
 			return this.$store.state.userInfo.user.projectId
 		}
 	},
+	created () {
+		this.$modal.$on('keyup',(data)=>{this.setSearch(data)})	
+	},
 	methods: {
+		setSearch(val) {
+			this.reqData.q = val;
+			this.query()
+		},
 		electric(data) {
 			this.$refs.equipmentset.setElectricSwitch(data)
 		},
@@ -165,6 +171,11 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		margin-bottom:17px;
+		margin-top:5px;
+		div.flexcenter:first-child{
+			width: 600px;
+		}
 	}
 	.result-info{
 		margin-right:5px
