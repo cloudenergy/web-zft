@@ -9,6 +9,9 @@
                 <el-form-item label="账户余额">
                     <span class="gray"> {{price(userInfo.cashAccount.balance)}}元</span>
                 </el-form-item>
+                <!-- <el-form-item label="今日用量">
+                    <span class="gray"> {{price(userInfo.cashAccount.balance)}}度</span>
+                </el-form-item> -->
                 <el-form-item label="结算类型">
                     <el-radio-group v-model="radio">
                         <el-radio :label="1">收款</el-radio>
@@ -48,6 +51,7 @@
 <script>
     import axios from 'axios'
     import userInfoImage from './userInfoImage'
+    import startOfYesterday from 'date-fns/start_of_yesterday'
     export default {
         props: {
             id: {
@@ -55,11 +59,32 @@
             },
             userId: {
                 required: true
+            },
+            roomDevices: {
+                required: true
+            },
+            houseFormat: {
+                required: true
+            },
+            roomId: {
+                required: true
             }
         },
         computed: {
             projectId() {
                 return this.$store.state.userInfo.user.projectId;
+            },
+            reqData() {
+                return {'deviceId':this.roomDevices.deviceId}
+            },
+            newReqData() {
+                console.log(this.roomId)
+                return {
+                    'houseFormat':this.houseFormat,
+                    'startDate':Date.parse(startOfYesterday())/1000,
+                    'endDate':Date.parse(new Date())/1000,
+                    'roomId':this.roomId
+                }
             }
         },
         components: {
@@ -129,7 +154,6 @@
                 .then(res=>{
                     this.$set(this,'userInfo',res)
                 })
-                console.log(this.userId)
                 this.$model('contract_bill')
 				.query(
 					{},
@@ -139,6 +163,21 @@
 					}
 				)
                 .then(data => this.$set(this, 'contractbill', data));
+                this.$model('electricity_instructions')
+				.patch(this.reqData, {
+					projectId: this.projectId,
+					id: 'reading'
+				})
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err=>{
+					console.log(err)
+                })
+                this.$model('reading_equipment')
+                .query(this.newReqData,{
+                    projectId:this.projectId
+                })
             },
             onSubmit() {
                 console.log('submit!');

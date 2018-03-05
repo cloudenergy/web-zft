@@ -54,7 +54,7 @@
 			    class="cursorp" />
 		</el-dialog>
 		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="800px">
-			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo' :userId="room.contract"/>
+			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo' :userId="room.contract" :roomDevices="room.showEquipment" :houseFormat="houseFormat" :roomId="room.id"/>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
 				<el-button type="primary" @click="operateRent">确 定</el-button>

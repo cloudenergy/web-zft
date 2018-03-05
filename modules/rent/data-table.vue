@@ -134,7 +134,7 @@
 		</el-dialog>
 		<!-- 用户信息预览 -->
 		<el-dialog :title="dialogTitle4" :visible.sync="dialogVisible4" width="800px">
-			<RentWithout :id="updateData.id" :userId="updateData.user" ref="operate" @successInfo="successInfo" @operateRent="operateRent"/>
+			<RentWithout :id="updateData.id" :userId="updateData.user" ref="operate" @successInfo="successInfo" @operateRent="operateRent" :houseFormat="houseFormat" :roomId="updateData.roomId"/>
 		</el-dialog>
 		<el-pagination :background="background" layout="prev, pager, next" :total='housesrentData.paging.count' @current-change="handleCurrentChange"
 		    style="margin-top:5px;text-align:right" :page-size='20'>
@@ -185,6 +185,9 @@
 			},
 			index: {
 				required:true
+			},
+			houseFormat: {
+				required: true
 			}
 		},
 		data() {

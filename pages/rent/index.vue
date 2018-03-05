@@ -23,7 +23,7 @@
 			</el-header>
 			
 			<div class="result">
-				<DataTable v-if="housesRent" :housesrentData='housesRent' :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()"/>
+				<DataTable v-if="housesRent" :housesrentData='housesRent' :houseFormat="reqData.houseFormat" :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()"/>
 			</div>
 		</el-container>
 	</el-container>
