@@ -51,6 +51,8 @@ export default {
 			this.$message.success('退出成功');
 			this.$router.replace('/login');
 			this.$store.dispatch('CLEAR_USER_INFO')
+			this.$model('logout')
+			.create({},{})
 		},
 		create(type) {
 			this.$modal.$emit('open', {

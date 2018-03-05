@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-03-04 16:50:24
+ * @Last Modified time: 2018-03-05 11:10:59
  */
 
 import api from '~/plugins/api';
@@ -160,6 +160,21 @@ export default {
 		},
 		SAVE_HOUSE_KEERER(state, data) {
 			state.userInfo.houseKeeper = data
+		},
+		ADD_COMMUNITYS(state,data) {
+			var addCommunityInfo = {
+				'areaId':data.area,
+				'cityId':data.city,
+				'name':data.location.name,
+				'geoLocationId':data.location.id
+			}
+			if (data.houseFormat === 'SHARE') {
+				state.userInfo.communities = _.uniqBy(state.userInfo.communities.push(addCommunityInfo),'geoLocationId')
+			} else if (data.houseFormat === 'SOLE') {
+				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities.push(addCommunityInfo),'geoLocationId')
+			} else {
+				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities.push(addCommunityInfo),'geoLocationId')
+			}
 		}
 	},
 	actions: {
@@ -168,11 +183,13 @@ export default {
 			state
 		}, {
 			username,
-			password
+			password,
+			keepAlive
 		}) {
 			return api('login', {
 					username: username,
-					password: md5(password)
+					password: md5(password),
+					keepAlive: keepAlive?30:0
 				})
 				.then(res => {
 					if (res.code === 0) {
@@ -362,6 +379,14 @@ export default {
 					}))
 					return data
 				})
+		},
+		ADD_COMMUNITY({
+			commit,
+			state
+		},{
+			val
+		}) {
+			commit('ADD_COMMUNITYS',val)
 		}
 	}
 };

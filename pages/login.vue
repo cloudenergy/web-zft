@@ -15,9 +15,9 @@
 					<el-form-item prop="user.pass">
 						<el-input placeholder="密码" type="password" v-model="user.pass" auto-complete="off" @keyup.native="keyLogin($event)" size="medium"></el-input>
 					</el-form-item>
-					<el-form-item prop="user.pass">
-						<el-checkbox-group v-model="type" style="float:left">
-							<el-checkbox label="记住密码" name="type"></el-checkbox>
+					<el-form-item prop="">
+						<el-checkbox-group v-model="user.keepAlive" style="float:left">
+							<el-checkbox label="记住密码" :key="30"></el-checkbox>
 						</el-checkbox-group>
 					</el-form-item>
 					<el-form-item class="bottom-btn">
@@ -50,10 +50,12 @@
 				}
 			},
 			login() {
+				console.log(this.user.pass)
 				this.$store
 					.dispatch('POST_LOGIN', {
 						username: this.user.mobile,
-						password: this.user.pass
+						password: this.user.pass,
+						keepAlive:this.user.keepAlive
 					})
 					.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
 					.then(() => {

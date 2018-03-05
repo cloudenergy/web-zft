@@ -140,7 +140,7 @@
 			// this.query();
 			this.$modal.$on('keyup',(data)=>{this.setSearch(data)}),
 			this.$modal.$on('refresh', () => {
-				this.refresh('SHARE')
+				this.refresh(this.reqData.houseFormat)
 			})
 		},
     	methods: {

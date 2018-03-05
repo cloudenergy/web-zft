@@ -186,7 +186,6 @@
 					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form
 				};
-				console.log(data)
 				if(data.code!==this.houseCode) {
 					this.houseCode = data.code
 					if (data.houseFormat === 'ENTIRE') {
@@ -200,6 +199,7 @@
 					.then(res => {
 						this.$message.success('创建成功')
 						this.$emit('addhouse')
+						this.$store.dispatch('ADD_COMMUNITY',{val:res})
 					})
 					.catch(err=>{
 						this.$message('创建失败')

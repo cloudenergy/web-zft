@@ -68,9 +68,6 @@
 			var a = 0;
 			a = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 			this.h = a - 177
-			this.$modal.$on('refresh', () => {
-				this.refresh('SHARE')
-			})
 		},
 		watch: {
 			communities(newVal,oldVal) {
@@ -123,12 +120,6 @@
 				this.$refs.menuLocation.$children.forEach((item, index) => {
 					item.$el.classList.value = "el-menu-item"
 				})
-			},
-			refresh() {
-				if(/houses/.test(document.location.pathname)) {
-					this.updateCommunity(false,true)
-				}
-				this.addHouse = true
 			},
 			updateCommunity(force = false,val) {
 				this.$store
