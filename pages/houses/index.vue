@@ -170,7 +170,8 @@
     			const height = elm.scrollHeight;
 
     			if (offset >= height) {
-    				console.log(elm.scrollTop, elm.scrollHeight, elm.clientHeight);
+					this.reqData.size+=200;
+					this.query()
     			}
     		},
     		cityArea(data) {
