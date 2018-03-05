@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table :data="tableBill" style="width: 100%">
-            <el-table-column type="index" width="50">
+            <el-table-column type="index" width="50" label="序号">
             </el-table-column>
             <el-table-column label="应支付日" width="200">
                 <template slot-scope="scope">

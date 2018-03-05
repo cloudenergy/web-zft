@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table :data="equipmentHouses" style="width: 100%" @selection-change="handleSelectionChange" v-if="!copyHouseExtra">
-            <el-table-column type="" width="20">
+            <el-table-column type="index" width="50" label="序号">
             </el-table-column>
             <el-table-column label="房源" width="300">
                 <template slot-scope="scope">

@@ -1,7 +1,7 @@
 <template>
 	<div id="rentinfo">
 		<el-table :data="housesRent" style="width: 100%">
-			<el-table-column type="index" width="50" :index="indexMethod">
+			<el-table-column type="index" width="50" :index="indexMethod" label="序号">
             </el-table-column>
 			<el-table-column label="承租状态" width="100">
 				<template slot-scope="scope">
