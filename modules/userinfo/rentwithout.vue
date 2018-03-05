@@ -81,7 +81,7 @@
                 console.log(this.roomId)
                 return {
                     'houseFormat':this.houseFormat,
-                    'startDate':Date.parse(startOfYesterday())/1000,
+                    'startDate':Date.parse(startOfYesterday())/1000+21*60*60,
                     'endDate':Date.parse(new Date())/1000,
                     'roomId':this.roomId
                 }
