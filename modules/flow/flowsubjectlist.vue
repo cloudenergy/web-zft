@@ -1,4 +1,5 @@
 <template lang="html">
+<div>
     <el-table :data="subjectFlows" :row-key="getRowKeys" :expand-row-keys="expands"         @row-click='handleRowHandle'         ref="tableData5">
         <el-table-column type="expand">
             <!-- <template slot-scope="props">
@@ -65,6 +66,10 @@
             </template>
         </el-table-column>
     </el-table>
+    <!-- <el-pagination background layout="prev, pager, next" :total='flowPaging.count' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
+            :page-size='20'>
+        </el-pagination> -->
+    </div>
 </template>
 
 <script>

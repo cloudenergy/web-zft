@@ -1,9 +1,8 @@
 <template>
     <div>
         <div style="position:relative;display:inline-block;" class="settimeEnd">
-
-            <el-date-picker v-model="value3" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width:200px;padding:3px;over-flow:hidden"
-                class="datach" @change="oldTime(value3)" size="small" :clearable="false">
+            <el-date-picker v-model="value" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width:200px;padding:3px;over-flow:hidden"
+                class="datach" @change="oldTime(value)" size="small" :clearable="false">
             </el-date-picker>
             <span style="position: absolute;" class="shabi">至</span>
         </div>
@@ -18,7 +17,7 @@
     export default {
         data() {
             return {
-                value3: [startOfMounth, endOfDate],
+                value: [startOfMounth, endOfDate],
             }
         },
         methods: {

@@ -46,8 +46,8 @@
 					community: ''
 				},
 				reqData: {
-					// from: startOfMounth,
-					// to: nowDate,
+					from: startOfMounth,
+					to: nowDate,
 					view: 'category'
 				},
 				subjectFlows:null

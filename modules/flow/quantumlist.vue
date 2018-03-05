@@ -79,7 +79,7 @@
 
         </el-table>
         <el-pagination background layout="prev, pager, next" :total='flowPaging.count' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
-            :page-size='10'>
+            :page-size='20'>
         </el-pagination>
     </div>
 </template>
