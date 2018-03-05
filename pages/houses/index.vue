@@ -4,7 +4,7 @@
         <div class="main-container">
             <Search @changeRoom='changeRoom' @changeRoomsStatus='changeRoomsStatus' @changeHouseKeeper='changeHouseKeeper' :houseKeeper='houseKeeper' />
 			<search-all :title="'搜索小区/门牌/电话'"></search-all>
-            <div class="houses">
+            <div class="houses" ref="house">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
                     <div>
 						<span v-if="!entire">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
@@ -89,7 +89,7 @@
     	computed: {
     		projectId() {
     			return this.$store.state.userInfo.user.projectId;
-    		},
+			},
 			equipmentHouses: function () {
 				if (this.houseFormat !== 'ENTIRE') {
 					return this.houses.map((element, index) => {
@@ -142,8 +142,13 @@
 			this.$modal.$on('refresh', () => {
 				this.refresh(this.reqData.houseFormat)
 			})
+			let that = this;
+			document.addEventListener('scroll',that.scrollFunc,true)
 		},
     	methods: {
+			scrollFunc() {
+				console.log(this.$refs.house.scrollHeight)
+			},
 			cityArea(data) {
 				if(_.isUndefined(data)){
 					delete this.reqData.districtId

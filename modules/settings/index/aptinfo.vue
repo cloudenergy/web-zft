@@ -69,7 +69,7 @@
 
               <el-form-item label="公司全称">
                 <el-col :span="10">
-                  <el-input placeholder="未来住客"></el-input>
+                  <el-input placeholder=""></el-input>
                 </el-col>
               </el-form-item>
 
@@ -180,7 +180,7 @@ UploadImg
 				resource: '',
 				desc: ''
 			},
-			apartmentBrand: '未来住客',
+			apartmentBrand: '',
       activeName: 'personal',
       city:[{value:'杭州',label:'hz'}],
       value:'',
