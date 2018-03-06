@@ -65,7 +65,7 @@
             </el-table>
         </div>
         <div>
-            <el-button @click.native="del" type="danger">删除单间</el-button>
+            <el-button @click.native="del" type="danger">删除房间</el-button>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />

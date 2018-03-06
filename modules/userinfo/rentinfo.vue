@@ -26,7 +26,7 @@
 
             <el-input v-model="form.user.documentId" class="inputuser"></el-input>
         </el-form>
-        <el-button type="primary" @click="updateuser()" style="margin-top:15px;margin-left:116px;">更改</el-button>
+        <el-button type="primary" @click="updateuser()" style="margin:15px 0 0 273px">更改</el-button>
     </div>
 </template>
 

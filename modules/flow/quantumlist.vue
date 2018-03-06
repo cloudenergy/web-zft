@@ -5,7 +5,7 @@
             style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <el-row>
+                    <el-row class="gray">
                         <el-col v-if="props.row.billItems!==null" :span="5">
                             <p v-for="item in props.row.billItems" class="flexcenter">
                                 <span v-for="(list,index) in otherCost" :key="index" v-if="list.id===item.configId">{{list.key}}</span>
@@ -16,7 +16,7 @@
                                 </span>
                             </p>
                         </el-col>
-                        <el-col v-if="props.row.category==='topup'" :span="5">
+                        <el-col v-if="props.row.category==='topup'" :span="4">
                             <p class="flexcenter">
                                 <span>充值</span>
                                 <span>
@@ -24,7 +24,7 @@
                                 </span>
                             </p>
                         </el-col>
-                        <el-col v-if="props.row.category==='final'" :span="5">
+                        <el-col v-if="props.row.category==='final'" :span="4">
                             <p class="flexcenter">
                                 <span>退租</span>
                                 <span>
@@ -40,13 +40,15 @@
                     <span>{{ timeChange(scope.row.paidAt) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="金额" prop="folwm" width="80px">
+            <el-table-column label="金额" prop="folwm" width="80" align="right">
                 <template slot-scope="scope">
                     <div :style="{color:scope.row.direction==='pay'?'#fd6d6d':'#67c23a'}">
                         <span v-if="scope.row.direction==='pay'">-</span>
                         <span>{{ price(scope.row.amount) }}</span>
                     </div>
                 </template>
+            </el-table-column>
+            <el-table-column label="" width="20">
             </el-table-column>
             <el-table-column label="姓名" prop="user.name" min-width="100">
             </el-table-column>
@@ -172,6 +174,16 @@
     }
 </script>
 
+<style scoped>
+    .gray{
+        color:#999;
+    }
+    .gray span:first-child{
+        padding-left: 10px;
+    }
+</style>
+
+
 <style lang="css">
     .demo-table-expand {
         font-size: 0;
@@ -192,4 +204,6 @@
         display: flex;
         justify-content: space-around
     }
+
+    
 </style>

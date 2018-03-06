@@ -40,7 +40,7 @@
 			<el-table-column label="房源/租期" min-width="300" max-width="500">
 				<template slot-scope="scope">
 					<div slot="reference" class="name-wrapper cursorp" @click="rentuser('2',scope.row)">
-						<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}{{ scope.row.room.unit }}{{ scope.row.room.roomNumber}}{{
+						<div>{{ scope.row.room.locationName }}{{ scope.row.room.building }}幢{{ scope.row.room.unit }}单元{{ scope.row.room.roomNumber}}{{
 							scope.row.room.roomName }}</div>
 						<div class="rent-bottom">
 							<span>{{ scope.row.fromDate }}&nbsp;&nbsp;至&nbsp;&nbsp;{{ scope.row.toDate }}</span>

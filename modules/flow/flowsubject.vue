@@ -16,7 +16,7 @@
 				</div>
 			</el-form>
 		</div>
-		<flowsubjectlist :subjectFlows="subjectFlows"/>
+		<flowsubjectlist :subjectFlows="subjectFlows" :reqData="reqData"/>
 	</div>
 </template>
 <script>
