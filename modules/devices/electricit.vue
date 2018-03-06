@@ -100,7 +100,7 @@
         },
         methods: {
             price(val) {
-                return val/100
+                return (val / 100).toFixed(2)
             },
             delYTL(val) {
 				return val.replace(/YTL/g,'')
