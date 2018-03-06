@@ -25,7 +25,7 @@
 				</div>
 			</el-header>
 			<el-main style="padding-right:0">
-				<electricit :readingElectric="readingElectric" />
+				<electricit :readingElectric="readingElectric" :houseFormat="houseFormat"/>
 				<el-pagination :background="background" layout="prev, pager, next" :total='paging.count' @current-change="handleCurrentChange"
 				style="margin-top:5px;text-align:right" :page-size='20'>
 			</el-pagination>

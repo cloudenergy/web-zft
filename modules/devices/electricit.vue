@@ -34,36 +34,36 @@
                     <span style="margin-left: 2px;margin-top:5px">{{ scope.row.details[0].contract.userId }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="往次抄表" min-width="160">
+            <el-table-column label="起始日期" min-width="160">
                 <template slot-scope="scope">
-                    <el-date-picker v-model="scope.row.startDate" type="date" placeholder="选择日期" style="width:160px" @input="oldTime(scope.row)" @blur="dateTest()">
+                    <el-date-picker v-model="scope.row.startDate" type="date" placeholder="选择日期" style="width:160px" @input="oldTime(scope.row,scope.$index)" @blur="dateTest()" >
                     </el-date-picker>
                     <br/>
                     <span style="margin-left: 30px;margin-top:5px"  v-if="scope.row.details.length!==0">{{ scope.row.details[0].startScale }}</span>
                     <br>
                 </template>
             </el-table-column>
-            <el-table-column label="本次抄表" min-width="160">
+            <el-table-column label="截止日期" min-width="160">
                 <template slot-scope="scope">
-                    <el-date-picker v-model="scope.row.endDate" type="date" placeholder="选择日期" style="width:160px" @change="newTime(scope.row)">
+                    <el-date-picker v-model="scope.row.endDate" type="date" placeholder="选择日期" style="width:160px" @change="newTime(scope.row,scope.$index)">
                     </el-date-picker>
                     <br>
                     <span style="margin-left: 30px;margin-top:5px" v-if="scope.row.details.length!==0">{{ scope.row.details[0].endScale }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="差值" width="50">
+            <el-table-column label="用量" width="70">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.differentnum }}</span>
+                    <span v-if="scope.row.details[0]">{{ scope.row.details[0].usage }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="单价" width="50">
+            <el-table-column label="单价/元" width="70">
                 <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.unitprice }}</span>
+                    <span v-if="scope.row.details[0]">{{ price(scope.row.details[0].price) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="账单" width="50">
+            <el-table-column label="金额/元" width="80">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.bill }}</span>
+                    <span v-if="scope.row.details[0]">{{ price(scope.row.details[0].amount) }}</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -71,10 +71,14 @@
 </template>
 <script>
     import startOfYesterday from 'date-fns/start_of_yesterday'
+    import getTime from 'date-fns/get_time'
     export default {
         props: {
             readingElectric: {
                 type: Array
+            },
+            houseFormat: {
+                required:true
             }
         },
         data() {
@@ -89,24 +93,43 @@
                 // readingElectricData:[{startDate:'0',endDate:'0'}]
             }
         },
+        computed: {
+            projectId() {
+                return this.$store.state.userInfo.user.projectId
+            }  
+        },
         methods: {
+            price(val) {
+                return val/100
+            },
             delYTL(val) {
 				return val.replace(/YTL/g,'')
 			},
             dateTest(data) {
-                console.log(data)
-                
             },
-            oldTime(data) {
-                console.log(data)
-                data.lastnum = 11111;
-                data.differentnum = this.computations(data.thisnum, data.lastnum)
-                data.bill = this.computationsPrice(data.differentnum, data.unitprice)
+            oldTime(data, index) {
+                this.roomReading(getTime(data.startDate)/1000,getTime(data.endDate)/1000,data.houseId,data.roomId,index)
             },
-            newTime(data) {
-                data.thisnum = 999999;
-                data.differentnum = this.computations(data.thisnum, data.lastnum)
-                data.bill = this.computationsPrice(data.differentnum, data.unitprice)
+            roomReading(startDate,endDate,houseId,roomId,index) {
+                let roomReadingData = {
+                    houseFormat:this.houseFormat,
+                    startDate,
+                    endDate,
+                    houseId,
+                    roomId
+                }
+                this.$model('reading_equipment')
+				.query(roomReadingData, {
+					projectId: this.projectId
+                })
+                .then(res=>{
+                    if(res.data.length===1) {
+                        this.readingElectric[index]=res.data[0]
+                    }
+                })
+            },
+            newTime(data, index) {
+                this.roomReading(getTime(data.startDate)/1000,getTime(data.endDate)/1000,data.houseId,data.roomId,index)
             },
             computations(newnum, oldnum) {
                 return newnum - oldnum;
@@ -115,10 +138,6 @@
                 return differentnum * price
             },
             handleRowHandle(row, event) {
-                // if (event.path[0].tagName != 'INPUT') {
-                //     this.toggle(row.userid)
-                // }
-                console.log(row.startDate,row.endDate)
             },
             // 展开
             toggle(flowi) {
