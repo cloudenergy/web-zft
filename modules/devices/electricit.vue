@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column label="仪表名称/ID" min-width="120">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.details.length!==0">{{ scope.row.details[0].device.deviceId }}</span>
+                    <span v-if="scope.row.details.length!==0">{{ delYTL(scope.row.details[0].device.deviceId) }}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -51,17 +51,17 @@
                     <span style="margin-left: 30px;margin-top:5px" v-if="scope.row.details.length!==0">{{ scope.row.details[0].endScale }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="差值">
+            <el-table-column label="差值" width="50">
                 <template slot-scope="scope">
                     <span>{{ scope.row.differentnum }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="单价">
+            <el-table-column label="单价" width="50">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.unitprice }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="账单">
+            <el-table-column label="账单" width="50">
                 <template slot-scope="scope">
                     <span>{{ scope.row.bill }}</span>
                 </template>
@@ -90,6 +90,9 @@
             }
         },
         methods: {
+            delYTL(val) {
+				return val.replace(/YTL/g,'')
+			},
             dateTest(data) {
                 console.log(data)
                 

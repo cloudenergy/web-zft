@@ -19,6 +19,9 @@
             </h4>
             <el-table :data="room.devicesChooseElectricity" stripe>
                 <el-table-column prop="deviceId" label="ID" width="150">
+                    <template slot-scope="scope">
+                        <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column prop="title" label="设备备注" min-width="200">
                 </el-table-column>
@@ -75,6 +78,7 @@
 </template>
 
 <script>
+    import { delYTL } from '~/utils/helper';
     import conversion from '../devices/conversion.vue'
     export default {
         props: {
@@ -123,6 +127,9 @@
             }
         },
         methods: {
+            delDeviceYTL(val) {
+                return delYTL(val)
+            },
             electricSwitch(data) {
 				return data.status.switch==='EMC_ON'
 			},

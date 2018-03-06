@@ -82,3 +82,11 @@ export const isBrowserSupport = function() {
 
 	return isChrome || isSafari || isFF;
 };
+
+/**
+ * 删除YTL
+ */
+
+ export const delYTL = function delYTL(val) {
+	 return val.replace(/YTL/g,'')
+ }

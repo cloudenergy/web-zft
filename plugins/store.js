@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-03-05 11:10:59
+ * @Last Modified time: 2018-03-06 09:38:26
  */
 
 import api from '~/plugins/api';
@@ -374,9 +374,6 @@ export default {
 				})
 				.then(data => {
 					commit('SAVE_HOUSE_KEERER', data)
-					console.log(_.filter(data, {
-						'level': 'ADMIN'
-					}))
 					return data
 				})
 		},

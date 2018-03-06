@@ -9,7 +9,7 @@
             <div v-for="list in item" :key="list.index">
                 <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()">
                     <span>电表:{{list.title}}</span>
-                    <span style="float:right;padding-right:10px">{{list.deviceId}}</span>
+                    <span style="float:right;padding-right:10px">{{delDeviceYTL(list.deviceId)}}</span>
                 </el-radio>
             </div>
             <el-pagination :background="background" layout="prev, pager, next" :total="listInfo.count" @current-change="handleCurrentChange"
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+    import { delYTL } from '~/utils/helper';
     import {
         RentSearch
     } from '~/modules/rent'
@@ -50,6 +51,9 @@
             this.query()
         },
         methods: {
+            delDeviceYTL(val) {
+                return delYTL(val)
+            },
             childinfo(val) {
                 this.room.q = val;
                 this.query()

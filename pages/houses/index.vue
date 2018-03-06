@@ -45,9 +45,10 @@
                         </span>
                     </div>
                 </div>
-
             </div>
+			<div v-loading="loading"></div>
         </div>
+		
         <drawer-panel :open.sync="viewRoom">
             <div v-if="viewRoom" class="drawer">
                 <Preview :room="currentRoom" :house="currentHouse" />
@@ -58,6 +59,7 @@
                 <houseInformation :house="currentHouse" :houseType="reqData.houseFormat" />
             </div>
         </drawer-panel>
+		
     </div>
 </template>
 
@@ -83,7 +85,8 @@
     			entire: false,
     			tabCard: true,
     			houseFormat: 'SHARE',
-    			houseKeeper: null
+				houseKeeper: null,
+				loading:true
     		};
     	},
     	computed: {
@@ -154,25 +157,31 @@
     				this.refresh(this.reqData.houseFormat);
     			});
     	},
-    	mounted() {
-    		let mainElm = document.getElementsByClassName('main')[0];
-    		document.addEventListener(
+    	mounted () {
+    		window.addEventListener(
     			'scroll',
-    			() => {
-    				this.scrollFunc(mainElm);
-    			},
+    			this.scrollFunc,
     			true
+    		);	
+		},
+		beforeDestroy () {
+			window.removeEventListener(
+    			'scroll',
+				this.scrollFunc,
+				true
     		);
-    	},
+		},
     	methods: {
-    		scrollFunc(elm) {
+    		scrollFunc() {
+				let elm = document.getElementsByClassName('main')[0];
+				this.loading = false;
     			const offset = elm.scrollTop + elm.clientHeight;
     			const height = elm.scrollHeight;
 
-    			if (offset >= height) {
-					this.reqData.size+=200;
+    			if (offset >= height&&this.houseFormat!=='ENTIRE'&&(/houses/.test(window.location.pathname))) {
 					this.query()
-    			}
+				}
+				return
     		},
     		cityArea(data) {
     			if (_.isUndefined(data)) {
@@ -197,7 +206,9 @@
     				delete this.reqData.locationId;
     			} else {
     				this.reqData.locationId = data;
-    			}
+				}
+				this.reqData.index=1
+				this.houses=[]
     			this.query();
     		},
     		changeRoom(data) {
@@ -225,7 +236,9 @@
     					delete this.reqData.locationId;
     				}
     				delete this.reqData.districtId;
-    				this.query();
+					this.query();
+					this.reqData.index=1
+					this.houses=[]
     			}
     		},
     		query() {
@@ -257,13 +270,21 @@
     						this.houses = this.testArray;
     					} else if (this.reqData.houseFormat === 'SOLE') {
     						this.tabCard = false;
-    						this.$set(this, 'houses', res.data || []);
+    						res.data.forEach(element => {
+								this.houses.push(element)
+							});
     					} else {
     						this.entire = false;
     						this.tabCard = true;
-    						this.$set(this, 'houses', res.data || []);
+							res.data.forEach(element => {
+								this.houses.push(element)
+							});
     					}
-    					this.houseFormat = this.reqData.houseFormat;
+						this.houseFormat = this.reqData.houseFormat;
+						this.reqData.index++;
+						setTimeout(()=>{
+							this.loading = false
+						},500)
     				})
     				.catch(err => {
     					console.log(err);
@@ -274,7 +295,8 @@
     				})
     				.then(data => {
     					this.$set(this, 'houseKeeper', data);
-    				});
+					});
+				
     		},
     		showDrawer({ room, house }) {
     			this.currentRoom = room;

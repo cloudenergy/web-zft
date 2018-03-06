@@ -32,6 +32,7 @@
 			</el-header>
 			<el-main style="padding-right:0;overflow:hidden">
 				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh" @copyStatusChange='copyStatusChange' :houseFormat='houseFormat'/>
+				<div v-loading="loading"></div>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -70,15 +71,41 @@
 					size:'200',
 					index:1
 				},
-				configurationStatus:false
+				configurationStatus:false,
+				loading:true
 			};
 		},
 		computed: {
 			projectId() {
 				return this.$store.state.userInfo.user.projectId;
-			}
+			},
+		},
+		mounted () {
+    		window.addEventListener(
+    			'scroll',
+    			this.scrollFunc,
+    			true
+    		);	
+		},
+		beforeDestroy () {
+			window.removeEventListener(
+    			'scroll',
+				this.scrollFunc,
+				true
+    		);
 		},
 		methods:{
+			scrollFunc() {
+				let elm = document.getElementsByClassName('main')[0];
+				this.loading = false;
+    			const offset = elm.scrollTop + elm.clientHeight;
+    			const height = elm.scrollHeight;
+
+    			if (offset >= height&&this.houseFormat!=='ENTIRE'&&(/unitprice/.test(window.location.pathname))) {
+					this.query()
+				}
+				return
+    		},
 			copyStatusChange(data) {
 				this.configurationStatus=data
 			},
@@ -89,6 +116,8 @@
 				}else{
 					delete this.reqData.locationId
 				}
+				this.reqData.index=1
+				this.houses=[]
 				this.query();
 			},
 			choose_refresh(){
@@ -100,9 +129,15 @@
     					this.reqData,{ projectId: this.projectId }
     				)
     				.then(res => {
-    					this.$set(this, 'houses', res.data || []);
+						res.data.forEach(element => {
+							this.houses.push(element)
+						});
 						this.$set(this, 'countInfo', res.paging)
 						this.houseFormat = this.reqData.houseFormat
+						this.reqData.index++
+						setTimeout(()=>{
+							this.loading = false
+						},500)
 					});
     		},
 			showmessage(data){
@@ -114,6 +149,8 @@
 				}else{
 					this.reqData.locationId = data
 				}
+				this.reqData.index=1
+				this.houses=[]
 				this.query()
 			},
 			cityArea(data) {
