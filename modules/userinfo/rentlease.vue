@@ -22,7 +22,7 @@
 						支付时间
 					</div>
 					<div>
-						<div v-for="item in props.row.billItems" :key="item.amount" class="setinline">
+						<div v-for="item in props.row.fundChannelFlows" :key="item.amount" class="setinline">
 							<div>{{date(item.createdAt)}}</div>
 						</div>
 					</div>
@@ -49,8 +49,8 @@
 		</el-table-column>
 		<el-table-column label="状态" width="120">
 			<template slot-scope="scope">
-				<span v-if="scope.row.billItems.length!==0">已支付</span>
-				<span v-if="scope.row.billItems.length===0">未支付</span>
+				<span v-if="scope.row.fundChannelFlows.length!==0">已支付</span>
+				<span v-if="scope.row.fundChannelFlows.length===0">未支付</span>
 			</template>
 		</el-table-column>
 	</el-table>

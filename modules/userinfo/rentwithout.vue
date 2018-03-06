@@ -9,9 +9,9 @@
                 <el-form-item label="账户余额">
                     <span class="gray"> {{price(userInfo.cashAccount.balance)}}元</span>
                 </el-form-item>
-                <!-- <el-form-item label="今日用量">
-                    <span class="gray"> {{price(userInfo.cashAccount.balance)}}度</span>
-                </el-form-item> -->
+                <el-form-item label="未付账单">
+                    <span class="gray" v-for="item in contractbill" :key="item.endDate"> <span v-if="item.type==='rent'">押金{{item.index}}期</span><span v-if="item.type==='bond'">租金</span>{{price(item.dueAmount)}}元 </span>
+                </el-form-item>
                 <el-form-item label="结算类型">
                     <el-radio-group v-model="radio">
                         <el-radio :label="1">收款</el-radio>
@@ -52,6 +52,7 @@
     import axios from 'axios'
     import userInfoImage from './userInfoImage'
     import startOfYesterday from 'date-fns/start_of_yesterday'
+    import _ from 'lodash'
     export default {
         props: {
             id: {
@@ -103,7 +104,7 @@
                 userInfo:{
                     cashAccount:{}
                 },
-                contractbill:{}
+                contractbill:[]
             }
         },
         mounted() {
@@ -159,10 +160,14 @@
 					{},
 					{
 						projectId: this.projectId,
-						id: this.userId.id
+						id: data
 					}
 				)
-                .then(data => this.$set(this, 'contractbill', data));
+                .then(data => {
+                    this.$set(this, 'contractbill', _.filter(data,function(val) {
+                        return val.dueDate<Date.parse(new Date())/1000&&val.fundChannelFlows.length===0
+                    }))
+                });
                 this.$model('electricity_instructions')
 				.patch(this.reqData, {
 					projectId: this.projectId,
