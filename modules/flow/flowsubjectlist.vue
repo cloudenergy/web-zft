@@ -105,12 +105,8 @@
                 let index = _.indexOf(this.subjectFlows,row)
                 let houseQuery = this.reqData
                 houseQuery.housesInLocation = row.id
-<<<<<<< HEAD
                 // TODO SUOQIN community SEARCH 
                 this.$model('flow_month')
-=======
-				this.$model('flow_mounth')
->>>>>>> abdb061e627b56ff79170fdd34d0cdb67593b2ca
 					.query(houseQuery, {
 						projectId: this.projectId
 					})
