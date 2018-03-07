@@ -50,7 +50,7 @@
 					to: nowDate,
 					view: 'category'
 				},
-				subjectFlows:null,
+				subjectFlows:[],
 				loading:[]
 			}
 		},

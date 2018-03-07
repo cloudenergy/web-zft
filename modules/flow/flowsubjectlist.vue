@@ -105,41 +105,44 @@
                 let index = _.indexOf(this.subjectFlows,row)
                 let houseQuery = this.reqData
                 houseQuery.housesInLocation = row.id
+<<<<<<< HEAD
                 // TODO SUOQIN community SEARCH 
                 this.$model('flow_month')
+=======
+				this.$model('flow_mounth')
+>>>>>>> abdb061e627b56ff79170fdd34d0cdb67593b2ca
 					.query(houseQuery, {
 						projectId: this.projectId
 					})
 					.then(res => {
-                        this.subjectFlows[index].housesInLocation=res
-                        // TODO SUOQIN house location search
-                        res.forEach((ele,num)=>{
-                            this.$model('housedetail')
-                            .query( {},{
-                                projectId: this.projectId,
-                                id: ele.id
-                            })
-                            .then(data => {
-                                this.subjectFlows[index].housesInLocation[num].location = data
-                                this.loading[index] = false
-                            })
-                            .catch(err => {
-                                console.log(err)
-                            })
-                        })
-                    })
+						this.subjectFlows[index].housesInLocation = res
+						res.forEach((ele, num) => {
+							this.$model('housedetail')
+								.query({houseFormat: 'SHARE'}, {
+									projectId: this.projectId,
+									id: ele.id
+								})
+								.then(data => {
+									this.subjectFlows[index].housesInLocation[num].location = data
+									this.loading[index] = false
+									if (row.id !== this.upflowi) {
+										this.toggle(row.id)
+										if (this.upflowi !== 0) {
+											this.toggle(this.upflowi)
+											this.upflowi = row.id
+										}
+									} else {
+										this.toggle(row.id)
+									}
+								})
+								.catch(err => {
+									console.log(err)
+								})
+						})
+					})
 					.catch(err => {
 						console.log(err)
-					})          
-                if (row.id != this.upflowi) {
-                    this.toggle(row.id)
-                    if (this.upflowi != 0) {
-                        this.toggle(this.upflowi)
-                        this.upflowi = row.id
-                    }
-                } else {
-                    this.toggle(row.id)
-                }
+					});
             },
             toggle(flowi) {
                 this.$refs.tableData.toggleRowExpansion(this.subjectFlows.find(d => d.id == flowi))
