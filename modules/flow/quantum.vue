@@ -14,7 +14,7 @@
 							<i class="el-icon-sort"></i>
 						</el-button>
 					</div>
-					<span class="result-info">32项结果</span>
+					<span class="result-info">{{flowPaging.count}}项结果</span>
 				</div>
 			</el-form>
 		</div>

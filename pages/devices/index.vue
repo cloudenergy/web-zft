@@ -106,9 +106,10 @@
 						projectId: this.projectId
 					})
 					.then(res => {
-						res.data.map(ele=>{
+						res.data.map((ele,index)=>{
 							ele.startDate = Date.parse(startOfYesterday())
 							ele.endDate = Date.parse(new Date())
+							ele.index = index
 							return ele
 						})
 						this.$set(this, 'readingElectric', res.data || []);
