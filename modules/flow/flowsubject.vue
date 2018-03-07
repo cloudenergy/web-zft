@@ -16,7 +16,7 @@
 				</div>
 			</el-form>
 		</div>
-		<flowsubjectlist :subjectFlows="subjectFlows" :reqData="reqData"/>
+		<flowsubjectlist :subjectFlows="subjectFlows" :reqData="reqData" :loading="loading"/>
 	</div>
 </template>
 <script>
@@ -50,7 +50,8 @@
 					to: nowDate,
 					view: 'category'
 				},
-				subjectFlows:null
+				subjectFlows:null,
+				loading:[]
 			}
 		},
 		created () {
@@ -64,6 +65,9 @@
 					})
 					.then(res => {
 						this.$set(this, 'subjectFlows', res)
+						this.loading = res.map(ele=>{
+							return true
+						})
 					})
 					.catch(err => {
 						console.log(err)

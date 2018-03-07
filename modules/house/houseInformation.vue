@@ -167,7 +167,7 @@
                         id: this.house.houseId
                     })
                     .then(res => {
-                        console.log(res)
+                        this.house.devices = res.devices
                     })
                     .catch(err => {
                         console.log(err)

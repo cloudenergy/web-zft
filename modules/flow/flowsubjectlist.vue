@@ -1,11 +1,11 @@
 <template lang="html">
-<div>
+<div class="subjectHouseLocation">
     <el-table :data="subjectFlows" :row-key="getRowKeys" :expand-row-keys="expands"         @row-click='handleRowHandle'         ref="tableData">
         <el-table-column type="expand">
             <template slot-scope="props">
-                <div>
-                    <div v-for="item in props.row.housesInLocation">
-                        <div><span>{{item.id}}</span></div>
+                <div v-loading="loading[props.$index]" class="housesInLocation">
+                    <div v-for="item in props.row.housesInLocation" class="flexc">
+                        <div><span v-if="item.location">{{item.location.location.name}}{{item.location.building}}幢{{item.location.unit}}单元{{item.location.roomNumber}}</span></div>
                         <div><span>{{price(item.rent)}}</span></div>
                         <div><span>{{price(item.rentFee)}}</span></div>
                         <div><span>{{price(item.topup)}}</span></div>
@@ -14,7 +14,6 @@
                         <div><span>{{price(item.finalPay)}}</span></div>
                         <div><span>{{price(item.balance)}}</span></div>
                     </div>
-                    
                 </div>
             </template>
         </el-table-column>
@@ -71,6 +70,9 @@
             },
             reqData: {
                 required:true
+            },
+            loading: {
+                type:Array
             }
         },
         data() {
@@ -81,19 +83,22 @@
                     return row.id;
                 },
                 // 要展开的行，数值的元素是row的key值
-                expands: []
+                expands: [],
+                test:true,
+                copyLoading:[]
             }
         },
+        
         computed: {
             projectId() {
                 return this.$store.state.userInfo.user.projectId
-            }  
+            }
         },
         mounted() {
             // 在这里你想初始化的时候展开哪一行都可以了
-            // this.$refs.tableData5.toggleRowExpansion(this.tableData5[0]) // 選中第二個
+            // this.$refs.tableData.toggleRowExpansion(this.tableData[0]) // 選中第二個
                      // 選中 value = 1 那行
-            // this.$refs.tableData5.toggleRowExpansion(this.tableData5.find(d => d.id == 888886))
+            // this.$refs.tableData.toggleRowExpansion(this.tableData.find(d => d.id == 888886))
         },
         methods: {
             handleRowHandle(row,event,column) {    
@@ -105,8 +110,22 @@
 						projectId: this.projectId
 					})
 					.then(res => {
-						this.subjectFlows[index].housesInLocation=res
-					})
+                        this.subjectFlows[index].housesInLocation=res
+                        res.forEach((ele,num)=>{
+                            this.$model('housedetail')
+                            .query( {},{
+                                projectId: this.projectId,
+                                id: ele.id
+                            })
+                            .then(data => {
+                                this.subjectFlows[index].housesInLocation[num].location = data
+                                this.loading[index] = false
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                        })
+                    })
 					.catch(err => {
 						console.log(err)
 					})          
@@ -130,7 +149,7 @@
     }
 </script>
 
-<style lang="css">
+<style lang="less">
     .demo-table-expand {
         font-size: 0;
     }
@@ -145,4 +164,18 @@
         margin-bottom: 0;
         width: 50%;
     }
+    .subjectHouseLocation .el-table__expanded-cell {
+        padding:20px 0 20px 52px;
+    }
 </style>
+
+<style lang="less" scoped>
+    .housesInLocation>div>div{
+        flex:1;
+        padding:0 10px;
+        span{
+            flex:1;
+        }
+    }
+</style>
+
