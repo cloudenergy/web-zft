@@ -3,7 +3,7 @@
     <el-table :data="subjectFlows" :row-key="getRowKeys" :expand-row-keys="expands"         @row-click='handleRowHandle'         ref="tableData">
         <el-table-column type="expand">
             <template slot-scope="props">
-                <div v-loading="loading[props.$index]" class="housesInLocation">
+                <div class="housesInLocation">
                     <div v-for="item in props.row.housesInLocation" class="flexc">
                         <div><span v-if="item.location">{{item.location.location.name}}{{item.location.building}}幢{{item.location.unit}}单元{{item.location.roomNumber}}</span></div>
                         <div><span>{{price(item.rent)}}</span></div>
@@ -119,17 +119,19 @@
 									id: ele.id
 								})
 								.then(data => {
+                                    
 									this.subjectFlows[index].housesInLocation[num].location = data
-									this.loading[index] = false
-									if (row.id !== this.upflowi) {
-										this.toggle(row.id)
-										if (this.upflowi !== 0) {
-											this.toggle(this.upflowi)
-											this.upflowi = row.id
-										}
-									} else {
-										this.toggle(row.id)
-									}
+                                    if(num===0) {
+                                        if (row.id !== this.upflowi ) {
+                                            this.toggle(row.id)
+                                            if (this.upflowi !== 0) {
+                                                this.toggle(this.upflowi)
+                                                this.upflowi = row.id
+                                            }
+                                        } else {
+                                            this.toggle(row.id)
+                                        }
+                                    }
 								})
 								.catch(err => {
 									console.log(err)
@@ -167,6 +169,7 @@
     }
     .subjectHouseLocation .el-table__expanded-cell {
         padding:20px 0 20px 52px;
+        color:#999;
     }
 </style>
 

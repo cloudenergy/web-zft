@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"blade-scripts": "~1.2.13",
+		"calculatorjs": "^1.0.0",
 		"date-fns": "^1.29.0",
 		"echarts": "^4.0.2",
 		"element-ui": "^2.0.5",

@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="flexc doublechec">
-            <userInfoImage :contractInfo="contractInfo"/>
+            <userInfoImage :contractInfo="contractInfo" />
             <div class="paymway flexc">
                 <el-form ref="form" :model="form" label-width="80px" :rules="rules">
                     <el-form-item label="当前余额" prop="price">
                         <p :style="{color:contractInfo.user.cashAccount.balance<2000?'#f03d53':'#000'}">{{price(contractInfo.user.cashAccount.balance)}}</p>
                     </el-form-item>
                     <el-form-item label="充值金额" prop="price">
-                        <el-input v-model="form.price" auto-complete="off" size="small"></el-input>
+                        <el-input v-model="form.price" auto-complete="off" size="small" ref="input" @input="upddateValue"></el-input>
                     </el-form-item>
                     <el-form-item label="充值方式">
                         <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%" size="small">
@@ -25,13 +25,14 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 
 <script>
     import userInfoImage from './userInfoImage.vue'
+    const calc = require('calculatorjs')
     export default {
         props: {
             contractInfo: {
@@ -39,7 +40,7 @@
             }
         },
         components: {
-              userInfoImage
+            userInfoImage
         },
         computed: {
             projectId() {
@@ -53,7 +54,7 @@
             var checkPrice = (rule, value, callback) => {
                 if (!value) {
                     return callback(new Error('请输入金额'))
-                } else if (parseInt(value * 100) !== value * 100) {
+                } else if (parseInt(value * 100) !== calc.mul(value, 100)) {
                     return callback(new Error('金额输入错误'))
                 } else {
                     callback()
@@ -61,7 +62,7 @@
             }
             return {
                 form: {
-                    "price": 0,
+                    "price": '',
                     "region": 1,
                     "desc": ''
                 },
@@ -75,8 +76,24 @@
             }
         },
         methods: {
-            change(val) {
-                this.add(val.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'))
+            upddateValue(value) {
+                var formattedValue = value
+                    // 删除两侧的空格符
+                    .trim()
+                    // 保留 2 位小数
+                    .slice(
+                        0,
+                        value.indexOf('.') === -1 ?
+                        value.length :
+                        value.indexOf('.') + 3
+                    )
+                console.log(formattedValue)
+                // 如果值尚不合规，则手动覆盖为合规的值
+                if (formattedValue !== value) {
+                    this.$nextTick(() => {
+                        this.form.price = formattedValue;
+                    })
+                }
             },
             price(data) {
                 return (data / 100).toFixed(2)
@@ -96,7 +113,7 @@
                     if (valid) {
                         this.$model('top_up')
                             .patch({
-                                amount: this.form.price * 100,
+                                amount: calc.mul(this.form.price * 100),
                                 fundChannelId: this.form.region
                             }, {
                                 projectId: this.projectId,
@@ -135,9 +152,7 @@
 <style lang="less" scoped>
     .doublechec {
         justify-content: space-between;
-    }
-
-    // .paymuser {
+    } // .paymuser {
     //     width: 180px;
     //     text-align: center;
     //     border: 1px solid #aaa;
@@ -157,10 +172,9 @@
     //         height: 100px;
     //     }
     // }
-
     .paymway {
         flex: 1;
-        margin-left:30px;
+        margin-left: 30px;
         flex-direction: column;
         justify-content: space-between;
     }
@@ -168,18 +182,20 @@
     .onsub {
         flex-direction: row-reverse;
         button {
-            margin-left:20px;
+            margin-left: 20px;
         }
     }
 </style>
 
-// <style lang="less">
-//     .paymuser i {
-//         width: 75px;
-//         height: 75px;
-//         svg{
-//             width: 75px;
-//             height: 75px;
-//         }
-//     }
-// </style>
+//
+<style lang="less">
+    //     .paymuser i {
+    //         width: 75px;
+    //         height: 75px;
+    //         svg{
+    //             width: 75px;
+    //             height: 75px;
+    //         }
+    //     }
+    //
+</style>

@@ -241,5 +241,6 @@
     }
     .readingElectric .el-table__expanded-cell{
         padding:10px 0 0 50px;
+        color:#999;
     }
 </style>
