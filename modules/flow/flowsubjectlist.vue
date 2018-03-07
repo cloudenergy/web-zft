@@ -105,12 +105,14 @@
                 let index = _.indexOf(this.subjectFlows,row)
                 let houseQuery = this.reqData
                 houseQuery.housesInLocation = row.id
+                // TODO SUOQIN community SEARCH 
                 this.$model('flow_mounth')
 					.query(houseQuery, {
 						projectId: this.projectId
 					})
 					.then(res => {
                         this.subjectFlows[index].housesInLocation=res
+                        // TODO SUOQIN house location search
                         res.forEach((ele,num)=>{
                             this.$model('housedetail')
                             .query( {},{
