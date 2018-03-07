@@ -8,12 +8,12 @@
 				<city-area style="width:220px" class="flexce" />
 				<rent-search/>
 				<div class="importres">
-					<div class="actions">
+					<!-- <div class="actions">
 						<el-button type="warning" size="mini" @click.native="show()">
 							导出
 							<i class="el-icon-sort"></i>
 						</el-button>
-					</div>
+					</div> -->
 					<span class="result-info">{{flowPaging.count}}项结果</span>
 				</div>
 			</el-form>
@@ -75,7 +75,7 @@
 				console.log(this.flowMounth)
 			},
 			query() {
-				this.$model('flow_mounth')
+				this.$model('flow_month')
 					.query(this.reqData, {
 						projectId: this.projectId
 					})

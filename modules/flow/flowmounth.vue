@@ -8,12 +8,12 @@
 				<water-source class="marsp marspa" />
 				<city-area style="width:220px" class="flexce" />
 				<div class="importres">
-					<div class="actions">
+					<!-- <div class="actions">
 						<el-button type="warning" size="mini">
 							导出
 							<i class="el-icon-sort"></i>
 						</el-button>
-					</div>
+					</div> -->
 					<span class="result-info">32项结果</span>
 				</div>
 			</el-form>

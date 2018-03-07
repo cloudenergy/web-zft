@@ -106,7 +106,7 @@
                 let houseQuery = this.reqData
                 houseQuery.housesInLocation = row.id
                 // TODO SUOQIN community SEARCH 
-                this.$model('flow_mounth')
+                this.$model('flow_month')
 					.query(houseQuery, {
 						projectId: this.projectId
 					})

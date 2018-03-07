@@ -22,10 +22,10 @@
 					<div class="flexcenter">
 						<span class="result-info">{{countInfo.count}}项结果</span>
 						<div class="actions">
-							<el-button type="warning" size="mini" @click="importrent('rentinfo')">
+							<!-- <el-button type="warning" size="mini" @click="importrent('rentinfo')">
 								导出
 								<i class="el-icon-sort"></i>
-							</el-button>
+							</el-button> -->
 						</div>
 					</div>
 				</div>

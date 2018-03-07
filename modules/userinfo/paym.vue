@@ -8,7 +8,7 @@
                         <p :style="{color:contractInfo.user.cashAccount.balance<2000?'#f03d53':'#000'}">{{price(contractInfo.user.cashAccount.balance)}}</p>
                     </el-form-item>
                     <el-form-item label="充值金额" prop="price">
-                        <el-input v-model.number="form.price" auto-complete="off" type="number" size="small"></el-input>
+                        <el-input v-model="form.price" auto-complete="off" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="充值方式">
                         <el-select v-model="form.region" placeholder="请选择缴费方式" style="width:100%" size="small">
@@ -21,7 +21,7 @@
                 </el-form>
                 <div class="flexc onsub">
                     <el-button type="primary" @click="onSubmit('form')">立即充值</el-button>
-                    <el-button @click="onclose('form')">取消</el-button>
+                    <el-button @click="onClose('form')">取消</el-button>
                 </div>
             </div>
         </div>
@@ -31,7 +31,6 @@
 
 
 <script>
-    import axios from 'axios'
     import userInfoImage from './userInfoImage.vue'
     export default {
         props: {
@@ -62,7 +61,7 @@
             }
             return {
                 form: {
-                    "price": '',
+                    "price": 0,
                     "region": 1,
                     "desc": ''
                 },
@@ -76,6 +75,9 @@
             }
         },
         methods: {
+            change(val) {
+                this.add(val.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'))
+            },
             price(data) {
                 return (data / 100).toFixed(2)
             },
@@ -116,11 +118,11 @@
                     }
                 });
             },
-            onclose(formName) {
-                this.cleraboth()
+            onClose(formName) {
+                this.clearBoth()
                 this.$refs[formName].resetFields();
             },
-            cleraboth() {
+            clearBoth() {
                 this.$modal.$emit('dismiss');
                 this.form.desc = ""
             }

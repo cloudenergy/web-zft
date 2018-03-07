@@ -11,10 +11,10 @@
 				<city-area style="width:220px" class="flexce" />
 				<div class="importres">
 					<div class="actions">
-						<el-button type="warning" size="mini">
+						<!-- <el-button type="warning" size="mini">
 							导出
 							<i class="el-icon-sort"></i>
-						</el-button>
+						</el-button> -->
 					</div>
 					<span class="result-info">32项结果</span>
 				</div>

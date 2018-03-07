@@ -14,12 +14,12 @@
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">{{pagingSize.count}}项结果</span>
-						<div class="actions">
+						<!-- <div class="actions">
 							<el-button type="warning" size="mini">
 								导出
 								<i class="el-icon-sort"></i>
 							</el-button>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<search-all :title="'搜索姓名/电话'"></search-all>
