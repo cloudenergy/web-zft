@@ -10,7 +10,7 @@
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<div style="margin-left:-20px">
-							<RentSearch @childinfo="showmessage" />
+							<RentSearch @childinfo="showmessage" :placeholder="'搜索小区/门牌/电话'"/>
 						</div>
 					</div>
 					<div class="flexcenter">

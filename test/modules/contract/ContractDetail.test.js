@@ -17,10 +17,10 @@ describe('ContractDetail', () => {
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain(
-			'<el-date-picker type="date" placeholder="起租时间" picker-options="[object Object]"></el-date-picker>'
+			'<el-date-picker type="date" placeholder="起租时间" picker-options="[object Object]" class="date-pick"></el-date-picker>'
 		);
 		expect(wrapper.html()).toContain(
-			'<el-date-picker type="date" placeholder="选择日期"></el-date-picker>'
+			'<el-date-picker type="date" placeholder="退租时间" picker-options="[object Object]" class="date-pick"></el-date-picker>'
 		);
 	});
 

@@ -10,7 +10,7 @@
 						<div class="select-with-label el-input-group">
 							<span class="el-input-group__prepend">开始日期</span>
 							<div class="block lease-start-input prepend-label">
-								<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间" :picker-options="startOptions" style="width:152px">
+								<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间" :picker-options="startOptions" class="date-pick">
 								</el-date-picker>
 							</div>
 						</div>
@@ -21,7 +21,7 @@
 						<div class="select-with-label el-input-group">
 							<span class="el-input-group__prepend">退租日期</span>
 							<div class="block lease-start-input prepend-label">
-								<el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间" :picker-options="endOptions" style="width:152px">
+								<el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间" :picker-options="endOptions" class="date-pick">
 								</el-date-picker>
 							</div>
 						</div>
@@ -95,6 +95,7 @@
 		data() {
 			const vm = this;
 			return {
+				width:'152px',
 				startOptions: {
 
 				},
@@ -140,5 +141,11 @@
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
+	}
+	
+</style>
+<style lang="less">
+	.house-contract .el-date-editor.el-input.date-pick {
+		width: 152px;
 	}
 </style>
