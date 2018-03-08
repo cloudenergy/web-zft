@@ -179,6 +179,9 @@
 </script>
 
 <style lang="less" scoped>
+    .base {
+        margin-top: 20px;
+    }
     .section {
         margin-bottom: 30px;
 

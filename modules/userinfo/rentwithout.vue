@@ -61,9 +61,10 @@
             userId: {
                 required: true
             },
-            roomDevices: {
-                required: true
-            },
+            // 获取电表信息 rent.vue 没有返回，未获取到
+            // roomDevices: {
+            //     required: true
+            // },
             houseFormat: {
                 required: true
             },
@@ -165,20 +166,21 @@
 				)
                 .then(data => {
                     this.$set(this, 'contractbill', _.filter(data,function(val) {
-                        return val.dueDate<Date.parse(new Date())/1000&&val.fundChannelFlows.length===0
+                        return val.dueDate<Date.parse(new Date())/1000&&val.payments.length===0
                     }))
                 });
-                this.$model('electricity_instructions')
-				.patch(this.reqData, {
-					projectId: this.projectId,
-					id: 'reading'
-				})
-				.then(res => {
-					console.log(res)
-				})
-				.catch(err=>{
-					console.log(err)
-                })
+                // 查询当前电表使用度数 rent没有电表信息
+                // this.$model('electricity_instructions')
+				// .patch(this.reqData, {
+				// 	projectId: this.projectId,
+				// 	id: 'reading'
+				// })
+				// .then(res => {
+				// 	console.log(res)
+				// })
+				// .catch(err=>{
+				// 	console.log(err)
+                // })
                 this.$model('reading_equipment')
                 .query(this.newReqData,{
                     projectId:this.projectId
@@ -188,17 +190,10 @@
                 console.log('submit!');
             },
             operateRent(data) {
-                this.$emit('operateRent')
-                console.log(this.radio)
+                this.$emit('operateRent',data)
                 if (data) {
-                    if (this.radio === 1) {
-                        this.withOutInfo.transaction.flow = 'receive'
-                        this.withOutInfo.endDate = this.nowData()
-                       
-                    } else {
-                        this.withOutInfo.transaction.flow = 'pay'
-                        this.withOutInfo.endDate = this.nowData()
-                    }
+                    this.withOutInfo.transaction.flow = this.radio===1?'receive':'pay'
+                    this.withOutInfo.endDate = this.nowData()
                     this.withOutInfo.transaction.amount = this.input * 100
                     this.input = ''
                     this.radio = 2

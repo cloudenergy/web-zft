@@ -11,10 +11,9 @@
 		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange"/>
 		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
 			<el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
-				<!-- <i class="el-icon-menu"></i> -->
-				<div slot="title" class="flexcenter"><span>全部小区</span><span class="communityNumber">数量:{{community.length}}</span></div>
+				<div slot="title" class="flexcenter"><span><span>全部小区</span><span v-if="urlLocation">/整幢</span></span><span class="communityNumber" v-if="!communityTable">数量:{{community.length}}</span></div>
 			</el-menu-item>
-			<el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.geoLocationId)" :class="{'is-active':typeNum==item.geoLocationId}">
+			<el-menu-item v-for="(item, index) in community" :key="index" :index="String(item.geoLocationId)" :class="{'is-active':typeNum==item.geoLocationId}" v-if="!communityTable">
 				<span slot="title">{{item.name}}</span>
 			</el-menu-item>
 		</el-menu>
@@ -60,7 +59,8 @@
 				communityType: 'SHARE',
 				showCommunity:'',
 				bindEquipment:'first',
-				addHouse:false
+				addHouse:false,
+				communityTable:false
 			};
 		},
 		created() {
@@ -85,6 +85,7 @@
 				}
 			},
 			change(tab, event) {
+				this.communityTable = tab.name==='second'?true:false
 				this.clickType = tab.name
 				this.firNum = 0
 				this.updateCommunity()

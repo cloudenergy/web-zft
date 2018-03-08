@@ -172,6 +172,7 @@
     		);
 		},
     	methods: {
+			// 滚动事件query
     		scrollFunc() {
 				let elm = document.getElementsByClassName('main')[0];
 				this.loading = false;
@@ -183,14 +184,16 @@
 				}
 				return
     		},
+			// 城市选择
     		cityArea(data) {
     			if (_.isUndefined(data)) {
     				delete this.reqData.districtId;
     			} else {
     				this.reqData.districtId = data.area || data.city;
     			}
-    			this.query();
+    			this.formatting()
     		},
+			// 查找 search
     		setSearch(data) {
     			if (/house/.test(location.pathname)) {
     				if (data !== '') {
@@ -198,35 +201,38 @@
     				} else {
     					delete this.reqData.q;
     				}
-    				this.query();
+    				this.formatting()
     			}
     		},
+			// 小区查找
     		communityChange(data) {
     			if (data === '0') {
     				delete this.reqData.locationId;
     			} else {
     				this.reqData.locationId = data;
 				}
-				this.reqData.index=1
-				this.houses=[]
-    			this.query();
+				this.formatting()
     		},
+			// 房间数查找
     		changeRoom(data) {
     			if (data !== 0) {
     				this.reqData.bedRooms = data;
     			} else {
     				delete this.reqData.bedRooms;
     			}
-    			this.query();
+    			this.formatting()
     		},
+			// 房间状态查找
     		changeRoomsStatus(data) {
     			this.reqData.status = data;
-    			this.query();
+    			this.formatting()
     		},
+			// 管理员查找
     		changeHouseKeeper(data) {
     			this.reqData.houseKeeper = data;
-    			this.query();
+    			this.formatting()
     		},
+			// houseFormat查找
     		refresh(type, commiunityId) {
     			if (/houses/.test(document.location.pathname)) {
     				this.reqData.houseFormat = type;
@@ -236,12 +242,10 @@
     					delete this.reqData.locationId;
     				}
     				delete this.reqData.districtId;
-					this.query();
-					this.reqData.index=1
-					this.houses=[]
+					this.formatting()
     			}
     		},
-    		query() {
+    		query(val) {
     			// TODO ZHOUYI house接口size设置
     			this.$model('houses')
     				.query(this.reqData, { projectId: this.projectId })
@@ -270,15 +274,23 @@
     						this.houses = this.testArray;
     					} else if (this.reqData.houseFormat === 'SOLE') {
     						this.tabCard = false;
-    						res.data.forEach(element => {
-								this.houses.push(element)
-							});
+							if(val) {
+								this.houses = res.data
+							}else {
+								res.data.forEach(element => {
+									this.houses.push(element)
+								});
+							}
     					} else {
     						this.entire = false;
     						this.tabCard = true;
-							res.data.forEach(element => {
-								this.houses.push(element)
-							});
+							if(val) {
+								this.houses = res.data
+							}else {
+								res.data.forEach(element => {
+									this.houses.push(element)
+								});
+							}
     					}
 						this.houseFormat = this.reqData.houseFormat;
 						this.reqData.index++;
@@ -321,7 +333,7 @@
     						})
     						.then(res => {
     							this.$message.success('删除成功');
-    							this.query();
+    							this.formatting()
     						})
     						.catch(e => {
     							this.$message('删除失败');
@@ -343,15 +355,19 @@
     				)
     				.then(res => {
     					this.$message.success('添加成功');
-    					this.query();
+    					this.formatting()
     				})
     				.catch(err => {
     					console.log(err);
     				});
     		},
     		successRefresh() {
-    			this.query();
-    		}
+				this.formatting()
+    		},
+			formatting() {
+				this.reqData.index = 1
+    			this.query(true);
+			}
     	}
     };
 </script>

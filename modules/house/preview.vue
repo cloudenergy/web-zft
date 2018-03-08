@@ -4,7 +4,9 @@
         <h3 class="title" v-if="room.name===''">{{house.location.name}} {{house.roomNumber}}{{room.orientation}}</h3>
         <div class="base section">
             <h4>房间信息</h4>
-            <p>朝向:<span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span></p>
+            <p>朝向:
+                <span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span>
+            </p>
         </div>
         <div class="facilities section">
             <h4>房间配置</h4>
@@ -33,8 +35,9 @@
                 </el-table-column>
                 <el-table-column label="控制" width="100">
                     <template slot-scope="scope">
-                        <el-switch :width="num" v-model="scope.row.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch" active-value="EMC_ON" inactive-value="EMC_OFF">
-					    </el-switch>
+                        <el-switch :width="num" v-model="scope.row.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch"
+                            active-value="EMC_ON" inactive-value="EMC_OFF">
+                        </el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="管理" width="100">
@@ -45,22 +48,32 @@
             </el-table>
         </div>
         <div class="bills section">
-            <h4>租费设置</h4>
+            <h4>租费详情</h4>
             <el-table :data="contracts" stripe>
-                <el-table-column prop="name" label="名称" width="150">
+                <el-table-column prop="name" label="租金" width="150">
                     <template slot-scope="scope">
-					    <span>租金</span>
-				    </template>
+                        <span>{{price(scope.row.rent)}}元</span>
+                    </template>
                 </el-table-column>
-                <el-table-column prop="amount" label="金额">
+                <el-table-column prop="amount" label="押金">
                     <template slot-scope="scope">
-					    <span>{{price(scope.row.rent)}}元/期</span>
-				    </template>
+                        <span v-if="scope.row.bond">{{price(scope.row.bond)}}元</span>
+                    </template>
                 </el-table-column>
-                <el-table-column prop="period" label="周期">
+                <el-table-column prop="amount" label="电费">
                     <template slot-scope="scope">
-					    <span>{{date(scope.row.from)}}至{{date(scope.row.to)}}</span>
-				    </template>
+                        <span>{{price(scope.row.price)}}元/度</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="amount" label="方式">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.freq}}月一付</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="period" label="租期" min-width="120">
+                    <template slot-scope="scope">
+                        <span>{{date(scope.row.from)}}至{{date(scope.row.to)}}</span>
+                    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -78,7 +91,9 @@
 </template>
 
 <script>
-    import { delYTL } from '~/utils/helper';
+    import {
+        delYTL
+    } from '~/utils/helper';
     import conversion from '../devices/conversion.vue'
     export default {
         props: {
@@ -106,24 +121,42 @@
             return {
                 dialogVisible: false,
                 value4: true,
-                reqData:{
-                    roomId:this.room.id
+                reqData: {
+                    roomId: this.room.id
                 },
-                num: 30,
-                contracts:[]
+                num: 30
             }
         },
         components: {
             conversion
         },
-        created () {
-            if(this.room.contract.from!==undefined) {
-                this.contracts.push(this.room.contract)
+        created() {
+            if (this.room.contract.from !== undefined) {
+                
+                this.contracts[0].rent = this.room.contract.rent
+                this.contracts[0].to = this.room.contract.to
+                this.contracts[0].from = this.room.contract.from
+                this.contracts[0].price = this.house.prices.length!==0?this.house.prices[0].price:0
+                this.$model('contracts_info')
+				.query({}, {
+					projectId: this.projectId,
+					contractId: this.room.contract.id
+				})
+				.then(res => {
+                    this.contracts[0].bond = res.strategy.bond
+                    this.contracts[0].freq = res.strategy.freq.pattern
+				})
+				.catch(err => {
+					console.log(err);
+				});
             }
         },
         computed: {
             projectId() {
                 return this.$store.state.userInfo.user.projectId;
+            },
+            contracts() {
+                return this.room.contract.from?[{'bond':'-','freq':'1'}]:[]
             }
         },
         methods: {
@@ -131,30 +164,23 @@
                 return delYTL(val)
             },
             electricSwitch(data) {
-				return data.status.switch==='EMC_ON'
-			},
+                return data.status.switch === 'EMC_ON'
+            },
             eleciricitySwitch(data) {
-                // this.$confirm('此操作将送/断电表, 是否继续?', '提示', {
-                //     confirmButtonText: '确定',
-                //     cancelButtonText: '取消',
-                //     type: 'warning'
-                // }).then(()=>{
-                    if (data) {
-					this.reqData.mode = 'EMC_ON'
-                    } else {
-                        this.reqData.mode = 'EMC_OFF'
-                    }
-                    this.$model('electricity_instructions')
-                        .patch(this.reqData, {
-                            projectId: this.projectId,
-                            id: 'switch'
-                        })
-                        .then(res => {
-                            this.$message.success('成功')
-                        })
-                // }).catch(err=>{
-                // })
-			},
+                if (data) {
+                    this.reqData.mode = 'EMC_ON'
+                } else {
+                    this.reqData.mode = 'EMC_OFF'
+                }
+                this.$model('electricity_instructions')
+                    .patch(this.reqData, {
+                        projectId: this.projectId,
+                        id: 'switch'
+                    })
+                    .then(res => {
+                        this.$message.success('成功')
+                    })
+            },
             del(room) {
                 this.$model('rooms').delete(null, {
                     id: this.roomId
@@ -250,6 +276,10 @@
 </script>
 
 <style lang="less" scoped>
+    .base {
+        margin-top: 20px;
+    }
+
     .section {
         margin-bottom: 30px;
 

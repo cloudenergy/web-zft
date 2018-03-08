@@ -56,11 +56,7 @@
 		</el-dialog>
 		<el-dialog title="退租结算" :visible.sync="dialogVisibleWithout" width="800px">
 			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo' :userId="room.contract" :roomDevices="room.showEquipment"
-			    :houseFormat="houseFormat" :roomId="room.id" />
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisibleWithout = false">取 消</el-button>
-				<el-button type="primary" @click="operateRent">确 定</el-button>
-			</span>
+			    :houseFormat="houseFormat" :roomId="room.id" @operateRent='operateRent'/>
 		</el-dialog>
 		<el-dialog title="详情信息" :visible.sync="dialogVisible" width="65%" class="">
 			<div></div>
@@ -346,7 +342,6 @@
 			// 关闭房间
 			closeRoom() {},
 			operateRent() {
-				this.$refs.operate.operateRent();
 				this.dialogVisibleWithout = false;
 			},
 			showUserInfo(item) {
