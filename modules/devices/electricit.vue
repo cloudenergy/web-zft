@@ -174,14 +174,18 @@
                     roomId
                 }
                 this.$model('reading_equipment')
-                    .query(roomReadingData, {
-                        projectId: this.projectId
-                    })
-                    .then(res => {
-                        if (res.data.length === 1) {
-                            this.readingElectric[index] = res.data[0]
-                        }
-                    })
+                .query(roomReadingData, {
+                    projectId: this.projectId
+                })
+                .then(res => {
+                    if (res.data.length === 1) {
+                        res.data[0].startDate = startDate*1000
+                        res.data[0].endDate = endDate*1000
+                        res.data[0].index = index
+                        this.readingElectric[index] = res.data[0]
+                        this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
+                    }
+                })
             },
             newTime(data, index) {
                 this.roomReading(getTime(data.startDate) / 1000, getTime(data.endDate) / 1000, data.houseId, data.roomId,
@@ -194,14 +198,17 @@
                 return differentnum * price
             },
             handleRowHandle(row, event) {
-                if (row.index != this.upflowi) {
-                    this.toggle(row.index)
-                    if (this.upflowi != 0) {
-                        this.toggle(this.upflowi)
-                        this.upflowi = row.index
+                // 阻止冒泡
+                if (event.path[0].tagName != 'INPUT') {
+                    if (row.index != this.upflowi) {
+                        this.toggle(row.index)
+                        if (this.upflowi != 0) {
+                            this.toggle(this.upflowi)
+                            this.upflowi = row.index
+                        }
+                    } else {
+                        this.toggle(row.index)
                     }
-                } else {
-                    this.toggle(row.index)
                 }
             },
             // 展开
@@ -230,7 +237,7 @@
         margin-top: 5px;
     }
 </style>
-<style>
+<style lang="less">
     .no-border>.el-input>.el-input__inner {
         border: 1px solid transparent;
         padding: 0;
@@ -242,5 +249,12 @@
     .readingElectric .el-table__expanded-cell{
         padding:10px 0 0 50px;
         color:#999;
+        background: #f2f2f2;
+        .el-table__row{
+            background: #f2f2f2;
+        }
+        .el-table, .el-table__expanded-cell {
+            background: #f2f2f2;
+        }
     }
 </style>

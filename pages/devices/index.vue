@@ -61,8 +61,8 @@
 				paging: {},
 				reqData: {
 					houseFormat:this.houseFormat,
-					startDate:1506787200,
-					endDate:1512057600,
+					startDate:startOfYesterday()/1000,
+					endDate:Date.parse(new Date)/1000,
 					size:20,
 					index:1
 				}

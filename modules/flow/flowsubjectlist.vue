@@ -167,9 +167,16 @@
         margin-bottom: 0;
         width: 50%;
     }
-    .subjectHouseLocation .el-table__expanded-cell {
+    .subjectHouseLocation .el-table__expanded-cell{
         padding:20px 0 20px 52px;
-        color:#999;
+        color:#9b9b9b;
+        background: #f2f2f2;
+        .el-table__row{
+            background: #f2f2f2;
+        }
+        .el-table, .el-table__expanded-cell {
+            background: #f2f2f2;
+        }
     }
 </style>
 

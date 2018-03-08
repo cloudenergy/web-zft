@@ -1,12 +1,11 @@
 <template lang="html">
-    <div>
-        <!-- TODO ZHOUYI 服务费返回 -->
+    <div class=" subjectHouseLocation">
         <el-table :data="mounthFlows" :row-key="getRowKeys" :expand-row-keys="expands"     @row-click='handleRowHandle'         ref="tableData5"
             style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-row class="gray">
-                        <el-col v-if="props.row.billItems!==null" :span="5">
+                        <el-col v-if="props.row.billItems!==null" :span="4">
                             <p v-for="item in props.row.billItems" class="flexcenter">
                                 <span v-for="(list,index) in otherCost" :key="index" v-if="list.id===item.configId">{{list.key}}</span>
                                 <span v-if="item.configId===121">租金</span>
@@ -174,17 +173,26 @@
     }
 </script>
 
-<style scoped>
-    .gray{
-        color:#999;
-    }
+<style scoped lang="less">
+    
     .gray span:first-child{
         padding-left: 10px;
     }
 </style>
 
 
-<style lang="css">
+<style lang="less">
+    .subjectHouseLocation .el-table__expanded-cell{
+        padding:20px 0 20px 52px;
+        color:#9b9b9b;
+        background: #f2f2f2;
+        .el-table__row{
+            background: #f2f2f2;
+        }
+        .el-table, .el-table__expanded-cell {
+            background: #f2f2f2;
+        }
+    }
     .demo-table-expand {
         font-size: 0;
     }
