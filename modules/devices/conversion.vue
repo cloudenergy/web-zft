@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flexcenter">
-            <RentSearch style="width:300px" class="clearmargin" />
+            <RentSearch style="width:300px" class="clearmargin" :placeholder="placeholder" @childinfo='childinfo'/>
             <p>数量/{{listInfo.count}}</p>
         </div>
         <!-- TODO ZHOUYI 设备管理绑定电表增加条件查询 -->
@@ -39,7 +39,8 @@
                 },
                 loading: true,
                 listInfo: '',
-                background: true
+                background: true,
+                placeholder:'请输入仪表ID'
             }
         },
         computed: {
