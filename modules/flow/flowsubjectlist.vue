@@ -111,7 +111,8 @@
 						projectId: this.projectId
 					})
 					.then(res => {
-						this.subjectFlows[index].housesInLocation = res
+                        this.subjectFlows[index].housesInLocation = res
+                        // 改造失败
 						res.forEach((ele, num) => {
 							this.$model('housedetail')
 								.query({houseFormat: 'SHARE'}, {
