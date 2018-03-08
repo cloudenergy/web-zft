@@ -11,7 +11,7 @@
 			</el-col>
 			<el-col :span="9">
 				<div class="select-with-label el-input-group">
-					<el-input placeholder="" v-model="expense.rent" prefix-icon="el-icon-rank">
+					<el-input placeholder="" v-model="expense.rent">
 					</el-input>
 					<span class="el-input-group__append" v-if="expense.pattern!=='prepaid'">元/月</span>
 					<span class="el-input-group__append" v-if="expense.pattern==='prepaid'">
@@ -42,7 +42,7 @@
 		},
 		computed: {
 			paymentMethods() {
-				return this.allowPayWithRent ? fp.concat(this.standardMethods, this.payWithRent) : this.standardMethods
+				return this.allowPayWithRent ? fp.concat(this.payWithRent, this.standardMethods) : this.standardMethods
 			}
 		},
 		mounted() {

@@ -4,24 +4,29 @@
 			<el-col :span="3">
 				<div class="section-label">租期</div>
 			</el-col>
-			<el-col :span="10">
-				<el-form-item prop="contract.leaseStart">
-					<div class="select-with-label el-input-group">
-						<span class="el-input-group__prepend">范围</span>
-						<div class="block lease-start-input prepend-label">
-							<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间" :picker-options="startOptions">
-							</el-date-picker>
+			<el-col :span="21">
+				<el-col :span="9">
+					<el-form-item prop="contract.leaseStart">
+						<div class="select-with-label el-input-group">
+							<span class="el-input-group__prepend">开始日期</span>
+							<div class="block lease-start-input prepend-label">
+								<el-date-picker v-model="contract.leaseStart" type="date" placeholder="起租时间" :picker-options="startOptions" style="width:152px">
+								</el-date-picker>
+							</div>
 						</div>
-					</div>
-				</el-form-item>
-			</el-col>
-			<el-col :span="10" class="lease-end-input">
-				<el-form-item prop="contract.leaseEnd" :rules="[
-      						{ required: true, message: '请输入租期结束时间', trigger: 'blur', type: 'date' }
-    					]">
-					<el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间" :picker-options="endOptions">
-					</el-date-picker>
-				</el-form-item>
+					</el-form-item>
+				</el-col>
+				<el-col :span="9" class="lease-end-input">
+					<el-form-item prop="contract.leaseEnd" :rules="[{ required: true, message: '请输入租期结束时间', trigger: 'blur', type: 'date' }]">
+						<div class="select-with-label el-input-group">
+							<span class="el-input-group__prepend">退租日期</span>
+							<div class="block lease-start-input prepend-label">
+								<el-date-picker v-model="contract.leaseEnd" type="date" placeholder="退租时间" :picker-options="endOptions" style="width:152px">
+								</el-date-picker>
+							</div>
+						</div>
+					</el-form-item>
+				</el-col>
 			</el-col>
 		</el-row>
 		<el-row>
@@ -29,23 +34,25 @@
 				<el-col :span="3">
 					<div class="section-label">合同描述</div>
 				</el-col>
-				<el-col :span="9">
-					<el-input placeholder="选填" v-model="contract.contractNumber">
-						<template slot="prepend">合同编号</template>
-					</el-input>
-				</el-col>
-				<el-col :span="9">
-					<el-form-item prop="contract.signUpDate" :rules="[
-								{ required: true, message: '请输入签约时间', trigger: 'blur', type: 'date' }
-    					]">
-						<div class="select-with-label el-input-group">
-							<span class="el-input-group__prepend">签约日期</span>
-							<div class="block lease-start-input prepend-label">
-								<el-date-picker v-model="contract.signUpDate" type="date" placeholder="选择日期">
-								</el-date-picker>
+				<el-col :span="21">
+					<el-col :span="9">
+						<el-input placeholder="选填" v-model="contract.contractNumber">
+							<template slot="prepend">合同编号</template>
+						</el-input>
+					</el-col>
+					<el-col :span="9">
+						<el-form-item prop="contract.signUpDate" :rules="[
+									{ required: true, message: '请输入签约时间', trigger: 'blur', type: 'date' }
+							]">
+							<div class="select-with-label el-input-group">
+								<span class="el-input-group__prepend">签约日期</span>
+								<div class="block lease-start-input prepend-label">
+									<el-date-picker v-model="contract.signUpDate" type="date" placeholder="选择日期" style="width:152px">
+									</el-date-picker>
+								</div>
 							</div>
-						</div>
-					</el-form-item>
+						</el-form-item>
+					</el-col>
 				</el-col>
 			</el-form-item>
 		</el-row>
@@ -127,10 +134,6 @@
 </script>
 
 <style lang="less" scoped>
-	.lease-end-input {
-		margin-left: 20px;
-	}
-
 	.select-with-label {
 		display: inline-table;
 		.el-input__inner {

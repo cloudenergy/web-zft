@@ -32,7 +32,7 @@
 			</el-tooltip>
 			<el-tooltip content="添加合同" placement="top">
 				<p @click="addContracts()">
-					<icon type="shebeiguanli4" style="font-size:15px" class="flexdirection addContracts" />
+					<icon type="renyuanzengjia" style="font-size:15px" class="flexdirection addContracts" />
 				</p>
 			</el-tooltip>
 

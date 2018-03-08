@@ -166,7 +166,7 @@
 						signUpDate: this.defaultStart(today)
 					},
 					expense: {
-						billPlan: 'F',
+						billPlan: '-',
 						offset: 2,
 						standard: {
 							name: '常规租金',

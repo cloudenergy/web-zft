@@ -44,10 +44,13 @@
 			<el-col :span="3">
 				<div class="section-label">押金</div>
 			</el-col>
-			<el-col :span="9">
-				<el-input placeholder="押金" v-model="expense.bond">
-					<template slot="prepend">常规押金</template>
-				</el-input>
+			<el-col :span="21">
+				<el-col :span="9">
+					<el-input placeholder="押金" v-model="expense.bond">
+						<icon slot="suffix" class="el-input__icon icon-renminbi" style="font-size:20px"></icon>
+						<template slot="prepend">常规押金</template>
+					</el-input>
+				</el-col>
 			</el-col>
 		</el-row>
 		<el-dialog width="30%" title="选择要增加的收费选项" :visible.sync="innerVisible" append-to-body>
