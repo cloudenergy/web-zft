@@ -1,10 +1,8 @@
 <template>
     <div>
-        <p>{{ data.room.locationName }}{{ data.room.building }}幢{{ data.room.unit }}单元{{ data.room.roomNumber}}&nbsp;{{ data.room.roomName }}</p>
-        <p>{{data.user.name}} {{data.user.accountName}}</p>
-        <div>
-            <div class="title">应支付日:{{set(data.dueDate)}}</div>
-        </div>
+        <p class="title">{{ data.room.locationName }}{{ data.room.building }}幢{{ data.room.unit }}单元{{ data.room.roomNumber}}&nbsp;{{ data.room.roomName }}</p>
+        <p class="title">{{data.user.name}} {{data.user.accountName}}</p>
+        <p class="title">应支付日:{{set(data.dueDate)}}</p>
         <div>
             <el-table :data="data.billItems" style="width: 100%">
                 <el-table-column label="账单类型">
@@ -143,7 +141,9 @@
 
 <style lang="less" scoped>
     .title {
-        line-height: 40px;
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: #999;
     }
 
     .flexc {

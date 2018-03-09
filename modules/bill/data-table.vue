@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table :data="tableBill" style="width: 100%">
-            <el-table-column type="index" width="50" label="序号">
+            <el-table-column type="index" width="50" label="序号" :index="indexMethod">
             </el-table-column>
             <el-table-column label="应支付日" width="200">
                 <template slot-scope="scope">
@@ -42,7 +42,7 @@
         <el-pagination background layout="prev, pager, next" :total='pagingSize.count' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
             :page-size='20'>
         </el-pagination>
-        <el-dialog title="收款" :visible.sync="dialogVisible" width="40%">
+        <el-dialog title="收款" :visible.sync="dialogVisible" width="40%" class="billCollection">
             <billCollection :data="tableData" :type="otherCost" ref="collect" @closeDialog='closeDialog()' />
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -87,6 +87,7 @@
                 paging: null,
                 dialogVisible: false,
                 dialogTitle: 'Tips',
+                index:1,
                 type: [{
                         type: 'bond',
                         text: '押金'
@@ -124,10 +125,9 @@
             };
         },
         methods: {
-            /**@augments
-             * max 传入实收最大的值
-             * num 实收的值
-             */
+            indexMethod(data) {
+				return (this.index-1)*20+data+1
+			},
             narrow(data) {
                 return (data / 100).toFixed(2)
             },
@@ -161,6 +161,7 @@
                 }
             },
             handleCurrentChange(val) {
+                this.index = val
                 this.$emit('sizeIndex', val)
             }
         }
@@ -176,5 +177,12 @@
     }
     .gray{
         color:#999
+    }
+    
+</style>
+
+<style lang="less">
+    .billCollection .el-dialog__body{
+        padding: 10px 20px; 
     }
 </style>

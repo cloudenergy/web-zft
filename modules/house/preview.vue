@@ -131,6 +131,7 @@
             conversion
         },
         created() {
+            console.log(this.room)
             if (this.room.contract.from !== undefined) {
                 
                 this.contracts[0].rent = this.room.contract.rent
@@ -186,6 +187,7 @@
                     id: this.roomId
                 });
             },
+            // 解绑设备
             handleDelete(data) {
                 this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
                     confirmButtonText: '确定',
@@ -200,15 +202,17 @@
                             id: data.deviceId
                         })
                         .then((res) => {
+                            console.log(this.room)
                             this.queryAgain('unbundling')
                         })
                 }).catch(err => {
-
+                    this.$message('解绑失败')
                 });
             },
             bindEleciricity() {
                 this.dialogVisible = true
             },
+            // 添加设备
             setEquipmentid(data) {
                 this.$model('room_devices')
                     .update({}, {
@@ -241,29 +245,25 @@
 
                 });
             },
+            // 请求房间信息
             queryAgain(data) {
+                console.log(this.room)
                 this.$model('room_detail')
-                    .query({}, {
-                        projectId: this.projectId,
-                        houseId: this.house.houseId,
-                        roomId: this.room.id
-                    })
-                    .then(res => {
-                        if (data == 'bind') {
-                            if (res.devices.length != 0) {
-                                this.$message.success('操作成功')
-                            } else {
-                                this.$message('操作失败')
-                            }
-                        } else {
-                            if (res.devices.length == 0) {
-                                this.$message.success('操作成功')
-                            } else {
-                                this.$message('操作失败')
-                            }
-                        }
-                        this.room.devices = res.devices
-                    })
+                .query({}, {
+                    projectId: this.projectId,
+                    houseId: this.house.houseId,
+                    roomId: this.room.id
+                })
+                .then(res => {
+                    this.$message.success('操作成功')
+                    if(res.devices.length!==0) {
+                        this.$set(this.room,'devicesChooseElectricity',res.devices)
+                    }else {
+                        this.$set(this.room,'devicesChooseElectricity',[])
+                    }
+                    
+                    console.log(this.room)
+                })
             },
             date(data) {
                 return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/\//g, "-")

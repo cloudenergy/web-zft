@@ -62,7 +62,8 @@
 <script>
 	import {
 		addMonths,
-		addYears
+		addYears,
+		subDays
 	} from 'date-fns';
 
 	export default {
@@ -73,16 +74,18 @@
 		},
 		computed: {
 			sixMonthsLength() {
-				return addMonths(this.contract.leaseStart, 6)
+				console.log(addMonths(this.contract.leaseStart, 6))
+				console.log(subDays(addMonths(this.contract.leaseStart, 6),1))
+				return subDays(addMonths(this.contract.leaseStart, 6),1)
 			},
 			oneYearLength() {
-				return addYears(this.contract.leaseStart, 1)
+				return subDays(addYears(this.contract.leaseStart, 1),1)
 			},
 			twoYearsLength() {
-				return addYears(this.contract.leaseStart, 2)
+				return subDays(addYears(this.contract.leaseStart, 2),1)
 			},
 			threeYearsLength() {
-				return addYears(this.contract.leaseStart, 3)
+				return subDays(addYears(this.contract.leaseStart, 3),1)
 			}
 		},
 		watch: {

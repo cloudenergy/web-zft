@@ -22,6 +22,7 @@ export default {
 	},
 	methods: {
 		dismiss: function() {
+			console.log('dismiss')
 			this.visible = false;
 			this.$modal.$emit('refresh');
 		},

@@ -31,7 +31,8 @@
     					name="type"
     					indeterminate={this.indeterminate}
     					on-change={handleChangeAll}
-    					value={this.all}
+						value={this.all}
+						disabled
     					on-input={val => (this.all = val)}
     				/>
     				{this.all}
@@ -41,7 +42,8 @@
     						this.$emit('input', val);
     					}}
     					on-change={handleCheckChange}
-    					value={this.model}
+						value={this.model}
+						disabled
     				>
     					{facilities.map(item => {
     						return (

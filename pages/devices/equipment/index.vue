@@ -27,7 +27,7 @@
 			</el-header>
 			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:20px">
 				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh' @restoreSwitch="restoreSwitch"
-				    :index="reqData.index" />
+				    :index="reqData.index" :equipmentLoading='equipmentLoading'/>
 				<div class="flexcenter batch">
 					<div class="flexc cursorp">
 						<span @click="electric('EMC_ON')">批量送电</span>
@@ -81,7 +81,8 @@
 					mode: 'BIND'
 				},
 				devices: [],
-				loading: 1
+				loading: 1,
+				equipmentLoading:false
 			}
 		},
 		computed: {
@@ -120,6 +121,7 @@
 				});
 			},
 			handleCurrentChange(val) {
+				this.equipmentLoading = true;
 				this.reqData.index = val;
 				this.query()
 			},
@@ -145,6 +147,7 @@
 						console.log(this.loading)
 						this.$set(this, 'devices', _.chunk(res.data, 20)[0])
 						this.$set(this, 'paging', res.paging)
+						this.equipmentLoading = false
 					})
 					.catch(err => {
 						console.log(err)

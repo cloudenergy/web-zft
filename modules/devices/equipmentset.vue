@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-table :data="devices" style="width: 100%" @row-click='handleRowHandle' @select="select" @select-all="selectAll">
+		<el-table :data="devices" style="width: 100%" @row-click='handleRowHandle' @select="select" @select-all="selectAll" v-loading="equipmentLoading">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
 			<el-table-column type="index" :index="indexMethod" label="序号">
@@ -80,6 +80,9 @@
 			},
 			index: {
 				type: Number
+			},
+			equipmentLoading: {
+				type: Boolean
 			}
 		},
 		data() {

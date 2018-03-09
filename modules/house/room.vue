@@ -250,7 +250,8 @@
 						itemRoom: this.room,
 						itemHouse: this.house
 					},
-					title: '新增合约'
+					title: '新增合约',
+					className: 'new-contract'
 				});
 			},
 			viewContracts() {

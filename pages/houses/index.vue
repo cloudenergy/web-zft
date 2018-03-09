@@ -86,13 +86,14 @@
     			tabCard: true,
     			houseFormat: 'SHARE',
 				houseKeeper: null,
-				loading:true
+				loading:true,
+				refreshAgain:false
     		};
     	},
     	computed: {
     		projectId() {
     			return this.$store.state.userInfo.user.projectId;
-    		},
+			},
     		equipmentHouses: function() {
     			if (this.houseFormat !== 'ENTIRE') {
     				return this.houses.map((element, index) => {
@@ -149,13 +150,14 @@
     		}
     	},
     	created() {
-    		// this.query();
+			// this.query();
     		this.$modal.$on('keyup', data => {
     			this.setSearch(data);
-    		}),
-    			this.$modal.$on('refresh', () => {
-    				this.refresh(this.reqData.houseFormat);
-    			});
+			}),
+			// 减少house页面打开几次在创建时请求几次的错误
+    		this.$modal.$on('refresh', () => {
+				this.formatting()
+    		});
     	},
     	mounted () {
     		window.addEventListener(
@@ -250,6 +252,7 @@
     			this.$model('houses')
     				.query(this.reqData, { projectId: this.projectId })
     				.then(res => {
+						this.refreshAgain = false;
     					if (this.reqData.houseFormat === 'ENTIRE') {
     						this.testArray = [];
     						this.entireHouse = [];
@@ -363,7 +366,8 @@
     		},
     		successRefresh() {
 				this.formatting()
-    		},
+			},
+			// 格式化请求
 			formatting() {
 				this.reqData.index = 1
     			this.query(true);

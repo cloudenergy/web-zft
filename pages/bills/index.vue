@@ -10,7 +10,7 @@
 						<BillStatus class="status" @billStatus="billStatus" />
 						<!-- <bill-type/> -->
 						<ReportPeriod class="period" />
-						<room-manager/>
+						<RentManager class="manager" :houseKeeper='houseKeeper'/>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">{{pagingSize.count}}项结果</span>
@@ -44,7 +44,7 @@
 		BillMode,
 		BillSearch
 	} from '~/modules/bill';
-
+	import RentManager from '~/modules/rent/rent-manager.vue';
 	export default {
 		components: {
 			Tab,
@@ -54,7 +54,8 @@
 			BillManager,
 			DataTable,
 			BillMode,
-			BillSearch
+			BillSearch,
+			RentManager
 		},
 		data() {
 			return {
@@ -66,7 +67,8 @@
 					paid: false,
 					size:20,
 					index:1
-				}
+				},
+				houseKeeper:null
 			};
 		},
 		computed: {
@@ -109,16 +111,21 @@
 			},
 			query() {
 				this.$model('all_user_bills')
-					.query(this.reqData, {
-						projectId: this.projectId
-					})
-					.then(res => {
-						this.$set(this, 'tableData', res.data)
-						this.$set(this, 'pagingSize', res.paging)
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				.query(this.reqData, {
+					projectId: this.projectId
+				})
+				.then(res => {
+					this.$set(this, 'tableData', res.data)
+					this.$set(this, 'pagingSize', res.paging)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+				this.$store.dispatch('HOUSE_KEERER',{
+					projectId:this.projectId
+				}).then(data=>{
+					this.$set(this,'houseKeeper',data)
+				})
 			},
 			refresh(type,commiunityId) {
 				this.reqData.houseFormat = type
