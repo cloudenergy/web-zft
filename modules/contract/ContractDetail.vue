@@ -74,8 +74,6 @@
 		},
 		computed: {
 			sixMonthsLength() {
-				console.log(addMonths(this.contract.leaseStart, 6))
-				console.log(subDays(addMonths(this.contract.leaseStart, 6),1))
 				return subDays(addMonths(this.contract.leaseStart, 6),1)
 			},
 			oneYearLength() {

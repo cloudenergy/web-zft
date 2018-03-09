@@ -29,10 +29,10 @@ describe('ContractDetail', () => {
 	});
 
 	it('should compute different end contract spots base on leaseStart date', () => {
-		expect(format('YYYY-MM-DD')(wrapper.vm.sixMonthsLength)).toBe('2018-05-11');
-		expect(format('YYYY-MM-DD')(wrapper.vm.oneYearLength)).toBe('2018-11-11');
-		expect(format('YYYY-MM-DD')(wrapper.vm.twoYearsLength)).toBe('2019-11-11');
-		expect(format('YYYY-MM-DD')(wrapper.vm.threeYearsLength)).toBe('2020-11-11');
+		expect(format('YYYY-MM-DD')(wrapper.vm.sixMonthsLength)).toBe('2018-05-10');
+		expect(format('YYYY-MM-DD')(wrapper.vm.oneYearLength)).toBe('2018-11-10');
+		expect(format('YYYY-MM-DD')(wrapper.vm.twoYearsLength)).toBe('2019-11-10');
+		expect(format('YYYY-MM-DD')(wrapper.vm.threeYearsLength)).toBe('2020-11-10');
 	});
 
 	it('should compute one year end date on lease start option', () => {
@@ -43,6 +43,6 @@ describe('ContractDetail', () => {
 			signUpDate: '2017-12-12'
 		} })
 
-		expect(format('YYYY-MM-DD')(wrapper.vm.oneYearLength)).toBe('2019-05-11');
+		expect(format('YYYY-MM-DD')(wrapper.vm.oneYearLength)).toBe('2019-05-10');
 	});
 });
