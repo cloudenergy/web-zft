@@ -52,12 +52,12 @@
 					</el-col>
 					<el-col :span="8" class="roomInfo">
 						<el-input v-model.number="form.currentFloor" auto-complete="off" placeholder="层高">
-							<template slot="append">楼</template>
+							<template slot="append">层</template>
 						</el-input>
 					</el-col>
 					<el-col :span="8" class="roomInfo">
 						<el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数">
-							<template slot="append">数</template>
+							<template slot="append">层</template>
 						</el-input>
 					</el-col>
 				</el-row>

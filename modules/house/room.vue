@@ -58,7 +58,7 @@
 			<RentWithout :id="room.contract.id" ref="operate" @successInfo='successInfo' :userId="room.contract" :roomDevices="room.showEquipment"
 			    :houseFormat="houseFormat" :roomId="room.id" @operateRent='operateRent'/>
 		</el-dialog>
-		<el-dialog title="详情信息" :visible.sync="dialogVisible" width="65%" class="">
+		<el-dialog title="详情信息" :visible.sync="dialogVisible" width="1100px" class="">
 			<div></div>
 			<div class="flexc rgbc">
 				<div class="setborder">
@@ -71,23 +71,23 @@
 						<div>
 							<p>姓名</p>
 							<p>{{updateData.user.name}}</p>
-							<p v-if="updateData.user.name==''">暂无信息</p>
+							<p v-if="updateData.user.name===null">暂无信息</p>
 						</div>
 						<div>
 							<p>性别</p>
 							<p v-if="updateData.user.gender=='M'">男</p>
 							<p v-if="updateData.user.gender=='F'">女</p>
-							<p v-if="updateData.user.gender==''">暂无信息</p>
+							<p v-if="updateData.user.gender===null">暂无信息</p>
 						</div>
 						<div>
 							<p>身份证号</p>
 							<p>{{updateData.user.documentId}}</p>
-							<p v-if="updateData.user.documentId==''">暂无信息</p>
+							<p v-if="updateData.user.documentId===null">暂无信息</p>
 						</div>
 						<div>
 							<p>手机号</p>
 							<p>{{updateData.user.mobile}}</p>
-							<p v-if="updateData.user.mobile==''">暂无信息</p>
+							<p v-if="updateData.user.mobile===null">暂无信息</p>
 						</div>
 						<div class="others"></div>
 					</div>
@@ -273,26 +273,28 @@
 					this.loading = false;
 				}
 			},
+			// 删除房间
 			deleteRoom() {
-				this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
+				if(!this.room.contract) {
+					this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						type: 'warning'
 					})
 					.then(() => {
 						this.$model('delete_room')
-							.delete({}, {
-								projectId: this.projectId,
-								houseId: this.house.houseId,
-								id: this.room.id
-							})
-							.then(res => {
-								this.$message.success('删除成功!');
-								this.$emit('successRefresh');
-							})
-							.catch(err => {
-								this.$message('删除失败');
-							});
+						.delete({}, {
+							projectId: this.projectId,
+							houseId: this.house.houseId,
+							id: this.room.id
+						})
+						.then(res => {
+							this.$message.success('删除成功!');
+							this.$emit('successRefresh');
+						})
+						.catch(err => {
+							this.$message('删除失败');
+						});
 					})
 					.catch(() => {
 						this.$message({
@@ -300,6 +302,10 @@
 							message: '已取消删除'
 						});
 					});
+				}else {
+					this.$message('有合同正在履行，请先退租')
+				}
+				
 			},
 			// 退租
 			without() {
@@ -345,6 +351,7 @@
 			operateRent() {
 				this.dialogVisibleWithout = false;
 			},
+			// 获取租约信息和bill
 			showUserInfo(item) {
 				this.$model('contracts_info')
 					.query({}, {
@@ -486,7 +493,7 @@
 			border-bottom: 1px solid #ddd;
 		}
 		.others {
-			height: 100px;
+			height: 50px;
 		}
 	}
 
@@ -532,6 +539,9 @@
 		}
 		>div>p:nth-child(1) {
 			color: #000;
+		}
+		>div {
+			margin-bottom: 10px;
 		}
 	}
 

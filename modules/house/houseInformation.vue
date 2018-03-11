@@ -30,16 +30,6 @@
                 </el-table-column>
             </el-table>
         </div>
-        <!-- TODO ZHOUYI 分摊有问题，暂时下线 -->
-        <!-- <div class="flexc setPrice">
-            <span class="title">电费分摊</span>
-            <div class="centerRoom">
-                <span v-for="item in apportionment" :key="item.value">房间{{item.room.name}}:{{item.value}}%</span>
-            </div>
-            <div class="write">
-                <i class="el-icon-edit-outline" @click="writePercent"></i>
-            </div>
-        </div> -->
         <div>
             <el-button @click.native="del" type="danger" style="margin-top:1px;">删除此房源</el-button>
         </div>
@@ -117,6 +107,9 @@
                         .then((res) => {
                             this.queryAgain('unbundling')
                         })
+                        .catch(err=>{
+                            this.$message('解绑失败')
+                        })
                 }).catch(err => {
 
                 });
@@ -167,7 +160,7 @@
                         id: this.house.houseId
                     })
                     .then(res => {
-                        this.house.devices = res.devices
+                        this.$set(this.house,'devices',res.devices)
                     })
                     .catch(err => {
                         console.log(err)

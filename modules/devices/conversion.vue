@@ -6,10 +6,12 @@
         </div>
         <!-- TODO ZHOUYI 设备管理绑定电表增加条件查询 -->
         <div class="newchoose prevent" v-loading="loading">
-            <div v-for="list in item" :key="list.index">
-                <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()">
-                    <span>电表:{{list.title}}</span>
-                    <span style="float:right;padding-right:10px">{{delDeviceYTL(list.deviceId)}}</span>
+            <div v-for="list in item" :key="list.index" class="mini">
+                <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()" size="mini">
+                    <div class="flexcenter">
+                        <span>电表:{{list.title}}</span>
+                        <span style="padding-right:10px">{{delDeviceYTL(list.deviceId)}}</span>
+                    </div>
                 </el-radio>
             </div>
             <el-pagination :background="background" layout="prev, pager, next" :total="listInfo.count" @current-change="handleCurrentChange"
@@ -97,12 +99,15 @@
         padding: 5px;
         min-height: 100px;
     }
+    .mini {
+        height: 40px;
+        border-bottom: 1px solid #eee;
+    }
 </style>
 <style>
     .clearmargin>div {
         margin-left: 0;
     }
-
     .newchoose.prevent .el-radio__input {
         display: none;
     }

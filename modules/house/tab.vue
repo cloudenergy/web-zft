@@ -71,10 +71,7 @@
 		},
 		watch: {
 			communities(newVal,oldVal) {
-				if(this.addHouse){
-					this.community = newVal
-				}
-				this.addHouse = false
+				this.community = newVal
 			}
 		},
 		methods: {

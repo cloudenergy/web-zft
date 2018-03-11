@@ -232,8 +232,3 @@
 		}
 	}
 </script>
-<style scoped>
-	.bill_search {
-		/* margin-left: 10px; */
-	}
-</style>

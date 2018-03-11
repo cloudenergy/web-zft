@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="block">
+        <div class="block rentMessage">
             <span class="demonstration">起租/退租</span>
             <el-date-picker disabled type="datetimerange" range-separator="至" :start-placeholder="tt1" :end-placeholder="tt2" class="startEND">
             </el-date-picker>
@@ -69,6 +69,7 @@
         mounted() {
             this.changetime(this.form.signUpTime, this.form.from, this.form.to)
             this.strt(this.form.paymentPlan)
+            console.log(this.form)
         },
         methods: {
             changetime(tm, tm1, tm2) {
@@ -127,5 +128,14 @@
 
     .block>.startEND {
         width: 410px;
+    }
+</style>
+
+<style lang="less">
+    .rentMessage .el-range-editor.is-disabled{
+        background-color: hsla(220,4%,58%,.1);
+        .el-range-input {
+            background-color: hsla(220,4%,58%,0);
+        }
     }
 </style>

@@ -100,8 +100,8 @@
 			width: 700px;
 			height: 450px;
 			background: #fff;
-			box-shadow: 0 0 15px #eee;
-			border-radius: 4px;
+			box-shadow: 0 0 15px #999;
+			border-radius: 8px;
 			.logo-image {
 				background: #F5F8FC;
 				padding:20px 0;

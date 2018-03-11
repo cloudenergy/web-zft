@@ -116,7 +116,7 @@
     						}
     						return item;
     					});
-    					element.showEquipment = element.devices[0];
+    					element.showEquipment = element.devices[0]||[];
     					return element;
     				});
     			} else {
@@ -410,7 +410,7 @@
     	}
     }
     .drawer {
-    	padding: 30px;
+    	padding: 0;
     }
     .moreSet {
     	position: relative;

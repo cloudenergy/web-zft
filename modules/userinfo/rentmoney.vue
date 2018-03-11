@@ -1,8 +1,8 @@
 <template>
 	<el-table :data="bills" stripe style="width: 100%">
-		<el-table-column label="日期" width="130">
+		<el-table-column label="日期" width="150">
 			<template slot-scope="scope">
-				<span>{{ nowTime(scope.row.createdAt) }}</span>
+				<span>{{ date(scope.row.createdAt) }}</span>
 			</template>
 		</el-table-column>
 		<!-- <el-table-column
@@ -15,19 +15,20 @@
 				<span v-if="scope.row.type==='ELECTRICITY'">电费</span>
 			</template>
 		</el-table-column>
-		<el-table-column label="金额">
+		<el-table-column label="金额(￥)">
 			<template slot-scope="scope">
-				<span>{{ price(scope.row.amount) }}元</span>
+				<span>{{ price(scope.row.amount) }}</span>
 			</template>
 		</el-table-column>
-		<el-table-column prop="scale" label="读数">
+		<el-table-column prop="scale" label="读数(Kwh)">
 		</el-table-column>
-		<el-table-column prop="usage" label="用量">
+		<el-table-column prop="usage" label="用量(Kwh)">
 		</el-table-column>
 	</el-table>
 </template>
 
 <script>
+	import format from 'date-fns/format'
 	export default {
 		props: {
 			form: {
@@ -48,6 +49,9 @@
 			this.query()
 		},
 		methods: {
+			date(val) {
+				return format(new Date(val*1000),'YYYY-MM-DD  HH:mm:ss')
+			},
 			query() {
 				this.$model('paid_bills')
 					.query({
@@ -64,9 +68,6 @@
 			},
 			price(data) {
 				return (data / 100).toFixed(2)
-			},
-			nowTime(data) {
-				return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/年|月/g, "-")
 			}
 		}
 	}

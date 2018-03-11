@@ -1,53 +1,70 @@
 <template>
     <div class="preview">
-        <h3 class="title" v-if="room.name!==''">{{house.location.name}}{{house.building}}幢{{house.unit}}单元{{house.roomNumber}} {{room.name}}</h3>
-        <h3 class="title" v-if="room.name===''">{{house.location.name}} {{house.roomNumber}}{{room.orientation}}</h3>
-        <div class="base section">
-            <h4>房间信息</h4>
-            <p>朝向:
-                <span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span>
-            </p>
+        <div class="backgroundGray">
+            <div class="previewRoom">
+                <h3 class="title" v-if="room.name!==''">{{house.location.name}}{{house.building}}幢{{house.unit}}单元{{house.roomNumber}} {{room.name}}</h3>
+                <h3 class="title" v-if="room.name===''">{{house.location.name}} {{house.roomNumber}}{{room.orientation}}</h3>
+                <div>
+                    <div class="base section">
+                        <h4>房间信息</h4>
+                        <p>朝向:
+                            <span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span>
+                        </p>
+                    </div>
+                    <div class="facilities section">
+                        <h4>房间配置</h4>
+                        <house-facility></house-facility>
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        <div class="facilities section">
-            <h4>房间配置</h4>
-            <house-facility></house-facility>
-        </div>
-        <div class="devices section">
+        
+        <div class="devices section previewRoom">
             <h4 class="flexc" style="aline-item:center">
                 <span style="line-height:20px;margin-right:15px">
                     智能设备
                 </span>
                 <i class="el-icon-circle-plus-outline" style="font-size:20px;color:#409eff" @click="bindEleciricity"></i>
             </h4>
-            <el-table :data="room.devicesChooseElectricity" stripe>
-                <el-table-column prop="deviceId" label="ID" width="150">
+            <el-table :data="room.devicesChooseElectricity" stripe class="section">
+                <el-table-column prop="deviceId" label="设备ID" width="110">
                     <template slot-scope="scope">
                         <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="设备备注" min-width="200">
+                <el-table-column prop="title" label="设备备注" min-width="120">
                 </el-table-column>
-                <el-table-column label="通讯状态" width="100">
+                <el-table-column prop="deviceId" label="读数">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.status.service==='EMC_ONLINE'">在线</span>
-                        <span v-if="scope.row.status.service==='EMC_OFFLINE'">离线</span>
+                        <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="控制" width="100">
+                <el-table-column prop="updatedAt" label="通讯时间" width="80">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.scale}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="通讯状态" width="70">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.status.service==='EMC_ONLINE'">正常</span>
+                        <span v-if="scope.row.status.service==='EMC_OFFLINE'">异常</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="控制" width="60">
                     <template slot-scope="scope">
                         <el-switch :width="num" v-model="scope.row.status.switch" active-color="#13ce66" inactive-color="#ff4949" @change="eleciricitySwitch"
                             active-value="EMC_ON" inactive-value="EMC_OFF">
                         </el-switch>
                     </template>
                 </el-table-column>
-                <el-table-column label="管理" width="100">
+                <el-table-column label="管理" width="70">
                     <template slot-scope="scope">
                         <el-button size="mini" type="danger" @click="handleDelete(scope.row)">解绑</el-button>
                     </template>
                 </el-table-column>
             </el-table>
-        </div>
-        <div class="bills section">
+            <div class="bills section">
             <h4>租费详情</h4>
             <el-table :data="contracts" stripe>
                 <el-table-column prop="name" label="租金" width="150">
@@ -80,6 +97,8 @@
         <div>
             <el-button @click.native="del" type="danger">删除房间</el-button>
         </div>
+        </div>
+        
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
             <span slot="footer" class="dialog-footer">
@@ -161,6 +180,9 @@
             }
         },
         methods: {
+            date(val) {
+				return format(new Date(val*1000),'YYYY-MM-DD')
+			},
             delDeviceYTL(val) {
                 return delYTL(val)
             },
@@ -202,11 +224,10 @@
                             id: data.deviceId
                         })
                         .then((res) => {
-                            console.log(this.room)
                             this.queryAgain('unbundling')
                         })
                 }).catch(err => {
-                    this.$message('解绑失败')
+                    this.$message('取消解绑')
                 });
             },
             bindEleciricity() {
@@ -258,6 +279,7 @@
                     this.$message.success('操作成功')
                     if(res.devices.length!==0) {
                         this.$set(this.room,'devicesChooseElectricity',res.devices)
+                        this.$set(this.room,'devices',res.devices)
                     }else {
                         this.$set(this.room,'devicesChooseElectricity',[])
                     }
@@ -276,6 +298,12 @@
 </script>
 
 <style lang="less" scoped>
+    .backgroundGray {
+        background-color: rgb(245, 239, 239);
+    }
+    .previewRoom {
+        padding:30px
+    }
     .base {
         margin-top: 20px;
     }
