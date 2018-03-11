@@ -109,7 +109,7 @@
 						res.data.map((ele,index)=>{
 							ele.startDate = Date.parse(startOfYesterday())
 							ele.endDate = Date.parse(new Date())
-							ele.index = index
+							ele.index = `identifyId${index}`
 							return ele
 						})
 						console.log(res.data)

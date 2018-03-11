@@ -185,12 +185,12 @@
     .subjectHouseLocation .el-table__expanded-cell{
         padding:20px 0 20px 52px;
         color:#9b9b9b;
-        background: #f2f2f2;
+        background: #f5f7fa;
         .el-table__row{
-            background: #f2f2f2;
+            background: #f5f7fa;
         }
         .el-table, .el-table__expanded-cell {
-            background: #f2f2f2;
+            background: #f5f7fa;
         }
     }
     .demo-table-expand {

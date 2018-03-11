@@ -251,12 +251,12 @@
     .readingElectric .el-table__expanded-cell{
         padding:10px 0 0 50px;
         color:#999;
-        background: #f2f2f2;
+        background: #f5f7fa;
         .el-table__row{
-            background: #f2f2f2;
+            background: #f5f7fa;
         }
         .el-table, .el-table__expanded-cell {
-            background: #f2f2f2;
+            background: #f5f7fa;
         }
     }
 </style>
