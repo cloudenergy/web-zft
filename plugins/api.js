@@ -134,7 +134,8 @@ const apis = {
 	apportionment: resource('/projects/{projectId}/houses/{id}/apportionment'),
 	reading_equipment: resource('/projects/{projectId}/devices/reading'),
 	logout: resource('/logout'),
-	user_info: resource('/projects/{projectId}/users/{userInfoId}')
+	user_info: resource('/projects/{projectId}/users/{userInfoId}'),
+	scale_read: resource('/projects/{projectId}/devices/{deviceId}/scale')
 };
 
 /**

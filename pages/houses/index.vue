@@ -26,6 +26,10 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </span>
+						<span v-if="house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)">
+							<icon type="jian" style="font-size:20px;color:#67c23a" v-if="house.devices[0].status.service==='EMC_ONLINE'" />
+							<icon type="jian" style="font-size:20px;color:#FA5555" v-if="house.devices[0].status.service==='EMC_OFFLINE'" />
+						</span>
                         <!-- <span class="badge pull-right">{{house.rooms.length}}</span> -->
                     </div>
                     <div class="cells" v-if="!entire">
@@ -65,9 +69,9 @@
 
 <script>
     import _ from 'lodash';
-    import { Tab, Room, Search, Preview, houseInformation } from '~/modules/house';
+    import { Tab, Room, Search, Preview, houseInformation,houseDevicesDosage } from '~/modules/house';
     export default {
-    	components: { Tab, Room, Search, Preview, houseInformation },
+    	components: { Tab, Room, Search, Preview, houseInformation,houseDevicesDosage },
     	data() {
     		return {
     			houses: [],
@@ -184,6 +188,16 @@
 			}
 		},
     	methods: {
+			// 打开电表使用详情
+			houseDevicesDosage(data) {
+				this.$modal.$emit('open', {
+					comp: houseDevicesDosage,
+					data: {
+						houseDevice:data
+					},
+					title: '使用详情'
+				});
+			},
 			// 滚动事件query
     		scrollFunc() {
 				let elm = document.getElementsByClassName('main')[0];
