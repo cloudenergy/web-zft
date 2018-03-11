@@ -150,12 +150,6 @@
                 return this.$store.state.userInfo.user.projectId
             }
         },
-        created () {
-            setTimeout(()=>{
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric[1])  
-            },5000)
-            
-        },
         methods: {
             dateTime(data) {
 				return format(new Date(data),'YYYY-MM-DD')
@@ -205,23 +199,22 @@
             },
             handleRowHandle(row, event) {
                 // 阻止冒泡
+                let index = _.indexOf(this.readingElectric,row)
                 if (event.path[0].tagName != 'INPUT') {
                     if (row.index != this.upflowi) {
-                        this.toggle(row.index)
+                        this.toggle(index)
                         if (this.upflowi != 0) {
                             this.toggle(this.upflowi)
-                            this.upflowi = row.index
+                            this.upflowi = index
                         }
                     } else {
-                        this.toggle(row.index)
+                        this.toggle(index)
                     }
                 }
             },
             // 展开
-            toggle(flowi) {
-                console.log(flowi)
-                console.log(this.readingElectric.find(d => d.index === flowi))
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
+            toggle(val) {
+                this.$refs.tableData.toggleRowExpansion(this.readingElectric[val],true)
             }
         }
     }
