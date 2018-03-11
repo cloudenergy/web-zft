@@ -19,10 +19,10 @@
                         </el-table-column>
                         <el-table-column label="归属账单" min-width="160">
                             <template slot-scope="scope">
-                                <span class="el-dropdown-link devicesuser">
+                                <span class="el-dropdown-link devicesuser" v-if="scope.row.contract">
                                     {{ scope.row.contract.userName }}
                                 </span>
-                                <span style="margin-left: 2px;" class="margin_top">{{ scope.row.contract.userId }}</span>
+                                <span style="margin-left: 2px;" class="margin_top" v-if="scope.row.contract">{{ scope.row.contract.userId }}</span>
                             </template>
                         </el-table-column>
                         <el-table-column label="起始日期" min-width="160">
