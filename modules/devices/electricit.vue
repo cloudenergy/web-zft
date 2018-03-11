@@ -150,12 +150,6 @@
                 return this.$store.state.userInfo.user.projectId
             }
         },
-        created () {
-            setTimeout(()=>{
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric[1])  
-            },5000)
-            
-        },
         methods: {
             dateTime(data) {
 				return format(new Date(data),'YYYY-MM-DD')
@@ -219,8 +213,6 @@
             },
             // 展开
             toggle(flowi) {
-                console.log(flowi)
-                console.log(this.readingElectric.find(d => d.index === flowi))
                 this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
             }
         }

@@ -298,7 +298,7 @@
     						this.entire = false;
     						this.tabCard = true;
 							if(val) {
-								this.houses = res.data
+								this.$set(this,'houses',res.data)
 							}else {
 								res.data.forEach(element => {
 									this.houses.push(element)

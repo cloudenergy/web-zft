@@ -150,7 +150,6 @@
             conversion
         },
         created() {
-            console.log(this.room)
             if (this.room.contract.from !== undefined) {
                 
                 this.contracts[0].rent = this.room.contract.rent
@@ -268,7 +267,6 @@
             },
             // 请求房间信息
             queryAgain(data) {
-                console.log(this.room)
                 this.$model('room_detail')
                 .query({}, {
                     projectId: this.projectId,
@@ -284,7 +282,6 @@
                         this.$set(this.room,'devicesChooseElectricity',[])
                     }
                     
-                    console.log(this.room)
                 })
             },
             date(data) {
