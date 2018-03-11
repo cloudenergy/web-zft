@@ -112,6 +112,7 @@
 							ele.index = index
 							return ele
 						})
+						console.log(res.data)
 						this.$set(this, 'readingElectric', res.data || []);
 						this.$set(this, 'paging', res.paging || []);
 						// this.$set(this, 'paging', res.paging || []);

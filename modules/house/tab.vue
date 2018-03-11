@@ -111,6 +111,7 @@
 				}
 			},
 			handleSelect(key, keyPath) {
+				this.$store.state.userInfo.index++
 				this.typeNum = 'a'
 				this.$emit('communityChange', key)
 			},

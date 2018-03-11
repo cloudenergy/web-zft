@@ -94,6 +94,9 @@
     		projectId() {
     			return this.$store.state.userInfo.user.projectId;
 			},
+			listenTabClick() {
+				return this.$store.state.userInfo.index
+			},
     		equipmentHouses: function() {
     			if (this.houseFormat !== 'ENTIRE') {
     				return this.houses.map((element, index) => {
@@ -158,7 +161,8 @@
     		this.$modal.$on('refresh', () => {
 				this.formatting()
     		});
-    	},
+		},
+		// 监听滚动事件
     	mounted () {
     		window.addEventListener(
     			'scroll',
@@ -172,6 +176,12 @@
 				this.scrollFunc,
 				true
     		);
+		},
+		watch: {
+			listenTabClick(newVal,oldVal) {
+				let elm = document.getElementsByClassName('main')[0];
+				elm.scrollTop = 0
+			}
 		},
     	methods: {
 			// 滚动事件query

@@ -210,10 +210,12 @@
                         this.toggle(row.index)
                     }
                 }
+                console.log(row)
             },
             // 展开
             toggle(flowi) {
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index == flowi))
+                console.log(flowi)
+                this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
             }
         }
     }

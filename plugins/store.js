@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-03-09 10:20:54
+ * @Last Modified time: 2018-03-11 11:19:19
  */
 
 import api from '~/plugins/api';
@@ -49,6 +49,7 @@ function userInfo() {
 		communitiesChoose: {},
 		houseKeeper: null,
 		allCommunityBoolean:true,
+		index:0,
 		toward: [{
 				EN: 'S',
 				CH: '南'

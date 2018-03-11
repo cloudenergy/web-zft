@@ -14,8 +14,8 @@
 			</el-table-column>
 			<el-table-column label="状态">
 				<template slot-scope="scope">
-					<div v-if="scope.row.status.service==='EMC_ONLINE'">正常</div>
-					<div v-if="scope.row.status.service==='EMC_OFFLINE'">异常</div>
+					<div v-if="scope.row.status.service==='EMC_ONLINE'" style="color:#13ce66">正常</div>
+					<div v-if="scope.row.status.service==='EMC_OFFLINE'" style="color:#ff4949">异常</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="读数(KWH)" prop="scale">
