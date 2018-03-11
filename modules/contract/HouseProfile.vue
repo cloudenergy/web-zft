@@ -8,7 +8,7 @@
                     <div class="select-with-label el-input-group">
 
                         <span class="el-input-group__prepend">承租房源</span>
-                        <el-select v-model="property.houseType" class="house-type">
+                        <el-select v-model="property.houseType" class="house-type" :disabled="property.disabled">
                             <el-option label="整租" value="SOLE"></el-option>
                             <el-option label="合租" value="SHARE"></el-option>
                             <el-option label="整幢" value="ENTIRE"></el-option>

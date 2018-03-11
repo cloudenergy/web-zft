@@ -25,7 +25,8 @@
 	import {
 		addYears,
 		format,
-		getTime
+		getTime,
+		subDays
 	} from 'date-fns';
 	import _ from 'lodash';
 	import fp from 'lodash/fp';
@@ -37,6 +38,9 @@
 			},
 			itemHouse: {
 				type: Object
+			},
+			houseFormat: {
+				type: String
 			}
 		},
 		computed: {
@@ -89,6 +93,7 @@
 				this.form.property.roomId = this.itemRoom.id
 				this.form.property.disabled = true
 			}
+			this.form.property.houseType = this.houseFormat
 		},
 		methods: {
 			query() {
@@ -122,6 +127,7 @@
 			defaultStart(now) {
 				return now;
 			},
+			// todo ZSH SUBDayS
 			defaultEnd(now) {
 				return addYears(now, 1);
 			},
@@ -171,7 +177,7 @@
 						standard: {
 							name: '常规租金',
 							rent: 3600,
-							pattern: '6'
+							pattern: '1'
 						},
 						extra: [{
 								configId: 1041,

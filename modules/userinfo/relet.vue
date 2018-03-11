@@ -29,7 +29,8 @@
 	import {
 		addYears,
 		format,
-		getTime
+		getTime,
+		subDays
 	} from 'date-fns';
 
 	export default {
@@ -39,6 +40,15 @@
 			},
 			contractsId: {
 				required: true
+			},
+			itemRoom: {
+				type: Object
+			},
+			itemHouse: {
+				type: Object
+			},
+			houseFormat: {
+				type: String
 			}
 		},
 		computed: {
@@ -50,6 +60,17 @@
 					group: "加收费用"
 				})
 			}
+		},
+		mounted() {
+			if (!_.isUndefined(this.itemHouse)) {
+				if (this.itemRoom.contract.id !== undefined) {
+					this.form = this.newModel(new Date((this.itemRoom.contract.to + 1) * 1000))
+				}
+				this.form.property.house =
+					`${this.itemHouse.location.name}${this.itemHouse.building}${this.itemHouse.unit}${this.itemHouse.roomNumber}${this.itemRoom.name}`
+				this.form.property.roomId = this.itemRoom.id
+			}
+			this.form.property.houseType = this.houseFormat
 		},
 		watch: {
 			otherCost(newVal, oldVal) {
@@ -64,6 +85,7 @@
 					if (extraCost.name === "电费") {
 						extraCost.pattern = "prepaid"
 					}
+					
 					return extraCost
 				})
 			}
@@ -98,6 +120,7 @@
 						contractId: this.contractsId
 					})
 					.then(res => {
+						console.log(res)
 						this.$set(this, 'contractInfo', res)
 						this.setUser()
 					})
@@ -106,14 +129,29 @@
 					})
 			},
 			setUser() {
+				console.log(this.contractInfo.expenses)
 				this.form.user.name = this.contractInfo.user.name
 				this.form.user.accountName = this.contractInfo.user.accountName
 				this.form.user.mobile = this.contractInfo.user.mobile
 				this.form.user.gender = this.contractInfo.user.gender
 				this.form.user.documentId = this.contractInfo.user.documentId
+				this.form.expense.standard.rent = this.contractInfo.strategy.freq.rent/100
+				this.form.expense.standard.pattern = this.contractInfo.strategy.freq.pattern.toString()
+				this.form.expense.bond = this.contractInfo.strategy.bond/100
 				this.form.user.documentType = 1
+				this.contractInfo.expenses.forEach(element => {
+					switch(element.configId)
+					{
+						case 1041:
+							console.log(element)
+							this.$set(this.form.expense.extra[0],'pattern',element.pattern)
+							this.$set(this.form.expense.extra[0],'rent',(element.rent/100).toFixed(2))
+							break;
+					}
+				});
 				this.showUser = true
 				this.loading = false
+				console.log(this.form)
 			},
 			onselect(userdata) {
 				this.changeuserdata = userdata
@@ -140,7 +178,7 @@
 				return now;
 			},
 			defaultEnd(now) {
-				return addYears(now, 1);
+				return subDays(addYears(now, 1),1);
 			},
 			newModel(today) {
 				return {
@@ -158,22 +196,22 @@
 						signUpDate: this.defaultStart(today)
 					},
 					expense: {
-						billPlan: 'F',
+						billPlan: '-',
 						offset: 2,
 						standard: {
 							name: '常规租金',
 							rent: 3600,
-							pattern: '6'
+							pattern: '1'
 						},
 						extra: [{
-								configId: 2,
+								configId: 1041,
 								name: '电费',
 								type: 'extra',
 								rent: 1.2,
 								pattern: 'prepaid'
 							},
 							{
-								configId: 3,
+								configId: 1043,
 								name: '水费',
 								type: 'extra',
 								rent: 20,

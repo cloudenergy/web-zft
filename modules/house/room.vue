@@ -82,7 +82,7 @@
 						<div>
 							<p>身份证号</p>
 							<p>{{updateData.user.documentId}}</p>
-							<p v-if="updateData.user.documentId===null">暂无信息</p>
+							<p v-if="updateData.user.documentId===null||undefined">暂无信息</p>
 						</div>
 						<div>
 							<p>手机号</p>
@@ -201,7 +201,7 @@
 						accountName: 'accountName',
 						name: 'username',
 						mobile: '111111111111',
-						documentId: '11111111111',
+						documentId: '',
 						documentType: 1,
 						gender: 'M'
 					}
@@ -248,7 +248,8 @@
 					comp: NewContract,
 					data: {
 						itemRoom: this.room,
-						itemHouse: this.house
+						itemHouse: this.house,
+						houseFormat: this.houseFormat
 					},
 					title: '新增合约',
 					className: 'new-contract'
@@ -316,9 +317,13 @@
 				this.$modal.$emit('open', {
 					comp: Relet,
 					data: {
-						contractsId: this.room.contract.id
+						contractsId: this.room.contract.id,
+						itemRoom: this.room,
+						itemHouse: this.house,
+						houseFormat: this.houseFormat
 					},
-					title: '续租'
+					title: '续租',
+					className:'new-contract'
 				});
 			},
 			// 删除合同

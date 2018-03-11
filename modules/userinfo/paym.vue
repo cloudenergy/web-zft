@@ -110,25 +110,26 @@
             },
             onSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
+                    console.log(this.form.price)
                     if (valid) {
                         this.$model('top_up')
-                            .patch({
-                                amount: calc.mul(this.form.price * 100),
-                                fundChannelId: this.form.region
-                            }, {
-                                projectId: this.projectId,
-                                userId: this.contractInfo.user.id,
-                                contractId: this.contractInfo.id,
-                                id: 'balance'
-                            })
-                            .then(res => {
-                                this.$message.success('充值成功');
-                                this.$refs[formName].resetFields();
-                                this.cleraboth();
-                            })
-                            .catch(err => {
-                                this.$message('充值失败');
-                            })
+                        .patch({
+                            amount: this.form.price * 100,
+                            fundChannelId: this.form.region
+                        }, {
+                            projectId: this.projectId,
+                            userId: this.contractInfo.user.id,
+                            contractId: this.contractInfo.id,
+                            id: 'balance'
+                        })
+                        .then(res => {
+                            this.$message.success('充值成功');
+                            this.$refs[formName].resetFields();
+                            this.clearBoth();
+                        })
+                        .catch(err => {
+                            this.$message('充值失败');
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;
