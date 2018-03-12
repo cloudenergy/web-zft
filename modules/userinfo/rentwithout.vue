@@ -7,7 +7,7 @@
                     <span class="gray"> {{set(contractInfo.from)}}至{{set(contractInfo.to)}}</span>
                 </el-form-item>
                 <el-form-item label="账户余额">
-                    <span class="gray"> {{price(userInfo.cashAccount.balance)}}元</span>
+                    <span class="gray" :style="{color:userInfo.cashAccount.balance<0?'#f03d53':'#000'}"> {{price(userInfo.cashAccount.balance)}}元</span>
                 </el-form-item>
                 <el-form-item label="未付账单">
                     <span class="gray" v-for="item in contractbill" :key="item.endDate"> <span v-if="item.type==='rent'">押金{{item.index}}期</span><span v-if="item.type==='bond'">租金</span>{{price(item.dueAmount)}}元 </span>

@@ -9,6 +9,8 @@
 					<div class="flexcenter">
 						<RentStatus class="status" @leasingStatus="leasingStatus"/>
 						<RentManager class="manager" :houseKeeper='houseKeeper'/>
+						<!-- todo SUOQIN  欠费 正常query -->
+						<RentOwe @rentMoneyType="rentMoneyType" class="manager"/>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info" v-if="housesRent">{{housesRent.paging.count}}项结果</span>
@@ -37,7 +39,8 @@
 		RentStatus,
 		DataTable,
 		RentManager,
-		RentSearch
+		RentSearch,
+		RentOwe
 	} from '~/modules/rent';
 	import {readableDuration} from '../../utils/date.js'
 	export default {
@@ -46,7 +49,8 @@
 			RentStatus,
 			RentManager,
 			DataTable,
-			RentSearch
+			RentSearch,
+			RentOwe
 		},
 		data() {
 			return {
@@ -69,6 +73,10 @@
 			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
 		methods: {
+			// 用户欠费查找 todo zsh
+			rentMoneyType(val) {
+				console.log('用户欠费状态查找')
+			},
 			setSearch(data) {
 				if(/rent/.test(location.pathname)){
 					if(data!==''){

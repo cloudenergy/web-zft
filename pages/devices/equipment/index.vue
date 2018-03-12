@@ -9,7 +9,6 @@
 			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter">
-						<room-search @input="roomSearch" v-model="info.search"></room-search>
 						<rooms-select @input="search" v-model="info.room"></rooms-select>
 						<room-manager @input="manager" v-model="info.manager" />
 					</div>
@@ -107,18 +106,7 @@
 				this.$refs.equipmentset.setElectricSwitch(data)
 			},
 			deleteElectric() {
-				this.$confirm('将要删除此电表, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$refs.equipmentset.deleteElectric()
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
-					});
-				});
+				this.$refs.equipmentset.setDelElectric()
 			},
 			handleCurrentChange(val) {
 				this.equipmentLoading = true;
@@ -194,7 +182,7 @@
 		margin-bottom: 17px;
 		margin-top: 5px;
 		div.flexcenter:first-child {
-			width: 600px;
+			width: 400px;
 		}
 	}
 

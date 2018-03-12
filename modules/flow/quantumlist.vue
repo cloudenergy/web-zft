@@ -36,10 +36,10 @@
             </el-table-column>
             <el-table-column label="支付时间">
                 <template slot-scope="scope">
-                    <span>{{ timeChange(scope.row.paidAt) }}</span>
+                    <span>{{ dateTime(scope.row.paidAt) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="金额" prop="folwm" width="80" align="right">
+            <el-table-column label="金额(￥)" prop="folwm" width="80" align="right">
                 <template slot-scope="scope">
                     <div :style="{color:scope.row.direction==='pay'?'#fd6d6d':'#67c23a'}">
                         <span v-if="scope.row.direction==='pay'">-</span>
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+    import format from 'date-fns/format'
     export default {
         props: {
             flowPaging: {
@@ -147,9 +148,9 @@
             toggle(flowi) {
                 this.$refs.tableData5.toggleRowExpansion(this.mounthFlows.find(d => d.id == flowi))
             },
-            timeChange(data) {
-                return new Date(parseInt(data * 1000)).toLocaleDateString()
-            },
+            dateTime(data) {
+				return format(new Date(data*1000), 'YYYY-MM-DD  HH:mm:ss')
+			},
             price(data) {
                 return (data / 100).toFixed(2)
             },

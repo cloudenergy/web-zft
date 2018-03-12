@@ -19,6 +19,9 @@
 				</template>
 			</el-table-column>
 			<el-table-column label="读数(KWH)" prop="scale">
+				<template slot-scope="scope">
+					<div>{{fixed(scope.row.scale)}}</div>
+				</template>
 			</el-table-column>
 			<el-table-column label="通信时间">
 				<template slot-scope="scope">
@@ -56,9 +59,7 @@
 			</el-table-column>
 			<el-table-column label="删除">
 				<template slot-scope="scope">
-					<el-button @click="delElectric(scope.row)" :disabled="loading===1">
-						<i class="el-icon-delete" style="font-size:16px"></i>
-					</el-button>
+					<el-button icon="el-icon-delete" @click="delElectric(scope.row)" :disabled="loading===1" size="mini"></el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -99,51 +100,63 @@
 			}
 		},
 		methods: {
+			fixed(val) {
+				return val.toFixed(2)
+			},
 			delYTL(val) {
 				return val.replace(/YTL/g, '')
 			},
+			// 批量送电/断电
 			setElectricSwitch(data) {
 				if (this.reqData.devicesIds.length !== 0) {
 					this.reqData.mode = data
 					this.sendElectric()
 				} else {
-					this.$message('请至少选择一个仪表')
+					this.$message.error('请至少选择一个仪表')
+				}
+			},
+			// 批量删除
+			setDelElectric() {
+				console.log(1)
+				if (this.reqData.devicesIds.length !== 0) {
+					this.deleteElectric()
+				} else {
+					this.$message.error('请至少选择一个仪表')
 				}
 			},
 			delElectric(data) {
+				this.reqData.devicesIds = []
+				this.reqData.devicesIds.push(data.deviceId)
+				this.deleteElectric()
+			},
+			deleteElectric() {
 				this.$confirm('将要删除此电表, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					this.reqData.devicesIds = []
-					this.reqData.devicesIds.push(data.deviceId)
-					this.deleteElectric()
+					this.$model('delDevices')
+					.delete({
+						deviceIds: this.reqData.devicesIds
+					}, {
+						projectId: this.projectId,
+						id: 'devices'
+					})
+					.then(res => {
+						this.$message.success('删除成功')
+						this.$emit('refresh', 'second')
+					})
+					.catch(err => {
+						console.log(err)
+						this.$message('删除失败')
+					})
+					this.$set(this.reqData,'devicesIds',[])
 				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消'
 					});
 				});
-			},
-			deleteElectric() {
-				if (this.reqData.devicesIds.length !== 0) {
-					this.$model('delDevices')
-						.delete({
-							deviceIds: this.reqData.devicesIds
-						}, {
-							projectId: this.projectId,
-							id: 'devices'
-						})
-						.then(res => {
-							this.$message.success('删除成功')
-							this.$emit('refresh','second')
-						})
-						.catch(err => {
-							console.log(err)
-							this.$message('删除失败')
-						})
-				}
 			},
 			select(val, b) {
 				this.reqData.devicesIds = val.map(ele => {
@@ -184,19 +197,20 @@
 						})
 						.then(res => {
 							this.$message.success('切换状态成功')
-							this.reqData.devicesIds.length>1?this.$emit('restoreSwitch'):this.test()
+							this.reqData.devicesIds.length > 1 ? this.$emit('restoreSwitch') : this.test()
 						})
 						.catch(err => {
 							// 刷新失败重新请求恢复el-switch
 							this.$message('切换状态失败')
-							this.reqData.devicesIds.length>1?this.test():this.$emit('restoreSwitch')
+							this.reqData.devicesIds.length > 1 ? this.test() : this.$emit('restoreSwitch')
 						})
+						this.$set(this.reqData,'devicesIds',[])
 				}).catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消'
 					});
-					this.reqData.devicesIds.length>1?this.test():this.$emit('restoreSwitch')
+					this.reqData.devicesIds.length > 1 ? this.test() : this.$emit('restoreSwitch')
 				});
 			},
 			test() {}

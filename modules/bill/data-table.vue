@@ -12,9 +12,8 @@
             <el-table-column label="住户姓名/帐号">
                 <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
-                        <i class="el-icon-phone"></i>
-                        <span size="medium">{{ scope.row.user.name }}</span>
-                        <p style="margin-left: 10px" class="gray">{{ scope.row.user.accountName }}</p>
+                        <span size="medium">{{ scope.row.user.name }}</span><i class="el-icon-phone"></i>
+                        <p class="gray">{{ scope.row.user.accountName }}</p>
                     </div>
                 </template>
             </el-table-column>
@@ -27,8 +26,8 @@
             </el-table-column>
             <el-table-column label="金额(¥)/类型">
                 <template slot-scope="scope">
-                    <p style="margin-left: 10px">{{ narrow(scope.row.dueAmount) }}元</p>
-                    <p style="margin-left: 10px;" v-for="item in type" :key="item.type" v-if="scope.row.type===item.type" class="gray">{{ item.text }}{{scope.row.index}}<span v-if="scope.row.type==='rent'">期</span></p>
+                    <p>{{ narrow(scope.row.dueAmount) }}元</p>
+                    <p v-for="item in type" :key="item.type" v-if="scope.row.type===item.type" class="gray">{{ item.text }}{{scope.row.index}}<span v-if="scope.row.type==='rent'">期</span></p>
                 </template>
             </el-table-column>
             <el-table-column label="操作">
