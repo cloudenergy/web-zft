@@ -2,7 +2,7 @@
     <div class="readingElectric">
         <!-- TODO ZHOUYI  自动抄表接口返回 -->
         <el-table :data="readingElectric" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle'
-            ref="tableData" v-if="readingElectric.length!==0">
+            ref="readingElectric" v-if="readingElectric.length!==0">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <div class="innerTable">
@@ -183,7 +183,7 @@
                         res.data[0].endDate = endDate*1000
                         res.data[0].index = index
                         this.readingElectric[index] = res.data[0]
-                        // this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
+                        this.$refs.readingElectric.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
                     }
                 })
             },
@@ -213,7 +213,7 @@
             },
             // 展开
             toggle(flowi) {
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
+                this.$refs.readingElectric.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
             }
         }
     }
