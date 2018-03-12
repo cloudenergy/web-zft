@@ -1,11 +1,11 @@
-<template>
+<template lang="html">
     <div class="readingElectric">
         <!-- TODO ZHOUYI  自动抄表接口返回 -->
         <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
             ref="readingElectric" v-if="readingElectric.length!==0">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <div class="innerTable">
+                    <!-- <div class="innerTable">
                         <el-table :data="props.row.details">
                         <el-table-column label="房源" min-width="160">
                             <template slot-scope="scope">
@@ -57,8 +57,8 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    </div>
-                    
+                    </div> -->
+                    <div>123</div>
                 </template>
             </el-table-column>
             <el-table-column label="房源" min-width="160">
