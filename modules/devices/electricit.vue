@@ -1,11 +1,10 @@
 <template lang="html">
-    <div class="readingElectric">
-        <!-- TODO ZHOUYI  自动抄表接口返回 -->
+    <!-- <div class="readingElectric">
         <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
             ref="readingElectric" v-if="readingElectric.length!==0">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <!-- <div class="innerTable">
+                    <div class="innerTable">
                         <el-table :data="props.row.details">
                         <el-table-column label="房源" min-width="160">
                             <template slot-scope="scope">
@@ -57,8 +56,7 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    </div> -->
-                    <div>123</div>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column label="房源" min-width="160">
@@ -117,7 +115,50 @@
                 </template>
             </el-table-column>
         </el-table>
-    </div>
+    </div> -->
+    <el-table
+    :data="tableData5"
+    style="width: 100%">
+    <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="商品名称">
+            <span>{{ props.row.name }}</span>
+          </el-form-item>
+          <el-form-item label="所属店铺">
+            <span>{{ props.row.shop }}</span>
+          </el-form-item>
+          <el-form-item label="商品 ID">
+            <span>{{ props.row.id }}</span>
+          </el-form-item>
+          <el-form-item label="店铺 ID">
+            <span>{{ props.row.shopId }}</span>
+          </el-form-item>
+          <el-form-item label="商品分类">
+            <span>{{ props.row.category }}</span>
+          </el-form-item>
+          <el-form-item label="店铺地址">
+            <span>{{ props.row.address }}</span>
+          </el-form-item>
+          <el-form-item label="商品描述">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+        </el-form>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="商品 ID"
+      prop="id">
+    </el-table-column>
+    <el-table-column
+      label="商品名称"
+      prop="name">
+    </el-table-column>
+    <el-table-column
+      label="描述"
+      prop="desc">
+    </el-table-column>
+  </el-table>
 </template>
 <script>
     import startOfYesterday from 'date-fns/start_of_yesterday'
