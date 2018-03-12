@@ -183,7 +183,7 @@
                         res.data[0].endDate = endDate*1000
                         res.data[0].index = index
                         this.readingElectric[index] = res.data[0]
-                        this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
+                        // this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
                     }
                 })
             },
