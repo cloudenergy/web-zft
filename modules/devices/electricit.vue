@@ -1,7 +1,7 @@
 <template>
     <div class="readingElectric">
         <!-- TODO ZHOUYI  自动抄表接口返回 -->
-        <el-table :data="readingElectric" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle'
+        <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
             ref="readingElectric" v-if="readingElectric.length!==0">
             <el-table-column type="expand">
                 <template slot-scope="props">
