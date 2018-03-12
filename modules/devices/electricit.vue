@@ -1,5 +1,5 @@
 <template lang="html">
-    <!-- <div class="readingElectric">
+    <div class="readingElectric">
         <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
             ref="readingElectric" v-if="readingElectric.length!==0">
             <el-table-column type="expand">
@@ -115,50 +115,7 @@
                 </template>
             </el-table-column>
         </el-table>
-    </div> -->
-    <el-table
-    :data="tableData5"
-    style="width: 100%">
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="商品名称">
-            <span>{{ props.row.name }}</span>
-          </el-form-item>
-          <el-form-item label="所属店铺">
-            <span>{{ props.row.shop }}</span>
-          </el-form-item>
-          <el-form-item label="商品 ID">
-            <span>{{ props.row.id }}</span>
-          </el-form-item>
-          <el-form-item label="店铺 ID">
-            <span>{{ props.row.shopId }}</span>
-          </el-form-item>
-          <el-form-item label="商品分类">
-            <span>{{ props.row.category }}</span>
-          </el-form-item>
-          <el-form-item label="店铺地址">
-            <span>{{ props.row.address }}</span>
-          </el-form-item>
-          <el-form-item label="商品描述">
-            <span>{{ props.row.desc }}</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="商品 ID"
-      prop="id">
-    </el-table-column>
-    <el-table-column
-      label="商品名称"
-      prop="name">
-    </el-table-column>
-    <el-table-column
-      label="描述"
-      prop="desc">
-    </el-table-column>
-  </el-table>
+    </div>
 </template>
 <script>
     import startOfYesterday from 'date-fns/start_of_yesterday'
@@ -240,7 +197,7 @@
             },
             handleRowHandle(row, event) {
                 // 阻止冒泡
-                if (event.path[0].tagName != 'INPUT') {
+                // if (event.path[0].tagName != 'INPUT') {
                     if (row.index != this.upflowi) {
                         this.toggle(row.index)
                         if (this.upflowi != 0) {
@@ -250,7 +207,7 @@
                     } else {
                         this.toggle(row.index)
                     }
-                }
+                // }
             },
             // 展开
             toggle(flowi) {
