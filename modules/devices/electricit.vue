@@ -135,7 +135,7 @@
                 valueuser: '',
                 // 获取row的key值
                 getRowKeys(row) {
-                    return row.userid;
+                    return row.index;
                 },
                 // 要展开的行，数值的元素是row的key值
                 expands: [],
@@ -197,7 +197,7 @@
             },
             handleRowHandle(row, event) {
                 // 阻止冒泡
-                // if (event.path[0].tagName != 'INPUT') {
+                if (event.path[0].tagName != 'INPUT') {
                     if (row.index != this.upflowi) {
                         this.toggle(row.index)
                         if (this.upflowi != 0) {
@@ -207,7 +207,7 @@
                     } else {
                         this.toggle(row.index)
                     }
-                // }
+                }
             },
             // 展开
             toggle(flowi) {
