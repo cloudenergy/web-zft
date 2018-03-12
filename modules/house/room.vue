@@ -6,8 +6,8 @@
 				<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
 				<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
 				<div v-if="room.devices!=''||null">
-					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='EMC_ONLINE'" />
-					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.showEquipment.status.service==='EMC_OFFLINE'" />
+					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.devices[0].status.service==='EMC_ONLINE'" />
+					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.devices[0].status.service==='EMC_OFFLINE'" />
 				</div>
 			</div>
 			<p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>

@@ -1,7 +1,7 @@
-<template lang="html">
+<template>
     <div class="readingElectric">
         <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
-            ref="readingElectric" v-if="readingElectric.length!==0">
+            ref="readingElectric">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <div class="innerTable">
@@ -134,9 +134,7 @@
             return {
                 valueuser: '',
                 // 获取row的key值
-                getRowKeys(row) {
-                    return row.index;
-                },
+                
                 // 要展开的行，数值的元素是row的key值
                 expands: [],
                 // readingElectricData:[{startDate:'0',endDate:'0'}],
@@ -149,6 +147,9 @@
             }
         },
         methods: {
+            getRowKeys(row) {
+                return row.index;
+            },
             dateTime(data) {
 				return format(new Date(data),'YYYY-MM-DD')
 			},

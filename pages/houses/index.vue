@@ -102,58 +102,7 @@
 				return this.$store.state.userInfo.index
 			},
     		equipmentHouses: function() {
-    			if (this.houseFormat !== 'ENTIRE') {
-    				return this.houses.map((element, index) => {
-    					element.rooms.map((item, list) => {
-    						if (item.devices != '' || null) {
-    							item.devicesChooseElectricity = [];
-    							item.devices.map((ele, num) => {
-    								ele.updatedAtTime = new Date(
-    									parseInt(ele.updatedAt) * 1000
-    								)
-    									.toLocaleDateString()
-    									.replace(/\//g, '-');
-    								if (ele.type == 'ELECTRICITY') {
-    									item.devicesChooseElectricity.push(ele);
-    								}
-    								return ele;
-    							});
-    							item.showEquipment =
-    								item.devicesChooseElectricity[0];
-    						}
-    						return item;
-    					});
-    					element.showEquipment = element.devices[0]||[];
-    					return element;
-    				});
-    			} else {
-    				return this.houses.map((element, index) => {
-    					element.map(house => {
-    						house.rooms.map((item, list) => {
-    							if (item.devices != '' || null) {
-    								item.devices.map((ele, num) => {
-    									ele.updatedAtTime = new Date(
-    										parseInt(ele.updatedAt) * 1000
-    									)
-    										.toLocaleDateString()
-    										.replace(/\//g, '-');
-    									item.devicesChooseElectricity = [];
-    									if (ele.type == 'ELECTRICITY') {
-    										item.devicesChooseElectricity.push(ele);
-    									}
-    									return ele;
-    								});
-    								item.showEquipment =
-    									item.devicesChooseElectricity[0];
-    							}
-    							return item;
-    						});
-    						house.showEquipment = house.devices[0];
-    						return house;
-    					});
-    					return element;
-    				});
-    			}
+				return this.houses
     		}
     	},
     	created() {
@@ -172,7 +121,7 @@
     			'scroll',
     			this.scrollFunc,
     			true
-    		);	
+			);
 		},
 		beforeDestroy () {
 			window.removeEventListener(

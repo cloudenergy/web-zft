@@ -27,7 +27,7 @@
                 </span>
                 <i class="el-icon-circle-plus-outline" style="font-size:20px;color:#409eff" @click="bindEleciricity"></i>
             </h4>
-            <el-table :data="room.devicesChooseElectricity" stripe class="section">
+            <el-table :data="room.devices" stripe class="section">
                 <el-table-column prop="deviceId" label="设备ID" width="110">
                     <template slot-scope="scope">
                         <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
@@ -276,10 +276,10 @@
                 .then(res => {
                     this.$message.success('操作成功')
                     if(res.devices.length!==0) {
-                        this.$set(this.room,'devicesChooseElectricity',res.devices)
                         this.$set(this.room,'devices',res.devices)
+                        
                     }else {
-                        this.$set(this.room,'devicesChooseElectricity',[])
+                        this.$set(this.room,'devices',[])
                     }
                     
                 })
