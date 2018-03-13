@@ -8,7 +8,7 @@
 				<tenant-way class="marsp marspa" />
 				<ofpayments class="marsp marspa" />
 				<water-source class="marsp marspa" />
-				<city-area style="width:220px" class="flexce" />
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
 				<div class="importres">
 					<div class="actions">
 						<!-- <el-button type="warning" size="mini">
@@ -41,7 +41,25 @@
 					type: '',
 					city: '',
 					community: ''
+				},
+				reqData:{
+					
 				}
+			}
+		},
+		methods: {
+			cityChange(val) {
+				console.log(val)
+				this.reqData.districtId = val.city
+				this.query()
+			},
+			areaChange(val) {
+				console.log(val)
+				this.reqData.districtId = val.area
+				this.query()
+			},
+			query() {
+
 			}
 		}
 	}

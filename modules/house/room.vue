@@ -16,7 +16,7 @@
 			<p class="rentee" v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">
 				<span @click.stop="showUserInfo(room.contract)">
 					<icon type="icon-test1" :symbol="true" />{{room.contract.name}}</span>
-				<span>退: {{timeDate(room.contract.to)}}</span>
+				<span :style="{color:room.contract.to*1000<nowDate?'#f5a623':'#888888'}">退: {{timeDate(room.contract.to)}}</span>
 			</p>
 		</div>
 		<div class="actions cursorp">

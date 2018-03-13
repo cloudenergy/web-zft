@@ -6,7 +6,7 @@
 				<ofpayments class="marsp marspa" />
 				<mounth class="marsp marspa" />
 				<water-source class="marsp marspa" />
-				<city-area style="width:220px" class="flexce" />
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
 				<div class="importres">
 					<!-- <div class="actions">
 						<el-button type="warning" size="mini">
@@ -58,6 +58,16 @@
 			this.query()
 		},
 		methods: {
+			cityChange(val) {
+				console.log(val)
+				this.reqData.districtId = val.city
+				this.query()
+			},
+			areaChange(val) {
+				console.log(val)
+				this.reqData.districtId = val.area
+				this.query()
+			},
 			query() {
 				this.$model('flow_month')
 					.query(this.reqData, {

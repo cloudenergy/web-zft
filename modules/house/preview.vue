@@ -296,7 +296,7 @@
 
 <style lang="less" scoped>
     .backgroundGray {
-        background-color: rgb(245, 239, 239);
+        background-color: #f5f7fa;
     }
     .previewRoom {
         padding:30px

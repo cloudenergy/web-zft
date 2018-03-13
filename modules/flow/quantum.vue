@@ -5,7 +5,7 @@
 				<goend @from-toTime='chooseFlowTime'/>
 				<water-source class="marsp marspa" />
 				<tenant-way class="marsp marspa" />
-				<city-area style="width:220px" class="flexce" />
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
 				<rent-search/>
 				<div class="importres">
 					<!-- <div class="actions">
@@ -71,6 +71,16 @@
 			};
 		},
 		methods: {
+			cityChange(val) {
+				console.log(val)
+				this.reqData.districtId = val.city
+				this.query()
+			},
+			areaChange(val) {
+				console.log(val)
+				this.reqData.districtId = val.area
+				this.query()
+			},
 			show() {
 				console.log(this.flowMounth)
 			},

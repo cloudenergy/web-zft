@@ -1,9 +1,13 @@
 <template>
     <div class="preview">
-        <h3 class="title">{{house.location.name}}{{house.building}}幢{{house.unit}}单元{{house.roomNumber}}</h3>
-        <div class="base section">
-            <h4>房源信息</h4>
-            <p>朝向:<span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span></p>
+        <div class="houseInformationHeader">
+            <h3 class="title">{{house.location.name}}{{house.building}}幢{{house.unit}}单元{{house.roomNumber}}</h3>
+            <div class="base section">
+                <h4>房源信息</h4>
+                <p>朝向:
+                    <span v-for="(item,index) in this.$store.state.userInfo.toward" :key="index" v-if="item.EN===house.layout.orientation">{{item.CH}}</span>
+                </p>
+            </div>
         </div>
         <div class="devices section">
             <h4 class="flexc" style="aline-item:center">
@@ -29,9 +33,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-        </div>
-        <div>
-            <el-button @click.native="del" type="danger" style="margin-top:1px;">删除此房源</el-button>
+            <el-button @click.native="del" type="danger" style="margin-top:30px;">删除此房源</el-button>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
@@ -46,7 +48,7 @@
                 <el-button type="primary" @click="visibility = false">确 定</el-button>
             </span>
         </el-dialog> -->
-        
+
     </div>
 </template>
 
@@ -61,8 +63,8 @@
             return {
                 dialogVisible: false,
                 value4: true,
-                apportionment:[],
-                visibility:false
+                apportionment: [],
+                visibility: false
             }
         },
         components: {
@@ -79,10 +81,13 @@
         methods: {
             query() {
                 this.$model('apportionment')
-                .query({},{projectId:this.projectId,id:this.house.houseId})
-                .then(res=>{
-                    this.$set(this,'apportionment',res)
-                })
+                    .query({}, {
+                        projectId: this.projectId,
+                        id: this.house.houseId
+                    })
+                    .then(res => {
+                        this.$set(this, 'apportionment', res)
+                    })
             },
             writePercent() {
                 this.visibility = true;
@@ -107,7 +112,7 @@
                         .then((res) => {
                             this.queryAgain('unbundling')
                         })
-                        .catch(err=>{
+                        .catch(err => {
                             this.$message('解绑失败')
                         })
                 }).catch(err => {
@@ -160,7 +165,7 @@
                         id: this.house.houseId
                     })
                     .then(res => {
-                        this.$set(this.house,'devices',res.devices)
+                        this.$set(this.house, 'devices', res.devices)
                     })
                     .catch(err => {
                         console.log(err)
@@ -172,12 +177,16 @@
 </script>
 
 <style lang="less" scoped>
+    .houseInformationHeader {
+        padding:20px;
+        background-color: #f5f7fa;
+    }
     .base {
         margin-top: 20px;
     }
-    .section {
-        margin-bottom: 30px;
 
+    .section {
+        padding:20px;
         h4 {
             margin-bottom: 20px;
         }
