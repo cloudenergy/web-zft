@@ -180,9 +180,14 @@
 		margin-right:5px;
 	}
  </style>
- <style>
+ <style lang="less">
 	.searchset .nonemargin{
 		margin-left: 0
+	}
+	.devices {
+		.el-header,.el-main {
+			padding-left:10px;
+		}
 	}
  </style>
  

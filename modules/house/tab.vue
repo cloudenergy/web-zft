@@ -26,7 +26,6 @@
 		mapState
 	} from 'vuex';
 	export default {
-		// todo i
 		computed: {
 			...mapState(['userInfo', 'defaultHouseType']),
 			projectId() {

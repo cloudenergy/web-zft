@@ -20,8 +20,11 @@
 				</el-form-item>
 			</el-col>
 			<el-col :span="8">
-				<el-form-item prop="user.mobile">
-					<el-input class="form-input" placeholder="选填" v-model="user.mobile">
+				<el-form-item prop="user.mobile" :rules="[
+      						{ required: true, message: '请输入手机号', trigger: 'blur' },
+							{ type:'number',min: 11, max: 11, message: '手机号输入错误', trigger: 'blur' }
+    					]">
+					<el-input class="form-input" placeholder="选填" v-model.number="user.mobile">
 						<template slot="prepend">电话</template>
 					</el-input>
 				</el-form-item>

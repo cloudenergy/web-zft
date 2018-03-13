@@ -24,7 +24,7 @@
 				</div>
 				<search-all :title="'搜索'"></search-all>
 			</el-header>
-			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:20px">
+			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:10px">
 				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh' @restoreSwitch="restoreSwitch"
 				    :index="reqData.index" :equipmentLoading='equipmentLoading'/>
 				<div class="flexcenter batch">
@@ -182,7 +182,7 @@
 		margin-bottom: 17px;
 		margin-top: 5px;
 		div.flexcenter:first-child {
-			width: 400px;
+			width: 366px;
 		}
 	}
 
@@ -197,3 +197,10 @@
 		}
 	}
 </style>
+<style lang="less">
+	.devices {
+		.el-header,.el-main {
+			padding-left:10px;
+		}
+	}
+ </style>

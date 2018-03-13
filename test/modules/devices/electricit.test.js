@@ -10,7 +10,6 @@ describe('Electricit', ()=> {
 
         }
     });
-
     it('should have row-key', () => {
         expect(wrapper.html()).toContain(
             '<el-table-column type="expand">'

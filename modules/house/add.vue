@@ -85,7 +85,6 @@
 				type: Object
 			}
 		},
-		// todo i
 		computed: {
 			...mapState(['userInfo', 'user']),
 			projectId() {

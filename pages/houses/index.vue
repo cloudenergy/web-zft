@@ -7,7 +7,7 @@
             <div class="houses" ref="house">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
                     <div>
-                        <span v-if="!entire">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
+                        <span v-if="!entire" class="houseName">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
                         <span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
                         <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
@@ -221,7 +221,6 @@
     			}
     		},
     		query(val) {
-    			// TODO ZHOUYI house接口size设置
     			this.$model('houses')
     				.query(this.reqData, { projectId: this.projectId })
     				.then(res => {
@@ -355,11 +354,14 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 20px;
+			margin-left: 10px;
+			.houseName {
+				font-size: 14px;
+			}
     	}
 
     	.room + .room {
-    		margin-top: 20px;
+    		margin-top: 10px;
     	}
 
     	.room {
@@ -368,7 +370,7 @@
     		box-shadow: 0 0 4px #ddd;
     		border-radius: 2px;
     		color: @dark;
-    		padding: 20px;
+    		padding: 20px 20px 0 20px;
 
     		.cells {
     			display: flex;

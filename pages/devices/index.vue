@@ -1,5 +1,5 @@
 <template>
-	<el-container>
+	<el-container class="devices">
 		<el-aside class="page-bill-index" width="auto">
 			<div>
 				<Tab @change="refresh" :selected="houseFormat" @communityChange='communityChange'/>
@@ -133,5 +133,13 @@
 
 	.result-info {
 		margin-right: 5px;
+	}
+</style>
+
+<style lang="less">
+	.devices {
+		.el-header,.el-main {
+			padding-left:10px;
+		}
 	}
 </style>

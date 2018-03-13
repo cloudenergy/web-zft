@@ -14,22 +14,29 @@
 							<i class="el-icon-sort"></i>
 						</el-button>
 					</div> -->
-					<span class="result-info">32项结果</span>
+					<span class="result-info">{{monthFlows.length}}项结果</span>
 				</div>
 			</el-form>
 		</div>
-		<flowmounthlist />
+		<flowmounthlist :monthFlows="monthFlows" :reqData="reqData"/>
 	</div>
 </template>
 <script>
 	import flowmounthlist from './flowmounthlist.vue'
 	import mounth from './mounth.vue'
 	import ofpayments from './ofpayments.vue'
+	import format from 'date-fns/format'
+	let nowYear = format(new Date(),'YYYY')
 	export default {
 		components: {
 			flowmounthlist,
 			ofpayments,
 			mounth
+		},
+		computed: {
+			projectId() {
+				return this.$store.state.userInfo.user.projectId;
+			}	
 		},
 		data() {
 			return {
@@ -39,7 +46,30 @@
 					type: '',
 					city: '',
 					community: ''
-				}
+				},
+				reqData: {
+					year:nowYear,
+					view: 'month'
+				},
+				monthFlows:[]
+			}
+		},
+		created () {
+			this.query()
+		},
+		methods: {
+			query() {
+				this.$model('flow_month')
+					.query(this.reqData, {
+						projectId: this.projectId
+					})
+					.then(res => {
+						console.log(res[0].months['2018-01'])
+						this.$set(this, 'monthFlows', res)
+					})
+					.catch(err => {
+						console.log(err)
+					})
 			}
 		}
 	}

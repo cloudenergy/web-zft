@@ -1,10 +1,10 @@
 <template>
-	<el-container>
+	<el-container class="rent">
 		<div>
 			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
-			<el-header style="height:auto;padding-right:0">
+			<el-header style="height:auto;padding-right:0" class="rentSearch">
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<RentStatus class="status" @leasingStatus="leasingStatus"/>
@@ -23,7 +23,6 @@
 					</div>
 				</div><search-all :title="'搜索姓名/电话'"></search-all>
 			</el-header>
-			
 			<div class="result">
 				<DataTable v-if="housesRent" :housesrentData='housesRent' :houseFormat="reqData.houseFormat" :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()"/>
 			</div>
@@ -148,6 +147,9 @@
 </script>
 
 <style lang="less" scoped>
+	.rent .el-header.rentSearch {
+		padding-left: 10px;
+	}
 	.page-bill-index {
 		display: flex;
 		min-width: 275px;
@@ -162,7 +164,7 @@
 	}
 
 	.result {
-		margin-left: 20px;
+		margin-left: 10px;
 		display: block;
 		&:before {
 			clear: both;
