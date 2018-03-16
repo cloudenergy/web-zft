@@ -276,7 +276,7 @@
 			},
 			// 删除房间
 			deleteRoom() {
-				if(!this.room.contract) {
+				if(!this.room.contract.id) {
 					this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
