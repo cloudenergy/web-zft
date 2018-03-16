@@ -26,7 +26,7 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </span>
-						<span v-if="house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)">
+						<span v-if="house.devices&&house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)">
 							<icon type="jian" style="font-size:20px;color:#67c23a" v-if="house.devices[0].status.service==='EMC_ONLINE'" />
 							<icon type="jian" style="font-size:20px;color:#FA5555" v-if="house.devices[0].status.service==='EMC_OFFLINE'" />
 						</span>
@@ -228,10 +228,10 @@
     					if (this.reqData.houseFormat === 'ENTIRE') {
     						this.testArray = [];
     						this.entireHouse = [];
+							console.log()
     						res.data.map((ele, index) => {
-    							if (
-    								!_.includes(this.entireHouse, ele.currentFloor)
-    							) {
+								console.log(ele.devices.length)
+    							if (!_.includes(this.entireHouse, ele.currentFloor)) {
     								this.entireHouse.push(ele.currentFloor);
     								var newTset = [];
     								newTset.push(ele);
@@ -246,7 +246,8 @@
     						});
     						this.tabCard = true;
     						this.entire = true;
-    						this.houses = this.testArray;
+							console.log(this.testArray)
+							this.$set(this,'houses',this.testArray)
     					} else if (this.reqData.houseFormat === 'SOLE') {
     						this.tabCard = false;
 							if(val) {
