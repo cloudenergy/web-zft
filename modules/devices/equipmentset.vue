@@ -20,7 +20,7 @@
 			</el-table-column>
 			<el-table-column label="读数(KWH)" prop="scale">
 				<template slot-scope="scope">
-					<div>{{fixed(scope.row.scale)}}</div>
+					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">{{fixed(scope.row.scale)}}</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="通信时间">
@@ -68,6 +68,7 @@
 
 <script>
 	import format from 'date-fns/format'
+	import { houseDevicesDosage } from '~/modules/house';
 	export default {
 		props: {
 			devices: {
@@ -100,6 +101,16 @@
 			}
 		},
 		methods: {
+			houseDevicesDosage(data) {
+				this.$modal.$emit('open', {
+					comp: houseDevicesDosage,
+					data: {
+						houseDevice:data,
+						oneEquipment:true
+					},
+					title: '使用详情'
+				});
+			},
 			fixed(val) {
 				return val.toFixed(2)
 			},

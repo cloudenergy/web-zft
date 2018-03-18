@@ -37,12 +37,12 @@
                 </el-table-column>
                 <el-table-column prop="deviceId" label="读数">
                     <template slot-scope="scope">
-                        <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                        <span>{{scope.row.scale}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="updatedAt" label="通讯时间" width="80">
                     <template slot-scope="scope">
-                        <span>{{scope.row.scale}}</span>
+                        <span>{{date(scope.row.updatedAt)}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="通讯状态" width="70">
@@ -110,9 +110,7 @@
 </template>
 
 <script>
-    import {
-        delYTL
-    } from '~/utils/helper';
+    import { delYTL } from '~/utils/helper';
     import conversion from '../devices/conversion.vue'
     export default {
         props: {
@@ -150,6 +148,7 @@
             conversion
         },
         created() {
+            console.log(this.room)
             if (this.room.contract.from !== undefined) {
                 
                 this.contracts[0].rent = this.room.contract.rent

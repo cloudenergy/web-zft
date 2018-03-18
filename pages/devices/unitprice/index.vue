@@ -121,23 +121,28 @@
 				this.query();
 			},
 			choose_refresh(){
-				this.query()
+				this.reqData.index=1
+				this.query(true)
 			},
-			query() {
+			query(val) {
     			this.$model('houses')
     				.query(
     					this.reqData,{ projectId: this.projectId }
     				)
     				.then(res => {
-						res.data.forEach(element => {
-							this.houses.push(element)
-						});
-						this.$set(this, 'countInfo', res.paging)
-						this.houseFormat = this.reqData.houseFormat
-						this.reqData.index++
-						setTimeout(()=>{
-							this.loading = false
-						},500)
+						if(val) {
+							this.$set(this,'houses',res.data)
+						}else {
+							res.data.forEach(element => {
+								this.houses.push(element)
+							});
+							this.$set(this, 'countInfo', res.paging)
+							this.houseFormat = this.reqData.houseFormat
+							this.reqData.index++
+							setTimeout(()=>{
+								this.loading = false
+							},500)
+						}
 					});
     		},
 			showmessage(data){

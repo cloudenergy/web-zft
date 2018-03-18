@@ -95,8 +95,9 @@
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.endDate" type="date" placeholder="选择日期" style="width:160px" @change="newTime(scope.row,scope.$index)">
                     </el-date-picker>
-                    <br>
+                    <br/>
                     <span v-if="scope.row.details.length!==0" class="margin_top margin_left">{{ scope.row.details[0].endScale }}</span>
+                    <br>
                 </template>
             </el-table-column>
             <el-table-column label="用量" width="70">

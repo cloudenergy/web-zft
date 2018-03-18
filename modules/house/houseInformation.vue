@@ -33,6 +33,32 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <h4 class="flexc" style="aline-item:center">
+                <span style="line-height:20px;margin-right:15px">
+                    房间设备
+                </span>
+            </h4>
+            <div class="roomDevices">
+                <div v-for="item in this.house.rooms" :key='item.id'>
+                    <el-table :data="item.devices" style="width: 100%">
+                        <el-table-column label="房间号">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">房间{{ item.name }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="电表id">
+                            <template slot-scope="scope">
+                                <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button size="mini" type="danger" @click="handleRoomDelete(item.id, scope.row.deviceId)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </div>
             <el-button @click.native="del" type="danger" style="margin-top:30px;">删除此房源</el-button>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
@@ -42,6 +68,7 @@
                 <el-button type="primary" @click="choosechange()">确 定</el-button>
             </span>
         </el-dialog>
+
         <!-- <el-dialog title="设置分摊方式" :visible.sync="visibility" width="40%" append-to-body>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="visibility = false">取 消</el-button>
@@ -53,6 +80,9 @@
 </template>
 
 <script>
+    import {
+        delYTL
+    } from '~/utils/helper';
     import conversion from '../devices/conversion.vue'
     export default {
         props: {
@@ -79,6 +109,9 @@
             this.query()
         },
         methods: {
+            delDeviceYTL(val) {
+                return delYTL(val)
+            },
             query() {
                 this.$model('apportionment')
                     .query({}, {
@@ -97,6 +130,7 @@
                     id: this.roomId
                 });
             },
+            // 删除house电表
             handleDelete(data) {
                 this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
                     confirmButtonText: '确定',
@@ -110,7 +144,7 @@
                             id: data.deviceId
                         })
                         .then((res) => {
-                            this.queryAgain('unbundling')
+                            this.queryAgain()
                         })
                         .catch(err => {
                             this.$message('解绑失败')
@@ -119,9 +153,31 @@
 
                 });
             },
+            // 删除room电表
+            handleRoomDelete(data, val) {
+                this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$model('room_devices')
+                        .delete({}, {
+                            projectId: this.projectId,
+                            houseId: this.house.houseId,
+                            roomId: this.data,
+                            id: val
+                        })
+                        .then((res) => {
+                            this.queryAgain('unbundling')
+                        })
+                }).catch(err => {
+                    this.$message('取消解绑')
+                });
+            },
             bindEleciricity() {
                 this.dialogVisible = true
             },
+            // 房源绑定电表
             setEquipmentid(data) {
                 this.$model('house_devices')
                     .update({
@@ -134,7 +190,6 @@
                     .then((data) => {
                         this.$refs.aaa.setNewList()
                         this.queryAgain('bind')
-
                     })
                     .catch(err => {
                         this.$message.mistake('绑定失败')
@@ -156,6 +211,7 @@
 
                 });
             },
+            // TODO ZHOUYI res缺少devices
             queryAgain(data) {
                 this.$model('housedetail')
                     .query({
@@ -178,15 +234,16 @@
 
 <style lang="less" scoped>
     .houseInformationHeader {
-        padding:20px;
+        padding: 20px;
         background-color: #f5f7fa;
     }
+
     .base {
         margin-top: 20px;
     }
 
     .section {
-        padding:20px;
+        padding: 20px;
         h4 {
             margin-bottom: 20px;
         }
@@ -218,5 +275,8 @@
 <style>
     .el-switch {
         height: 22px;
+    }
+    .roomDevices .el-table__header-wrapper {
+        display: none;
     }
 </style>
