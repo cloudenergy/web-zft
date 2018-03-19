@@ -1,12 +1,27 @@
 <template>
-	<el-table :data="tableData" stripe>
-		<el-table-column prop="data" label="日期" width="150">
+	<el-table :data="channelFlows" stripe>
+		<el-table-column prop="timespan" label="日期" width="150">
 		</el-table-column>
 		<el-table-column prop="mountha" label="现金">
+			<template slot-scope="scope">
+                <div>
+                    {{price(scope.row.channels[1])}}
+                </div>
+            </template>
 		</el-table-column>
 		<el-table-column prop="mounthb" label="支付宝">
+			<template slot-scope="scope">
+                <div>
+                    {{price(scope.row.channels[2])}}
+                </div>
+            </template>
 		</el-table-column>
 		<el-table-column prop="mounthc" label="微信">
+			<template slot-scope="scope">
+                <div v-if="scope.row.channels[9]!==undefined">
+                    {{price(scope.row.channels[9])}}
+                </div>
+            </template>
 		</el-table-column>
 		<el-table-column prop="mounthd" label="微信公众号">
 		</el-table-column>
@@ -17,57 +32,19 @@
 
 <script>
 	export default {
+		props:{
+			channelFlows:{
+				type:Array
+			}
+		},
 		data() {
 			return {
-				tableData: [{
-						data: '2017-01-01',
-						mountha: 100,
-						mounthb: 200,
-						mounthc: 300,
-						mounthd: 400,
-						mounthe: 500
-					},
-					{
-						data: '2017-01-01',
-						mountha: 100,
-						mounthb: 200,
-						mounthc: 300,
-						mounthd: 400,
-						mounthe: 500
-					},
-					{
-						data: '2017-01-01',
-						mountha: 100,
-						mounthb: 200,
-						mounthc: 300,
-						mounthd: 400,
-						mounthe: 500,
-						mounthf: 600,
-						mounthg: 700,
-						mounthh: 800,
-						mounthi: 900,
-						mounthj: 100,
-						mounthk: 110,
-						mounthl: 120
-					},
-					{
-						data: '2017-01-01',
-						mountha: 100,
-						mounthb: 200,
-						mounthc: 300,
-						mounthd: 400,
-						mounthe: 500
-					},
-					{
-						data: '2017-01-01',
-						mountha: 100,
-						mounthb: 200,
-						mounthc: 300,
-						mounthd: 400,
-						mounthe: 500
-					}
-				],
 
+			}
+		},
+		methods:{
+			price(val) {
+				return (val/100).toFixed(2)
 			}
 		},
 		mounted() {

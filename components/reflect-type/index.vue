@@ -5,5 +5,5 @@
     	{ value: 'artificial', label: '人工' },
     	{ value: 'automatic', label: '自动' },
     ];
-    export default modelSelect(options);
+    export default modelSelect(options, { placeholder: '操作方式' });
 </script>
