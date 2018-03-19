@@ -22,7 +22,6 @@
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item @click.native="create()"><p class="setPading">房源</p></el-dropdown-item>
 						<el-dropdown-item @click.native="createContract()"><p class="setPading">租户</p></el-dropdown-item>
-						<!-- TODO ZHOUYI  批量导入接口 -->
 						<!-- <el-dropdown-item>批量导入</el-dropdown-item> -->
 					</el-dropdown-menu>
 				</el-dropdown>

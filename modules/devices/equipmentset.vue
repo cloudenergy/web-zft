@@ -7,13 +7,13 @@
 			</el-table-column>
 			<el-table-column label="设备id" width="130" prop="deviceId">
 				<template slot-scope="scope">
-					<div>
+					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
 						{{delYTL(scope.row.deviceId)}}
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="状态">
-				<template slot-scope="scope">
+				<template slot-scope="scope" @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
 					<div v-if="scope.row.status.service==='EMC_ONLINE'" style="color:#13ce66">正常</div>
 					<div v-if="scope.row.status.service==='EMC_OFFLINE'" style="color:#ff4949">异常</div>
 				</template>
@@ -25,19 +25,19 @@
 			</el-table-column>
 			<el-table-column label="通信时间">
 				<template slot-scope="scope">
-					<div>{{dateTime(scope.row.updatedAt*1000)}}</div>
+					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">{{dateTime(scope.row.updatedAt*1000)}}</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="关联房源" v-if="loading===1">
 				<template slot-scope="scope">
-					<div class="flexcenter" style="padding-right: 15px" v-if="scope.row.building.location">
+					<div class="flexcenter cursorp" style="padding-right: 15px" v-if="scope.row.building.location" @click="houseDevicesDosage(scope.row.deviceId)">
 						{{scope.row.building.location.name}}{{scope.row.building.building}}幢{{scope.row.building.unit}}单元{{scope.row.building.roomNumber}}
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="租户" v-if="loading===1">
 				<template slot-scope="scope">
-					<div v-if="scope.row.contract&&scope.row.contract.user">
+					<div v-if="scope.row.contract&&scope.row.contract.user"  @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
 						{{scope.row.contract.user.name}} {{scope.row.contract.userId}}
 					</div>
 				</template>
@@ -45,8 +45,16 @@
 
 			<el-table-column label="备注">
 				<template slot-scope="scope">
-					<div>
-
+					<div class="flexc remake">
+						<div v-if="scope.row.memo">
+							{{scope.row.memo}}
+						</div>
+						<div v-if="!scope.row.memo">
+							-
+						</div>
+						<div @click="setElectricit(scope.row)" class="cursorp change">
+                            修改
+                        </div>
 					</div>
 				</template>
 			</el-table-column>
@@ -63,6 +71,15 @@
 				</template>
 			</el-table-column>
 		</el-table>
+		<el-dialog title="修改备注" :visible.sync="dialogVisible" width="30%" class="changeRemake">
+            <div class="flexc">
+				<el-input v-model="remakeInput" type="textarea" placeholder="请输入备注"></el-input>
+			</div>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="notify()">取 消</el-button>
+                <el-button type="primary" @click="notify(deviceInfo)">确 定</el-button>
+            </div>
+        </el-dialog>
 	</div>
 </template>
 
@@ -92,7 +109,10 @@
 				reqData: {
 					mode: '',
 					devicesIds: []
-				}
+				},
+				remakeInput:'',
+				deviceInfo:'',
+				dialogVisible:false
 			}
 		},
 		computed: {
@@ -101,6 +121,20 @@
 			}
 		},
 		methods: {
+			notify(val) {
+				console.log(val)
+				this.dialogVisible = false
+				if(val) {
+					this.$model('change_remake')
+					.update({memo:this.remakeInput},{projectId:this.projectId,id:val.deviceId})
+					.then(res=>{this.$message.success('备注修改成功');this.$emit('restoreSwitch')})
+					.catch(err=>{this.$message('备注修改失败')})
+				}
+			},
+			setElectricit(data) {
+                this.deviceInfo = data
+                this.dialogVisible = true;
+			},
 			houseDevicesDosage(data) {
 				this.$modal.$emit('open', {
 					comp: houseDevicesDosage,
@@ -233,4 +267,24 @@
 </script>
 
 <style lang="less" scoped>
+	.remake {
+		&:hover .change{
+			opacity: 1;
+		}
+		.change {
+			margin-left:5px;
+			color:#409eff;
+			opacity: 0;
+		}
+	}
+	
+</style>
+
+<style lang="less">
+	.changeRemake .el-dialog__body{
+		padding:10px 20px;
+		textarea {
+			height:80px
+		}
+	}
 </style>

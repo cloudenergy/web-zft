@@ -135,7 +135,8 @@ const apis = {
 	reading_equipment: resource('/projects/{projectId}/devices/reading'),
 	logout: resource('/logout'),
 	user_info: resource('/projects/{projectId}/users/{userInfoId}'),
-	scale_read: resource('/projects/{projectId}/devices/{deviceId}/scale')
+	scale_read: resource('/projects/{projectId}/devices/{deviceId}/scale'),
+	change_remake: resource('/projects/{projectId}/devices')
 };
 
 /**

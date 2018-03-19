@@ -8,10 +8,10 @@
 			<component :is="currentView"></component>
 		</el-col>
 
-		<el-dialog title="提示" :visible.sync="addSteward" width="30%">
+		<el-dialog title="添加岗位" :visible.sync="addSteward" width="30%">
 			<el-form ref="addStewardForm" :model="addStewardForm" label-width="80px" :rules="rules" >
 
-				<el-form-item label="管家姓名">
+				<el-form-item label="姓名">
 					<el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
 				</el-form-item>
 				<el-form-item label="账户密码" prop="pass">

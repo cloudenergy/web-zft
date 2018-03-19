@@ -7,7 +7,8 @@
 
 <script>
     import {
-		subDays
+		subDays,
+        format
 	} from 'date-fns';
     export default {
         name: 'hello',
@@ -20,16 +21,24 @@
             this.$model('scale_read')
             .query(this.reqData,{
                 projectId:this.projectId,
-                deviceId:this.houseDevice.devices[0].deviceId
+                deviceId:this.oneEquipment?this.houseDevice:this.houseDevice.devices[0].deviceId
             })
             .then(res=>{
-                console.log(res)
                 this.$set(this,'deviceScale',res)
+                let x = this.deviceScale.map(ele => {return this.dateTime(ele.time*1000)})
+                let y = this.deviceScale.map(ele => {return ele.scale})
+                // console.log(this.deviceScale,x,y)
+                let z = this.deviceScale.map(ele => {return 0})
+                this.drawLine(x, y, z)
             })
+            
         },
         props: {
             houseDevice: {
-                type:Object
+                required:true
+            },
+            oneEquipment: {
+                type: Boolean
             }
         },
         computed: {
@@ -43,17 +52,17 @@
                 }
             }
         },
-        mounted() {
-            this.drawLine();
-        },
         methods: {
-            drawLine() {
+            dateTime(data) {
+				return format(new Date(data),'YYYY-MM-DD')
+			},
+            drawLine(x,y,z) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(document.getElementById('myChart'))
                 // 绘制图表
-                var data_val = [20, 12, 41, 30, 49, 30, 29],
-                    xAxis_val = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                var data_val1 = [0, 0, 0, 0, 0, 0, 0];
+                var data_val = y,
+                    xAxis_val = x
+                var data_val1 = z
                 var option = {
                     backgroundColor: '#ffffff',
                     grid: {
@@ -127,8 +136,6 @@
                     series: [{
                             type: 'bar',
                             name: 'linedemo',
-
-
                             tooltip: {
                                 show: false
                             },

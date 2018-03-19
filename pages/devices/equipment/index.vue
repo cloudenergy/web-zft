@@ -122,7 +122,7 @@
 					this.query()
 				}
 			},
-			sendThird(data) {
+			sendThird() {
 				this.query()
 			},
 			query() {
