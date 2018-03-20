@@ -29,14 +29,14 @@
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="price" label="金额" width="180">
+                        <el-table-column prop="price" label="金额(￥)" width="180">
                             <template slot-scope="scope">
                                 <div>
                                     {{price(scope.row.amount)}}
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="idNum" label="订单号">
+                        <el-table-column prop="id" label="订单号">
                         </el-table-column>
                         <el-table-column prop="type" label="操作方式">
                             <template slot-scope="scope">
@@ -45,7 +45,7 @@
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="operator" label="操作账号">
+                        <el-table-column prop="operator.userName" label="操作账号">
                         </el-table-column>
                         <el-table-column prop="status" label="状态">
                             <template slot-scope="scope">
@@ -67,21 +67,21 @@
             <el-form ref="form" label-width="200px" style="width:100%">
                 <el-form-item label="可提现金额">
                     <span class="gray">{{price(balance.balance)}}元</span>
-                    <p class="noCash">不可提现金额{{price(balance.frozen)}}</p>
+                    <p class="noCash">不可提现金额{{price(balance.frozen)}}元</p>
                 </el-form-item>
                 <el-form-item label="提现金额">
                     <div style="widht:158px;">
-                        <el-input v-model="cashInput" placeholder="输入结算金额" type="number" prop="cashInput">
+                        <el-input v-model="cashInput" placeholder="输入结算金额" type="number" prop="cashInput" size="small">
                             <template slot="append">￥</template>
                         </el-input>
                     </div>
                     
                 </el-form-item>
-                <!-- <el-form-item label="支付方式">
-                    <el-select v-model="withOutInfo.transaction.fundChannelId" placeholder="请选择" style="width:100%">
-                        <el-option :label='item.name' :value="item.id" v-for="item in payRoad" :key="item.id"></el-option>
+                <el-form-item label="收款方式">
+                    <el-select v-model="fundChannelId" placeholder="请选择" style="width:100%" size="small">
+                        <el-option :label='item.name' :value="item.id" v-for="item in fundChannel" :key="item.id"></el-option>
                     </el-select>
-                </el-form-item> -->
+                </el-form-item>
                 <el-form-item label="">
                     <span class="red">*如遇到问题，请拨打技术支持热线0571-86996727</span>
                 </el-form-item>
@@ -142,7 +142,9 @@
                 }, {
                     status: 'DONE',
                     value: '完成'
-                }]
+                }],
+                fundChannel:[],
+                fundChannelId:''
             }
         },
         computed: {
@@ -157,7 +159,12 @@
                 })
                 .then(res => this.$set(this, 'balance', res))
             this.flowList()
-            
+            // 获取资金渠道
+            this.$model('fund_channel')
+            .query({flow:'pay'},{projectId:this.projectId})
+            .then(res=>{
+                this.$set(this, 'fundChannel', res)
+            })
         },
         methods: {
             
@@ -169,9 +176,9 @@
             },
             // 申请提现
             applyCashInfo() {
-                if(this.cashInput!==null) {
+                if(this.cashInput!==null&&this.fundChannelId!=='') {
                     this.$model('project_balance')
-                    .update({'balance':this.cashInput*100},{projectId:this.projectId,id:'withdraw'})
+                    .update({'balance':this.cashInput*100,fundChannelId:this.fundChannelId},{projectId:this.projectId,id:'withdraw'})
                     .then(res=>{this.$message.success('申请提现成功');this.applyCash=false;this.flowList()})
                     .catch(err=>this.$message('申请提现失败'))
                 } else {
@@ -230,7 +237,7 @@
         border-bottom: 1px solid #aaa
     }
     .applyCash{
-        width: 800px;
+        width: 600px;
         .gray{
             font-size: 26px;
         }

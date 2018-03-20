@@ -2,9 +2,9 @@
 	<div>
 		<div class="block" style="margin-bottom:10px">
 			<el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
-				<tenant-way class="marsp marspa" style="margin-left:0px" />
-				<ofpayments class="marsp marspa" />
-				<mounth class="marsp marspa" />
+				<tenant-way class="marsp marspa" style="margin-left:0px" @change="houseFormat"/>
+				<ofpayments class="marsp marspa" @change="ofpayments"/>
+				<mounth class="marsp marspa"  @change="yearChange"/>
 				<water-source class="marsp marspa" />
 				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
 				<div class="importres">
@@ -58,13 +58,31 @@
 			this.query()
 		},
 		methods: {
+			yearChange(val) {
+				this.reqData.year = val
+				this.query()
+			},
+			ofpayments(val) {
+				if(val==='all') {
+					delete this.reqData.category
+				}else {
+					this.reqData.category = val
+				}
+				this.query()
+			},
+			houseFormat(val) {
+				if(val==='all') {
+					delete this.reqData.houseFormat
+				}else {
+					this.reqData.houseFormat = val
+				}
+				this.query()
+			},
 			cityChange(val) {
-				console.log(val)
 				this.reqData.districtId = val.city
 				this.query()
 			},
 			areaChange(val) {
-				console.log(val)
 				this.reqData.districtId = val.area
 				this.query()
 			},
@@ -74,7 +92,7 @@
 						projectId: this.projectId
 					})
 					.then(res => {
-						console.log(res[0].months['2018-01'])
+						console.log(res)
 						this.$set(this, 'monthFlows', res)
 					})
 					.catch(err => {

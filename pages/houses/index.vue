@@ -3,7 +3,7 @@
         <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab" @cityArea="cityArea" />
         <div class="main-container">
             <Search @changeRoom='changeRoom' @changeRoomsStatus='changeRoomsStatus' @changeHouseKeeper='changeHouseKeeper' :houseKeeper='houseKeeper' />
-            <search-all :title="'搜索小区/门牌/电话'"></search-all>
+            <search-all :title="'搜索小区/门牌/电话'" @keyup="keyup"></search-all>
             <div class="houses" ref="house">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
                     <div>
@@ -106,10 +106,6 @@
     		}
     	},
     	created() {
-			// this.query();
-    		this.$modal.$on('keyup', data => {
-    			this.setSearch(data);
-			}),
 			// 减少house页面打开几次在创建时请求几次的错误
     		this.$modal.$on('refresh', () => {
 				this.formatting()
@@ -137,6 +133,10 @@
 			}
 		},
     	methods: {
+			// 搜索
+			keyup(val) {
+				this.setSearch(val);
+			},
 			// 打开电表使用详情
 			houseDevicesDosage(data) {
 				this.$modal.$emit('open', {

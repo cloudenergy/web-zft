@@ -21,7 +21,8 @@
 							</el-button> -->
 						</div>
 					</div>
-				</div><search-all :title="'搜索姓名/电话'"></search-all>
+				</div>
+				<search-all :title="'搜索姓名/电话'" @keyup="keyup"></search-all>
 			</el-header>
 			<div class="result">
 				<DataTable v-if="housesRent" :housesrentData='housesRent' :houseFormat="reqData.houseFormat" :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()"/>
@@ -69,12 +70,11 @@
 		},
 		created() {
 			// this.query();
-			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
 		methods: {
-			// 用户欠费查找 todo zsh
-			rentMoneyType(val) {
-				console.log('用户欠费状态查找')
+			// 查找
+			keyup(val) {
+				this.setSearch(val)
 			},
 			setSearch(data) {
 				if(/rent/.test(location.pathname)){
@@ -87,6 +87,11 @@
 					this.query()
 				}
 			},
+			// 用户欠费查找 todo zsh
+			rentMoneyType(val) {
+				console.log('用户欠费状态查找')
+			},
+			
 			leasingStatus(data) {
 				if(data!=='all'){
 					this.reqData.leasingStatus = data

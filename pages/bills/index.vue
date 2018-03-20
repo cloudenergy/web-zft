@@ -22,7 +22,7 @@
 						</div> -->
 					</div>
 				</div>
-				<search-all :title="'搜索姓名/电话'"></search-all>
+				<search-all :title="'搜索姓名/电话'" @keyup="keyup"></search-all>
 			</el-header>
 			<div class="result">
 				<DataTable :tableBill='tableBill' :pagingSize="pagingSize" @refresh="refreshCost" @sizeIndex="sizeIndex"/>
@@ -86,9 +86,12 @@
 		},
 		created() {
 			// this.query();
-			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
 		methods: {
+			// 搜索
+			keyup(val) {
+				this.setSearch(val)
+			},
 			communityChange(data) {
 				if(data==='0'){
 					delete this.reqData.locationId

@@ -9,9 +9,8 @@
 			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter searchset">
-						<RentSearch @childinfo="showmessage" class="setsearch"/>
 						<span v-if="!configurationStatus">
-							<myIconYufu style="margin-left:20px"/><span class="myiconintroduce">预付费</span>
+							<myIconYufu/><span class="myiconintroduce">预付费</span>
 							<myIconZujin/><span class="myiconintroduce">随租金付</span>
 							<myIconNum/><span class="myiconintroduce">1号付费，其他数字以此类推</span>
 						</span>
@@ -29,8 +28,12 @@
 						</div>
 					</div>
 				</div>
+				<div class="search">
+					<search-all :title="'搜索小区/门牌/电话'" @keyup="keyup"></search-all>
+				</div>
+				
 			</el-header>
-			<el-main style="padding-right:0;overflow:hidden">
+			<el-main style="padding:0 0 0 10px;overflow:hidden">
 				<setUnitPrice :homePrice="houses" :countInfo='countInfo' @refresh="choose_refresh" @copyStatusChange='copyStatusChange' :houseFormat='houseFormat'/>
 				<div v-loading="loading"></div>
 			</el-main>
@@ -95,6 +98,20 @@
     		);
 		},
 		methods:{
+			keyup(val) {
+				this.setSearch(val)
+			},
+			setSearch(data) {
+				if(/rent/.test(location.pathname)){
+					if(data!==''){
+						this.reqData.q=data
+					}
+					else{
+						delete this.reqData.q
+					}
+					this.query()
+				}
+			},
 			scrollFunc() {
 				let elm = document.getElementsByClassName('main')[0];
 				this.loading = false;
@@ -176,6 +193,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		height: 40px;
 	}
 	.myiconintroduce{
 		margin-right: 30px;
@@ -183,6 +201,9 @@
 	}
 	.result-info{
 		margin-right:5px;
+	}
+	.search {
+		margin-top: 14px;
 	}
  </style>
  <style lang="less">

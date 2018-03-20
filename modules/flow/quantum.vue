@@ -3,8 +3,8 @@
 		<div class="block" style="margin-bottom:10px">
 			<el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
 				<goend @from-toTime='chooseFlowTime'/>
-				<water-source class="marsp marspa" />
-				<tenant-way class="marsp marspa" />
+				<water-source class="marsp marspa" @change="waterSource"/>
+				<tenant-way class="marsp marspa" @change="houseFormat"/>
 				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
 				<rent-search/>
 				<div class="importres">
@@ -71,18 +71,29 @@
 			};
 		},
 		methods: {
+			waterSource(val) {
+				if(val==='all') {
+					delete this.reqData.source
+				}else {
+					this.reqData.source = val
+				}
+				this.query()
+			},
+			houseFormat(val) {
+				if(val==='all') {
+					delete this.reqData.houseFormat
+				}else {
+					this.reqData.houseFormat = val
+				}
+				this.query()
+			},
 			cityChange(val) {
-				console.log(val)
 				this.reqData.districtId = val.city
 				this.query()
 			},
 			areaChange(val) {
-				console.log(val)
 				this.reqData.districtId = val.area
 				this.query()
-			},
-			show() {
-				console.log(this.flowMounth)
 			},
 			query() {
 				this.$model('flow_month')

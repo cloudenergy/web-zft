@@ -22,7 +22,7 @@
 						</div>
 					</div>
 				</div>
-				<search-all :title="'搜索'"></search-all>
+				<search-all :title="'搜索'" @keyup="keyup"></search-all>
 			</el-header>
 			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:10px">
 				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh' @restoreSwitch="restoreSwitch"
@@ -90,11 +90,13 @@
 			}
 		},
 		created() {
-			this.$modal.$on('keyup', (data) => {
-				this.setSearch(data)
-			})
+			
 		},
 		methods: {
+			// 搜索
+			keyup(val) {
+				this.setSearch(val)
+			},
 			restoreSwitch() {
 				this.query()
 			},
