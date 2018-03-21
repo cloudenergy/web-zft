@@ -18,12 +18,13 @@
             }
         },
         created () {
-            this.$model('scale_read')
+            this.$model('device_usage')
             .query(this.reqData,{
                 projectId:this.projectId,
                 deviceId:this.oneEquipment?this.houseDevice:this.houseDevice.devices[0].deviceId
             })
             .then(res=>{
+                console.log(res)
                 this.$set(this,'deviceScale',res)
                 let x = this.deviceScale.map(ele => {return this.dateTime(ele.time*1000)})
                 let y = this.deviceScale.map(ele => {return ele.scale})

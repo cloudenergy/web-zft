@@ -141,6 +141,7 @@ const apis = {
 	project_balance: resource('/projects/{projectId}/balance'),
 	blance_withdraw: resource('/projects/{projectId}/withdraw'),
 	electric_withdraw: resource('/projects/{projectId}/withdraw/{id}'),
+	device_usage: resource('/projects/{projectId}/devices/{deviceId}/usage')
 	
 	
 };
