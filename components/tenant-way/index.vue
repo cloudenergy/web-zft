@@ -16,27 +16,27 @@ export default {
             },
             formInlinetype:[
                 {
-                    value:1,
+                    value:'all',
                     label:'全部'
                 },
                 {
-                    value:2,
+                    value:'SHARE',
                     label:'合租'
                 },
                 {
-                    value:3,
+                    value:'SOLE',
                     label:'整租'
                 },
                 {
-                    value:4,
+                    value:'ENTIRE',
                     label:'整栋'
                 },
             ]
         }
     },
     methods:{
-        changeflow(){
-            console.log(this.formInline.type)
+        changeflow(val){
+            this.$emit('change',val)
         }
     }
 }

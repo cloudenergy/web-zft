@@ -9,7 +9,7 @@
 			<el-tab-pane label="未绑定" name="second"/>
 		</el-tabs>
 		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange"/>
-		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()">
+		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()" style="overflow:hidden">
 			<el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
 				<div slot="title" class="flexcenter"><span><span>全部小区</span><span v-if="urlLocation">/整幢</span></span><span class="communityNumber" v-if="!communityTable">数量:{{community.length}}</span></div>
 			</el-menu-item>
@@ -26,7 +26,6 @@
 		mapState
 	} from 'vuex';
 	export default {
-		// todo i
 		computed: {
 			...mapState(['userInfo', 'defaultHouseType']),
 			projectId() {

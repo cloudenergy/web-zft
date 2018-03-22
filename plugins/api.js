@@ -117,8 +117,9 @@ const apis = {
 		'/projects/{projectId}/houses/{houseId}/rooms/{roomId}'
 	),
 	housedetail: resource('/projects/{projectId}/houses/{id}'),
+	// 添加资金渠道
 	fund_channel: resource('/projects/{projectId}/fundChannels'),
-	top_up: resource('/projects/{projectId}/users/{userId}/contracts/{contractId}'),
+	top_up: resource('/projects/{projectId}/users/{userId}'),
 	all_user_bills: resource('/projects/{projectId}/bills'),
 	config_list: resource('/projects/{projectId}/config'),
 	room_contracts: resource('/projects/{projectId}/rooms/{roomId}/contracts'),
@@ -134,7 +135,15 @@ const apis = {
 	apportionment: resource('/projects/{projectId}/houses/{id}/apportionment'),
 	reading_equipment: resource('/projects/{projectId}/devices/reading'),
 	logout: resource('/logout'),
-	user_info: resource('/projects/{projectId}/users/{userInfoId}')
+	user_info: resource('/projects/{projectId}/users/{userInfoId}'),
+	scale_read: resource('/projects/{projectId}/devices/{deviceId}/scale'),
+	change_remake: resource('/projects/{projectId}/devices'),
+	project_balance: resource('/projects/{projectId}/balance'),
+	blance_withdraw: resource('/projects/{projectId}/withdraw'),
+	electric_withdraw: resource('/projects/{projectId}/withdraw/{id}'),
+	device_usage: resource('/projects/{projectId}/devices/{deviceId}/usage')
+	
+	
 };
 
 /**

@@ -87,7 +87,6 @@
                         value.length :
                         value.indexOf('.') + 3
                     )
-                console.log(formattedValue)
                 // 如果值尚不合规，则手动覆盖为合规的值
                 if (formattedValue !== value) {
                     this.$nextTick(() => {
@@ -119,7 +118,6 @@
                         }, {
                             projectId: this.projectId,
                             userId: this.contractInfo.user.id,
-                            contractId: this.contractInfo.id,
                             id: 'balance'
                         })
                         .then(res => {

@@ -23,7 +23,7 @@ export default {
     methods: {
         show(el) {
             if(el.keyCode===13){
-                this.$modal.$emit('keyup',this.searchInput)
+                this.$emit('keyup',this.searchInput)
             }
         }
     }
@@ -31,7 +31,7 @@ export default {
 </script>
 <style lang="less" scoped>
     .searchInput{
-        margin-bottom: 13px;
+        margin-bottom: 14px;
     }
 </style>
 

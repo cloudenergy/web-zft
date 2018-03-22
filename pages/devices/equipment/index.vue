@@ -9,7 +9,6 @@
 			<el-header style="height:auto;padding-right:0">
 				<div class="ops-bills">
 					<div class="flexcenter">
-						<room-search @input="roomSearch" v-model="info.search"></room-search>
 						<rooms-select @input="search" v-model="info.room"></rooms-select>
 						<room-manager @input="manager" v-model="info.manager" />
 					</div>
@@ -23,9 +22,9 @@
 						</div>
 					</div>
 				</div>
-				<search-all :title="'搜索'"></search-all>
+				<search-all :title="'搜索'" @keyup="keyup"></search-all>
 			</el-header>
-			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:20px">
+			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:10px">
 				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh' @restoreSwitch="restoreSwitch"
 				    :index="reqData.index" :equipmentLoading='equipmentLoading'/>
 				<div class="flexcenter batch">
@@ -91,11 +90,13 @@
 			}
 		},
 		created() {
-			this.$modal.$on('keyup', (data) => {
-				this.setSearch(data)
-			})
+			
 		},
 		methods: {
+			// 搜索
+			keyup(val) {
+				this.setSearch(val)
+			},
 			restoreSwitch() {
 				this.query()
 			},
@@ -107,18 +108,7 @@
 				this.$refs.equipmentset.setElectricSwitch(data)
 			},
 			deleteElectric() {
-				this.$confirm('将要删除此电表, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$refs.equipmentset.deleteElectric()
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
-					});
-				});
+				this.$refs.equipmentset.setDelElectric()
 			},
 			handleCurrentChange(val) {
 				this.equipmentLoading = true;
@@ -134,7 +124,7 @@
 					this.query()
 				}
 			},
-			sendThird(data) {
+			sendThird() {
 				this.query()
 			},
 			query() {
@@ -194,7 +184,7 @@
 		margin-bottom: 17px;
 		margin-top: 5px;
 		div.flexcenter:first-child {
-			width: 600px;
+			width: 366px;
 		}
 	}
 
@@ -209,3 +199,10 @@
 		}
 	}
 </style>
+<style lang="less">
+	.devices {
+		.el-header,.el-main {
+			padding-left:10px;
+		}
+	}
+ </style>

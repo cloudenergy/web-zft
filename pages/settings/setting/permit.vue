@@ -34,6 +34,7 @@
 
 				<el-table-column prop="operate" label="操作">
 					<template slot-scope="scope">
+						<el-button type="primary" @click="editorUser(scope.row)">编辑</el-button>
 						<el-button type="danger" @click="deleteUser(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
@@ -42,8 +43,11 @@
 		</div>
 		<el-dialog title="提示" :visible.sync="addSteward" width="30%">
 			<el-form ref="addStewardForm" :model="addStewardForm" label-width="80px" :rules="rules">
-				<el-form-item label="管家姓名">
-					<el-input v-model="addStewardForm.username" placeholder="管家姓名"></el-input>
+				<el-form-item label="姓名">
+					<el-input v-model="addStewardForm.username" placeholder="请输入姓名"></el-input>
+				</el-form-item>
+				<el-form-item label="手机号">
+					<el-input v-model="addStewardForm.mobile" placeholder="请输入手机号"></el-input>
 				</el-form-item>
 				<el-form-item label="账户密码" prop="pass">
 					<el-input v-model="password" placeholder="密码" type="password"></el-input>
@@ -66,6 +70,29 @@
 				<el-button type="primary" @click="add">确 定</el-button>
 			</span>
 		</el-dialog>
+		<el-dialog title="资料修改" :visible.sync="editorSteward" width="30%">
+			<el-form ref="addStewardForm" :model="editorUserInfo" label-width="80px" :rules="rules">
+				<el-form-item label="姓名">
+					<el-input v-model="editorUserInfo.username" placeholder="管家姓名" :disabled="true"></el-input>
+				</el-form-item>
+				<el-form-item label="手机号">
+					<el-input v-model="editorUserInfo.mobile" placeholder="请输入手机号"></el-input>
+				</el-form-item>
+				<el-form-item label="账户密码" prop="pass">
+					<el-input v-model="password" placeholder="密码"></el-input>
+				</el-form-item>
+				<el-form-item label="确认密码" prop="checkPass">
+					<el-input v-model="passwordAgain" placeholder="请重复输入密码"></el-input>
+				</el-form-item>
+				<el-form-item label="电子邮件">
+					<el-input v-model="editorUserInfo.email" placeholder="电子邮件"></el-input>
+				</el-form-item>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="editorSteward = false">取 消</el-button>
+				<el-button type="primary" @click="editor">确 定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -83,7 +110,6 @@
 					callback(new Error('请输入密码'));
 				} else {
 					if (this.passwordAgain !== '') {
-						console.log(this.passwordAgain)
 						this.$refs.addStewardForm.validateField('checkPass');
 					}
 					callback();
@@ -100,6 +126,8 @@
 			};
 			return {
 				addSteward: false,
+				editorSteward: false,
+				editorUserInfo: '',
 				addStewardForm: {
 					username: '',
 					level: '',
@@ -126,6 +154,46 @@
 		},
 		components: {},
 		methods: {
+			editor() {
+				this.editorSteward = false
+				this.$refs['addStewardForm'].validate((valid) => {
+					if (valid) {
+						var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+						if (regex.test(this.editorUserInfo.email)) {
+							this.editorUserInfo.password = md5(this.password);
+							this.$model('administrator_change')
+								.patch({
+									mobile: this.editorUserInfo.mobile,
+									email: this.editorUserInfo.email,
+									password:this.editorUserInfo.password
+								}, {
+									projectId: this.projectId,
+									id: this.editorUserInfo.id
+								})
+								.then(res => {
+									this.$message.success('信息更改成功');
+									this.query()
+								})
+								.catch(err=>{
+									this.$message('信息更改失败')
+								})
+						} else {
+							this.$message('邮箱格式错误');
+						}
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				})
+			},
+			editorUser(data) {
+				if (JSON.parse(localStorage.getItem('user')).level === 'ADMIN') {
+					this.$set(this,'editorUserInfo',data)
+					this.editorSteward = true
+				} else {
+					this.$message('权限不足，无法编辑资料');
+				}
+			},
 			addJobs() {
 				if (JSON.parse(localStorage.getItem('user')).level === 'ADMIN') {
 					this.addSteward = true;
@@ -135,7 +203,7 @@
 			},
 			add() {
 				this.$refs['addStewardForm'].validate((valid) => {
-					if(valid) {
+					if (valid) {
 						var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
 						if (regex.test(this.addStewardForm.email)) {
 							this.addSteward = false;
@@ -146,8 +214,8 @@
 								})
 								.then(res => {
 									this.$message.success('创建成功');
-									this.addStewardForm.username = this.addStewardForm.password = this.password = this.addStewardForm.email =
-										'';
+									this.addStewardForm.username = this.addStewardForm.password = this.password = this.addStewardForm.email = '';
+									this.query()
 								})
 								.catch(err => {
 									if (err.code === 90000004) {
@@ -157,9 +225,9 @@
 						} else {
 							this.$message('邮箱格式错误');
 						}
-					}else {
+					} else {
 						console.log('error submit!!');
-            			return false;
+						return false;
 					}
 				})
 			},
@@ -194,7 +262,7 @@
 									projectId: this.projectId,
 									id: data.id
 								})
-								.then(res => console.log(res));
+								.then(res => this.query());
 						})
 						.catch(() => {
 							this.$message({

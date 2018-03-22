@@ -1,14 +1,16 @@
 <template>
-	<el-container>
+	<el-container class="rent">
 		<div>
 			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
-			<el-header style="height:auto;padding-right:0">
+			<el-header style="height:auto;padding-right:0" class="rentSearch">
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<RentStatus class="status" @leasingStatus="leasingStatus"/>
 						<RentManager class="manager" :houseKeeper='houseKeeper'/>
+						<!-- todo SUOQIN  欠费 正常query -->
+						<RentOwe @rentMoneyType="rentMoneyType" class="manager"/>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info" v-if="housesRent">{{housesRent.paging.count}}项结果</span>
@@ -19,9 +21,9 @@
 							</el-button> -->
 						</div>
 					</div>
-				</div><search-all :title="'搜索姓名/电话'"></search-all>
+				</div>
+				<search-all :title="'搜索姓名/电话'" @keyup="keyup"></search-all>
 			</el-header>
-			
 			<div class="result">
 				<DataTable v-if="housesRent" :housesrentData='housesRent' :houseFormat="reqData.houseFormat" :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()"/>
 			</div>
@@ -37,7 +39,8 @@
 		RentStatus,
 		DataTable,
 		RentManager,
-		RentSearch
+		RentSearch,
+		RentOwe
 	} from '~/modules/rent';
 	import {readableDuration} from '../../utils/date.js'
 	export default {
@@ -46,7 +49,8 @@
 			RentStatus,
 			RentManager,
 			DataTable,
-			RentSearch
+			RentSearch,
+			RentOwe
 		},
 		data() {
 			return {
@@ -66,9 +70,12 @@
 		},
 		created() {
 			// this.query();
-			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
 		methods: {
+			// 查找
+			keyup(val) {
+				this.setSearch(val)
+			},
 			setSearch(data) {
 				if(/rent/.test(location.pathname)){
 					if(data!==''){
@@ -80,6 +87,11 @@
 					this.query()
 				}
 			},
+			// 用户欠费查找 todo zsh
+			rentMoneyType(val) {
+				console.log('用户欠费状态查找')
+			},
+			
 			leasingStatus(data) {
 				if(data!=='all'){
 					this.reqData.leasingStatus = data
@@ -140,6 +152,9 @@
 </script>
 
 <style lang="less" scoped>
+	.rent .el-header.rentSearch {
+		padding-left: 10px;
+	}
 	.page-bill-index {
 		display: flex;
 		min-width: 275px;
@@ -154,7 +169,7 @@
 	}
 
 	.result {
-		margin-left: 20px;
+		margin-left: 10px;
 		display: block;
 		&:before {
 			clear: both;

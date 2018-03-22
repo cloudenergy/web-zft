@@ -20,9 +20,8 @@
 						+ 添加
 					</span>
 					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item @click.native="create()">房源</el-dropdown-item>
-						<el-dropdown-item @click.native="createContract()">租户</el-dropdown-item>
-						<!-- TODO ZHOUYI  批量导入接口 -->
+						<el-dropdown-item @click.native="create()"><p class="setPading">房源</p></el-dropdown-item>
+						<el-dropdown-item @click.native="createContract()"><p class="setPading">租户</p></el-dropdown-item>
 						<!-- <el-dropdown-item>批量导入</el-dropdown-item> -->
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -94,10 +93,10 @@ export default {
 	z-index: 2;
 	width: 120px;
 	background-color: #2f3c4d;
-	flex: 0 0 200px;
-	max-width: 200px;
-	min-width: 200px;
-	width: 200px;
+	flex: 0 0 110px;
+	max-width: 110px;
+	min-width: 110px;
+	width: 110px;
 }
 
 .app .userInfo {
@@ -120,6 +119,9 @@ export default {
 	color: #fff;
 	border-radius: 3px;
 	margin-right: -4px;
+}
+.setPading {
+	padding:0 18px;
 }
 .new-house .el-dialog {
 	width: 730px;

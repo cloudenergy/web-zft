@@ -20,11 +20,13 @@
 				</el-form-item>
 			</el-col>
 			<el-col :span="8">
-				<el-form-item prop="user.mobile">
-					<el-input class="form-input" placeholder="选填" v-model="user.mobile">
-						<template slot="prepend">电话</template>
-					</el-input>
-				</el-form-item>
+				<el-form :rules="rules">
+					<el-form-item prop="mobile">
+						<el-input class="form-input" placeholder="必填" v-model.number="user.mobile">
+							<template slot="prepend">电话</template>
+						</el-input>
+					</el-form-item>
+				</el-form>
 			</el-col>
 		</el-row>
 		<el-row>
@@ -62,6 +64,16 @@
 			}
 		},
 		data() {
+			var validateMobile = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入手机号'));
+				} else {
+					if (!(/^1[3|4|5|7|8][0-9]{9}$/.test(this.user.mobile))) {
+						callback(new Error('手机号输入错误'));
+					}
+					callback();
+				}
+			};
 			return {
 				idTypes: [{
 					id: 1,
@@ -87,7 +99,13 @@
 				}, {
 					id: 8,
 					name: '其他证件',
-				}]
+				}],
+				rules: {
+					mobile: [{
+						validator: validateMobile,
+						trigger: 'blur'
+					}]
+				}
 			}
 		}
 

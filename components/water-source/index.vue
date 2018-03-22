@@ -14,23 +14,27 @@ export default {
             },
             formInlinetype:[
                 {
-                    value:1,
-                    label:'充值账户'
+                    value:'all',
+                    label:'全部'
                 },
                 {
-                    value:2,
-                    label:'租金扣费'
+                    value:'rent',
+                    label:'租约缴费'
                 },
                 {
-                    value:3,
-                    label:'仪表扣费'
+                    value:'topup',
+                    label:'账户充值'
+                },
+                {
+                    value:'final',
+                    label:'退租结算'
                 }
             ]
         }
     },
     methods:{
-        changeflow(){
-            console.log(this.formInline.type)
+        changeflow(val){
+            this.$emit('change',val)
         }
     }
 }

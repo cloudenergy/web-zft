@@ -1,10 +1,10 @@
 <template>
-	<el-container>
+	<el-container class="bill">
 		<div>
 			<Tab @change="refresh" :selected="reqData.houseFormat" @communityChange="communityChange"/>
 		</div>
 		<el-container>
-			<el-header style="height:auto;padding-right:0">
+			<el-header style="height:auto;padding-right:0" class="billSearch">
 				<div class="ops-bills">
 					<div class="flexcenter" style="width:540px">
 						<BillStatus class="status" @billStatus="billStatus" />
@@ -22,7 +22,7 @@
 						</div> -->
 					</div>
 				</div>
-				<search-all :title="'搜索姓名/电话'"></search-all>
+				<search-all :title="'搜索姓名/电话'" @keyup="keyup"></search-all>
 			</el-header>
 			<div class="result">
 				<DataTable :tableBill='tableBill' :pagingSize="pagingSize" @refresh="refreshCost" @sizeIndex="sizeIndex"/>
@@ -86,9 +86,12 @@
 		},
 		created() {
 			// this.query();
-			this.$modal.$on('keyup',(data)=>{this.setSearch(data)})
     	},
 		methods: {
+			// 搜索
+			keyup(val) {
+				this.setSearch(val)
+			},
 			communityChange(data) {
 				if(data==='0'){
 					delete this.reqData.locationId
@@ -152,6 +155,9 @@
 </script>
 
 <style lang="less" scoped>
+	.bill .billSearch {
+		padding-left: 10px;
+	}
 	.page-bill-index {
 		display: flex; // min-width: 275px;
 	}
@@ -164,7 +170,7 @@
 	}
 
 	.result {
-		margin-left: 20px;
+		margin-left: 10px;
 		display: block;
 		&:before {
 			clear: both;
@@ -178,5 +184,6 @@
 
 	.el-select.select {
 		margin-top: 0;
+		margin-left: 10px;
 	}
 </style>

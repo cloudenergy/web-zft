@@ -25,7 +25,7 @@
         },
         methods: {
             sendchange() {
-                this.input = calc.mul(this.input * 100)
+                this.input = this.input * 100
                 this.$emit('notclose', this.input)
                 this.input = ''
             },

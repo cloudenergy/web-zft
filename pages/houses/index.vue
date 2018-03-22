@@ -3,11 +3,11 @@
         <Tab @change="refresh" :selected="reqData.houseFormat" @communityChange='communityChange' ref="setLocation" class="communityTab" @cityArea="cityArea" />
         <div class="main-container">
             <Search @changeRoom='changeRoom' @changeRoomsStatus='changeRoomsStatus' @changeHouseKeeper='changeHouseKeeper' :houseKeeper='houseKeeper' />
-            <search-all :title="'搜索小区/门牌/电话'"></search-all>
+            <search-all :title="'搜索小区/门牌/电话'" @keyup="keyup"></search-all>
             <div class="houses" ref="house">
                 <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
                     <div>
-                        <span v-if="!entire">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
+                        <span v-if="!entire" class="houseName">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
                         <span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
                         <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
@@ -26,6 +26,10 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </span>
+						<span v-if="house.devices&&house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)">
+							<icon type="jian" style="font-size:20px;color:#67c23a" v-if="house.devices[0].status.service==='EMC_ONLINE'" />
+							<icon type="jian" style="font-size:20px;color:#FA5555" v-if="house.devices[0].status.service==='EMC_OFFLINE'" />
+						</span>
                         <!-- <span class="badge pull-right">{{house.rooms.length}}</span> -->
                     </div>
                     <div class="cells" v-if="!entire">
@@ -65,9 +69,9 @@
 
 <script>
     import _ from 'lodash';
-    import { Tab, Room, Search, Preview, houseInformation } from '~/modules/house';
+    import { Tab, Room, Search, Preview, houseInformation,houseDevicesDosage } from '~/modules/house';
     export default {
-    	components: { Tab, Room, Search, Preview, houseInformation },
+    	components: { Tab, Room, Search, Preview, houseInformation,houseDevicesDosage },
     	data() {
     		return {
     			houses: [],
@@ -98,65 +102,10 @@
 				return this.$store.state.userInfo.index
 			},
     		equipmentHouses: function() {
-    			if (this.houseFormat !== 'ENTIRE') {
-    				return this.houses.map((element, index) => {
-    					element.rooms.map((item, list) => {
-    						if (item.devices != '' || null) {
-    							item.devicesChooseElectricity = [];
-    							item.devices.map((ele, num) => {
-    								ele.updatedAtTime = new Date(
-    									parseInt(ele.updatedAt) * 1000
-    								)
-    									.toLocaleDateString()
-    									.replace(/\//g, '-');
-    								if (ele.type == 'ELECTRICITY') {
-    									item.devicesChooseElectricity.push(ele);
-    								}
-    								return ele;
-    							});
-    							item.showEquipment =
-    								item.devicesChooseElectricity[0];
-    						}
-    						return item;
-    					});
-    					element.showEquipment = element.devices[0]||[];
-    					return element;
-    				});
-    			} else {
-    				return this.houses.map((element, index) => {
-    					element.map(house => {
-    						house.rooms.map((item, list) => {
-    							if (item.devices != '' || null) {
-    								item.devices.map((ele, num) => {
-    									ele.updatedAtTime = new Date(
-    										parseInt(ele.updatedAt) * 1000
-    									)
-    										.toLocaleDateString()
-    										.replace(/\//g, '-');
-    									item.devicesChooseElectricity = [];
-    									if (ele.type == 'ELECTRICITY') {
-    										item.devicesChooseElectricity.push(ele);
-    									}
-    									return ele;
-    								});
-    								item.showEquipment =
-    									item.devicesChooseElectricity[0];
-    							}
-    							return item;
-    						});
-    						house.showEquipment = house.devices[0];
-    						return house;
-    					});
-    					return element;
-    				});
-    			}
+				return this.houses
     		}
     	},
     	created() {
-			// this.query();
-    		this.$modal.$on('keyup', data => {
-    			this.setSearch(data);
-			}),
 			// 减少house页面打开几次在创建时请求几次的错误
     		this.$modal.$on('refresh', () => {
 				this.formatting()
@@ -168,7 +117,7 @@
     			'scroll',
     			this.scrollFunc,
     			true
-    		);	
+			);
 		},
 		beforeDestroy () {
 			window.removeEventListener(
@@ -184,6 +133,20 @@
 			}
 		},
     	methods: {
+			// 搜索
+			keyup(val) {
+				this.setSearch(val);
+			},
+			// 打开电表使用详情
+			houseDevicesDosage(data) {
+				this.$modal.$emit('open', {
+					comp: houseDevicesDosage,
+					data: {
+						houseDevice:data
+					},
+					title: '使用详情'
+				});
+			},
 			// 滚动事件query
     		scrollFunc() {
 				let elm = document.getElementsByClassName('main')[0];
@@ -258,7 +221,6 @@
     			}
     		},
     		query(val) {
-    			// TODO ZHOUYI house接口size设置
     			this.$model('houses')
     				.query(this.reqData, { projectId: this.projectId })
     				.then(res => {
@@ -266,10 +228,10 @@
     					if (this.reqData.houseFormat === 'ENTIRE') {
     						this.testArray = [];
     						this.entireHouse = [];
+							console.log()
     						res.data.map((ele, index) => {
-    							if (
-    								!_.includes(this.entireHouse, ele.currentFloor)
-    							) {
+								console.log(ele.devices.length)
+    							if (!_.includes(this.entireHouse, ele.currentFloor)) {
     								this.entireHouse.push(ele.currentFloor);
     								var newTset = [];
     								newTset.push(ele);
@@ -284,7 +246,8 @@
     						});
     						this.tabCard = true;
     						this.entire = true;
-    						this.houses = this.testArray;
+							console.log(this.testArray)
+							this.$set(this,'houses',this.testArray)
     					} else if (this.reqData.houseFormat === 'SOLE') {
     						this.tabCard = false;
 							if(val) {
@@ -298,7 +261,7 @@
     						this.entire = false;
     						this.tabCard = true;
 							if(val) {
-								this.houses = res.data
+								this.$set(this,'houses',res.data)
 							}else {
 								res.data.forEach(element => {
 									this.houses.push(element)
@@ -392,11 +355,14 @@
 
     	.main-container {
     		flex: 1;
-    		margin-left: 20px;
+			margin-left: 10px;
+			.houseName {
+				font-size: 14px;
+			}
     	}
 
     	.room + .room {
-    		margin-top: 20px;
+    		margin-top: 10px;
     	}
 
     	.room {
@@ -405,7 +371,7 @@
     		box-shadow: 0 0 4px #ddd;
     		border-radius: 2px;
     		color: @dark;
-    		padding: 20px;
+    		padding: 20px 20px 0 20px;
 
     		.cells {
     			display: flex;

@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.other
- * @Last Modified time: 2018-03-11 11:19:19
+ * @Last Modified time: 2018-03-13 10:32:37
  */
 
 import api from '~/plugins/api';
@@ -163,18 +163,21 @@ export default {
 			state.userInfo.houseKeeper = data
 		},
 		ADD_COMMUNITYS(state,data) {
-			var addCommunityInfo = {
+			let addCommunityInfo = {
 				'areaId':data.area,
 				'cityId':data.city,
 				'name':data.location.name,
 				'geoLocationId':data.location.id
 			}
 			if (data.houseFormat === 'SHARE') {
-				state.userInfo.communities = _.uniqBy(state.userInfo.communities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.communities.push(addCommunityInfo)
+				state.userInfo.communities = _.uniqBy(state.userInfo.communities,'geoLocationId')
 			} else if (data.houseFormat === 'SOLE') {
-				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.soleCommunities.push(addCommunityInfo)
+				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities,'geoLocationId')
 			} else {
-				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.entireCommunities.push(addCommunityInfo)
+				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities,'geoLocationId')
 			}
 		}
 	},

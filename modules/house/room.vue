@@ -5,9 +5,9 @@
 				<h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
 				<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
 				<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
-				<div v-if="room.devices!=''||null">
-					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.showEquipment.status.service==='EMC_ONLINE'" />
-					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.showEquipment.status.service==='EMC_OFFLINE'" />
+				<div v-if="room.devices!=''||null" @click.stop="houseDevicesDosage(this.room.devices)">
+					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.devices[0].status.service==='EMC_ONLINE'" />
+					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.devices[0].status.service==='EMC_OFFLINE'" />
 				</div>
 			</div>
 			<p>{{room.name}} {{room.area}} {{room.orientation | orientation}}</p>
@@ -16,7 +16,7 @@
 			<p class="rentee" v-if="room.contract.rent!==undefined&&room.contract.from*1000<nowDate">
 				<span @click.stop="showUserInfo(room.contract)">
 					<icon type="icon-test1" :symbol="true" />{{room.contract.name}}</span>
-				<span>退: {{timeDate(room.contract.to)}}</span>
+				<span :style="{color:room.contract.to*1000<nowDate?'#f5a623':'#888888'}">退: {{timeDate(room.contract.to)}}</span>
 			</p>
 		</div>
 		<div class="actions cursorp">
@@ -213,6 +213,15 @@
 			};
 		},
 		methods: {
+			houseDevicesDosage(data) {
+				this.$modal.$emit('open', {
+					comp: houseDevicesDosage,
+					data: {
+						houseDevice:data
+					},
+					title: '使用详情'
+				});
+			},
 			successInfo() {
 				this.$emit('successRefresh');
 			},
@@ -276,7 +285,7 @@
 			},
 			// 删除房间
 			deleteRoom() {
-				if(!this.room.contract) {
+				if(!this.room.contract.id) {
 					this.$confirm('此操作将删除此房间, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',

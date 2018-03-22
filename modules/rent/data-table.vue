@@ -1,6 +1,6 @@
 <template>
 	<div id="rentinfo">
-		<el-table :data="housesRent" style="width: 100%">
+		<el-table :data="housesRent" style="width: 100%" @sort-change="sortClick">
 			<el-table-column type="index" width="50" :index="indexMethod" label="序号">
             </el-table-column>
 			<el-table-column label="承租状态" width="100">
@@ -48,14 +48,14 @@
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="预付费余额(¥)" width="100" align="right">
+			<el-table-column label="预付费余额(¥)" width="140" align="right" sortable="custom">
 				<template slot-scope="scope">
-					<div class="flexcenter">
-						<span class="userCashAmount" :class="{lowPrice:scope.row.user.cashAccount.balance<2000}">{{price(scope.row.user.cashAccount.balance)}}</span>
+					<div class="flexcenter balanceMoney">
+						<span class="userCashAmount" :class="{lowPrice:scope.row.user.cashAccount.balance<0}">{{price(scope.row.user.cashAccount.balance)}}</span>
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column width="50">
+			<el-table-column width="20">
 				<template slot-scope="scope">
 				</template>
 			</el-table-column>
@@ -251,6 +251,10 @@
 			this.$modal.$on('refresh', () => this.$emit('paymFresh'));
 		},
 		methods: {
+			// todo SUOQIN 预付费余额排序
+			sortClick(column) {
+				console.log(column.orderorder)
+			},
 			indexMethod(data) {
 				return (this.index-1)*20+data+1
 			},
@@ -381,6 +385,9 @@
 
 
 <style lang="less" scoped>
+	.balanceMoney {
+		margin-right:24px;
+	}
 	.contractStatus {
 		.willIn {
 			color: #4cb774;

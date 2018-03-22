@@ -15,7 +15,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="电">
+            <el-table-column label="电(￥)">
                 <template slot-scope="scope">
                     <div class="showicon">
                         <myIconYufu /> {{price(scope.row.electricity[0].price)}}
@@ -39,7 +39,7 @@
         </div>
 
         <el-dialog title="单价设置" :visible.sync="dialogVisible" width="30%">
-            <set-price :item='homeinfo' ref="childinput" @notclose='notclose' />
+            <setPrice :item='homeinfo' ref="childinput" @notclose='notclose' />
             <div slot="footer" class="dialog-footer">
                 <el-button @click="hidden()">取 消</el-button>
                 <el-button type="primary" @click="notify()">确 定</el-button>

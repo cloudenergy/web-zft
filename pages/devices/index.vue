@@ -1,16 +1,15 @@
 <template>
-	<el-container>
+	<el-container class="devices">
 		<el-aside class="page-bill-index" width="auto">
 			<div>
 				<Tab @change="refresh" :selected="houseFormat" @communityChange='communityChange'/>
 			</div>
 		</el-aside>
 		<el-container>
-			<el-header style="height:auto;padding-right:0">
+			<el-header style="height:auto;padding-right:0;padding-left:9px">
 				<div class="ops-bills">
 					<div class="flexcenter">
 						<div style="margin-left:-20px">
-							<RentSearch @childinfo="showmessage" :placeholder="'搜索小区/门牌/电话'"/>
 						</div>
 					</div>
 					<div class="flexcenter">
@@ -23,8 +22,11 @@
 						</div>
 					</div>
 				</div>
+				<div class="search">
+					<search-all :title="'搜索小区/门牌/电话'" @keyup="keyup"></search-all>
+				</div>
 			</el-header>
-			<el-main style="padding-right:0">
+			<el-main style="padding:0 0 0 10px">
 				<electricit :readingElectric="readingElectric" :houseFormat="houseFormat"/>
 				<el-pagination :background="background" layout="prev, pager, next" :total='paging.count' @current-change="handleCurrentChange"
 				style="margin-top:5px;text-align:right" :page-size='20'>
@@ -77,6 +79,20 @@
 			// this.drawLine();
 		},
 		methods: {
+			keyup(val) {
+				this.setSearch(val)
+			},
+			setSearch(data) {
+				if(/rent/.test(location.pathname)){
+					if(data!==''){
+						this.reqData.q=data
+					}
+					else{
+						delete this.reqData.q
+					}
+					this.query()
+				}
+			},
 			handleCurrentChange(val) {
 				this.reqData.index = val;
 				this.query()
@@ -112,7 +128,6 @@
 							ele.index = `identifyId${index}`
 							return ele
 						})
-						console.log(res.data)
 						this.$set(this, 'readingElectric', res.data || []);
 						this.$set(this, 'paging', res.paging || []);
 						// this.$set(this, 'paging', res.paging || []);
@@ -134,5 +149,9 @@
 
 	.result-info {
 		margin-right: 5px;
+		line-height: 40px;
+	}
+	.search {
+		margin-top: 14px;
 	}
 </style>

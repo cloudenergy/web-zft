@@ -5,11 +5,7 @@
 				<span>{{ date(scope.row.createdAt) }}</span>
 			</template>
 		</el-table-column>
-		<!-- <el-table-column
-      prop="name"
-      label="姓名"
-      width="130">
-    </el-table-column> -->
+		<!-- TODO zhouyi 用电详情分开写，区分公区和room -->
 		<el-table-column label="类型" width="130">
 			<template slot-scope="scope">
 				<span v-if="scope.row.type==='ELECTRICITY'">电费</span>

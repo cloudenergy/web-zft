@@ -1,8 +1,7 @@
 <template>
     <div class="readingElectric">
-        <!-- TODO ZHOUYI  自动抄表接口返回 -->
-        <el-table :data="readingElectric" style="width: 100%" :row-key="getRowKeys" :expand-row-keys="expands" @row-click='handleRowHandle'
-            ref="tableData" v-if="readingElectric.length!==0">
+        <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
+            ref="readingElectric">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <div class="innerTable">
@@ -58,14 +57,13 @@
                         </el-table-column>
                     </el-table>
                     </div>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="房源" min-width="160">
                 <template slot-scope="scope">
                     <span>{{ scope.row.location.district }}{{ scope.row.location.name }}</span>
                     <br>
-                    <span style="margin-top:5px">{{ scope.row.building }}幢{{ scope.row.unit }}单元{{ scope.row.roomNumber }}</span>
+                    <span style="margin-top:5px">{{ scope.row.building }}幢{{ scope.row.unit }}单元{{ scope.row.roomNumber }} {{scope.row.unit}}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -97,8 +95,9 @@
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.endDate" type="date" placeholder="选择日期" style="width:160px" @change="newTime(scope.row,scope.$index)">
                     </el-date-picker>
-                    <br>
+                    <br/>
                     <span v-if="scope.row.details.length!==0" class="margin_top margin_left">{{ scope.row.details[0].endScale }}</span>
+                    <br>
                 </template>
             </el-table-column>
             <el-table-column label="用量" width="70">
@@ -136,9 +135,7 @@
             return {
                 valueuser: '',
                 // 获取row的key值
-                getRowKeys(row) {
-                    return row.userid;
-                },
+                
                 // 要展开的行，数值的元素是row的key值
                 expands: [],
                 // readingElectricData:[{startDate:'0',endDate:'0'}],
@@ -150,13 +147,10 @@
                 return this.$store.state.userInfo.user.projectId
             }
         },
-        created () {
-            setTimeout(()=>{
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric[1])  
-            },5000)
-            
-        },
         methods: {
+            getRowKeys(row) {
+                return row.index;
+            },
             dateTime(data) {
 				return format(new Date(data),'YYYY-MM-DD')
 			},
@@ -189,7 +183,7 @@
                         res.data[0].endDate = endDate*1000
                         res.data[0].index = index
                         this.readingElectric[index] = res.data[0]
-                        this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
+                        this.$refs.readingElectric.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
                     }
                 })
             },
@@ -219,9 +213,7 @@
             },
             // 展开
             toggle(flowi) {
-                console.log(flowi)
-                console.log(this.readingElectric.find(d => d.index === flowi))
-                this.$refs.tableData.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
+                this.$refs.readingElectric.toggleRowExpansion(this.readingElectric.find(d => d.index === flowi))
             }
         }
     }

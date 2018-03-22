@@ -27,7 +27,7 @@
                 </span>
                 <i class="el-icon-circle-plus-outline" style="font-size:20px;color:#409eff" @click="bindEleciricity"></i>
             </h4>
-            <el-table :data="room.devicesChooseElectricity" stripe class="section">
+            <el-table :data="room.devices" stripe class="section">
                 <el-table-column prop="deviceId" label="设备ID" width="110">
                     <template slot-scope="scope">
                         <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
@@ -37,12 +37,12 @@
                 </el-table-column>
                 <el-table-column prop="deviceId" label="读数">
                     <template slot-scope="scope">
-                        <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                        <span>{{scope.row.scale}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="updatedAt" label="通讯时间" width="80">
                     <template slot-scope="scope">
-                        <span>{{scope.row.scale}}</span>
+                        <span>{{date(scope.row.updatedAt)}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="通讯状态" width="70">
@@ -110,9 +110,7 @@
 </template>
 
 <script>
-    import {
-        delYTL
-    } from '~/utils/helper';
+    import { delYTL } from '~/utils/helper';
     import conversion from '../devices/conversion.vue'
     export default {
         props: {
@@ -268,7 +266,6 @@
             },
             // 请求房间信息
             queryAgain(data) {
-                console.log(this.room)
                 this.$model('room_detail')
                 .query({}, {
                     projectId: this.projectId,
@@ -278,13 +275,12 @@
                 .then(res => {
                     this.$message.success('操作成功')
                     if(res.devices.length!==0) {
-                        this.$set(this.room,'devicesChooseElectricity',res.devices)
                         this.$set(this.room,'devices',res.devices)
+                        
                     }else {
-                        this.$set(this.room,'devicesChooseElectricity',[])
+                        this.$set(this.room,'devices',[])
                     }
                     
-                    console.log(this.room)
                 })
             },
             date(data) {
@@ -299,7 +295,7 @@
 
 <style lang="less" scoped>
     .backgroundGray {
-        background-color: rgb(245, 239, 239);
+        background-color: #f5f7fa;
     }
     .previewRoom {
         padding:30px

@@ -85,7 +85,6 @@
 				type: Object
 			}
 		},
-		// todo i
 		computed: {
 			...mapState(['userInfo', 'user']),
 			projectId() {
@@ -181,11 +180,15 @@
 				this.saveCloseQ('noCLose')
 			},
 			saveCloseQ(val) {
-				const data = {
+				let data = {
 					projectId: this.$store.state.userInfo.user.projectId,
 					...this.form
 				};
 				this.houseCode = data.code
+				if(data.location.divisionId===undefined) {
+					data.location.name = data.community
+					data.location.divisionId = data.area
+				}
 				if (data.houseFormat === 'ENTIRE') {
 					data.totalFloor = this.Entire.totalFloor
 					data.houseCountOnFloor = this.Entire.houseCountOnFloor
