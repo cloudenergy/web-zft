@@ -22,7 +22,7 @@
 			<el-col :span="8">
 				<el-form :rules="rules">
 					<el-form-item prop="mobile">
-						<el-input class="form-input" placeholder="必填" v-model.number="user.mobile">
+						<el-input class="form-input" placeholder="必填" v-model="user.mobile">
 							<template slot="prepend">电话</template>
 						</el-input>
 					</el-form-item>
@@ -107,6 +107,9 @@
 					}]
 				}
 			}
+		},
+		methods:{
+			
 		}
 
 	}

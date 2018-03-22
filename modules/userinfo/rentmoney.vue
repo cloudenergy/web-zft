@@ -2,7 +2,7 @@
 	<el-table :data="bills" stripe style="width: 100%">
 		<el-table-column label="日期" width="150">
 			<template slot-scope="scope">
-				<span>{{ date(scope.row.createdAt) }}</span>
+				<span>{{ date(scope.row.paymentDay) }}</span>
 			</template>
 		</el-table-column>
 		<!-- TODO zhouyi 用电详情分开写，区分公区和room -->

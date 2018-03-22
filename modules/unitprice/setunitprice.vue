@@ -45,7 +45,6 @@
                 <el-button type="primary" @click="notify()">确 定</el-button>
             </div>
         </el-dialog>
-
     </div>
 </template>
 

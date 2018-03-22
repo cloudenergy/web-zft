@@ -160,7 +160,7 @@
             getFundChannel() {
                 this.$model('fund_channel')
                     .query({
-                        category: 'all',
+                        // category: 'all',
                         flow: 'receive'
                     }, {
                         projectId: this.projectId
