@@ -1,4 +1,5 @@
 <template>
+<div>
 	<el-table :data="bills" stripe style="width: 100%">
 		<el-table-column label="日期" width="150">
 			<template slot-scope="scope">
@@ -8,7 +9,8 @@
 		<!-- TODO zhouyi 用电详情分开写，区分公区和room -->
 		<el-table-column label="类型" width="130">
 			<template slot-scope="scope">
-				<span v-if="scope.row.type==='ELECTRICITY'">电费</span>
+				<span v-if="scope.row.type==='ELECTRICITY'&&scope.row.share===100">个人电费</span>
+				<span v-if="scope.row.type==='ELECTRICITY'&&scope.row.share!==100">公摊电费</span>
 			</template>
 		</el-table-column>
 		<el-table-column label="金额(￥)">
@@ -17,10 +19,21 @@
 			</template>
 		</el-table-column>
 		<el-table-column prop="scale" label="读数(Kwh)">
+			<template slot-scope="scope">
+				<span>{{ dosage(scope.row.scale) }}</span>
+			</template>
 		</el-table-column>
 		<el-table-column prop="usage" label="用量(Kwh)">
+			<template slot-scope="scope">
+				<span>{{ dosage(scope.row.usage) }}</span>
+			</template>
 		</el-table-column>
 	</el-table>
+	<el-pagination background layout="prev, pager, next" :total='paging.count' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
+        :page-size='15'>
+    </el-pagination>
+</div>
+	
 </template>
 
 <script>
@@ -38,29 +51,39 @@
 		},
 		data() {
 			return {
-				bills: []
+				bills: [],
+				paging:{},
+				reqData:{
+					mode:'prepaid',
+					index:1,
+					size:15
+				}
 			}
 		},
 		created() {
 			this.query()
 		},
 		methods: {
-			date(val) {
-				return format(new Date(val*1000),'YYYY-MM-DD  HH:mm:ss')
+			handleCurrentChange( val ) {
+				this.reqData.index = val
+				this.query()
 			},
 			query() {
 				this.$model('paid_bills')
-					.query({
-						mode: 'prepaid',
-						index: 1,
-						size: 15
-					}, {
+					.query(this.reqData, {
 						projectId: this.projectId,
 						contractId: this.form.id
 					})
 					.then(res => {
 						this.$set(this, 'bills', res.data || []);
+						this.$set(this, 'paging', res.paging || []);
 					})
+			},
+			dosage(val) {
+				return (val/10000).toFixed(2)
+			},
+			date(val) {
+				return format(new Date(val*1000),'YYYY-MM-DD  HH:mm:ss')
 			},
 			price(data) {
 				return (data / 100).toFixed(2)
