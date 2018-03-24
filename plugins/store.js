@@ -1,8 +1,8 @@
 /*
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
- * @Last Modified by: mikey.other
- * @Last Modified time: 2018-03-13 10:32:37
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-03-23 11:49:57
  */
 
 import api from '~/plugins/api';
@@ -138,6 +138,7 @@ export default {
 			} else {
 				state.userInfo.entireCommunities = state.userInfo.communitiesChoose.data
 			}
+			// 保存所有城市
 			if(state.userInfo.communities!==null&&state.userInfo.soleCommunities!==null&&state.userInfo.entireCommunities!==null&&state.userInfo.allCommunityBoolean) {
 				state.userInfo.allCommunity =_.uniqBy(_.concat(state.userInfo.communities,state.userInfo.soleCommunities,state.userInfo.entireCommunities),'geoLocationId') 
 				state.userInfo.allCommunityBoolean = false

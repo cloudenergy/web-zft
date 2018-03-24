@@ -21,10 +21,10 @@
                 <el-input disabled v-model="form.timemoney" class="inputuser"></el-input>
                 <el-input disabled v-model="form.name" class="inputuser"></el-input>
             </el-form-item>
-            <el-form-item label="合同编号/管理员" class="disable">
+            <!-- <el-form-item label="合同编号/管理员" class="disable">
                 <el-input disabled v-model="form.username" class="inputuser"></el-input>
                 <el-input disabled v-model="form.name" class="inputuser"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="签约时间" class="disable">
                 <el-input disabled v-model="form.signingtime" class="inputuser"></el-input>
             </el-form-item>

@@ -30,11 +30,10 @@
                 <el-tag type="info" class="inputuser" v-if="this.form.paymentP!=11">{{form.paymentPlan}}号收租</el-tag>
             </el-form-item>
             <!-- todo SUOQIN 编号和管理员 -->
-            <el-form-item label="合同编号/管理员" class="disable">
-                <!-- @@@没有东西，用时间代替 -->
+            <!-- <el-form-item label="合同编号/管理员" class="disable">
                 <el-tag type="info" class="inputuser">{{tt}}</el-tag>
                 <el-tag type="info" class="inputuser">{{tt}}</el-tag>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="签约时间" class="disable">
                 <el-tag type="info" class="inputuser">{{tt}}</el-tag>
             </el-form-item>
@@ -70,7 +69,6 @@
         mounted() {
             this.changetime(this.form.signUpTime, this.form.from, this.form.to)
             this.strt(this.form.paymentPlan)
-            console.log(this.form)
         },
         methods: {
             changetime(tm, tm1, tm2) {
