@@ -214,7 +214,8 @@
                 if (this.volumeSet) {
 
                 } else {
-                    this.homeinfo.electricity.forEach((element, index) => {
+                    [{category:"CLIENT"},{category:"HOST"}].forEach((element, index) => {
+                        console.log(index)
                         index = this.$model('set_electric_price')
                             .update({
                                 category: element.category,
