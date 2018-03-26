@@ -24,15 +24,23 @@ export default {
 		}	
 	},
 	created () {
-		if(this.isForm){
-			this.$store.dispatch('GET_CITY_AREA').then(({ result }) => {
-				this.list.city = result.map(mapper);
-			})
+		if(this.roadType==='flow') {
+			// 判断路由，是否为流水页面
+			this.list.city = _.uniqBy(this.listCity.map((ele)=>{return ele.city}).map(mapper),'value')
+		} else {
+			// 判断isForm，是否需要获取全部城市
+			if(this.isForm){
+				this.$store.dispatch('GET_CITY_AREA').then(({ result }) => {
+					this.list.city = result.map(mapper);
+				})
+			}
+			this.houseFormatChange('SHARE')	
 		}
-		this.houseFormatChange('SHARE')	
 	},
 	watch: {
 		listCity(newVal,oldVal) {
+			// 获取所有城市列表
+			// 根据传过来的houseFormat判断返回
 			var city = newVal.filter((item)=>{return item.houseFormat===this.clickType})
 			if(!this.isForm) {
 				this.list.city = _.uniqBy(city.map((ele)=>{
@@ -55,16 +63,18 @@ export default {
 		cityChange() {
 			this.$store.dispatch('GET_DISTRICTS',{
 				city:this.city,
-				isForm:this.isForm
+				isForm:this.isForm,
+				type:this.type,
+				roadType:this.roadType
 			}).then(data=>{
-				this.list.area = this.isForm?data.result:data[0].area
+				let _this = this
+				this.list.area = this.isForm?data.result:_.uniqBy(_.flatten(_.filter(data, function(ele){return ele.id===_this.city}).map(ele=>{return ele.area})), 'id')
 			})
 			this.area = null;
 		},
 		houseFormatChange(data) {
 			this.city=this.area=""
 			this.list.city =  _.uniqBy(this.listCity.filter((item)=>{return item.houseFormat===data}).map((ele)=>{return ele.city}).map(mapper),'value')
-			
 		}
 	},
 	render() {
@@ -143,6 +153,13 @@ export default {
 			default: false
 		},
 		clickType: {
+			type: String
+		},
+		roadType: {
+			type: String,
+			default: 'all'
+		},
+		type: {
 			type: String
 		}
 	}

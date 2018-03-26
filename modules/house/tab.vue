@@ -8,7 +8,7 @@
 			<el-tab-pane label="" name="first" />
 			<el-tab-pane label="未绑定" name="second"/>
 		</el-tabs>
-		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange"/>
+		<city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange" :type="type"/>
 		<el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle()" style="overflow:hidden">
 			<el-menu-item index='0' ref="activeMenu" v-if="communityType!=='ENTIRE'" :class="{'is-active':typeNum==index}">
 				<div slot="title" class="flexcenter"><span><span>全部小区</span><span v-if="urlLocation">/整幢</span></span><span class="communityNumber" v-if="!communityTable">数量:{{community.length}}</span></div>
@@ -119,15 +119,14 @@
 					item.$el.classList.value = "el-menu-item"
 				})
 			},
-			updateCommunity(force = false,val) {
+			updateCommunity() {
 				this.$store
 					.dispatch('GET_COMMUNITIES', {
 						houseType: this.type,
 						districtsCode: this.filters.area || this.filters.city,
-						force,
-						val
 					})
 					.then(data => {
+						// 绑表页面全部小区
 						if(this.urlLocation){
 							this.community = this.$store.state.userInfo.allCommunity
 							this.$emit('change',this.clickType)

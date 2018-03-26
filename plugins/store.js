@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-03-23 11:49:57
+ * @Last Modified time: 2018-03-26 13:06:09
  */
 
 import api from '~/plugins/api';
@@ -97,6 +97,7 @@ export default {
 			});
 		},
 		SAVE_COMMUNITIES(state, data) {
+			// 写的麻烦了，等等重构
 			_.values(data.data).forEach(ele => {
 				var city = {}
 				city.id = ele.districtId
@@ -118,6 +119,7 @@ export default {
 					area: cityArea
 				}
 			})
+
 			state.userInfo.communitiesChoose = {}
 			state.userInfo.communitiesChoose.houseFormat = data.houseType
 			state.userInfo.communitiesChoose.data = []
@@ -133,10 +135,13 @@ export default {
 			})
 			if (data.houseType === 'SHARE') {
 				state.userInfo.communities = state.userInfo.communitiesChoose.data;
+				state.userInfo.shareArea = state.userInfo.businessArea
 			} else if (data.houseType === 'SOLE') {
 				state.userInfo.soleCommunities = state.userInfo.communitiesChoose.data
+				state.userInfo.soleArea = state.userInfo.businessArea
 			} else {
 				state.userInfo.entireCommunities = state.userInfo.communitiesChoose.data
+				state.userInfo.entireArea = state.userInfo.businessArea
 			}
 			// 保存所有城市
 			if(state.userInfo.communities!==null&&state.userInfo.soleCommunities!==null&&state.userInfo.entireCommunities!==null&&state.userInfo.allCommunityBoolean) {
@@ -171,14 +176,11 @@ export default {
 				'geoLocationId':data.location.id
 			}
 			if (data.houseFormat === 'SHARE') {
-				state.userInfo.communities.push(addCommunityInfo)
-				state.userInfo.communities = _.uniqBy(state.userInfo.communities,'geoLocationId')
+				state.userInfo.communities = _.uniqBy(state.userInfo.communities.push(addCommunityInfo),'geoLocationId')
 			} else if (data.houseFormat === 'SOLE') {
-				state.userInfo.soleCommunities.push(addCommunityInfo)
-				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities,'geoLocationId')
+				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities.push(addCommunityInfo),'geoLocationId')
 			} else {
-				state.userInfo.entireCommunities.push(addCommunityInfo)
-				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities,'geoLocationId')
+				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities.push(addCommunityInfo),'geoLocationId')
 			}
 		}
 	},
@@ -230,22 +232,18 @@ export default {
 		}, {
 			houseType,
 			districtsCode,
-			force,
-			val
 		}) {
-			if(val!==true) {
-				if (houseType === 'SHARE') {
-					if (state.userInfo.communities) {
-						return Promise.resolve(state.userInfo.communities);
-					}
-				} else if (houseType === 'SOLE') {
-					if (state.userInfo.soleCommunities) {
-						return Promise.resolve(state.userInfo.soleCommunities);
-					}
-				} else {
-					if (state.userInfo.entireCommunities) {
-						return Promise.resolve(state.userInfo.entireCommunities);
-					}
+			if (houseType === 'SHARE') {
+				if (state.userInfo.communities) {
+					return Promise.resolve(state.userInfo.communities);
+				}
+			} else if (houseType === 'SOLE') {
+				if (state.userInfo.soleCommunities) {
+					return Promise.resolve(state.userInfo.soleCommunities);
+				}
+			} else {
+				if (state.userInfo.entireCommunities) {
+					return Promise.resolve(state.userInfo.entireCommunities);
 				}
 			}
 			api('communities')
@@ -293,7 +291,9 @@ export default {
 			state
 		}, {
 			city,
-			isForm
+			isForm,
+			type,
+			roadType
 		}) {
 			if (isForm) {
 				return api('districts', {
@@ -304,11 +304,20 @@ export default {
 						return data;
 					})
 			} else {
-				return state.userInfo.businessArea.filter(ele => {
-					return ele.id === city
-				})
+				// 返回城市列表
+				if(roadType==='flow') {
+					return _.concat(state.userInfo.shareArea, state.userInfo.soleArea, state.userInfo.entireArea)
+				}else {
+					if(type==='SHARE') {
+						console.log(state.userInfo.shareArea)
+						return state.userInfo.shareArea
+					} else if(type==='SOLE') {
+						return state.userInfo.soleArea
+					} else {
+						return state.userInfo.entireArea
+					}
+				}
 			}
-
 		},
 		GET_CITY_AREA({
 			commit,

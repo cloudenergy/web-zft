@@ -5,7 +5,7 @@
 				<goend @from-toTime='chooseFlowTime'/>
 				<water-source class="marsp marspa" @change="waterSource"/>
 				<tenant-way class="marsp marspa" @change="houseFormat"/>
-				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange" :roadType="flow"/>
 				<rent-search/>
 				<div class="importres">
 					<!-- <div class="actions">
@@ -67,7 +67,8 @@
 					size: 20,
 					from: startOfMounth,
 					to: nowDate
-				}
+				},
+				flow:'flow'
 			};
 		},
 		methods: {

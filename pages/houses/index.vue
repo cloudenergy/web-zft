@@ -228,9 +228,7 @@
     					if (this.reqData.houseFormat === 'ENTIRE') {
     						this.testArray = [];
     						this.entireHouse = [];
-							console.log()
     						res.data.map((ele, index) => {
-								console.log(ele.devices.length)
     							if (!_.includes(this.entireHouse, ele.currentFloor)) {
     								this.entireHouse.push(ele.currentFloor);
     								var newTset = [];
@@ -246,7 +244,6 @@
     						});
     						this.tabCard = true;
     						this.entire = true;
-							console.log(this.testArray)
 							this.$set(this,'houses',this.testArray)
     					} else if (this.reqData.houseFormat === 'SOLE') {
     						this.tabCard = false;
