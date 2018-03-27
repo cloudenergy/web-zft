@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-03-26 13:06:09
+ * @Last Modified time: 2018-03-27 19:57:48
  */
 
 import api from '~/plugins/api';
@@ -175,12 +175,16 @@ export default {
 				'name':data.location.name,
 				'geoLocationId':data.location.id
 			}
+			// push返回的是数组长度，不是数组
 			if (data.houseFormat === 'SHARE') {
-				state.userInfo.communities = _.uniqBy(state.userInfo.communities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.communities.push(addCommunityInfo)
+				state.userInfo.communities = _.uniqBy(state.userInfo.communities,'geoLocationId')
 			} else if (data.houseFormat === 'SOLE') {
-				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.soleCommunities.push(addCommunityInfo)
+				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities,'geoLocationId')
 			} else {
-				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.entireCommunities.push(addCommunityInfo)
+				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities,'geoLocationId')
 			}
 		}
 	},
