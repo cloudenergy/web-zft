@@ -129,6 +129,7 @@
 	import { houseDevicesDosage } from './index'
 	import ContractsList from './contractsList';
 	import format from 'date-fns/format'
+	import _ from 'lodash'
 	import {
 		Rentinfo,
 		Rentlease,
@@ -384,7 +385,10 @@
 						projectId: this.projectId,
 						id: item.id
 					})
-					.then(data => this.$set(this, 'contractbill', data));
+					.then(data => {
+						data.unshift(_.remove(data, function(o) {return o.type==='bond'})[0])
+						this.$set(this, 'contractbill', data)
+					});
 				this.dialogVisible = true;
 			}
 		}
