@@ -214,25 +214,6 @@
                 if (this.volumeSet) {
 
                 } else {
-<<<<<<< HEAD
-                    [{category:"CLIENT"},{category:"HOST"}].forEach((element, index) => {
-                        console.log(index)
-                        index = this.$model('set_electric_price')
-                            .update({
-                                category: element.category,
-                                price: data
-                            }, {
-                                projectId: this.projectId,
-                                id: 'ELECTRIC',
-                                houseId: this.homeinfo.houseId
-                            })
-                            .then(res => {
-                                return data
-                            })
-                        Promise.all([index]).then(res => {
-                            this.$emit('refresh')
-                            this.$message.success('修改成功')
-=======
                     let a = this.$model('set_electric_price')
                         .update({
                             category: 'HOST',
@@ -241,7 +222,6 @@
                             projectId: this.projectId,
                             id: 'ELECTRIC',
                             houseId: this.homeinfo.houseId
->>>>>>> develop
                         })
                         .then(res => {
                             return data
