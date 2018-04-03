@@ -114,7 +114,8 @@
                         this.$model('top_up')
                         .patch({
                             amount: this.form.price * 100,
-                            fundChannelId: this.form.region
+                            fundChannelId: this.form.region,
+                            contractId: this.contractInfo.id
                         }, {
                             projectId: this.projectId,
                             userId: this.contractInfo.user.id,
