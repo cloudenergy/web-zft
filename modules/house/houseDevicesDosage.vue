@@ -27,7 +27,7 @@
                 console.log(res)
                 this.$set(this,'deviceScale',res)
                 let x = this.deviceScale.map(ele => {return this.dateTime(ele.time*1000)})
-                let y = this.deviceScale.map(ele => {return ele.scale})
+                let y = this.deviceScale.map(ele => {return (ele.usage/10000).toFixed(2)})
                 // console.log(this.deviceScale,x,y)
                 let z = this.deviceScale.map(ele => {return 0})
                 this.drawLine(x, y, z)
@@ -90,9 +90,9 @@
                         }
                     },
                     title: {
-                        text: '每日电表用量',
+                        text: '每日电表用量(Kwh)',
                         x: '0.5%',
-                        top: '1%',
+                        top: '-1%',
                         textStyle: {
                             color: '#5c6076'
                         }

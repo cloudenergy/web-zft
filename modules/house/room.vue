@@ -5,7 +5,7 @@
 				<h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
 				<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
 				<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
-				<div v-if="room.devices!=''||null" @click.stop="houseDevicesDosage(this.room.devices)">
+				<div v-if="room.devices!=''||null" @click.stop="houseDevicesDosage(room)">
 					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.devices[0].status.service==='EMC_ONLINE'" />
 					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.devices[0].status.service==='EMC_OFFLINE'" />
 				</div>
@@ -126,8 +126,10 @@
 	import {
 		NewContract
 	} from '~/modules/contract';
+	import { houseDevicesDosage } from './index'
 	import ContractsList from './contractsList';
 	import format from 'date-fns/format'
+	import _ from 'lodash'
 	import {
 		Rentinfo,
 		Rentlease,
@@ -383,7 +385,10 @@
 						projectId: this.projectId,
 						id: item.id
 					})
-					.then(data => this.$set(this, 'contractbill', data));
+					.then(data => {
+						data.unshift(_.remove(data, function(o) {return o.type==='bond'})[0])
+						this.$set(this, 'contractbill', data)
+					});
 				this.dialogVisible = true;
 			}
 		}

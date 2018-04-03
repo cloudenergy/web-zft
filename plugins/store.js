@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-03-26 13:06:09
+ * @Last Modified time: 2018-03-28 20:31:21
  */
 
 import api from '~/plugins/api';
@@ -175,12 +175,16 @@ export default {
 				'name':data.location.name,
 				'geoLocationId':data.location.id
 			}
+			// push返回的是数组长度，不是数组
 			if (data.houseFormat === 'SHARE') {
-				state.userInfo.communities = _.uniqBy(state.userInfo.communities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.communities.push(addCommunityInfo)
+				state.userInfo.communities = _.uniqBy(state.userInfo.communities,'geoLocationId')
 			} else if (data.houseFormat === 'SOLE') {
-				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.soleCommunities.push(addCommunityInfo)
+				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities,'geoLocationId')
 			} else {
-				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities.push(addCommunityInfo),'geoLocationId')
+				state.userInfo.entireCommunities.push(addCommunityInfo)
+				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities,'geoLocationId')
 			}
 		}
 	},
@@ -215,7 +219,7 @@ export default {
 				.then(env => fromPairs(map(env, i => [i.key, i.value])))
 				.then(env => {
 					commit('UPDATE_ENV', env);
-
+					console.log(env)
 					// sync user
 					localStorage.user = JSON.stringify({
 						auth: true,
@@ -309,7 +313,6 @@ export default {
 					return _.concat(state.userInfo.shareArea, state.userInfo.soleArea, state.userInfo.entireArea)
 				}else {
 					if(type==='SHARE') {
-						console.log(state.userInfo.shareArea)
 						return state.userInfo.shareArea
 					} else if(type==='SOLE') {
 						return state.userInfo.soleArea
