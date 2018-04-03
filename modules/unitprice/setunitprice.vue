@@ -214,24 +214,34 @@
                 if (this.volumeSet) {
 
                 } else {
-                    this.homeinfo.electricity.forEach((element, index) => {
-                        index = this.$model('set_electric_price')
-                            .update({
-                                category: element.category,
-                                price: data
-                            }, {
-                                projectId: this.projectId,
-                                id: 'ELECTRIC',
-                                houseId: this.homeinfo.houseId
-                            })
-                            .then(res => {
-                                return data
-                            })
-                        Promise.all([index]).then(res => {
-                            this.$emit('refresh')
-                            this.$message.success('修改成功')
+                    let a = this.$model('set_electric_price')
+                        .update({
+                            category: 'HOST',
+                            price: data
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC',
+                            houseId: this.homeinfo.houseId
                         })
-                    });
+                        .then(res => {
+                            return data
+                        })
+                    let b = this.$model('set_electric_price')
+                        .update({
+                            category: 'CLIENT',
+                            price: data
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC',
+                            houseId: this.homeinfo.houseId
+                        })
+                        .then(res => {
+                            return data
+                        })
+                    Promise.all([a, b]).then(res => {
+                        this.$emit('refresh')
+                        this.$message.success('修改成功')
+                    })
                 }
             },
             setAllElectricit() {

@@ -25,7 +25,8 @@
 		Contract,
 		ExpenseSetting
 	} from '../contract'
-
+	import _ from 'lodash';
+	import fp from 'lodash/fp';
 	import {
 		addYears,
 		format,
@@ -120,7 +121,6 @@
 						contractId: this.contractsId
 					})
 					.then(res => {
-						console.log(res)
 						this.$set(this, 'contractInfo', res)
 						this.setUser()
 					})
@@ -129,12 +129,12 @@
 					})
 			},
 			setUser() {
-				console.log(this.contractInfo.expenses)
 				this.form.user.name = this.contractInfo.user.name
 				this.form.user.accountName = this.contractInfo.user.accountName
 				this.form.user.mobile = this.contractInfo.user.mobile
 				this.form.user.gender = this.contractInfo.user.gender
 				this.form.user.documentId = this.contractInfo.user.documentId
+				this.form.user.id = this.contractInfo.user.id
 				this.form.expense.standard.rent = this.contractInfo.strategy.freq.rent/100
 				this.form.expense.standard.pattern = this.contractInfo.strategy.freq.pattern.toString()
 				this.form.expense.bond = this.contractInfo.strategy.bond/100
@@ -143,15 +143,13 @@
 					switch(element.configId)
 					{
 						case 1041:
-							console.log(element)
 							this.$set(this.form.expense.extra[0],'pattern',element.pattern)
 							this.$set(this.form.expense.extra[0],'rent',(element.rent/100).toFixed(2))
-							break;
+						break;
 					}
 				});
 				this.showUser = true
 				this.loading = false
-				console.log(this.form)
 			},
 			onselect(userdata) {
 				this.changeuserdata = userdata
@@ -166,7 +164,10 @@
 							.then(() => {
 								this.closeDialog();
 								this.resetForm();
-								this.successMessage();
+								this.$message({
+									message: '续租成功',
+									type: 'success'
+								});
 							});
 					} else {
 						console.log('error in submitting ...');
@@ -183,7 +184,12 @@
 			newModel(today) {
 				return {
 					user: {
-
+						name: '',
+						accountName: '',
+						mobile: '',
+						gender: 'M',
+						documentId: '',
+						documentType: 1
 					},
 					property: {
 						houseType: 'SOLE',
@@ -200,7 +206,7 @@
 						offset: 2,
 						standard: {
 							name: '常规租金',
-							rent: 3600,
+							rent: 360,
 							pattern: '1'
 						},
 						extra: [{
@@ -218,8 +224,12 @@
 								pattern: '1'
 							}
 						],
+						
 						bond: 2600
-					}
+					},
+					strategy: {
+						freq:{},
+					},
 				}
 			},
 			resetForm() {
@@ -228,13 +238,13 @@
 			translate(form) {
 				return {
 					user: form.user,
-					"roomId": form.property.roomId,
-					"from": getTime(form.contract.leaseStart) / 1000,
-					"to": getTime(form.contract.leaseEnd) / 1000,
-					"strategy": this.createStrategy(form),
-					"expenses": this.createExpense(form),
-					"paymentPlan": this.createPaymentPlan(form.expense),
-					"signUpTime": getTime(form.contract.signUpDate) / 1000
+					roomId: form.property.roomId,
+					from: getTime(form.contract.leaseStart) / 1000,
+					to: getTime(form.contract.leaseEnd) / 1000,
+					strategy: this.createStrategy(form),
+					expenses: this.createExpense(form),
+					paymentPlan: this.createPaymentPlan(form.expense),
+					signUpTime: getTime(form.contract.signUpDate) / 1000
 				}
 			},
 			createPaymentPlan(expense) {
@@ -242,40 +252,25 @@
 			},
 			createStrategy(form) {
 				return {
-					"daily": {
-						"amount": 10000
-					},
-					"monthly": {
-						"once": 0,
-						"freq": {
-							"interval": "1/2/3/6/12",
-							"amount": 10000
-						},
-						"customer": [{
-							"from": 1509976830,
-							"to": 1509976830,
-							"forFree": "0不免租金/1免租金",
-							"amount": 10000,
-							"interval": "1/2/3/6/12"
-						}]
-					}
+					freq: this.unitAsCent(_.pick(form.expense.standard, ['rent', 'pattern'])),
+					bond: form.expense.bond * 100
 				}
 			},
 			createExpense(form) {
-				return [{
-					"cfgId": "1/2/3...",
-					"amount": 10000,
-					"interval": "1/2/3/6/12"
-				}]
+				const extraExpense = _.filter(fp.map(extra => _.pick(extra, ['configId', 'rent', 'pattern', 'frequency']))(form.expense
+					.extra), function (o) {
+					return o.rent
+				});
+				return fp.map(this.unitAsCent)(extraExpense);
 			},
 			closeDialog() {
 				this.$refs['form'].resetFields();
 				this.$modal.$emit('dismiss');
 			},
-			successmessage() {
-				this.$message({
-					message: '续租成功',
-					type: 'success'
+			unitAsCent(obj) {
+				const rent = obj.rent * 100;
+				return fp.defaults(obj, {
+					rent
 				});
 			}
 		},
