@@ -69,7 +69,7 @@
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item @click.native="paym(scope.row)">充值</el-dropdown-item>
-								<el-dropdown-item @click.native="callMobilebile()">催交</el-dropdown-item>
+								<el-dropdown-item @click.native="callMobilebile(scope.row)">催交</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
@@ -337,17 +337,24 @@
 			rentPay(datanum) {
 				this.showmoney = datanum;
 			},
-			callMobilebile() {
+			callMobilebile(data) {
 				this.$confirm('将要发送催缴通知，是否继续？', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						type: 'warning'
 					})
 					.then(() => {
-						this.$message({
-							type: 'success',
-							message: '提醒成功!'
-						});
+						this.$model('manual_notifications')
+						.create({users:[data.userId]},{projectId:this.projectId})
+						.then(res => {
+							console.log(res)
+							this.$message.success('提醒成功!');
+						})
+						.catch(err => {
+							console.log(err)
+							this.$message('提醒失败!')
+						})
+						
 					})
 					.catch(err => {
 						this.$message({
