@@ -9,7 +9,7 @@
 					<div class="flexcenter" style="width:540px">
 						<BillStatus class="status" @billStatus="billStatus" />
 						<!-- <bill-type/> -->
-						<ReportPeriod class="period" />
+						<ReportPeriod class="period" @dateChange = "dateChange"/>
 						<RentManager class="manager" :houseKeeper='houseKeeper'/>
 					</div>
 					<div class="flexcenter">
@@ -91,6 +91,9 @@
 			// 搜索
 			keyup(val) {
 				this.setSearch(val)
+			},
+			dateChange(val) {
+				console.log(val)
 			},
 			communityChange(data) {
 				if(data==='0'){

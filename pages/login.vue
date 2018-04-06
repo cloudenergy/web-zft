@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				user: {},
+				user: {keepAlive:2},
 				type:null
 			};
 		},
