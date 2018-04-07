@@ -237,9 +237,9 @@
 					user: {
 						id: 111111111,
 						accountName: 'accountName',
-						name: 'username',
-						mobile: '111111111111',
-						documentId: '11111111111',
+						name: '加载中',
+						mobile: '加载中',
+						documentId: '加载中',
 						documentType: 1,
 						gender: 'M'
 					}
@@ -253,7 +253,15 @@
 		methods: {
 			// todo SUOQIN 预付费余额排序
 			sortClick(column) {
-				console.log(column.orderorder)
+				console.log(column.order)
+				// 余额升序排列
+				if(column.order==='ascending') {
+					this.$emit('rentBalance', 'DESC')
+				}
+				// 余额降序
+				else if(column.order==='descending'){
+					this.$emit('rentBalance', 'ASC')
+				}else {this.$emit('rentBalance')}
 			},
 			indexMethod(data) {
 				return (this.index-1)*20+data+1

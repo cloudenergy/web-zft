@@ -10,7 +10,7 @@
 						<BillStatus class="status" @billStatus="billStatus" />
 						<!-- <bill-type/> -->
 						<ReportPeriod class="period" @dateChange = "dateChange"/>
-						<RentManager class="manager" :houseKeeper='houseKeeper'/>
+						<RentManager class="manager" :houseKeeper='houseKeeper' @managerChoose='managerChoose'/>
 					</div>
 					<div class="flexcenter">
 						<span class="result-info">{{pagingSize.count}}项结果</span>
@@ -45,6 +45,9 @@
 		BillSearch
 	} from '~/modules/bill';
 	import RentManager from '~/modules/rent/rent-manager.vue';
+	import subMonths from 'date-fns/sub_months';
+	import getTime from 'date-fns/get_time';
+	const nowDate = Date.parse(new Date())/1000
 	export default {
 		components: {
 			Tab,
@@ -92,8 +95,21 @@
 			keyup(val) {
 				this.setSearch(val)
 			},
+			// 管理员
+			managerChoose(val) {
+				this.reqData.manager = val
+				this.query()
+			},
 			dateChange(val) {
-				console.log(val)
+				if(val==='all') {
+					this.reqData.from = Date.parse(subMonths(nowDate*1000, 12))/1000
+					this.reqData.to = nowDate
+					this.query()
+				}else {
+					this.reqData.from = Date.parse(subMonths(nowDate*1000, val))/1000
+					this.reqData.to = nowDate
+					this.query()
+				}
 			},
 			communityChange(data) {
 				if(data==='0'){

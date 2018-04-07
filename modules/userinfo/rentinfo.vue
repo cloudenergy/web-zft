@@ -36,6 +36,11 @@
     } from './index.js';
 
     export default {
+        computed: {
+			projectId() {
+				return this.$store.state.userInfo.user.projectId
+			}
+		},
         props: {
             form: {
                 type: Object
@@ -79,7 +84,21 @@
         },
         methods: {
             updateuser() {
-                console.log(JSON.stringify(this.form))
+                this.$model('userInfoChange')
+                .update({
+                    mobile:this.form.user.mobile,
+                    documentId: this.form.user.documentId,
+                    documentType: this.form.user.documentType,
+                    gender: this.form.user.gender,
+                    name: this.form.user.name
+                },{
+                    projectId:this.projectId,
+                    id: this.form.userId
+                })
+                .then(res=>{
+                    this.$message.success('信息更新成功')
+                })
+                .catch(err=>{this.$message('信息更新失败')})
             }
         }
     }

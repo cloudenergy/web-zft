@@ -15,11 +15,11 @@
 					<el-form-item prop="user.pass">
 						<el-input placeholder="密码" type="password" v-model="user.pass" auto-complete="off" @keyup.native="keyLogin($event)" size="medium"></el-input>
 					</el-form-item>
-					<!-- <el-form-item prop="">
+					<el-form-item prop="">
 						<el-checkbox-group v-model="user.keepAlive" style="float:left">
 							<el-checkbox label="记住密码" :key="30"></el-checkbox>
 						</el-checkbox-group>
-					</el-form-item> -->
+					</el-form-item>
 					<el-form-item class="bottom-btn">
 						<el-button style="width: 100%" type="primary" @click.native="login()" size="medium">登录</el-button>
 					</el-form-item>
