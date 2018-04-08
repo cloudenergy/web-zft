@@ -6,7 +6,7 @@
 				<water-source class="marsp marspa" @change="waterSource"/>
 				<tenant-way class="marsp marspa" @change="houseFormat"/>
 				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange" :roadType="flow"/>
-				<rent-search/>
+				<rent-search @childinfo="childinfo"/>
 				<div class="importres">
 					<!-- <div class="actions">
 						<el-button type="warning" size="mini" @click.native="show()">
@@ -72,6 +72,15 @@
 			};
 		},
 		methods: {
+			childinfo(val) {
+				if(val!=='') {
+					this.reqData.q = val;
+				}
+				else {
+					delete this.reqData.q
+				}
+				this.query()
+			},
 			waterSource(val) {
 				if(val==='all') {
 					delete this.reqData.source

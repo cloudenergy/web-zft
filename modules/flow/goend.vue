@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="position:relative;display:inline-block;" class="settimeEnd">
-            <el-date-picker v-model="value" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width:200px;padding:3px;over-flow:hidden"
+            <el-date-picker v-model="value" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width:230px;padding:3px;over-flow:hidden"
                 class="datach" @change="oldTime(value)" size="small" :clearable="false">
             </el-date-picker>
             <span style="position: absolute;" class="shabi">至</span>
@@ -41,7 +41,7 @@
 
 <style lang="less" scoped>
     .shabi {
-        left: 98px;
+        left: 107px;
         top: 7.5px;
         display: inline-block;
         line-height: 18px;
