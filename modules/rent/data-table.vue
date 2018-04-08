@@ -69,7 +69,7 @@
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item @click.native="paym(scope.row)">充值</el-dropdown-item>
-								<el-dropdown-item @click.native="callMobilebile()">催交</el-dropdown-item>
+								<el-dropdown-item @click.native="callMobilebile(scope.row)">催交</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
@@ -237,9 +237,9 @@
 					user: {
 						id: 111111111,
 						accountName: 'accountName',
-						name: 'username',
-						mobile: '111111111111',
-						documentId: '11111111111',
+						name: '加载中',
+						mobile: '加载中',
+						documentId: '加载中',
 						documentType: 1,
 						gender: 'M'
 					}
@@ -253,7 +253,15 @@
 		methods: {
 			// todo SUOQIN 预付费余额排序
 			sortClick(column) {
-				console.log(column.orderorder)
+				console.log(column.order)
+				// 余额升序排列
+				if(column.order==='ascending') {
+					this.$emit('rentBalance', 'DESC')
+				}
+				// 余额降序
+				else if(column.order==='descending'){
+					this.$emit('rentBalance', 'ASC')
+				}else {this.$emit('rentBalance')}
 			},
 			indexMethod(data) {
 				return (this.index-1)*20+data+1
@@ -337,17 +345,24 @@
 			rentPay(datanum) {
 				this.showmoney = datanum;
 			},
-			callMobilebile() {
+			callMobilebile(data) {
 				this.$confirm('将要发送催缴通知，是否继续？', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						type: 'warning'
 					})
 					.then(() => {
-						this.$message({
-							type: 'success',
-							message: '提醒成功!'
-						});
+						this.$model('manual_notifications')
+						.create({users:[data.userId]},{projectId:this.projectId})
+						.then(res => {
+							console.log(res)
+							this.$message.success('提醒成功!');
+						})
+						.catch(err => {
+							console.log(err)
+							this.$message('提醒失败!')
+						})
+						
 					})
 					.catch(err => {
 						this.$message({

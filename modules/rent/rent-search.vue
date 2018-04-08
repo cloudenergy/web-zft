@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div class="marginleft nonemargin">
-			<el-input :placeholder='placeholder' v-model="input" class="input-with-select" @keyup.native.enter="login">
-				<el-button slot="append" icon="el-icon-search" @click="searchrent()"></el-button>
+			<el-input :placeholder='placeholder' v-model="input" class="input-with-select" @keyup.native.enter="login" size="small">
+				<el-button slot="append" icon="el-icon-search" @click="searchrent()" size="small"></el-button>
 			</el-input>
 		</div>
 	</div>

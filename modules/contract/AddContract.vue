@@ -102,7 +102,6 @@
 					.then(data => (this.otherCost = data));
 			},
 			submitForm(formName) {
-				console.log(typeof(this.translate(this.form).user.mobile))
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						if(this.form.expense.standard.rent<=0){

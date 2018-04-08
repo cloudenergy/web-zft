@@ -25,7 +25,7 @@
 				<search-all :title="'搜索姓名/电话'" @keyup="keyup"></search-all>
 			</el-header>
 			<div class="result">
-				<DataTable v-if="housesRent" :housesrentData='housesRent' :houseFormat="reqData.houseFormat" :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()"/>
+				<DataTable v-if="housesRent" :housesrentData='housesRent' :houseFormat="reqData.houseFormat" :index="reqData.index" class="rentTable" v-loading="!housesRent" @refresh="refresh" @pageSize="pageSize" @rentWithout='query' @paymFresh="query()" @rentBalance="rentBalance"/>
 			</div>
 		</el-container>
 	</el-container>
@@ -75,6 +75,17 @@
 			// 查找
 			keyup(val) {
 				this.setSearch(val)
+			},
+			// 账户余额排序
+			rentBalance(val) {
+				if(val===undefined) {
+					delete this.reqData.orderField
+					delete this.reqData.order
+				}else {
+					this.reqData.orderField='balance'
+					this.reqData.order = val
+				}
+				this.query()
 			},
 			setSearch(data) {
 				if(/rent/.test(location.pathname)){
