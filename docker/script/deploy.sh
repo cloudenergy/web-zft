@@ -9,15 +9,15 @@ echo "start deploy ..."
 function start () {
   docker rm -f web
   docker rmi $(docker images -qf "before=$REPO:$IMAGE_VERSION" -f=reference="$REPO:v*")
-  docker run -d -e ZFT_BACKEND_PROXY -p 80:80 --net=zft --name=web $REPO:$IMAGE_VERSION
+  docker run -d -e ZFT_BACKEND_PROXY -v ~/cert:/root/cert -p 80:80 --net=zft --name=web $REPO:$IMAGE_VERSION
   echo "done"
 }
 function test_deploy() {
   docker rm -f test_deploy
-  docker run -d --name test_deploy -p 8080:80 --net=zft $REPO:$IMAGE_VERSION
+  docker run -d --name test_deploy -v ~/cert:/root/cert -p 8081:80 --net=zft $REPO:$IMAGE_VERSION
 }
 function test_curl() {
-  response=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:8080)
+  response=$(curl --write-out %{http_code} --silent --output /dev/null https://localhost:8080)
   if [[ $response == "200" ]]; then
     docker rm -f test_deploy;
   else
