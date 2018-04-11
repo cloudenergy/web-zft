@@ -25,7 +25,7 @@ switch (process.env.NODE_ENV) {
 		baseURL = '/api/v1.0';
 		break;
 	case 'production':
-		baseURL = '/api/v1.0';
+		baseURL = `${process.env.ZFT_BACKEND_PROXY}/v1.0`;
 		break;
 	default:
 		baseURL: '/api/v1.0';
