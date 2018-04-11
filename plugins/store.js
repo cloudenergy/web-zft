@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-03-28 20:31:21
+ * @Last Modified time: 2018-04-11 19:46:23
  */
 
 import api from '~/plugins/api';
@@ -200,7 +200,7 @@ export default {
 			return api('login', {
 					username: username,
 					password: md5(password),
-					keepAlive: keepAlive?30:0
+					keepAlive
 				})
 				.then(res => {
 					if (res.code === 0) {

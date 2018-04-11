@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				user: {keepAlive:2},
+				user: {keepAlive:false},
 				type:null
 			};
 		},
@@ -54,7 +54,7 @@
 					.dispatch('POST_LOGIN', {
 						username: this.user.mobile,
 						password: this.user.pass,
-						keepAlive:this.user.keepAlive
+						keepAlive:this.user.keepAlive===true?30:2
 					})
 					.then(() => this.$store.dispatch('GET_ENVIRONMENTS'))
 					.then(() => {
