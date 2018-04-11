@@ -256,11 +256,11 @@
 				console.log(column.order)
 				// 余额升序排列
 				if(column.order==='ascending') {
-					this.$emit('rentBalance', 'DESC')
+					this.$emit('rentBalance', 'ASC')
 				}
 				// 余额降序
 				else if(column.order==='descending'){
-					this.$emit('rentBalance', 'ASC')
+					this.$emit('rentBalance', 'DECS')
 				}else {this.$emit('rentBalance')}
 			},
 			indexMethod(data) {
