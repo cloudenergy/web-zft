@@ -154,7 +154,7 @@
     			const offset = elm.scrollTop + elm.clientHeight;
     			const height = elm.scrollHeight;
 
-    			if (offset >= height&&this.houseFormat!=='ENTIRE'&&(/houses/.test(window.location.pathname))) {
+    			if (offset > height&&this.houseFormat!=='ENTIRE'&&(/houses/.test(window.location.pathname))) {
 					this.query()
 				}
 				return

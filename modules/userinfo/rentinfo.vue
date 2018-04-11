@@ -26,7 +26,11 @@
 
             <el-input v-model="form.user.documentId" class="inputuser"></el-input>
         </el-form>
-        <el-button type="primary" @click="updateuser()" style="margin:15px 0 0 273px">更改</el-button>
+        <div class="flexcenter" style="width:330px;margin-top:10px">
+            <el-button type="text" @click="resetPassword()">重置密码</el-button>
+            <el-button type="primary" @click="updateuser()">更改</el-button>
+        </div>
+        
     </div>
 </template>
 
@@ -85,7 +89,7 @@
         methods: {
             updateuser() {
                 this.$model('userInfoChange')
-                .update({
+                .patch({
                     mobile:this.form.user.mobile,
                     documentId: this.form.user.documentId,
                     documentType: this.form.user.documentType,
@@ -99,6 +103,31 @@
                     this.$message.success('信息更新成功')
                 })
                 .catch(err=>{this.$message('信息更新失败')})
+            },
+            // 重置密码
+            resetPassword() {
+                this.$confirm('将要重置用户密码, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$model('userInfoChange')
+                    .update({
+                        
+                    },{
+                        projectId:this.projectId,
+                        id: this.form.userId
+                    })
+                    .then(res=>{
+                        this.$message.success('密码重置成功')
+                    })
+                    .catch(err=>{this.$message('密码重置失败')})
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消'
+                    });          
+                });
             }
         }
     }
