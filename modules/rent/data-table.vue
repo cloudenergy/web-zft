@@ -251,17 +251,18 @@
 			this.$modal.$on('refresh', () => this.$emit('paymFresh'));
 		},
 		methods: {
-			// todo SUOQIN 预付费余额排序
 			sortClick(column) {
 				console.log(column.order)
 				// 余额升序排列
-				if(column.order==='ascending') {
+				if (column.order === 'ascending') {
 					this.$emit('rentBalance', 'ASC')
 				}
 				// 余额降序
-				else if(column.order==='descending'){
+				else if (column.order === 'descending') {
 					this.$emit('rentBalance', 'DECS')
-				}else {this.$emit('rentBalance')}
+				} else {
+					this.$emit('rentBalance')
+				}
 			},
 			indexMethod(data) {
 				return (this.index-1)*20+data+1

@@ -9,7 +9,6 @@
 					<div class="flexcenter">
 						<RentStatus class="status" @leasingStatus="leasingStatus"/>
 						<RentManager class="manager" :houseKeeper='houseKeeper'/>
-						<!-- todo SUOQIN  欠费 正常query -->
 						<RentOwe @rentMoneyType="rentMoneyType" class="manager"/>
 					</div>
 					<div class="flexcenter">
