@@ -20,7 +20,6 @@
                 </div>
                 <div class="recordsShow">
                     <el-table :data="withdraw" stripe style="width: 100%">
-                        <!-- TODO 周毅 信息没有给齐 -->
                         <!--  @row-click='withdrawlInformation' -->
                         <el-table-column prop="date" label="时间" width="300">
                             <template slot-scope="scope">

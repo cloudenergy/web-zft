@@ -130,7 +130,6 @@
 			defaultStart(now) {
 				return now;
 			},
-			// todo ZSH SUBDayS
 			defaultEnd(now) {
 				return addYears(now, 1);
 			},

@@ -29,11 +29,10 @@
                 <el-tag type="info" class="inputuser" v-if="this.form.paymentP==11">{{form.paymentPlan}}天收租</el-tag>
                 <el-tag type="info" class="inputuser" v-if="this.form.paymentP!=11">{{form.paymentPlan}}号收租</el-tag>
             </el-form-item>
-            <!-- todo SUOQIN 编号和管理员 -->
-            <!-- <el-form-item label="合同编号/管理员" class="disable">
-                <el-tag type="info" class="inputuser">{{tt}}</el-tag>
-                <el-tag type="info" class="inputuser">{{tt}}</el-tag>
-            </el-form-item> -->
+            <el-form-item label="合同编号" class="disable">
+                <el-tag type="info" class="inputuser" v-if="form.contractNumber!==''">{{form.contractNumber}}</el-tag>
+                <el-tag type="info" class="inputuser" v-if="form.contractNumber===''">暂无信息</el-tag>
+            </el-form-item>
             <el-form-item label="签约时间" class="disable">
                 <el-tag type="info" class="inputuser">{{tt}}</el-tag>
             </el-form-item>

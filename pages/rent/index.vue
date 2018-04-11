@@ -97,7 +97,6 @@
 					this.query()
 				}
 			},
-			// 用户欠费查找 todo zsh
 			rentMoneyType(val) {
 				console.log('用户欠费状态查找')
 			},

@@ -211,7 +211,6 @@
 
                 });
             },
-            // TODO ZHOUYI res缺少devices
             queryAgain(data) {
                 this.$model('housedetail')
                     .query({
