@@ -143,7 +143,7 @@ const apis = {
 	electric_withdraw: resource('/projects/{projectId}/withdraw/{id}'),
 	device_usage: resource('/projects/{projectId}/devices/{deviceId}/usage'),
 	manual_notifications: resource('/projects/{projectId}/manualNotifications'),
-	userInfoChange: resource('/projects/{peojectId}/users')
+	userInfoChange: resource('/projects/{projectId}/users')
 	
 	
 };
