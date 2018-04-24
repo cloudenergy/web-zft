@@ -1,4 +1,4 @@
-const port = process.env.ZFT_BLADE_PORT || 8080;
+const port = process.env.ZFT_BLADE_PORT || 8081;
 const publicPath = process.env.ZFT_PUBLIC_PATH || '/';
 
 module.exports = {

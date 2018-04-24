@@ -81,6 +81,7 @@ const [get, post, put, del, patch] = [
 ].map(action => decorateMaker(action, interceptor));
 
 const resource = (url, actions) => {
+	console.log(url, actions)
 	return makeResource(url, actions, {
 		GET: get,
 		POST: post,
