@@ -84,207 +84,228 @@
 </template>
 
 <script>
-	import format from 'date-fns/format'
-	import { houseDevicesDosage } from '~/modules/house';
-	export default {
-		props: {
-			devices: {
-				type: Array
-			},
-			type: {
-				required: true
-			},
-			loading: {
-				type: Number
-			},
-			index: {
-				type: Number
-			},
-			equipmentLoading: {
-				type: Boolean
-			}
+import format from 'date-fns/format';
+import { houseDevicesDosage } from '~/modules/house';
+export default {
+	props: {
+		devices: {
+			type: Array
 		},
-		data() {
-			return {
-				reqData: {
-					mode: '',
-					devicesIds: []
-				},
-				remakeInput:'',
-				deviceInfo:'',
-				dialogVisible:false
-			}
+		type: {
+			required: true
 		},
-		computed: {
-			projectId() {
-				return this.$store.state.userInfo.user.projectId
-			}
+		loading: {
+			type: Number
 		},
-		methods: {
-			notify(val) {
-				console.log(val)
-				this.dialogVisible = false
-				if(val) {
-					this.$model('change_remake')
-					.update({memo:this.remakeInput},{projectId:this.projectId,id:val.deviceId})
-					.then(res=>{this.$message.success('备注修改成功');this.$emit('restoreSwitch')})
-					.catch(err=>{this.$message('备注修改失败')})
-				}
+		index: {
+			type: Number
+		},
+		equipmentLoading: {
+			type: Boolean
+		}
+	},
+	data() {
+		return {
+			reqData: {
+				mode: '',
+				devicesIds: []
 			},
-			setElectricit(data) {
-                this.deviceInfo = data
-                this.dialogVisible = true;
-			},
-			houseDevicesDosage(data) {
-				this.$modal.$emit('open', {
-					comp: houseDevicesDosage,
-					data: {
-						houseDevice:data,
-						oneEquipment:true
-					},
-					title: '使用详情'
-				});
-			},
-			fixed(val) {
-				return val.toFixed(2)
-			},
-			delYTL(val) {
-				return val.replace(/YTL/g, '')
-			},
-			// 批量送电/断电
-			setElectricSwitch(data) {
-				if (this.reqData.devicesIds.length !== 0) {
-					this.reqData.mode = data
-					this.sendElectric()
-				} else {
-					this.$message.error('请至少选择一个仪表')
-				}
-			},
-			// 批量删除
-			setDelElectric() {
-				console.log(1)
-				if (this.reqData.devicesIds.length !== 0) {
-					this.deleteElectric()
-				} else {
-					this.$message.error('请至少选择一个仪表')
-				}
-			},
-			delElectric(data) {
-				this.reqData.devicesIds = []
-				this.reqData.devicesIds.push(data.deviceId)
-				this.deleteElectric()
-			},
-			deleteElectric() {
-				this.$confirm('将要删除此电表, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$model('delDevices')
-					.delete({
-						deviceIds: this.reqData.devicesIds
-					}, {
-						projectId: this.projectId,
-						id: 'devices'
-					})
+			remakeInput: '',
+			deviceInfo: '',
+			dialogVisible: false
+		};
+	},
+	computed: {
+		projectId() {
+			return this.$store.state.userInfo.user.projectId;
+		}
+	},
+	methods: {
+		notify(val) {
+			console.log(val);
+			this.dialogVisible = false;
+			if (val) {
+				this.$model('change_remake')
+					.update(
+						{ memo: this.remakeInput },
+						{ projectId: this.projectId, id: val.deviceId }
+					)
 					.then(res => {
-						this.$message.success('删除成功')
-						this.$emit('refresh', 'second')
+						this.$message.success('备注修改成功');
+						this.$emit('restoreSwitch');
 					})
 					.catch(err => {
-						console.log(err)
-						this.$message('删除失败')
-					})
-					this.$set(this.reqData,'devicesIds',[])
-				}).catch(() => {
+						this.$message('备注修改失败');
+					});
+			}
+		},
+		setElectricit(data) {
+			this.deviceInfo = data;
+			this.dialogVisible = true;
+		},
+		houseDevicesDosage(data) {
+			this.$modal.$emit('open', {
+				comp: houseDevicesDosage,
+				data: {
+					houseDevice: data,
+					oneEquipment: true
+				},
+				title: '使用详情'
+			});
+		},
+		fixed(val) {
+			return (val / 10000).toFixed(2);
+		},
+		delYTL(val) {
+			return val.replace(/YTL/g, '');
+		},
+		// 批量送电/断电
+		setElectricSwitch(data) {
+			if (this.reqData.devicesIds.length !== 0) {
+				this.reqData.mode = data;
+				this.sendElectric();
+			} else {
+				this.$message.error('请至少选择一个仪表');
+			}
+		},
+		// 批量删除
+		setDelElectric() {
+			console.log(1);
+			if (this.reqData.devicesIds.length !== 0) {
+				this.deleteElectric();
+			} else {
+				this.$message.error('请至少选择一个仪表');
+			}
+		},
+		delElectric(data) {
+			this.reqData.devicesIds = [];
+			this.reqData.devicesIds.push(data.deviceId);
+			this.deleteElectric();
+		},
+		deleteElectric() {
+			this.$confirm('将要删除此电表, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.$model('delDevices')
+						.delete(
+							{
+								deviceIds: this.reqData.devicesIds
+							},
+							{
+								projectId: this.projectId,
+								id: 'devices'
+							}
+						)
+						.then(res => {
+							this.$message.success('删除成功');
+							this.$emit('refresh', 'second');
+						})
+						.catch(err => {
+							console.log(err);
+							this.$message('删除失败');
+						});
+					this.$set(this.reqData, 'devicesIds', []);
+				})
+				.catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消'
 					});
 				});
-			},
-			select(val, b) {
-				this.reqData.devicesIds = val.map(ele => {
-					return ele.deviceId
-				})
-			},
-			selectAll(val) {
-				this.reqData.devicesIds = val.map(ele => {
-					return ele.deviceId
-				})
-			},
-			indexMethod(data) {
-				return (this.index - 1) * 20 + data + 1
-			},
-			dateTime(data) {
-				return format(new Date(data), 'YYYY-MM-DD  HH:mm:ss')
-			},
-			eleciricitySwitch(data) {
-				this.reqData.mode = data
-			},
-			handleRowHandle(row, event) {
-				if (event.screenX !== 0 && event.srcElement.className === 'el-switch__core') {
-					this.reqData.devicesIds = []
-					this.reqData.devicesIds.push(row.deviceId)
-					this.sendElectric()
-				}
-			},
-			sendElectric() {
-				this.$confirm('将更改电表状态, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
+		},
+		select(val, b) {
+			this.reqData.devicesIds = val.map(ele => {
+				return ele.deviceId;
+			});
+		},
+		selectAll(val) {
+			this.reqData.devicesIds = val.map(ele => {
+				return ele.deviceId;
+			});
+		},
+		indexMethod(data) {
+			return (this.index - 1) * 20 + data + 1;
+		},
+		dateTime(data) {
+			return format(new Date(data), 'YYYY-MM-DD  HH:mm:ss');
+		},
+		eleciricitySwitch(data) {
+			this.reqData.mode = data;
+		},
+		handleRowHandle(row, event) {
+			if (
+				event.screenX !== 0 &&
+				event.srcElement.className === 'el-switch__core'
+			) {
+				this.reqData.devicesIds = [];
+				this.reqData.devicesIds.push(row.deviceId);
+				this.sendElectric();
+			}
+		},
+		sendElectric() {
+			this.$confirm('将更改电表状态, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
 					this.$model('electricity_instructions')
 						.patch(this.reqData, {
 							projectId: this.projectId,
 							id: 'switch'
 						})
 						.then(res => {
-							this.$message.success('切换状态成功')
-							this.reqData.devicesIds.length > 1 ? this.$emit('restoreSwitch') : this.test()
+							this.$message.success('切换状态成功');
+							this.reqData.devicesIds.length > 1
+								? this.$emit('restoreSwitch')
+								: this.test();
 						})
 						.catch(err => {
 							// 刷新失败重新请求恢复el-switch
-							this.$message('切换状态失败')
-							this.reqData.devicesIds.length > 1 ? this.test() : this.$emit('restoreSwitch')
-						})
-						this.$set(this.reqData,'devicesIds',[])
-				}).catch(() => {
+							this.$message('切换状态失败');
+							this.reqData.devicesIds.length > 1
+								? this.test()
+								: this.$emit('restoreSwitch');
+						});
+					this.$set(this.reqData, 'devicesIds', []);
+				})
+				.catch(() => {
 					this.$message({
 						type: 'info',
 						message: '已取消'
 					});
-					this.reqData.devicesIds.length > 1 ? this.test() : this.$emit('restoreSwitch')
+					this.reqData.devicesIds.length > 1
+						? this.test()
+						: this.$emit('restoreSwitch');
 				});
-			},
-			test() {}
 		},
-		watch: {
-
-		}
-	};
+		test() {}
+	},
+	watch: {}
+};
 </script>
 
 <style lang="less" scoped>
-	.remake {
-		&:hover .change{
-			opacity: 1;
-		}
-		.change {
-			margin-left:5px;
-			color:#409eff;
-			opacity: 0;
-		}
+.remake {
+	&:hover .change {
+		opacity: 1;
 	}
-	
+	.change {
+		margin-left: 5px;
+		color: #409eff;
+		opacity: 0;
+	}
+}
 </style>
 
 <style lang="less">
-	.changeRemake .el-dialog__body{
-		padding:10px 20px;
-		textarea {
-			height:80px
-		}
+.changeRemake .el-dialog__body {
+	padding: 10px 20px;
+	textarea {
+		height: 80px;
 	}
+}
 </style>
