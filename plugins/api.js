@@ -21,15 +21,15 @@ let source = CancelToken.source();
 let baseURL = '/api/v1.0';
 
 switch (process.env.NODE_ENV) {
-	case 'development':
-		baseURL = '/api/v1.0';
-		break;
-	case 'production':
-		baseURL = 'https://api.51dianxiaoge.com/v1.0';
-		break;
-	default:
-		baseURL: '/api/v1.0';
-		break;
+case 'development':
+	baseURL = '/api/v1.0';
+	break;
+case 'production':
+	baseURL = 'https://api.51dianxiaoge.com/v1.0';
+	break;
+default:
+	'/api/v1.0';
+	break;
 }
 
 setup({
@@ -81,7 +81,6 @@ const [get, post, put, del, patch] = [
 ].map(action => decorateMaker(action, interceptor));
 
 const resource = (url, actions) => {
-	console.log(url, actions)
 	return makeResource(url, actions, {
 		GET: get,
 		POST: post,
@@ -145,8 +144,6 @@ const apis = {
 	device_usage: resource('/projects/{projectId}/devices/{deviceId}/usage'),
 	manual_notifications: resource('/projects/{projectId}/manualNotifications'),
 	userInfoChange: resource('/projects/{projectId}/users')
-	
-	
 };
 
 /**
