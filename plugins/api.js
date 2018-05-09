@@ -24,6 +24,9 @@ switch (process.env.NODE_ENV) {
 case 'development':
 	baseURL = '/api/v1.0';
 	break;
+case 'qa':
+	baseURL = 'https://zft-stage.cloudenergy.me/api/v1.0';
+	break;
 case 'production':
 	baseURL = 'https://api.51dianxiaoge.com/v1.0';
 	break;
