@@ -7,8 +7,9 @@
         <div class="newchoose prevent" v-loading="loading">
             <div v-for="list in item" :key="list.index" class="mini">
                 <el-radio v-model="radio" :label="list.deviceId" style="width:100%;" @change="equipmentId()" size="mini">
-                    <div class="flexcenter">
-                        <span>电表:{{list.memo}}</span>
+                    <div class="flexcenter space-between">
+                        <span>电表:</span>
+						<p class="memo">{{list.memo}}</p>
                         <span style="padding-right:10px">{{delDeviceYTL(list.deviceId)}}</span>
                     </div>
                 </el-radio>
@@ -99,6 +100,13 @@ export default {
 	height: 40px;
 	border-bottom: 1px solid #eee;
 }
+.space-between {
+	display: flex;
+	justify-content: space-between;
+	.memo {
+		width: 200px;
+	}
+}
 </style>
 <style>
 .clearmargin > div {
@@ -107,4 +115,5 @@ export default {
 .newchoose.prevent .el-radio__input {
 	display: none;
 }
+
 </style>
