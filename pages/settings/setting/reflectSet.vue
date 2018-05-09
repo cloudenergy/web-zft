@@ -17,7 +17,7 @@
                 <el-input v-model="form.linkman" size="small"></el-input>
             </el-form-item>
         </div>
-        <div v-if="region!=='person'">
+        <div v-if="region!=='person'" class="attributionSelection">
             <el-form-item label="银行卡号" style="width:700px" prop="account">
                 <el-input v-model="form.account" size="small"></el-input>
             </el-form-item>
@@ -151,3 +151,10 @@
         }
     }
 </script>
+<style lang="less">
+    .attributionSelection {
+        .el-select.el-select--small {
+            width: 178px;
+        }
+    }
+</style>
