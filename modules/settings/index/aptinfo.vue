@@ -195,10 +195,8 @@ UploadImg
 	},
 	methods: {
 		onSubmit() {
-			console.log('submit!');
 		},
 		handleClick(tab, event) {
-			console.log(tab, event);
     },
     upLogo(){
       this.isShow=true;
@@ -233,7 +231,6 @@ UploadImg
 
             uploadClose(data){
               this.isShow=data;
-              console.log(data)
             }    
 	}
 };

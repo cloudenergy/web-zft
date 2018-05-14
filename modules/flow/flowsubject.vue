@@ -86,7 +86,6 @@
 						})
 					})
 					.catch(err => {
-						console.log(err)
 					})
 			},
 			fromtoTime(data) {

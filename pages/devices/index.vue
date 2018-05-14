@@ -113,7 +113,6 @@
 				} else {
 					delete this.reqData.locationId
 				}
-				console.log(type,commiunityId)
 				this.query();
 			},
 			query() {
@@ -134,7 +133,6 @@
 					});
 			},
 			showmessage(data) {
-				console.log(data)
 			}
 		}
 	};

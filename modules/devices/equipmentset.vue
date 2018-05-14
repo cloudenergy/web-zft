@@ -122,7 +122,6 @@ export default {
 	},
 	methods: {
 		notify(val) {
-			console.log(val);
 			this.dialogVisible = false;
 			if (val) {
 				this.$model('change_remake')
@@ -170,7 +169,6 @@ export default {
 		},
 		// 批量删除
 		setDelElectric() {
-			console.log(1);
 			if (this.reqData.devicesIds.length !== 0) {
 				this.deleteElectric();
 			} else {
@@ -204,7 +202,6 @@ export default {
 							this.$emit('refresh', 'second');
 						})
 						.catch(err => {
-							console.log(err);
 							this.$message('删除失败');
 						});
 					this.$set(this.reqData, 'devicesIds', []);

@@ -279,7 +279,6 @@
 							this.$set(this, 'roomAllContracts', res.data);
 						})
 						.catch(err => {
-							console.log(err);
 						});
 					this.visibility = true;
 					this.loading = false;
@@ -378,7 +377,6 @@
 						this.updateData = res;
 					})
 					.catch(err => {
-						console.log(err);
 					});
 				this.$model('contract_bill')
 					.query({}, {

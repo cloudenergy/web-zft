@@ -272,7 +272,6 @@
 						},500)
     				})
     				.catch(err => {
-    					console.log(err);
     				});
     			this.$store
     				.dispatch('HOUSE_KEERER', {
@@ -313,7 +312,6 @@
     						});
     				})
     				.catch(e => {
-    					console.log(e);
     					this.$message({
     						type: 'info',
     						message: '已取消删除'
@@ -331,7 +329,6 @@
     					this.formatting()
     				})
     				.catch(err => {
-    					console.log(err);
     				});
     		},
     		successRefresh() {

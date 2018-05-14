@@ -49,7 +49,6 @@
             }
         },
         created () {
-            console.log(this.contractInfo.user.documentId)
         }
     }
 </script>

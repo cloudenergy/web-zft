@@ -117,7 +117,6 @@ export default {
 								this.successMessage();
 							})
 							.catch(err => {
-								console.log(err);
 								let _this = this;
 								switch (err.code) {
 									// 账号重复
@@ -143,7 +142,6 @@ export default {
 							});
 					}
 				} else {
-					console.log('error in submitting ...');
 					return false;
 				}
 			});

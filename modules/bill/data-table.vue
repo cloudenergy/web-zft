@@ -132,7 +132,6 @@
             },
             handleReceive(index, data) {
                 this.tableData = data
-                console.log(this.tableData)
                 this.tableData.billItems.map((ele, index) => {
                     ele.dueDateTime = data.dueDateTime
                     ele.endDateTime = data.endDateTime

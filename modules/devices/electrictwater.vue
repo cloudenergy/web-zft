@@ -247,13 +247,10 @@
         },
         methods: {
             test(date) {
-                console.log(date)
             },
             savech() {
-                console.log(this.tableData)
             },
             handleCommand(command) {
-                console.log(command)
             },
         }
     }

@@ -224,7 +224,6 @@
 				];
 			},
 			handleSelect(item) {
-				console.log(item);
 			}
 		},
 		mounted() {

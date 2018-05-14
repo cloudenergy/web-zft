@@ -125,7 +125,6 @@
 						this.setUser()
 					})
 					.catch(err => {
-						console.log(err)
 					})
 			},
 			setUser() {
@@ -170,7 +169,6 @@
 								});
 							});
 					} else {
-						console.log('error in submitting ...');
 						return false;
 					}
 				});

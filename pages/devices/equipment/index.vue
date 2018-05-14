@@ -134,26 +134,20 @@
 					})
 					.then(res => {
 						this.loading = this.reqData.mode === 'FREE' ? 2 : 1
-						console.log(this.loading)
 						this.$set(this, 'devices', _.chunk(res.data, 20)[0])
 						this.$set(this, 'paging', res.paging)
 						this.equipmentLoading = false
 					})
 					.catch(err => {
-						console.log(err)
 					})
 			},
 			showmessage(data) {
-				console.log(data)
 			},
 			search(data) {
-				console.log(data)
 			},
 			roomSearch(data) {
-				console.log(data)
 			},
 			manager(data) {
-				console.log(data)
 			},
 			refresh(type, commiunityId) {
 				if (type === 'first') {

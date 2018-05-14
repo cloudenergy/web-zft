@@ -98,7 +98,6 @@
 				}
 			},
 			rentMoneyType(val) {
-				console.log('用户欠费状态查找')
 			},
 			
 			leasingStatus(data) {
@@ -151,7 +150,6 @@
 					})
 			},
 			showmessage(data) {
-				console.log(data)
 			},
 			importrent(mytalbe) {
 

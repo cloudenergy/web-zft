@@ -223,7 +223,6 @@
                         this.$set(this.house, 'devices', res.devices)
                     })
                     .catch(err => {
-                        console.log(err)
                     })
 
             }

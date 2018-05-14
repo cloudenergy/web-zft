@@ -2,7 +2,7 @@
  * @Author: insane.luojie 
  * @Date: 2017-11-10 10:01:31 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-04-11 19:46:23
+ * @Last Modified time: 2018-05-14 21:28:57
  */
 
 import api from '~/plugins/api';
@@ -219,7 +219,6 @@ export default {
 				.then(env => fromPairs(map(env, i => [i.key, i.value])))
 				.then(env => {
 					commit('UPDATE_ENV', env);
-					console.log(env)
 					// sync user
 					localStorage.user = JSON.stringify({
 						auth: true,

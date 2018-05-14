@@ -176,10 +176,8 @@ export default {
       // this.tableStaff=[];
       // for (let i = 0; i < data.staff.length; i++) {
        this.tableStaff=data.staff;
-// console.log(this.tableStaff)
        
       // }
-      console.log(data)
 		}
 	},
 	created() {

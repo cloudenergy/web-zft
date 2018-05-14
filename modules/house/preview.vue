@@ -148,7 +148,6 @@
             conversion
         },
         created() {
-            console.log(this.room)
             if (this.room.contract.from !== undefined) {
                 
                 this.contracts[0].rent = this.room.contract.rent
@@ -165,7 +164,6 @@
                     this.contracts[0].freq = res.strategy.freq.pattern
 				})
 				.catch(err => {
-					console.log(err);
 				});
             }
         },

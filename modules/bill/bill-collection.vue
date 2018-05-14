@@ -64,7 +64,6 @@
         },
         created() {
             this.query()
-            console.log(this.data)
         },
         watch: {
             data(newVal, oldVal) {
@@ -132,7 +131,6 @@
                         this.$message.success('收款成功')
                     })
                     .catch(err => {
-                        console.log(err)
                     })
             }
         }

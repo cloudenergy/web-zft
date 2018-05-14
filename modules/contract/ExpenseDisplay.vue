@@ -99,7 +99,6 @@
 			},
 			deductionDate(data) {
 				if (data !== "1") {
-					console.log(1)
 				} else {
 					this.expense.frequency = 'day'
 				}

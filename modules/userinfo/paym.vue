@@ -109,7 +109,6 @@
             },
             onSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
-                    console.log(this.form.price)
                     if (valid) {
                         this.$model('top_up')
                         .patch({
@@ -129,7 +128,6 @@
                             this.$message('充值失败');
                         })
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });

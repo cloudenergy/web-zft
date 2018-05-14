@@ -181,7 +181,6 @@
 							this.$message('邮箱格式错误');
 						}
 					} else {
-						console.log('error submit!!');
 						return false;
 					}
 				})
@@ -226,7 +225,6 @@
 							this.$message('邮箱格式错误');
 						}
 					} else {
-						console.log('error submit!!');
 						return false;
 					}
 				})

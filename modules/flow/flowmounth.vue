@@ -92,11 +92,9 @@
 						projectId: this.projectId
 					})
 					.then(res => {
-						console.log(res)
 						this.$set(this, 'monthFlows', res)
 					})
 					.catch(err => {
-						console.log(err)
 					})
 			}
 		}

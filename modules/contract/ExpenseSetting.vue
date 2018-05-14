@@ -135,7 +135,6 @@
 
 			},
 			showOther() {
-				console.log(this.otherCoste)
 			},
 			chooseCost() {
 				this.innerVisible = false;

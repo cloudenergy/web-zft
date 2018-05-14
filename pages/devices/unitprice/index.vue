@@ -163,7 +163,6 @@
 					});
     		},
 			showmessage(data){
-				console.log(data)
 			},
 			communityChange(data) {
 				if(data==='0'){

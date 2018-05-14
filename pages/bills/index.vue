@@ -141,7 +141,6 @@
 					this.$set(this, 'pagingSize', res.paging)
 				})
 				.catch(err => {
-					console.log(err)
 				})
 				this.$store.dispatch('HOUSE_KEERER',{
 					projectId:this.projectId

@@ -80,7 +80,6 @@
                 return {'deviceId':this.roomDevices.deviceId}
             },
             newReqData() {
-                console.log(this.roomId)
                 return {
                     'houseFormat':this.houseFormat,
                     'startDate':Date.parse(startOfYesterday())/1000+21*60*60,
@@ -138,7 +137,6 @@
                     this.$set(this, 'contractInfo', res)
                 })
                 .catch(err => {
-                    console.log(err)
                 })
                 this.$model('fund_channel')
                 .query({
@@ -169,25 +167,12 @@
                         return val.dueDate<Date.parse(new Date())/1000&&val.payments.length===0
                     }))
                 });
-                // 查询当前电表使用度数 rent没有电表信息
-                // this.$model('electricity_instructions')
-				// .patch(this.reqData, {
-				// 	projectId: this.projectId,
-				// 	id: 'reading'
-				// })
-				// .then(res => {
-				// 	console.log(res)
-				// })
-				// .catch(err=>{
-				// 	console.log(err)
-                // })
                 this.$model('reading_equipment')
                 .query(this.newReqData,{
                     projectId:this.projectId
                 })
             },
             onSubmit() {
-                console.log('submit!');
             },
             operateRent(data) {
                 this.$emit('operateRent',data)

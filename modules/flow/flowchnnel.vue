@@ -63,12 +63,10 @@
 				this.$model('')
 			},	
 			cityChange(val) {
-				console.log(val)
 				this.reqData.districtId = val.city
 				this.query()
 			},
 			areaChange(val) {
-				console.log(val)
 				this.reqData.districtId = val.area
 				this.query()
 			},
@@ -86,7 +84,6 @@
 						this.$set(this, 'channelFlows', res)
 					})
 					.catch(err => {
-						console.log(err)
 					})
 			},
 		}

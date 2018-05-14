@@ -115,7 +115,6 @@
 						this.$set(this, 'flowPaging', res.paging)
 					})
 					.catch(err => {
-						console.log(err)
 					})
 			},
 			pageIndex(data) {

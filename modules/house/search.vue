@@ -65,7 +65,6 @@
 				this.$emit('changeRoomsStatus', data)
 			},
 			changeHouseKeeper(data) {
-				console.log(data)
 				this.$emit('changeHouseKeeper', data)
 			},
 			addHouse() {

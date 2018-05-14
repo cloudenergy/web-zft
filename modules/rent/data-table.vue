@@ -252,7 +252,6 @@
 		},
 		methods: {
 			sortClick(column) {
-				console.log(column.order)
 				// 余额升序排列
 				if (column.order === 'ascending') {
 					this.$emit('rentBalance', 'ASC')
@@ -284,7 +283,6 @@
 						this.updateData = res;
 					})
 					.catch(err => {
-						console.log(err);
 					});
 				this.$model('contract_bill')
 					.query({}, {
@@ -356,11 +354,9 @@
 						this.$model('manual_notifications')
 						.create({users:[data.userId]},{projectId:this.projectId})
 						.then(res => {
-							console.log(res)
 							this.$message.success('提醒成功!');
 						})
 						.catch(err => {
-							console.log(err)
 							this.$message('提醒失败!')
 						})
 						
