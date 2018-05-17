@@ -6,7 +6,7 @@ module.exports = {
 		'/api': {
 			target:
 				process.env['ZFT_BACKEND_PROXY'] ||
-				'https://api.51dianxiaoge.com',
+				'https://zft-stage.cloudenergy.me/api',
 			pathRewrite: {
 				'^/api': ''
 			},

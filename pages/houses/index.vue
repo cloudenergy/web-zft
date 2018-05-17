@@ -26,7 +26,7 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </span>
-						<span v-if="house.devices&&house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)">
+						<span v-if="house.devices&&house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)" style="margin-left:4px">
 							<icon type="jian" style="font-size:20px;color:#67c23a" v-if="house.devices[0].status.service==='EMC_ONLINE'" />
 							<icon type="jian" style="font-size:20px;color:#FA5555" v-if="house.devices[0].status.service==='EMC_OFFLINE'" />
 						</span>

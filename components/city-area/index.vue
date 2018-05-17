@@ -134,12 +134,12 @@ export default {
 		return (
 			<div class={{ inForm: this.isForm, filters: !this.isForm }}>
 				{this.isForm ? (
-					<span style="margin-right:28px"><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">城市</div>{citySelect}</span>
+					<span style="margin-right:28px;display:flex"><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">城市</div>{citySelect}</span>
 				) : (
 					citySelect
 				)}
 				{this.isForm ? (
-					<span><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">区域</div>{areaSelect}</span>
+					<span style="display:flex"><div tabindex="0" class="el-input-group__prepend addwidth" style="font-size:14px;display:inline-block">区域</div>{areaSelect}</span>
 				) : (
 					areaSelect
 				)}

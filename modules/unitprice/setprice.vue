@@ -27,9 +27,10 @@ export default {
 		sendchange() {
 			let regPos = /^\d+(\.\d+)?$/; //非负浮点数
 			let regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+			console.log(this.input > 0, regPos.test(this.input), regNeg.test(this.input))
 			if (
-				regPos.test(this.input) ||
-				regNeg.test(this.input) ||
+				(regPos.test(this.input) ||
+				regNeg.test(this.input)) &&
 				this.input > 0
 			) {
 				this.input = this.input * 100;

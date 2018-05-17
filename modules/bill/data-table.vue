@@ -9,7 +9,7 @@
                     <p style="" class="gray">{{ scope.row.dueDateTime }}</p>
                 </template>
             </el-table-column>
-            <el-table-column label="住户姓名/帐号">
+            <el-table-column label="住户姓名">
                 <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                         <span size="medium">{{ scope.row.user.name }}</span><i class="el-icon-phone"></i>

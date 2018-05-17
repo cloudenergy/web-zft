@@ -23,8 +23,10 @@
                 </el-table-column>
                 <el-table-column label="通讯状态" width="100">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.status.service==='EMC_ONLINE'">在线</span>
-                        <span v-if="scope.row.status.service==='EMC_OFFLINE'">离线</span>
+                        <div v-if="scope.row.status===undefined">
+                            <span v-if="scope.row.status.service==='EMC_ONLINE'">在线</span>
+                            <span v-if="scope.row.status.service==='EMC_OFFLINE'">离线</span>
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column label="管理" max-width="80">
@@ -38,7 +40,7 @@
                     房间设备
                 </span>
             </h4>
-            <div class="roomDevices">
+            <div class="roomDevices" v-loading = 'loading'>
                 <div v-for="item in this.house.rooms" :key='item.id'>
                     <el-table :data="item.devices" style="width: 100%">
                         <el-table-column label="房间号">
@@ -49,6 +51,13 @@
                         <el-table-column label="电表id">
                             <template slot-scope="scope">
                                 <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <div v-if="!loading">
+                                    {{scope.row.share.value}}%
+                                </div>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作">
@@ -94,7 +103,8 @@
                 dialogVisible: false,
                 value4: true,
                 apportionment: [],
-                visibility: false
+                visibility: false,
+                loading: true
             }
         },
         components: {
@@ -107,9 +117,19 @@
         },
         created() {
             this.query()
+            console.log(this.house)
         },
         methods: {
             delDeviceYTL(val) {
+                console.log(val, val!==undefined)
+                // val?(val)=>{
+                //     console.log(val)
+                //     return delYTL(val)
+                // }:''
+                return val?this.delDeYTL(val):''
+            },
+            delDeYTL(val) {
+                console.log(val)
                 return delYTL(val)
             },
             query() {
@@ -120,6 +140,21 @@
                     })
                     .then(res => {
                         this.$set(this, 'apportionment', res)
+                        this.$set(this.house, 'rooms', this.house.rooms.map(ele => {
+                            res.map(li => {
+                                if(li.roomId===ele.id) {
+                                    if(ele.devices.length===0) {
+                                        ele.devices.push({})
+                                        ele.devices[0].share=li
+                                    }else {
+                                        ele.devices[0].share=li
+                                    }
+                                }
+                            })
+                            return ele
+                        }))
+                        this.loading = false
+                        console.log(this.house.rooms)
                     })
             },
             writePercent() {
