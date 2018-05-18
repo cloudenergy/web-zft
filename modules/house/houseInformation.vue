@@ -41,7 +41,7 @@
                 </span>
             </h4>
             <div class="roomDevices" v-loading = 'loading'>
-                <div v-for="item in this.house.rooms" :key='item.id'>
+                <div v-for="(item, index) in this.house.rooms" :key='item.id'>
                     <el-table :data="item.devices" style="width: 100%">
                         <el-table-column label="房间号">
                             <template slot-scope="scope">
@@ -56,7 +56,7 @@
                         <el-table-column label="操作">
                             <template slot-scope="scope">
                                 <div v-if="!loading">
-                                    {{scope.row.share.value}}%
+                                   <el-input style="width:100px" v-model="scope.row.share.value" @input="share(scope.row)"></el-input>%
                                 </div>
                             </template>
                         </el-table-column>
@@ -67,8 +67,8 @@
                         </el-table-column>
                     </el-table>
                 </div>
+                <el-button @click.native="del" type="primary" style="margin-top:30px;">保存</el-button>
             </div>
-            <el-button @click.native="del" type="danger" style="margin-top:30px;">删除此房源</el-button>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
@@ -89,227 +89,275 @@
 </template>
 
 <script>
-    import {
-        delYTL
-    } from '~/utils/helper';
-    import conversion from '../devices/conversion.vue'
-    export default {
-        props: {
-            house: Object,
-            houseType: String
-        },
-        data() {
-            return {
-                dialogVisible: false,
-                value4: true,
-                apportionment: [],
-                visibility: false,
-                loading: true
-            }
-        },
-        components: {
-            conversion
-        },
-        computed: {
-            projectId() {
-                return this.$store.state.userInfo.user.projectId;
-            }
-        },
-        created() {
-            this.query()
-            console.log(this.house)
-        },
-        methods: {
-            delDeviceYTL(val) {
-                console.log(val, val!==undefined)
-                // val?(val)=>{
-                //     console.log(val)
-                //     return delYTL(val)
-                // }:''
-                return val?this.delDeYTL(val):''
-            },
-            delDeYTL(val) {
-                console.log(val)
-                return delYTL(val)
-            },
-            query() {
-                this.$model('apportionment')
-                    .query({}, {
-                        projectId: this.projectId,
-                        id: this.house.houseId
-                    })
-                    .then(res => {
-                        this.$set(this, 'apportionment', res)
-                        this.$set(this.house, 'rooms', this.house.rooms.map(ele => {
-                            res.map(li => {
-                                if(li.roomId===ele.id) {
-                                    if(ele.devices.length===0) {
-                                        ele.devices.push({})
-                                        ele.devices[0].share=li
-                                    }else {
-                                        ele.devices[0].share=li
-                                    }
-                                }
-                            })
-                            return ele
-                        }))
-                        this.loading = false
-                        console.log(this.house.rooms)
-                    })
-            },
-            writePercent() {
-                this.visibility = true;
-            },
-            del(room) {
-                this.$model('rooms').delete(null, {
-                    id: this.roomId
-                });
-            },
-            // 删除house电表
-            handleDelete(data) {
-                this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$model('house_devices')
-                        .delete({}, {
-                            projectId: this.projectId,
-                            houseId: this.house.houseId,
-                            id: data.deviceId
-                        })
-                        .then((res) => {
-                            this.queryAgain()
-                        })
-                        .catch(err => {
-                            this.$message('解绑失败')
-                        })
-                }).catch(err => {
-
-                });
-            },
-            // 删除room电表
-            handleRoomDelete(data, val) {
-                this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$model('room_devices')
-                        .delete({}, {
-                            projectId: this.projectId,
-                            houseId: this.house.houseId,
-                            roomId: this.data,
-                            id: val
-                        })
-                        .then((res) => {
-                            this.queryAgain('unbundling')
-                        })
-                }).catch(err => {
-                    this.$message('取消解绑')
-                });
-            },
-            bindEleciricity() {
-                this.dialogVisible = true
-            },
-            // 房源绑定电表
-            setEquipmentid(data) {
-                this.$model('house_devices')
-                    .update({
-                        public: '1'
-                    }, {
-                        projectId: this.projectId,
-                        houseId: this.house.houseId,
-                        id: data
-                    })
-                    .then((data) => {
-                        this.$refs.aaa.setNewList()
-                        this.queryAgain('bind')
-                    })
-                    .catch(err => {
-                        this.$message.mistake('绑定失败')
-                    })
-            },
-            choosechange() {
-                this.chooseElectricity()
-            },
-            chooseElectricity() {
-                this.$confirm('此操作将选择此电表, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$refs.aaa.changeelectricity(this.houseId)
-                    this.dialogVisible = false
-                    this.$refs.aaa.log()
-                }).catch(err => {
-
-                });
-            },
-            queryAgain(data) {
-                this.$model('housedetail')
-                    .query({
-                        houseFormat: this.houseType
-                    }, {
-                        projectId: this.projectId,
-                        id: this.house.houseId
-                    })
-                    .then(res => {
-                        this.$set(this.house, 'devices', res.devices)
-                    })
-                    .catch(err => {
-                    })
-
-            }
-        }
-    };
+import { delYTL } from '~/utils/helper';
+import conversion from '../devices/conversion.vue';
+export default {
+	props: {
+		house: Object,
+		houseType: String
+	},
+	data() {
+		return {
+			dialogVisible: false,
+			value4: true,
+			apportionment: [],
+			visibility: false,
+			loading: true
+		};
+	},
+	components: {
+		conversion
+	},
+	computed: {
+		projectId() {
+			return this.$store.state.userInfo.user.projectId;
+		}
+	},
+	created() {
+		this.query();
+		console.log(this.house);
+	},
+	methods: {
+		delDeviceYTL(val) {
+			// val?(val)=>{
+			//     console.log(val)
+			//     return delYTL(val)
+			// }:''
+			return val ? this.delDeYTL(val) : '';
+		},
+		delDeYTL(val) {
+			return delYTL(val);
+		},
+		query() {
+			this.$model('apportionment')
+				.query(
+					{},
+					{
+						projectId: this.projectId,
+						id: this.house.houseId
+					}
+				)
+				.then(res => {
+					this.$set(this, 'apportionment', res);
+					this.$set(
+						this.house,
+						'rooms',
+						this.house.rooms.map(ele => {
+							res.map(li => {
+								if (li.roomId === ele.id) {
+									if (ele.devices.length === 0) {
+										ele.devices.push({});
+										ele.devices[0].share = li;
+									} else {
+										ele.devices[0].share = li;
+									}
+								}
+							});
+							return ele;
+						})
+					);
+					this.loading = false;
+					console.log(this.house.rooms);
+				});
+		},
+		share(val) {
+			this.apportionment.forEach((element, index) => {
+				if (element.roomId === val.share.roomId) {
+					element.value = Number(val.share.value);
+				}
+			});
+		},
+		writePercent() {
+			this.visibility = true;
+		},
+		del(room) {
+			console.log(
+				this.apportionment,
+				this.apportionment.map(ele => {
+					return ele.value;
+				})
+			);
+			if (
+				eval(
+					this.apportionment
+						.map(ele => {
+							return ele.value;
+						})
+						.join('+')
+				) === 100
+			) {
+				this.$model('apportionment_put')
+					.update(this.apportionment, {
+						projectId: this.projectId,
+						houseId: this.house.houseId,
+						id: 'apportionment'
+					})
+					.then(res => {
+						this.$message.success('分摊比例更新成功');
+					})
+					.catch(err => {
+						this.$message('分摊更新失败');
+					});
+			} else {
+				this.$message('比例和不为100%，请重新输入');
+			}
+		},
+		// 删除house电表
+		handleDelete(data) {
+			this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.$model('house_devices')
+						.delete(
+							{},
+							{
+								projectId: this.projectId,
+								houseId: this.house.houseId,
+								id: data.deviceId
+							}
+						)
+						.then(res => {
+							this.queryAgain();
+						})
+						.catch(err => {
+							this.$message('解绑失败');
+						});
+				})
+				.catch(err => {});
+		},
+		// 删除room电表
+		handleRoomDelete(data, val) {
+			this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.$model('room_devices')
+						.delete(
+							{},
+							{
+								projectId: this.projectId,
+								houseId: this.house.houseId,
+								roomId: this.data,
+								id: val
+							}
+						)
+						.then(res => {
+							this.queryAgain('unbundling');
+						});
+				})
+				.catch(err => {
+					this.$message('取消解绑');
+				});
+		},
+		bindEleciricity() {
+			this.dialogVisible = true;
+		},
+		// 房源绑定电表
+		setEquipmentid(data) {
+			this.$model('house_devices')
+				.update(
+					{
+						public: '1'
+					},
+					{
+						projectId: this.projectId,
+						houseId: this.house.houseId,
+						id: data
+					}
+				)
+				.then(data => {
+					this.$refs.aaa.setNewList();
+					this.queryAgain('bind');
+				})
+				.catch(err => {
+					this.$message.mistake('绑定失败');
+				});
+		},
+		choosechange() {
+			this.chooseElectricity();
+		},
+		chooseElectricity() {
+			this.$confirm('此操作将选择此电表, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.$refs.aaa.changeelectricity(this.houseId);
+					this.dialogVisible = false;
+					this.$refs.aaa.log();
+				})
+				.catch(err => {});
+		},
+		queryAgain(data) {
+			this.$model('housedetail')
+				.query(
+					{
+						houseFormat: this.houseType
+					},
+					{
+						projectId: this.projectId,
+						id: this.house.houseId
+					}
+				)
+				.then(res => {
+					this.$set(this.house, 'devices', res.devices);
+				})
+				.catch(err => {});
+		}
+	}
+};
 </script>
 
 <style lang="less" scoped>
-    .houseInformationHeader {
-        padding: 20px;
-        background-color: #f5f7fa;
-    }
+.houseInformationHeader {
+	padding: 20px;
+	background-color: #f5f7fa;
+}
 
-    .base {
-        margin-top: 20px;
-    }
+.base {
+	margin-top: 20px;
+}
 
-    .section {
-        padding: 20px;
-        h4 {
-            margin-bottom: 20px;
-        }
-    }
+.section {
+	padding: 20px;
+	h4 {
+		margin-bottom: 20px;
+	}
+}
 
-    .setPrice {
-        .title {
-            width: 80px;
-            font-size: 14px;
-            line-height: 28px;
-        }
-        .centerRoom {
-            flex: 1;
-            span {
-                display: inline-block;
-                width: 80px;
-                line-height: 28px;
-            }
-        }
-        .write {
-            width: 102px;
-            padding: 0 10px;
-            font-size: 20px;
-            line-height: 28px;
-        }
-
-    }
+.setPrice {
+	.title {
+		width: 80px;
+		font-size: 14px;
+		line-height: 28px;
+	}
+	.centerRoom {
+		flex: 1;
+		span {
+			display: inline-block;
+			width: 80px;
+			line-height: 28px;
+		}
+	}
+	.write {
+		width: 102px;
+		padding: 0 10px;
+		font-size: 20px;
+		line-height: 28px;
+	}
+}
 </style>
 <style>
-    .el-switch {
-        height: 22px;
-    }
-    .roomDevices .el-table__header-wrapper {
-        display: none;
-    }
+.el-switch {
+	height: 22px;
+}
+.roomDevices .el-table__header-wrapper {
+	display: none;
+}
 </style>

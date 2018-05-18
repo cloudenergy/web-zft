@@ -9,8 +9,12 @@ import {
 	makePatch,
 	makeDelete
 } from '@/api';
-import { isFunc } from '~/utils';
-import { Message } from 'element-ui';
+import {
+	isFunc
+} from '~/utils';
+import {
+	Message
+} from 'element-ui';
 
 import router from '@/router';
 import axios from 'axios';
@@ -21,18 +25,18 @@ let source = CancelToken.source();
 let baseURL = '/api/v1.0';
 
 switch (process.env.NODE_ENV) {
-case 'development':
-	baseURL = '/api/v1.0';
-	break;
-case 'qa':
-	baseURL = 'https://zft-stage.cloudenergy.me/api/v1.0';
-	break;
-case 'production':
-	baseURL = 'https://api.51dianxiaoge.com/v1.0';
-	break;
-default:
-	'/api/v1.0';
-	break;
+	case 'development':
+		baseURL = '/api/v1.0';
+		break;
+	case 'qa':
+		baseURL = 'https://zft-stage.cloudenergy.me/api/v1.0';
+		break;
+	case 'production':
+		baseURL = 'https://api.51dianxiaoge.com/v1.0';
+		break;
+	default:
+		'/api/v1.0';
+		break;
 }
 
 setup({
@@ -43,7 +47,11 @@ setup({
 	},
 	interceptors: {
 		reponse(res) {
-			const { code, message, data } = res;
+			const {
+				code,
+				message,
+				data
+			} = res;
 			if (code && code !== 0) {
 				Message({
 					message: message,
@@ -58,8 +66,14 @@ setup({
 	}
 });
 
-const interceptor = function({ response, message }) {
-	const { status, data } = response || {};
+const interceptor = function ({
+	response,
+	message
+}) {
+	const {
+		status,
+		data
+	} = response || {};
 
 	if (status === 401) {
 		// source.cancel('login required.');
@@ -146,7 +160,8 @@ const apis = {
 	electric_withdraw: resource('/projects/{projectId}/withdraw/{id}'),
 	device_usage: resource('/projects/{projectId}/devices/{deviceId}/usage'),
 	manual_notifications: resource('/projects/{projectId}/manualNotifications'),
-	userInfoChange: resource('/projects/{projectId}/users')
+	userInfoChange: resource('/projects/{projectId}/users'),
+	apportionment_put: resource('/projects/{projectId}/houses/{houseId}')
 };
 
 /**
@@ -155,7 +170,7 @@ const apis = {
  * @param {object} data  query/body 参数
  * @param {object} params url 参数
  */
-export default function(entry, data, params) {
+export default function (entry, data, params) {
 	// entry - string, array, function
 
 	if (apis.hasOwnProperty(entry)) {
