@@ -123,7 +123,7 @@ export default {
 							},
 							{
 								projectId: this.projectId,
-								userId: this.contractInfo.user.id,
+								userId: this.contractInfo.userId,
 								id: 'balance'
 							}
 						)
