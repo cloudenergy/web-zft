@@ -27,6 +27,7 @@ export default {
 		if(this.roadType==='flow') {
 			// 判断路由，是否为流水页面
 			this.list.city = _.uniqBy(this.listCity.map((ele)=>{return ele.city}).map(mapper),'value')
+			console.log(this.list.city)
 		} else {
 			// 判断isForm，是否需要获取全部城市
 			if(this.isForm){
@@ -36,6 +37,7 @@ export default {
 			}
 			this.houseFormatChange('SHARE')	
 		}
+		console.log(this.list.city)
 	},
 	watch: {
 		listCity(newVal,oldVal) {

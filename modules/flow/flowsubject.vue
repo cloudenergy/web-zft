@@ -4,7 +4,7 @@
 			<el-form :inline="true" :model="formInline" class="demo-form-inline  flexc flexce" size="mini">
 				<goend @from-toTime="fromtoTime"/>
 				<tenant-way class="marsp marspa"  @change="houseFormat"/>
-				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange" :roadType="'flow'"/>
 				<div class="importres">
 					<div class="actions">
 						<!-- <el-button type="warning" size="mini">

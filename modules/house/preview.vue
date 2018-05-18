@@ -110,208 +110,228 @@
 </template>
 
 <script>
-    import { delYTL } from '~/utils/helper';
-    import conversion from '../devices/conversion.vue'
-    export default {
-        props: {
-            house: Object,
-            room: {
-                type: Object,
-                default () {
-                    return {
-                        houseType: {},
-                        devcies: [{
-                            part: '门锁',
-                            room: '1021',
-                            id: '12132013'
-                        }],
-                        bills: [{
-                            name: '租金',
-                            amount: '1400',
-                            period: '一月一付'
-                        }]
-                    };
-                }
-            }
-        },
-        data() {
-            return {
-                dialogVisible: false,
-                value4: true,
-                reqData: {
-                    roomId: this.room.id
-                },
-                num: 30
-            }
-        },
-        components: {
-            conversion
-        },
-        created() {
-            if (this.room.contract.from !== undefined) {
-                
-                this.contracts[0].rent = this.room.contract.rent
-                this.contracts[0].to = this.room.contract.to
-                this.contracts[0].from = this.room.contract.from
-                this.contracts[0].price = this.house.prices.length!==0?this.house.prices[0].price:0
-                this.$model('contracts_info')
-				.query({}, {
+import { delYTL } from '~/utils/helper';
+import conversion from '../devices/conversion.vue';
+export default {
+	props: {
+		house: Object,
+		room: {
+			type: Object,
+			default() {
+				return {
+					houseType: {},
+					devcies: [
+						{
+							part: '门锁',
+							room: '1021',
+							id: '12132013'
+						}
+					],
+					bills: [
+						{
+							name: '租金',
+							amount: '1400',
+							period: '一月一付'
+						}
+					]
+				};
+			}
+		}
+	},
+	data() {
+		return {
+			dialogVisible: false,
+			value4: true,
+			reqData: {
+				roomId: this.room.id
+			},
+			num: 30
+		};
+	},
+	components: {
+		conversion
+	},
+	created() {
+		if (this.room.contract.from !== undefined) {
+			console.log(this.house);
+			this.contracts[0].rent = this.room.contract.rent;
+			this.contracts[0].to = this.room.contract.to;
+			this.contracts[0].from = this.room.contract.from;
+			this.contracts[0].price =
+				this.house.prices.length !== 0 ? this.house.prices[0].price : 0;
+			this.$model('contracts_info')
+				.query(
+					{},
+					{
+						projectId: this.projectId,
+						contractId: this.room.contract.id
+					}
+				)
+				.then(res => {
+					console.log(res);
+					this.contracts[0].price = res.expenses[0].rent;
+					this.contracts[0].bond = res.strategy.bond;
+					this.contracts[0].freq = res.strategy.freq.pattern;
+				})
+				.catch(err => {});
+		}
+	},
+	computed: {
+		projectId() {
+			return this.$store.state.userInfo.user.projectId;
+		},
+		contracts() {
+			return this.room.contract.from ? [{ bond: '-', freq: '1' }] : [];
+		}
+	},
+	methods: {
+		date(val) {
+			return format(new Date(val * 1000), 'YYYY-MM-DD');
+		},
+		delDeviceYTL(val) {
+			return delYTL(val);
+		},
+		electricSwitch(data) {
+			return data.status.switch === 'EMC_ON';
+		},
+		eleciricitySwitch(data) {
+			if (data) {
+				this.reqData.mode = 'EMC_ON';
+			} else {
+				this.reqData.mode = 'EMC_OFF';
+			}
+			this.$model('electricity_instructions')
+				.patch(this.reqData, {
 					projectId: this.projectId,
-					contractId: this.room.contract.id
+					id: 'switch'
 				})
 				.then(res => {
-                    this.contracts[0].bond = res.strategy.bond
-                    this.contracts[0].freq = res.strategy.freq.pattern
+					this.$message.success('成功');
+				});
+		},
+		del(room) {
+			this.$model('rooms').delete(null, {
+				id: this.roomId
+			});
+		},
+		// 解绑设备
+		handleDelete(data) {
+			this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.$model('room_devices')
+						.delete(
+							{},
+							{
+								projectId: this.projectId,
+								houseId: this.house.houseId,
+								roomId: this.room.id,
+								id: data.deviceId
+							}
+						)
+						.then(res => {
+							this.queryAgain('unbundling');
+						});
 				})
 				.catch(err => {
+					this.$message('取消解绑');
 				});
-            }
-        },
-        computed: {
-            projectId() {
-                return this.$store.state.userInfo.user.projectId;
-            },
-            contracts() {
-                return this.room.contract.from?[{'bond':'-','freq':'1'}]:[]
-            }
-        },
-        methods: {
-            date(val) {
-				return format(new Date(val*1000),'YYYY-MM-DD')
-			},
-            delDeviceYTL(val) {
-                return delYTL(val)
-            },
-            electricSwitch(data) {
-                return data.status.switch === 'EMC_ON'
-            },
-            eleciricitySwitch(data) {
-                if (data) {
-                    this.reqData.mode = 'EMC_ON'
-                } else {
-                    this.reqData.mode = 'EMC_OFF'
-                }
-                this.$model('electricity_instructions')
-                    .patch(this.reqData, {
-                        projectId: this.projectId,
-                        id: 'switch'
-                    })
-                    .then(res => {
-                        this.$message.success('成功')
-                    })
-            },
-            del(room) {
-                this.$model('rooms').delete(null, {
-                    id: this.roomId
-                });
-            },
-            // 解绑设备
-            handleDelete(data) {
-                this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$model('room_devices')
-                        .delete({}, {
-                            projectId: this.projectId,
-                            houseId: this.house.houseId,
-                            roomId: this.room.id,
-                            id: data.deviceId
-                        })
-                        .then((res) => {
-                            this.queryAgain('unbundling')
-                        })
-                }).catch(err => {
-                    this.$message('取消解绑')
-                });
-            },
-            bindEleciricity() {
-                this.dialogVisible = true
-            },
-            // 添加设备
-            setEquipmentid(data) {
-                this.$model('room_devices')
-                    .update({}, {
-                        projectId: this.projectId,
-                        houseId: this.house.houseId,
-                        roomId: this.room.id,
-                        id: data
-                    })
-                    .then((data) => {
-                        this.$refs.aaa.setNewList()
-                        this.queryAgain('bind')
-                    })
-                    .catch(err => {
-                        this.$message.mistake('绑定失败')
-                    })
-            },
-            choosechange() {
-                this.chooseElectricity()
-            },
-            chooseElectricity() {
-                this.$confirm('此操作将选择此电表, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$refs.aaa.changeelectricity(this.houseId)
-                    this.dialogVisible = false
-                    this.$refs.aaa.log()
-                }).catch(err => {
-
-                });
-            },
-            // 请求房间信息
-            queryAgain(data) {
-                this.$model('room_detail')
-                .query({}, {
-                    projectId: this.projectId,
-                    houseId: this.house.houseId,
-                    roomId: this.room.id
-                })
-                .then(res => {
-                    this.$message.success('操作成功')
-                    if(res.devices.length!==0) {
-                        this.$set(this.room,'devices',res.devices)
-                        
-                    }else {
-                        this.$set(this.room,'devices',[])
-                    }
-                    
-                })
-            },
-            date(data) {
-                return new Date(parseInt(data) * 1000).toLocaleDateString().replace(/\//g, "-")
-            },
-            price(data) {
-                return (data / 100).toFixed(2)
-            }
-        }
-    };
+		},
+		bindEleciricity() {
+			this.dialogVisible = true;
+		},
+		// 添加设备
+		setEquipmentid(data) {
+			this.$model('room_devices')
+				.update(
+					{},
+					{
+						projectId: this.projectId,
+						houseId: this.house.houseId,
+						roomId: this.room.id,
+						id: data
+					}
+				)
+				.then(data => {
+					this.$refs.aaa.setNewList();
+					this.queryAgain('bind');
+				})
+				.catch(err => {
+					this.$message.mistake('绑定失败');
+				});
+		},
+		choosechange() {
+			this.chooseElectricity();
+		},
+		chooseElectricity() {
+			this.$confirm('此操作将选择此电表, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					this.$refs.aaa.changeelectricity(this.houseId);
+					this.dialogVisible = false;
+					this.$refs.aaa.log();
+				})
+				.catch(err => {});
+		},
+		// 请求房间信息
+		queryAgain(data) {
+			this.$model('room_detail')
+				.query(
+					{},
+					{
+						projectId: this.projectId,
+						houseId: this.house.houseId,
+						roomId: this.room.id
+					}
+				)
+				.then(res => {
+					this.$message.success('操作成功');
+					if (res.devices.length !== 0) {
+						this.$set(this.room, 'devices', res.devices);
+					} else {
+						this.$set(this.room, 'devices', []);
+					}
+				});
+		},
+		date(data) {
+			return new Date(parseInt(data) * 1000)
+				.toLocaleDateString()
+				.replace(/\//g, '-');
+		},
+		price(data) {
+			return (data / 100).toFixed(2);
+		}
+	}
+};
 </script>
 
 <style lang="less" scoped>
-    .backgroundGray {
-        background-color: #f5f7fa;
-    }
-    .previewRoom {
-        padding:30px
-    }
-    .base {
-        margin-top: 20px;
-    }
+.backgroundGray {
+	background-color: #f5f7fa;
+}
+.previewRoom {
+	padding: 30px;
+}
+.base {
+	margin-top: 20px;
+}
 
-    .section {
-        margin-bottom: 30px;
+.section {
+	margin-bottom: 30px;
 
-        h4 {
-            margin-bottom: 20px;
-        }
-    }
+	h4 {
+		margin-bottom: 20px;
+	}
+}
 </style>
 <style>
-    .el-switch {
-        height: 22px;
-    }
+.el-switch {
+	height: 22px;
+}
 </style>

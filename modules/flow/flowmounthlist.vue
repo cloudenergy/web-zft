@@ -113,122 +113,129 @@
 </template>
 
 <script>
-	import _ from 'lodash'
-	export default {
-		props:{
-			monthFlows: {
-				type:Array
-			},
-			reqData: {
-				type:Object
-			}
+import _ from 'lodash';
+export default {
+	props: {
+		monthFlows: {
+			type: Array
 		},
-		computed: {
-			projectId () {
-				return this.$store.state.userInfo.user.projectId
-			}	
+		reqData: {
+			type: Object
+		}
+	},
+	computed: {
+		projectId() {
+			return this.$store.state.userInfo.user.projectId;
+		}
+	},
+	data() {
+		return {
+			upflowi: 0
+		};
+	},
+	mounted() {},
+	methods: {
+		price(val) {
+			return typeof val === 'number' ? (val / 100).toFixed(2) : val;
 		},
-		data() {
-			return {
-				upflowi:0
-			}
-		},
-		mounted() {
-
-		},
-		methods: {
-			price(val) {
-				return typeof val===Number?(val/100).toFixed(2):val
-			},
-			handleRowHandle(row) {
-				let index = _.indexOf(this.monthFlows, row)
-				let houseQuery = this.reqData
-				houseQuery.housesInLocation = row.id
-				if(row.housesInLocation) {
-					if (row.id !== this.upflowi) {
-                        this.toggle(row.id)
-                        if (this.upflowi !== 0) {
-                            this.toggle(this.upflowi)
-                            this.upflowi = row.id
-                        }
-                    } else {
-                        this.toggle(row.id)
-                    }
-				}else {
-					this.$model('flow_month')
-                        .query(houseQuery, {
-                            projectId: this.projectId
-                        })
-                        .then(res => {
-                            this.monthFlows[index].housesInLocation = res
-                            // 改造失败
-                            res.forEach((ele, num) => {
-                                this.$model('housedetail')
-                                    .query({
-                                        houseFormat: 'SHARE'
-                                    }, {
-                                        projectId: this.projectId,
-                                        id: ele.id
-                                    })
-                                    .then(data => {
-                                        this.$set(this.monthFlows[index].housesInLocation[num],'location', data)
-                                        if (num === 0) {
-                                            if (row.id !== this.upflowi) {
-                                                this.toggle(row.id)
-                                                if (this.upflowi !== 0) {
-                                                    this.toggle(this.upflowi)
-                                                    this.upflowi = row.id
-                                                }
-                                            } else {
-                                                this.toggle(row.id)
-                                            }
-                                        }
-                                    })
-                                    .catch(err => {
-                                    })
-                            })
-                        })
-                        .catch(err => {
-                        });
+		handleRowHandle(row) {
+			let index = _.indexOf(this.monthFlows, row);
+			let houseQuery = this.reqData;
+			houseQuery.housesInLocation = row.id;
+			if (row.housesInLocation) {
+				if (row.id !== this.upflowi) {
+					this.toggle(row.id);
+					if (this.upflowi !== 0) {
+						this.toggle(this.upflowi);
+						this.upflowi = row.id;
+					}
+				} else {
+					this.toggle(row.id);
 				}
-			},
-			toggle(flowi) {
-                this.$refs.tableData.toggleRowExpansion(this.monthFlows.find(d => d.id === flowi))
-            },
+			} else {
+				this.$model('flow_month')
+					.query(houseQuery, {
+						projectId: this.projectId
+					})
+					.then(res => {
+						this.monthFlows[index].housesInLocation = res;
+						// 改造失败
+						res.forEach((ele, num) => {
+							this.$model('housedetail')
+								.query(
+									{
+										houseFormat: 'SHARE'
+									},
+									{
+										projectId: this.projectId,
+										id: ele.id
+									}
+								)
+								.then(data => {
+									this.$set(
+										this.monthFlows[index].housesInLocation[
+											num
+										],
+										'location',
+										data
+									);
+									if (num === 0) {
+										if (row.id !== this.upflowi) {
+											this.toggle(row.id);
+											if (this.upflowi !== 0) {
+												this.toggle(this.upflowi);
+												this.upflowi = row.id;
+											}
+										} else {
+											this.toggle(row.id);
+										}
+									}
+								})
+								.catch(err => {});
+						});
+					})
+					.catch(err => {});
+			}
+		},
+		toggle(flowi) {
+			this.$refs.tableData.toggleRowExpansion(
+				this.monthFlows.find(d => d.id === flowi)
+			);
 		}
 	}
+};
 </script>
 
 
 <style lang="less">
-	.monthList .el-table__expanded-cell{
-		padding: 20px 0 20px 48px;
-		color: #9b9b9b;
-        background: #f5f7fa;
-        .el-table__row {
-            background: #f5f7fa;
-        }
-        .el-table,
-        .el-table__expanded-cell {
-            background: #f5f7fa;
-        }
+.monthList .el-table__expanded-cell {
+	padding: 20px 0 20px 48px;
+	color: #9b9b9b;
+	background: #f5f7fa;
+	.el-table__row {
+		background: #f5f7fa;
 	}
+	.el-table,
+	.el-table__expanded-cell {
+		background: #f5f7fa;
+	}
+}
 </style>
 
 <style lang="less" scoped>
-    .housesInLocation>div>div:not(:first-child) {
-        flex: 1;
-        padding: 0 10px;
-        span {
-            flex: 1;
-        }
+.housesInLocation > div > div:not(:first-child) {
+	flex: 1;
+	padding: 0 10px;
+	span {
+		flex: 1;
 	}
-	.housesInLocation {
-		>div>div:first-child {
-			width: 200px;
-		}
-		.flowMounthLocation{
-			line-height: 18px
-		}
+}
+.housesInLocation {
+	> div > div:first-child {
+		width: 200px;
 	}
+	.flowMounthLocation {
+		line-height: 18px;
+	}
+}
 </style>

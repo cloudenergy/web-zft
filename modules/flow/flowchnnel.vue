@@ -8,7 +8,7 @@
 				<tenant-way class="marsp marspa" />
 				<ofpayments class="marsp marspa" />
 				<water-source class="marsp marspa" />
-				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange" :roadType="'flow'"/>
 				<div class="importres">
 					<div class="actions">
 					</div>

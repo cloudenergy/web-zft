@@ -6,7 +6,7 @@
 				<ofpayments class="marsp marspa" @change="ofpayments"/>
 				<mounth class="marsp marspa"  @change="yearChange"/>
 				<water-source class="marsp marspa" />
-				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange"/>
+				<city-area style="width:220px" class="flexce" @cityChange="cityChange" @change="areaChange" :roadType="'flow'"/>
 				<div class="importres">
 					<!-- <div class="actions">
 						<el-button type="warning" size="mini">
