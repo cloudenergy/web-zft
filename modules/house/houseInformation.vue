@@ -41,7 +41,7 @@
                 </span>
             </h4>
             <div class="roomDevices" v-loading = 'loading'>
-                <div v-for="(item, index) in this.house.rooms" :key='item.id'>
+                <div v-for="(item) in this.house.rooms" :key='item.id'>
                     <el-table :data="item.devices" style="width: 100%">
                         <el-table-column label="房间号">
                             <template slot-scope="scope">
@@ -194,9 +194,11 @@ export default {
 					})
 					.then(res => {
 						this.$message.success('分摊比例更新成功');
+						this.query();
 					})
 					.catch(err => {
 						this.$message('分摊更新失败');
+						this.query();
 					});
 			} else {
 				this.$message('比例和不为100%，请重新输入');
