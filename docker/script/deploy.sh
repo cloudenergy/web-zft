@@ -1,7 +1,7 @@
 #! /bin/bash
 
 IMAGE_VERSION=${1:-latest}
-REPO=registry.cn-hangzhou.aliyuncs.com/em_test/web-zft
+REPO=registry.docker-cn.com/kpse/web-zft
 docker pull $REPO:$IMAGE_VERSION
 
 echo "start deploy ..."

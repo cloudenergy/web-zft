@@ -2,7 +2,7 @@
 
 set -e
 
-REPO=registry.cn-hangzhou.aliyuncs.com/em_test/web-zft
+REPO=kpse/web-zft
 
 if [ $# -lt 1 ]; then
   echo "Usage: ./publish.sh <docker image version>"
