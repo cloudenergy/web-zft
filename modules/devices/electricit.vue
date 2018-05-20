@@ -63,7 +63,7 @@
                 <template slot-scope="scope">
                     <span>{{ scope.row.location.district }}{{ scope.row.location.name }}</span>
                     <br>
-                    <span style="margin-top:5px">{{ scope.row.building }}幢{{ scope.row.unit }}单元{{ scope.row.roomNumber }} {{scope.row.unit}}</span>
+                    <span style="margin-top:5px">{{ scope.row.building }}幢{{ scope.row.unit }}单元{{ scope.row.roomNumber }}室 <span>{{(scope.row.roomName?scope.row.roomName:'公区')}}</span></span>
                     <br>
                 </template>
             </el-table-column>
