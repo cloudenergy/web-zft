@@ -78,12 +78,12 @@
             </span>
         </el-dialog>
 
-        <!-- <el-dialog title="设置分摊方式" :visible.sync="visibility" width="40%" append-to-body>
+        <el-dialog title="设置分摊方式" :visible.sync="visibility" width="40%" append-to-body>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="visibility = false">取 消</el-button>
                 <el-button type="primary" @click="visibility = false">确 定</el-button>
             </span>
-        </el-dialog> -->
+        </el-dialog>
 
     </div>
 </template>
@@ -177,6 +177,7 @@ export default {
 					return ele.value;
 				})
 			);
+			console.log('this.apportionment', f.sum('value')(this.apportionment));
 			if (
 				eval(
 					this.apportionment
