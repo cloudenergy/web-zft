@@ -58,6 +58,7 @@
 
 <script>
 	import format from 'date-fns/format'
+	import fp from 'lodash/fp'
 	export default {
 		props: {
 			form: {
@@ -83,7 +84,7 @@
 		created() {
 			this.$store
 				.dispatch('GET_OTHERCOST')
-				.then(data => (this.otherCost = data));
+				.then(data => (this.otherCost = fp.filter(fp.get('enabled'))(data)));
 		},
 		data() {
 			return {

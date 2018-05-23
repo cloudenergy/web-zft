@@ -76,18 +76,13 @@
 		watch: {
 			otherCost(newVal, oldVal) {
 				this.form.expense.extra = newVal.map((ele, index) => {
-					var extraCost = {
+					return {
 						configId: ele.id,
 						name: ele.key,
 						type: 'extra',
 						rent: '',
 						pattern: 'withRent'
 					}
-					if (extraCost.name === "电费") {
-						extraCost.pattern = "prepaid"
-					}
-					
-					return extraCost
 				})
 			}
 		},
@@ -138,15 +133,6 @@
 				this.form.expense.standard.pattern = this.contractInfo.strategy.freq.pattern.toString()
 				this.form.expense.bond = this.contractInfo.strategy.bond/100
 				this.form.user.documentType = 1
-				this.contractInfo.expenses.forEach(element => {
-					switch(element.configId)
-					{
-						case 1041:
-							this.$set(this.form.expense.extra[0],'pattern',element.pattern)
-							this.$set(this.form.expense.extra[0],'rent',(element.rent/100).toFixed(2))
-						break;
-					}
-				});
 				this.showUser = true
 				this.loading = false
 			},
@@ -207,13 +193,7 @@
 							rent: 360,
 							pattern: '1'
 						},
-						extra: [{
-								configId: 1041,
-								name: '电费',
-								type: 'extra',
-								rent: 1.2,
-								pattern: 'prepaid'
-							},
+						extra: [
 							{
 								configId: 1043,
 								name: '水费',

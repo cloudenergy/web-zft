@@ -54,6 +54,7 @@
 
 <script>
     import billCollection from './bill-collection.vue'
+    import fp from 'lodash/fp'
     import {
         differentTime
     } from '../../utils/date.js'
@@ -148,7 +149,7 @@
             query() {
                 this.$store
                     .dispatch('GET_OTHERCOST')
-                    .then(data => (this.otherCost = data));
+                    .then(data => (this.otherCost = fp.filter(fp.get('enabled'))(data)));
             },
             chooseTime(data) {
                 return Date.parse(differentTime(data * 1000)) / 1000

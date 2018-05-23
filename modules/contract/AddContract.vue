@@ -7,7 +7,7 @@
 			<ContractDetail :contract="form.contract"></ContractDetail>
 
 			<h3 class="section-2">租费设置</h3>
-			<ExpenseSetting :expense="form.expense" :otherCost='otherCost'></ExpenseSetting>
+			<ExpenseSetting :expense="form.expense" :enabledExtras='availableExtras'></ExpenseSetting>
 		</el-form>
 		<div class="dialog-footer" slot="footer">
 			<el-button @click="closeDialog()">取 消</el-button>
@@ -44,27 +44,14 @@ export default {
 		}
 	},
 	watch: {
-		otherCost(newVal, oldVal) {
-			this.form.expense.extra = newVal.map((ele, index) => {
-				var extraCost = {
-					configId: ele.id,
-					name: ele.key,
-					type: 'extra',
-					rent: '',
-					pattern: 'withRent'
-				};
-				if (extraCost.name === '电费') {
-					extraCost.pattern = 'prepaid';
-					if (this.itemHouse && this.itemHouse.prices.length !== 0) {
-						this.itemHouse.prices.forEach((element, index) => {
-							if (element.type === 'ELECTRIC') {
-								extraCost.rent = element.price / 100;
-							}
-						});
-					}
-				}
-				return extraCost;
-			});
+		availableExtras(newVal, oldVal) {
+			this.form.expense.extra = newVal.map((ele,) => ({
+				configId: ele.id,
+				name: ele.key,
+				type: 'extra',
+				rent: '',
+				pattern: 'withRent'
+			}));
 		}
 	},
 	created() {
@@ -75,7 +62,7 @@ export default {
 		return {
 			form: this.newModel(today),
 			configList: [],
-			otherCost: []
+			availableExtras: []
 		};
 	},
 	mounted() {
@@ -99,7 +86,9 @@ export default {
 		query() {
 			this.$store
 				.dispatch('GET_OTHERCOST')
-				.then(data => (this.otherCost = data));
+				.then(data => {
+					this.availableExtras = fp.filter(fp.get('enabled'))(data)
+				});
 		},
 		submitForm(formName) {
 			this.$refs[formName].validate(valid => {
@@ -162,18 +151,7 @@ export default {
 						projectId: this.projectId,
 						houseId: data
 					}
-				)
-				.then(res => {
-					res.price.forEach((item, index) => {
-						if (item.type === 'ELECTRIC') {
-							this.form.expense.extra.forEach((ele, list) => {
-								if (ele.configId === 1041) {
-									ele.rent = item.price / 100;
-								}
-							});
-						}
-					});
-				});
+				);
 		},
 		newModel(today) {
 			return {
@@ -203,22 +181,13 @@ export default {
 						rent: 3600,
 						pattern: '1'
 					},
-					extra: [
-						{
-							configId: 1041,
-							name: '电费',
-							type: 'extra',
-							rent: 1.2,
-							pattern: 'prepaid'
-						},
-						{
-							configId: 1043,
-							name: '水费',
-							type: 'extra',
-							rent: 20,
-							pattern: '1'
-						}
-					],
+					extra: [{
+						configId: 1043,
+						name: '冷水费',
+						type: 'extra',
+						rent: '',
+						pattern: 'withRent'
+					}],
 					bond: 2600
 				}
 			};

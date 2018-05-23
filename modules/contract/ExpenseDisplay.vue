@@ -46,10 +46,6 @@
 			}
 		},
 		mounted() {
-			while (this.expense.name === '电费') {
-				this.payWay[1].label = '元/度'
-				break
-			}
 		},
 		data() {
 			return {
@@ -83,10 +79,6 @@
 				payWay: [{
 						label: '元/天',
 						value: '1'
-					},
-					{
-						label: '元/m³',
-						value: '2'
 					}
 				]
 			}
