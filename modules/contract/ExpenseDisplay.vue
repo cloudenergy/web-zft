@@ -13,13 +13,7 @@
 				<div class="select-with-label el-input-group">
 					<el-input placeholder="" v-model="expense.rent">
 					</el-input>
-					<span class="el-input-group__append" v-if="expense.pattern!=='prepaid'">元/月</span>
-					<span class="el-input-group__append" v-if="expense.pattern==='prepaid'">
-						<el-select v-model="payway" placeholder="请选择" style="width:69px" @change="deductionDate">
-							<el-option v-for="item in payWay" :key="item.value" :label="item.label" :value="item.value">
-							</el-option>
-						</el-select>
-					</span>
+					<span class="el-input-group__append">元/月</span>
 				</div>
 			</el-col>
 		</el-row>
@@ -85,9 +79,6 @@
 		},
 		methods: {
 			setWay(data) {
-				if (data === 'prepaid') {
-
-				}
 			},
 			deductionDate(data) {
 				if (data !== "1") {
