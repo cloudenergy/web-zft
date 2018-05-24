@@ -175,7 +175,7 @@ export default {
 				},
 				expense: {
 					billPlan: '-',
-					offset: 2,
+					offset: null,
 					standard: {
 						name: '常规租金',
 						rent: 3600,

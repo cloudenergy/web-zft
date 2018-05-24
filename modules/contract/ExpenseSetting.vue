@@ -93,7 +93,7 @@
 			},
 			currentPlan() {
 				return _.find(this.availablePlans, p => p.plan === this.expense.billPlan);
-			}
+			},
 		},
 		data() {
 			return {
@@ -138,6 +138,11 @@
 			},
 			chooseCost() {
 				this.innerVisible = false;
+			}
+		},
+		watch: {
+			currentPlan() {
+				this.expense.offset = null;
 			}
 		}
 	}
