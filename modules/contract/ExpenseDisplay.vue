@@ -13,7 +13,7 @@
 				<div class="select-with-label el-input-group">
 					<el-input placeholder="" v-model="expense.rent">
 					</el-input>
-					<span class="el-input-group__append">元/月</span>
+					<span class="el-input-group__append">{{unitOf(expense.pattern)}}</span>
 				</div>
 			</el-col>
 		</el-row>
@@ -46,39 +46,41 @@
 				payway: '2',
 				standardMethods: [{
 					name: '一月一付',
-					key: '1'
+					key: '1',
 				}, {
 					name: '两月一付',
-					key: '2'
+					key: '2',
 				}, {
 					name: '三月一付',
-					key: '3'
+					key: '3',
 				}, {
 					name: '半年一付',
-					key: '6'
+					key: '6',
 				}, {
 					name: '一年一付',
-					key: '12'
+					key: '12',
 				}, {
 					name: '一次付清',
-					key: 'paidOff'
+					key: 'paidOff',
+					unit: '元'
 				}],
 				payWithRent: [{
 					name: '预付费',
-					key: 'prepaid'
+					key: 'prepaid',
+					unit: '元'
 				}, {
 					name: '随租金付',
-					key: 'withRent'
-				}],
-				payWay: [{
-						label: '元/天',
-						value: '1'
-					}
-				]
+					key: 'withRent',
+				}]
 			}
 		},
 		methods: {
+			unitOf(pattern) {
+				const method = fp.find(fp.pipe(fp.get('key'), fp.eq(pattern)))(this.paymentMethods);
+				return fp.getOr('元/月')('unit')(method);
+			},
 			setWay(data) {
+
 			},
 			deductionDate(data) {
 				if (data !== "1") {
