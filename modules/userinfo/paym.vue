@@ -63,7 +63,7 @@ export default {
 		return {
 			form: {
 				price: '',
-				region: 1,
+				region: null,
 				desc: ''
 			},
 			payRoad: '',
