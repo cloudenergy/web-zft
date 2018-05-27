@@ -33,7 +33,7 @@
                         <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="设备备注" min-width="120">
+                <el-table-column prop="memo" label="设备备注" min-width="120">
                 </el-table-column>
                 <el-table-column prop="deviceId" label="读数">
                     <template slot-scope="scope">

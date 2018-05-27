@@ -19,7 +19,7 @@
             <el-table :data="house.devices" stripe>
                 <el-table-column prop="deviceId" label="ID" width="150">
                 </el-table-column>
-                <el-table-column prop="title" label="设备备注" min-width="200">
+                <el-table-column prop="memo" label="设备备注" min-width="200">
                 </el-table-column>
                 <el-table-column label="通讯状态" width="100">
                     <template slot-scope="scope">
