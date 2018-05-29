@@ -45,11 +45,14 @@
 				<div class="section-label">押金</div>
 			</el-col>
 			<el-col :span="21">
-				<el-col :span="9">
-					<el-input placeholder="押金" v-model="expense.bond">
-						<icon slot="suffix" class="el-input__icon icon-renminbi" style="font-size:20px"></icon>
-						<template slot="prepend">常规押金</template>
-					</el-input>
+				<el-col :span="7">
+					<div class="select-with-label el-input-group">
+						<span class="el-input-group__prepend">常规押金</span>
+						<el-input-number :controls="false" placeholder="押金" :precision="0" :step="1" v-model="expense.bond">
+							<icon slot="suffix" class="el-input__icon icon-renminbi" style="font-size:20px"></icon>
+						</el-input-number>
+						<span class="el-input-group__append">元</span>
+					</div>
 				</el-col>
 			</el-col>
 		</el-row>
@@ -149,6 +152,9 @@
 </script>
 
 <style lang="less" scoped>
+	.el-input-number--mini {
+		width: 100px;
+	}
 	.section-label {
 		margin-top: 4px;
 	}
@@ -172,6 +178,7 @@
 	.extra-rent-row {
 		margin-top: 18px;
 	}
+
 </style>
 
 <style lang="less">

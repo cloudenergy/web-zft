@@ -11,7 +11,7 @@
 			</el-col>
 			<el-col :span="9">
 				<div class="select-with-label el-input-group">
-					<el-input-number :controls="false" label="aaa" placeholder="请数额入金额，精确到0.00" :precision="2" :step="0.1" :max="9999" v-model="expense.rent">
+					<el-input-number :controls="false" placeholder="请数额入金额，精确到0.00" :precision="2" :step="0.1" v-model="expense.rent">
 					</el-input-number>
 					<span class="el-input-group__append">{{unitOf(expense.pattern)}}</span>
 				</div>
