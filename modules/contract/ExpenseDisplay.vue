@@ -11,8 +11,8 @@
 			</el-col>
 			<el-col :span="9">
 				<div class="select-with-label el-input-group">
-					<el-input placeholder="" v-model="expense.rent">
-					</el-input>
+					<el-input-number :controls="false" label="aaa" placeholder="请数额入金额，精确到0.00" :precision="2" :step="0.1" :max="9999" v-model="expense.rent">
+					</el-input-number>
 					<span class="el-input-group__append">{{unitOf(expense.pattern)}}</span>
 				</div>
 			</el-col>
@@ -67,7 +67,7 @@
 				payWithRent: [{
 					name: '预付费',
 					key: 'prepaid',
-					unit: '元'
+					unit: '元/天'
 				}, {
 					name: '随租金付',
 					key: 'withRent',
@@ -92,3 +92,14 @@
 		}
 	}
 </script>
+
+<style lang="less" scoped>
+
+	.el-input-number--mini {
+		width: 173px;
+	}
+
+	.el-input-group__append {
+		width: 69px;
+	}
+</style>
