@@ -10,6 +10,7 @@
 			<template slot-scope="scope">
 				<span v-if="scope.row.type==='ELECTRICITY'&&scope.row.share===100">个人电费</span>
 				<span v-if="scope.row.type==='ELECTRICITY'&&scope.row.share!==100">公摊电费</span>
+				<span v-if="scope.row.type==='DAILYPREPAID'">每日预付费</span>
 			</template>
 		</el-table-column>
 		<el-table-column label="金额(￥)">
