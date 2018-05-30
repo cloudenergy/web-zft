@@ -13,19 +13,20 @@
 				<span v-if="scope.row.type==='DAILYPREPAID'">每日预付费</span>
 			</template>
 		</el-table-column>
-		<el-table-column label="金额(￥)">
+		<el-table-column prop="scale" label="扣费类型">
 			<template slot-scope="scope">
-				<span>{{ price(scope.row.amount) }}</span>
+				<span>{{ scope.row.configName }}</span>
 			</template>
 		</el-table-column>
-		<el-table-column prop="scale" label="读数(Kwh)">
+		<el-table-column label="消费金额">
 			<template slot-scope="scope">
-				<span>{{ dosage(scope.row.scale) }}</span>
+				<span class="red">{{ price(scope.row.amount) }}</span>
 			</template>
 		</el-table-column>
-		<el-table-column prop="usage" label="用量(Kwh)">
+
+		<el-table-column prop="usage" label="剩余金额">
 			<template slot-scope="scope">
-				<span>{{ dosage(scope.row.usage) }}</span>
+				<span :class="colorOf(scope.row.balance)">{{ price(scope.row.balance) }}</span>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -60,7 +61,7 @@
 				}
 			}
 		},
-		created() {
+		mounted() {
 			this.query()
 		},
 		methods: {
@@ -87,7 +88,20 @@
 			},
 			price(data) {
 				return (data / 100).toFixed(2)
+			},
+			colorOf(balance) {
+				return balance < 0 ? 'red' : 'black';
 			}
 		}
 	}
 </script>
+
+<style scoped lang="less">
+
+	.red {
+		color: #F03D53;
+	}
+	.black {
+		color: #303133;
+	}
+</style>
