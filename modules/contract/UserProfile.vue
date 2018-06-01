@@ -14,7 +14,7 @@
 				<el-form-item prop="user.accountName" :rules="[
       						{ required: true, message: '请输入账号', trigger: 'blur' }
     					]">
-					<el-input class="form-input" placeholder="必填(建议手机号)" v-model="user.accountName">
+					<el-input class="form-input" placeholder="必填(建议手机号)" v-model="user.accountName" maxlength="13">
 						<template slot="prepend">账号</template>
 					</el-input>
 				</el-form-item>
@@ -45,7 +45,7 @@
 				</el-select>
 			</el-col>
 			<el-col :span="11">
-				<el-input placeholder="证件号(选填)" v-model="user.documentId">
+				<el-input placeholder="证件号(选填)" v-model="user.documentId" :maxlength="fieldLengthOf(user.documentType)">
 				</el-input>
 			</el-col>
 		</el-row>
@@ -53,14 +53,14 @@
 </template>
 
 <script>
-	import _ from 'lodash'
+	import fp from 'lodash/fp'
 
 	export default {
 		props: {
 			user: {
 				type: Object,
 				required: true,
-				validator: value => _.includes(_.range(1, 9), value.documentType) && _.includes(['M', 'F'], value.gender)
+				validator: value => fp.includes(value.documentType)(fp.range(1, 9)) && fp.includes(value.gender)(['M', 'F'])
 			}
 		},
 		data() {
@@ -78,27 +78,7 @@
 				idTypes: [{
 					id: 1,
 					name: '身份证',
-				}, {
-					id: 2,
-					name: '护照',
-				}, {
-					id: 3,
-					name: '港澳通行证',
-				}, {
-					id: 4,
-					name: '台胞证',
-				}, {
-					id: 5,
-					name: '居住证',
-				}, {
-					id: 6,
-					name: '临时居住证',
-				}, {
-					id: 7,
-					name: '营业执照',
-				}, {
-					id: 8,
-					name: '其他证件',
+					length: 18
 				}],
 				rules: {
 					mobile: [{
@@ -109,7 +89,9 @@
 			}
 		},
 		methods:{
-			
+			fieldLengthOf() {
+				return 18;
+			}
 		}
 
 	}
