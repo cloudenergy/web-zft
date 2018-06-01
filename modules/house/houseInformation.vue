@@ -124,7 +124,7 @@ export default {
 	},
 	methods: {
 		onlyOneRoom() {
-			return this.house.rooms.length === 1;
+			return this.apportionment.length === 1;
         },
 		delDeviceYTL(val) {
 			// val?(val)=>{

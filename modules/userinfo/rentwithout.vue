@@ -10,7 +10,9 @@
                     <span class="gray" :style="{color:userInfo.cashAccount.balance<0?'#f03d53':'#000'}"> {{price(userInfo.cashAccount.balance)}}元</span>
                 </el-form-item>
                 <el-form-item label="未付账单">
-                    <span class="gray" v-for="item in contractbill" :key="item.endDate"> <span v-if="item.type==='rent'">押金{{item.index}}期</span><span v-if="item.type==='bond'">租金</span>{{price(item.dueAmount)}}元 </span>
+                    <span class="gray" v-for="item in contractbill" :key="item.id">
+                        <span v-if="item.type==='rent'">押金{{item.index}}期</span>
+                        <span v-if="item.type==='bond'">租金</span>{{price(item.dueAmount)}}元 </span>
                 </el-form-item>
                 <el-form-item label="结算类型">
                     <el-radio-group v-model="radio">
@@ -37,7 +39,7 @@
                 <div>
                     <span style="margin-right:10px;">退租后房间转为关闭状态</span>
                     <el-radio v-model="withOutInfo.toConfig" label="PAUSED">是</el-radio>
-                    <el-radio v-model="withOutInfo.toConfig" label="IDIE">否</el-radio>
+                    <el-radio v-model="withOutInfo.toConfig" label="IDLE">否</el-radio>
                 </div>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="operateRent(false)">取 消</el-button>
@@ -119,7 +121,7 @@
             },
             newModel() {
                 return {
-                    toConfig: 'IDIE',
+                    toConfig: 'IDLE',
                     status: 'TERMINATED',
                     transaction: {
                         fundChannelId: 1,
