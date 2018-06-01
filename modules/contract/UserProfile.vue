@@ -14,7 +14,7 @@
 				<el-form-item prop="user.accountName" :rules="[
       						{ required: true, message: '请输入账号', trigger: 'blur' }
     					]">
-					<el-input class="form-input" placeholder="必填(建议手机号)" v-model="user.accountName" maxlength="13">
+					<el-input class="form-input" placeholder="必填(建议手机号)" v-model="user.accountName">
 						<template slot="prepend">账号</template>
 					</el-input>
 				</el-form-item>
@@ -22,7 +22,7 @@
 			<el-col :span="8">
 				<el-form :rules="rules">
 					<el-form-item prop="mobile">
-						<el-input class="form-input" placeholder="必填" v-model="user.mobile">
+						<el-input class="form-input" placeholder="必填" v-model="user.mobile" maxlength="13">
 							<template slot="prepend">电话</template>
 						</el-input>
 					</el-form-item>
