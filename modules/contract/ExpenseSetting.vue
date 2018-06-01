@@ -143,8 +143,8 @@
 			chooseCost() {
 				this.innerVisible = false;
 			},
-			syncOffset() {
-				this.expense.offset = fp.head(this.dateRange).value;
+			syncOffset(index=0) {
+				this.expense.offset = fp.get(`[${index}]`)(this.dateRange).value;
 			}
 		},
 		watch: {
@@ -153,7 +153,7 @@
 			}
 		},
 		mounted() {
-			this.syncOffset();
+			this.syncOffset(2);
 		}
 	}
 </script>
