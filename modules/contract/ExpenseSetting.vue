@@ -69,6 +69,7 @@
 <script>
 	import ExpenseDisplay from './ExpenseDisplay'
 	import _ from 'lodash'
+	import fp from 'lodash/fp'
 
 	export default {
 		props: {
@@ -141,12 +142,18 @@
 			},
 			chooseCost() {
 				this.innerVisible = false;
+			},
+			syncOffset() {
+				this.expense.offset = fp.head(this.dateRange).value;
 			}
 		},
 		watch: {
 			currentPlan() {
-				this.expense.offset = null;
+				this.syncOffset();
 			}
+		},
+		mounted() {
+			this.syncOffset();
 		}
 	}
 </script>

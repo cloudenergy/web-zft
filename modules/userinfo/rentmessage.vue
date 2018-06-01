@@ -62,12 +62,12 @@
         watch: {
             form(newval, oldval) {
                 this.changetime(newval.signUpTime, newval.from, newval.to)
-                this.strt(newval.paymentPlan)
+                this.start(newval.paymentPlan)
             }
         },
         mounted() {
             this.changetime(this.form.signUpTime, this.form.from, this.form.to)
-            this.strt(this.form.paymentPlan)
+            this.start(this.form.paymentPlan)
         },
         methods: {
             changetime(tm, tm1, tm2) {
@@ -78,7 +78,7 @@
             set(time) {
                 return new Date(parseInt(time) * 1000).toLocaleDateString().replace(/\//g, "-")
             },
-            strt(payment) {
+            start(payment) {
                 if (/-/g.test(payment)) {
                     this.form.paymentP = 11
                     this.form.paymentPlan = this.form.paymentPlan.replace(/-/g, '')
