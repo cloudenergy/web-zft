@@ -56,7 +56,11 @@
                         <el-table-column label="操作">
                             <template slot-scope="scope">
                                 <div v-if="!loading">
-                                   <el-input style="width:100px" v-model="scope.row.share.value" @input="share(scope.row)"></el-input>%
+                                   <el-input-number style="width:100px" :disabled="onlyOneRoom()"
+                                                    v-model="scope.row.share.value"
+                                                    :persicion="0" :max="100" :min="1"
+                                                    :controls="false" @input="share(scope.row)">
+                                   </el-input-number>%
                                 </div>
                             </template>
                         </el-table-column>
@@ -67,7 +71,7 @@
                         </el-table-column>
                     </el-table>
                 </div>
-                <el-button @click.native="del" type="primary" style="margin-top:30px;">保存</el-button>
+                <el-button @click.native="saveSharing" type="primary" style="margin-top:30px;">保存</el-button>
             </div>
         </div>
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
@@ -119,6 +123,9 @@ export default {
 		console.log(this.house);
 	},
 	methods: {
+		onlyOneRoom() {
+			return this.house.rooms.length === 1;
+        },
 		delDeviceYTL(val) {
 			// val?(val)=>{
 			//     console.log(val)
@@ -171,23 +178,8 @@ export default {
 		writePercent() {
 			this.visibility = true;
 		},
-		del(room) {
-			console.log(
-				this.apportionment,
-				this.apportionment.map(ele => {
-					return ele.value;
-				})
-			);
-			console.log('this.apportionment', fp.sumBy('value')(this.apportionment));
-			if (
-				eval(
-					this.apportionment
-						.map(ele => {
-							return ele.value;
-						})
-						.join('+')
-				) === 100
-			) {
+		saveSharing(room) {
+			if (fp.sumBy('value')(this.apportionment) === 100) {
 				this.$model('apportionment_put')
 					.update(this.apportionment, {
 						projectId: this.projectId,
@@ -199,6 +191,7 @@ export default {
 						this.query();
 					})
 					.catch(err => {
+						console.error('分摊更新失败', err);
 						this.$message('分摊更新失败');
 						this.query();
 					});
