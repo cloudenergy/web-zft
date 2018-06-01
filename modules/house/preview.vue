@@ -153,7 +153,6 @@ export default {
 	},
 	created() {
 		if (this.room.contract.from !== undefined) {
-			console.log(this.house);
 			this.contracts[0].rent = this.room.contract.rent;
 			this.contracts[0].to = this.room.contract.to;
 			this.contracts[0].from = this.room.contract.from;

@@ -120,7 +120,6 @@ export default {
 	},
 	created() {
 		this.query();
-		console.log(this.house);
 	},
 	methods: {
 		onlyOneRoom() {
@@ -165,7 +164,6 @@ export default {
 						})
 					);
 					this.loading = false;
-					console.log(this.house.rooms);
 				});
 		},
 		share(val) {

@@ -87,6 +87,6 @@ export const isBrowserSupport = function() {
  * 删除YTL
  */
 
- export const delYTL = function delYTL(val) {
-	 return val.replace(/YTL/g,'')
- }
+export const delYTL = function delYTL(val) {
+	return val ? val.replace(/^YTL/g, '') : '';
+};
