@@ -91,6 +91,7 @@
 <script>
 import { delYTL } from '~/utils/helper';
 import conversion from '../devices/conversion.vue';
+import fp from 'lodash/fp';
 export default {
 	props: {
 		house: Object,
@@ -177,7 +178,7 @@ export default {
 					return ele.value;
 				})
 			);
-			console.log('this.apportionment', f.sum('value')(this.apportionment));
+			console.log('this.apportionment', fp.sumBy('value')(this.apportionment));
 			if (
 				eval(
 					this.apportionment
