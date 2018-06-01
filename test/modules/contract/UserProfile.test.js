@@ -18,13 +18,6 @@ describe('UserProfile', () => {
 
 	it('should render the correct markup', () => {
 		expect(wrapper.html()).toContain('<el-option label="身份证" value="1"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="护照" value="2"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="港澳通行证" value="3"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="台胞证" value="4"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="居住证" value="5"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="临时居住证" value="6"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="营业执照" value="7"></el-option>')
-		expect(wrapper.html()).toContain('<el-option label="其他证件" value="8"></el-option>')
 	})
 
 	it('should render gender options', () => {
