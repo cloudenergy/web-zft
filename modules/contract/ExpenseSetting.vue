@@ -194,6 +194,10 @@
 		border-bottom-right-radius: 0;
 	}
 
+	.el-select .el-input__inner {
+		text-align: center;
+	}
+	
 	.extra-rent-row .el-row {
 		margin-bottom: 18px;
 	}
