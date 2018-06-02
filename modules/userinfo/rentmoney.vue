@@ -8,9 +8,7 @@
 		</el-table-column>
 		<el-table-column label="类型" width="130">
 			<template slot-scope="scope">
-				<span v-if="scope.row.type==='ELECTRICITY'&&scope.row.share===100">个人电费</span>
-				<span v-if="scope.row.type==='ELECTRICITY'&&scope.row.share!==100">公摊电费</span>
-				<span v-if="scope.row.type==='DAILYPREPAID'">每日预付费</span>
+				<span>{{categoryName(scope.row)}}</span>
 			</template>
 		</el-table-column>
 		<el-table-column prop="scale" label="扣费类型">
@@ -91,6 +89,13 @@
 			},
 			colorOf(balance) {
 				return balance < 0 ? 'red' : 'black';
+			},
+			categoryName(row) {
+				console.log(row);
+				if(row.type === 'ELECTRICITY') {
+					return row.share ? '公摊电费' : '个人电费';
+				}
+				return '每日预付费'
 			}
 		}
 	}
