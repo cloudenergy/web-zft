@@ -60,9 +60,13 @@
 			}
 		},
 		mounted() {
-			this.query()
+			this.query();
 		},
 		methods: {
+			refresh() {
+				this.$set(this, 'bills', []);
+				this.query();
+			},
 			handleCurrentChange( val ) {
 				this.reqData.index = val
 				this.query()
@@ -91,11 +95,17 @@
 				return balance < 0 ? 'red' : 'black';
 			},
 			categoryName(row) {
-				console.log(row);
 				if(row.type === 'ELECTRICITY') {
 					return row.share ? '公摊电费' : '个人电费';
 				}
 				return '每日预付费'
+			}
+		},
+		watch: {
+			form (newVal, oldVal) {
+				if(newVal.id !== oldVal.id) {
+					this.refresh();
+				}
 			}
 		}
 	}
