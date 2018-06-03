@@ -23,10 +23,7 @@
                 </el-table-column>
                 <el-table-column label="通讯状态" width="100">
                     <template slot-scope="scope">
-                        <div v-if="scope.row.status===undefined">
-                            <span v-if="scope.row.status.service==='EMC_ONLINE'">在线</span>
-                            <span v-if="scope.row.status.service==='EMC_OFFLINE'">离线</span>
-                        </div>
+                        <span>{{statusIndicator(scope.row.status)}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="管理" max-width="80">
@@ -304,7 +301,10 @@ export default {
 					this.$set(this.house, 'devices', res.devices);
 				})
 				.catch(err => {});
-		}
+		},
+		statusIndicator(status) {
+			return status.service === 'EMC_ONLINE' ? '在线': '离线';
+        }
 	}
 };
 </script>
