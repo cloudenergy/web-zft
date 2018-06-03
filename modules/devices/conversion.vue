@@ -10,7 +10,7 @@
                     <div class="flexcenter space-between">
                         <span>电表:</span>
 						<p class="memo">{{list.memo}}</p>
-                        <span style="padding-right:10px">{{delDeviceYTL(list.deviceId)}}</span>
+                        <span style="padding-right:10px">{{removeYTLPrefix(list.deviceId)}}</span>
                     </div>
                 </el-radio>
             </div>
@@ -52,7 +52,7 @@ export default {
 		this.query();
 	},
 	methods: {
-		delDeviceYTL(val) {
+		removeYTLPrefix(val) {
 			return delYTL(val);
 		},
 		childinfo(val) {

@@ -17,7 +17,10 @@
                 <i class="el-icon-circle-plus-outline" style="font-size:20px;color:#409eff" @click="bindEleciricity"></i>
             </h4>
             <el-table :data="house.devices" stripe>
-                <el-table-column prop="deviceId" label="ID" width="150">
+                <el-table-column label="ID" width="150">
+                    <template slot-scope="scope">
+                        <span>{{removeYTLPrefix(scope.row.deviceId)}}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column prop="memo" label="设备备注" min-width="200">
                 </el-table-column>
@@ -37,8 +40,8 @@
                     房间设备
                 </span>
             </h4>
-            <div class="roomDevices" v-loading = 'loading'>
-                <div v-for="(item) in this.house.rooms" :key='item.id'>
+            <div class="roomDevices" v-loading="loading">
+                <div v-for="(item) in this.house.showRooms" :key="item.id">
                     <el-table :data="item.devices" style="width: 100%">
                         <el-table-column label="房间号">
                             <template slot-scope="scope">
@@ -47,13 +50,18 @@
                         </el-table-column>
                         <el-table-column label="电表id">
                             <template slot-scope="scope">
-                                <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                                <p v-for="id in scope.row.deviceIds">{{id}}</p>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <div v-if="!loading">
-                                   <el-input-number style="width:100px" :disabled="onlyOneRoom()"
+                                <div v-if="onlyOneSharingContract()">
+                                   <el-input-number style="width:100px" :disabled="true"
+                                                    :controls="false" value="100">
+                                   </el-input-number>%
+                                </div>
+                                <div v-if="!onlyOneSharingContract()">
+                                   <el-input-number style="width:100px"
                                                     v-model="scope.row.share.value"
                                                     :persicion="0" :max="100" :min="1"
                                                     :controls="false" @input="share(scope.row)">
@@ -119,14 +127,10 @@ export default {
 		this.query();
 	},
 	methods: {
-		onlyOneRoom() {
+		onlyOneSharingContract() {
 			return this.apportionment.length === 1;
         },
-		delDeviceYTL(val) {
-			// val?(val)=>{
-			//     console.log(val)
-			//     return delYTL(val)
-			// }:''
+		removeYTLPrefix(val) {
 			return val ? this.delDeYTL(val) : '';
 		},
 		delDeYTL(val) {
@@ -143,37 +147,36 @@ export default {
 				)
 				.then(res => {
 					this.$set(this, 'apportionment', res);
-					this.$set(
-						this.house,
-						'rooms',
-						this.house.rooms.map(ele => {
-							res.map(li => {
-								if (li.roomId === ele.id) {
-									if (ele.devices.length === 0) {
-										ele.devices.push({});
-										ele.devices[0].share = li;
-									} else {
-										ele.devices[0].share = li;
-									}
-								}
-							});
-							return ele;
-						})
-					);
+					const sharingMap = fp.groupBy('roomId')(res);
+					const rooms = fp.map(room => fp.defaults(room)({
+						devices: fp.map(fp.defaults({
+                                share: fp.head(fp.getOr([{value: 0}])(room.id)(sharingMap))
+							}))(room.devices)
+					}))(this.house.rooms);
+
+					//only display one row per room
+                    const idsOfRoom = fp.pipe(fp.map('deviceId'), fp.map(delYTL));
+					const showRooms = fp.map(room => fp.defaults(room)({
+						devices: fp.map(d => fp.defaults({deviceIds: idsOfRoom(room.devices)})(d))(fp.take(1)(room.devices))
+					}))(rooms);
+
+					this.$set(this.house, 'rooms', rooms);
+					this.$set(this.house, 'showRooms', showRooms);
 					this.loading = false;
 				});
 		},
 		share(val) {
-			this.apportionment.forEach((element, index) => {
-				if (element.roomId === val.share.roomId) {
-					element.value = Number(val.share.value);
-				}
+            const newSharing = this.apportionment.map(sharing => {
+				return sharing.roomId === val.share.roomId ?
+					fp.defaults(sharing)({value: Number(val.share.value)})
+					: sharing;
 			});
+			this.$set(this, 'apportionment', newSharing);
 		},
 		writePercent() {
 			this.visibility = true;
 		},
-		saveSharing(room) {
+		saveSharing() {
 			if (fp.sumBy('value')(this.apportionment) === 100) {
 				this.$model('apportionment_put')
 					.update(this.apportionment, {
@@ -181,7 +184,7 @@ export default {
 						houseId: this.house.houseId,
 						id: 'apportionment'
 					})
-					.then(res => {
+					.then(() => {
 						this.$message.success('分摊比例更新成功');
 						this.query();
 					})

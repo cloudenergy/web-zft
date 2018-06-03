@@ -30,7 +30,7 @@
             <el-table :data="room.devices" stripe class="section">
                 <el-table-column prop="deviceId" label="设备ID" width="110">
                     <template slot-scope="scope">
-                        <span>{{delDeviceYTL(scope.row.deviceId)}}</span>
+                        <span>{{removeYTLPrefix(scope.row.deviceId)}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="memo" label="设备备注" min-width="120">
@@ -187,7 +187,7 @@ export default {
 		date(val) {
 			return format(new Date(val * 1000), 'YYYY-MM-DD');
 		},
-		delDeviceYTL(val) {
+		removeYTLPrefix(val) {
 			return delYTL(val);
 		},
 		electricSwitch(data) {
