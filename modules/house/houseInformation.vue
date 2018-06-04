@@ -60,7 +60,7 @@
                                                     :controls="false" value="100">
                                    </el-input-number>%
                                 </div>
-                                <div v-if="!onlyOneSharingContract()">
+                                <div v-if="multipleContracts()">
                                    <el-input-number style="width:100px"
                                                     v-model="scope.row.share.value"
                                                     :persicion="0" :max="100" :min="1"
@@ -129,6 +129,9 @@ export default {
 	methods: {
 		onlyOneSharingContract() {
 			return this.apportionment.length === 1;
+        },
+		multipleContracts() {
+			return this.apportionment.length > 1;
         },
 		removeYTLPrefix(val) {
 			return val ? this.delDeYTL(val) : '';
