@@ -15,7 +15,8 @@
 		"echarts": "^4.0.2",
 		"element-ui": "^2.4.0",
 		"humanize-duration": "^3.12.0",
-		"js-md5": "^0.7.3"
+		"js-md5": "^0.7.3",
+		"xlsx": "^0.13.0"
 	},
 	"devDependencies": {
 		"babel-jest": "^21.2.0",

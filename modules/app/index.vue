@@ -22,6 +22,7 @@
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item @click.native="create()"><p class="setPading">房源</p></el-dropdown-item>
 						<el-dropdown-item @click.native="createContract()"><p class="setPading">租户</p></el-dropdown-item>
+						<el-dropdown-item @click.native="deviceDialog()"><p class="setPading">设备</p></el-dropdown-item>
 						<!-- <el-dropdown-item>批量导入</el-dropdown-item> -->
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -34,6 +35,7 @@
 import site_nav from './site-nav';
 import AddModal from '~/modules/house/add';
 import { NewContract } from '~/modules/contract';
+import { ImportDevices } from '~/modules/devices';
 export default {
 	name: 'app',
 	components: {
@@ -65,6 +67,13 @@ export default {
 				comp: NewContract,
 				title: '新增合约',
 				className: 'new-contract'
+			});
+		},
+		deviceDialog() {
+			this.$modal.$emit('open', {
+				comp: ImportDevices,
+				title: '导入设备',
+				className: 'new-devices'
 			});
 		}
 	}
