@@ -5,19 +5,22 @@
                 ref="upload"
                 action=""
                 :on-preview="preview"
-                :multiple="false"
+                :limit="1"
                 accept="xlsx"
                 :http-request="request"
+                :file-list="fileList"
         >
-            <el-button slot="trigger" size="small" type="primary">select file</el-button>
+            <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="downloadTemplate">下载模版
             </el-button>
         </el-upload>
-        <div>preview</div>
+        <div>预览待导入内容</div>
+        <br>
         <p v-for="d in devices">{{d.deviceId}} - {{d.memo}}</p>
+        <br>
         <div slot="footer" class="dialog-footer">
             <el-button @click="closeDialog()">取 消</el-button>
-            <el-button type="primary" @click="submit()">导入</el-button>
+            <el-button type="primary" @click="submit()">导 入</el-button>
         </div>
     </div>
 </template>
@@ -29,18 +32,14 @@
 	export default {
 		data() {
 			return {
-				devices: []
+				devices: [],
+				fileList: [],
             };
 		},
 		created() {
 			this.projectId = this.$store.state.userInfo.user.projectId;
 		},
 		methods: {
-			submitUpload(file) {
-				// this.$refs.upload.submit();
-				// console.log(this.$refs.upload);
-				console.log(this.$refs.upload);
-			},
 			preview(file) {
 				console.log(file);
 			},
@@ -61,6 +60,7 @@
 				const [col1, col2] = fp.head(content);
 				if (!(col1 === '仪表ID' && col2 === '备注信息')) {
 					this.$message.error('列名错误，请下载使用模版重新导入。');
+					this.fileList = [];
 					return [];
 				}
 				return fp.drop(1)(content);
@@ -71,18 +71,21 @@
 				}))(content);
 			},
 			request(event) {
-				console.log(event.file);
+				this.fileList = [];
 				this.readContent(event).then(this.validate)
 					.then(c => {
 						this.$set(this, 'devices', this.translate(c));
 					})
 			},
             submit() {
+				if(!this.devices) {
+					this.$message.info(`请选择需要导入的仪表信息文件。`);
+					return;
+                }
 				this.$model('devices').create(this.devices, {
 					projectId: this.projectId
 				})
-					.then(res => {
-						console.log(res);
+					.then(() => {
 						this.closeDialog();
 					}).catch(err => {
 					this.$message.error(`批量创建仪表失败。${err}`);
