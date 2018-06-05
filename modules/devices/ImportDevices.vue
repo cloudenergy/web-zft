@@ -1,23 +1,21 @@
 <template>
     <div class="modal import-devices">
         <el-upload
-                class="upload-demo"
+                class="upload-xlsx"
                 ref="upload"
                 action=""
-                :on-preview="preview"
                 :limit="1"
-                accept="xlsx"
+                accept=".xlsx"
                 :http-request="request"
                 :file-list="fileList"
+                :on-exceed="onExceed"
+                :auto-upload="false"
         >
-            <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="downloadTemplate">下载模版
+            <el-button slot="trigger" class="select-file" size="small" type="primary">选择文件</el-button>
+            <el-button class="download-template" size="small" type="success" @click="downloadTemplate">下载模版
             </el-button>
         </el-upload>
-        <div>预览待导入内容</div>
-        <br>
-        <p v-for="d in devices">{{d.deviceId}} - {{d.memo}}</p>
-        <br>
+
         <div slot="footer" class="dialog-footer">
             <el-button @click="closeDialog()">取 消</el-button>
             <el-button type="primary" @click="submit()">导 入</el-button>
@@ -34,15 +32,17 @@
 			return {
 				devices: [],
 				fileList: [],
-            };
+			};
 		},
 		created() {
 			this.projectId = this.$store.state.userInfo.user.projectId;
 		},
 		methods: {
-			preview(file) {
-				console.log(file);
-			},
+			onExceed(file, list) {
+				console.log('onExceed', file, list);
+				this.fileList = [file.item(0)];
+				this.request({file: file.item(0)});
+            },
 			readContent(event) {
 				return new Promise((resolve, reject) => {
 					const reader = new FileReader();
@@ -61,6 +61,7 @@
 				if (!(col1 === '仪表ID' && col2 === '备注信息')) {
 					this.$message.error('列名错误，请下载使用模版重新导入。');
 					this.fileList = [];
+					this.devices = [];
 					return [];
 				}
 				return fp.drop(1)(content);
@@ -71,17 +72,16 @@
 				}))(content);
 			},
 			request(event) {
-				this.fileList = [];
 				this.readContent(event).then(this.validate)
 					.then(c => {
 						this.$set(this, 'devices', this.translate(c));
 					})
 			},
-            submit() {
-				if(!this.devices) {
+			submit() {
+				if (!this.devices) {
 					this.$message.info(`请选择需要导入的仪表信息文件。`);
 					return;
-                }
+				}
 				this.$model('devices').create(this.devices, {
 					projectId: this.projectId
 				})
@@ -94,10 +94,29 @@
 			},
 			downloadTemplate() {
 				this.$message.info(`暂未实现。`);
-            },
+			},
 			closeDialog() {
 				this.$modal.$emit('dismiss');
 			},
 		}
 	};
 </script>
+
+<style lang="less" scoped>
+    .dialog-footer {
+        position: absolute;
+        bottom: 20px;
+    }
+
+    .download-template {
+        margin-left: 50px;
+    }
+</style>
+
+<style lang="less">
+    .new-devices .el-dialog {
+        width: 370px;
+        height: 200px;
+    }
+
+</style>
