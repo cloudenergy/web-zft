@@ -103,6 +103,7 @@
 					unit: '',
 					roomNumber: '',
 					location: {},
+          electric_price: 0,
 					layout: {
 						name: '',
 						orientation:'S',
@@ -194,17 +195,39 @@
 					data.houseCountOnFloor = this.Entire.houseCountOnFloor
 					data.enabledFloors = this.Entire.enabledFloors
 				}
-				this.$model('houses').create(data, {
+        this.$model('houses').create(data, {
 					projectId: this.projectId
 				})
-				.then(res => {
+          .then(res => {
+            this.$store.dispatch('ADD_COMMUNITY',{val:res})
+            return Promise.all([this.$model('set_electric_price')
+                        .update({
+                            category: 'HOST',
+                            price: data
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC',
+                            houseId: res.id
+                        }),
+         this.$model('set_electric_price')
+                        .update({
+                            category: 'CLIENT',
+                            price: data
+                        }, {
+                            projectId: this.projectId,
+                            id: 'ELECTRIC',
+                            houseId: res.id
+                        })
+         ])
+          })
+        .then(_ => {
 					this.$message.success('创建成功')
 					this.$emit('addhouse')
 					// 关闭创建页面
 					if(val==='close') {
 						this.$modal.$emit('dismiss');
 					}
-					this.$store.dispatch('ADD_COMMUNITY',{val:res})
+
 				})
 				.catch(err=>{
 					this.$message(err.message)
