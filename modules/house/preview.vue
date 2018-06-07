@@ -167,12 +167,10 @@ export default {
 					}
 				)
 				.then(res => {
-					console.log(res);
-					this.contracts[0].price = res.expenses[0].rent;
 					this.contracts[0].bond = res.strategy.bond;
 					this.contracts[0].freq = res.strategy.freq.pattern;
 				})
-				.catch(err => {});
+				.catch(e=>console.error(e));
 		}
 	},
 	computed: {
