@@ -1,68 +1,77 @@
 <template>
-	<div class="add-house-form">
-		<el-form :model="form" class="mini-form">
-			<h3>房源信息</h3>
-			<base-info @change="mergeBaseInfo" :form="form" @houseTypeChange='houseTypeChange'></base-info>
-				<el-row :gutter="20">
-					<el-col :span="16">
-					<el-autocomplete v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect"
-						auto-complete="off" style="width:103%">
-						<template slot="prepend">小区</template>
-					</el-autocomplete>
-					</el-col>
-					<el-col :span="8" style="position:relative" class="roomInfo flexc">
-						<el-select v-model="form.layout.orientation" placeholder="方位" style="display:inline-block;width:163px">
-							<el-option value="E" label="东">东</el-option>
-							<el-option value="S" label="南">南</el-option>
-							<el-option value="W" label="西">西</el-option>
-							<el-option value="N" label="北">北</el-option>
-						</el-select>
-						<span tabindex="0" class="el-input-group__append addwidth toward" style="padding:0 0 0 13px;width:53px">朝向</span>
-					</el-col>
-				</el-row>
-			<div v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">
-				<el-row :gutter="20">
-					<el-col :span="8">
+<div class="add-house-form">
+	<el-form :model="form" class="mini-form">
+		<h3>房源信息</h3>
+		<base-info @change="mergeBaseInfo" :form="form" @houseTypeChange='houseTypeChange'></base-info>
+		<el-row :gutter="20">
+			<el-col :span="16">
+				<el-autocomplete v-model="form.community" class="full" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect"
+						             auto-complete="off" style="width:103%">
+					<template slot="prepend">小区</template>
+				</el-autocomplete>
+			</el-col>
+			<el-col :span="8" style="position:relative" class="roomInfo flexc">
+				<el-select v-model="form.layout.orientation" placeholder="方位" style="display:inline-block;width:163px">
+					<el-option value="E" label="东">东</el-option>
+					<el-option value="S" label="南">南</el-option>
+					<el-option value="W" label="西">西</el-option>
+					<el-option value="N" label="北">北</el-option>
+				</el-select>
+				<span tabindex="0" class="el-input-group__append addwidth toward" style="padding:0 0 0 13px;width:53px">朝向</span>
+			</el-col>
+		</el-row>
+		<div v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">
+			<el-row :gutter="20">
+				<el-col :span="8">
 					<el-input v-model="building" @blur="changeBuilding">
 						<template slot="prepend">序号</template>
 						<template slot="append">幢</template>
 					</el-input>
-					</el-col>
-					<el-col :span="8">
+				</el-col>
+				<el-col :span="8">
 					<el-input v-model="unit" @blur="changeUnit">
 						<template slot="append" style="width:53px">单元</template>
 					</el-input>
-					</el-col>
-					<el-col :span="8">
+				</el-col>
+				<el-col :span="8">
 					<el-input v-model="form.roomNumber">
 						<template slot="append">室</template>
 					</el-input>
-					</el-col>
-				</el-row>
-			</div>
-			<room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
-			<building-floor v-if="form.houseFormat==userInfo.houseTypes.ENTIRE[0]" :data="Entire"></building-floor>
-			<div v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">
-				<el-row :gutter="20">
-					<el-col :span="8" class="roomInfo">
-						<el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
-							<template slot="prepend">信息</template>
-							<template slot="append">㎡</template>
-						</el-input>
-					</el-col>
-					<el-col :span="8" class="roomInfo">
-						<el-input v-model.number="form.currentFloor" auto-complete="off" placeholder="层高">
-							<template slot="append">层</template>
-						</el-input>
-					</el-col>
-					<el-col :span="8" class="roomInfo">
-						<el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数">
-							<template slot="append">层</template>
-						</el-input>
-					</el-col>
-				</el-row>
-			</div>
-			<h3 style="margin-top:30px">房源配置</h3>
+				</el-col>
+			</el-row>
+		</div>
+		<room-layout v-model="form.layout" :rentType="form.houseFormat"></room-layout>
+		<building-floor v-if="form.houseFormat==userInfo.houseTypes.ENTIRE[0]" :data="Entire"></building-floor>
+		<div v-if="form.houseFormat!==userInfo.houseTypes.ENTIRE[0]">
+			<el-row :gutter="20">
+				<el-col :span="8" class="roomInfo">
+					<el-input v-model.number="form.layout.roomArea" auto-complete="off" placeholder="面积">
+						<template slot="prepend">信息</template>
+						<template slot="append">㎡</template>
+					</el-input>
+				</el-col>
+				<el-col :span="8" class="roomInfo">
+					<el-input v-model.number="form.currentFloor" auto-complete="off" placeholder="层高">
+						<template slot="append">层</template>
+					</el-input>
+				</el-col>
+				<el-col :span="8" class="roomInfo">
+					<el-input v-model.number="form.totalFloor" auto-complete="off" placeholder="总层数">
+						<template slot="append">层</template>
+					</el-input>
+				</el-col>
+			</el-row>
+      <el-row :gutter=20>
+        <el-col :span=8 class=roomInfo>
+          <el-input v-model.number="form.electricPrice" auto-complete=off type=number step=any>
+					  <template slot="prepend">电费</template>
+            <template slot="append">元/度</template>
+				  </el-input>
+        </el-col>
+      </el-row>
+		</div>
+
+		<h3 style="margin-top:30px">房源配置</h3>
 			<house-facility class="checkboxes" v-model="form.config"></house-facility>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
@@ -78,7 +87,8 @@
 	import {
 		mapState
 	} from 'vuex';
-	import fp from 'lodash/fp';
+import fp from 'lodash/fp';
+import {validPrice} from '../../utils/validators'
 	export default {
 		props: {
 			item: {
@@ -103,7 +113,7 @@
 					unit: '',
 					roomNumber: '',
 					location: {},
-          electric_price: 0,
+          electricPrice: 0,
 					layout: {
 						name: '',
 						orientation:'S',
@@ -195,15 +205,20 @@
 					data.houseCountOnFloor = this.Entire.houseCountOnFloor
 					data.enabledFloors = this.Entire.enabledFloors
 				}
-        this.$model('houses').create(data, {
+        new Promise((resolve,reject) => {
+          if(validPrice(this.form.electricPrice)){
+            resolve("valid")
+          }else{
+            reject({message: '输入错误'})
+          }
+        }).then(_=>this.$model('houses').create(data, {
 					projectId: this.projectId
-				})
-          .then(res => {
+				})).then(res => {
             this.$store.dispatch('ADD_COMMUNITY',{val:res})
             return Promise.all([this.$model('set_electric_price')
                         .update({
                             category: 'HOST',
-                            price: data
+                            price: this.form.electricPrice
                         }, {
                             projectId: this.projectId,
                             id: 'ELECTRIC',
@@ -212,7 +227,7 @@
          this.$model('set_electric_price')
                         .update({
                             category: 'CLIENT',
-                            price: data
+                            price: this.form.electricPrice
                         }, {
                             projectId: this.projectId,
                             id: 'ELECTRIC',
