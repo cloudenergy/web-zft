@@ -63,10 +63,10 @@
       </el-row>
       <el-row :gutter=20>
         <el-col :span=8 class=roomInfo>
-          <el-input v-model.number="form.electricPrice" auto-complete=off type=number step=any>
+          <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off step=0.01 precision=2>
             <template slot="prepend">电费</template>
             <template slot="append">元/度</template>
-          </el-input>
+          </el-input-number>
         </el-col>
       </el-row>
     </div>
@@ -88,7 +88,6 @@ import {
   mapState
 } from 'vuex';
 import fp from 'lodash/fp';
-import {validPrice} from '../../utils/validators'
 export default {
   props: {
     item: {
@@ -205,15 +204,9 @@ export default {
         data.houseCountOnFloor = this.Entire.houseCountOnFloor
         data.enabledFloors = this.Entire.enabledFloors
       }
-      new Promise((resolve,reject) => {
-        if(validPrice(this.form.electricPrice)){
-          resolve("valid")
-        }else{
-          reject({message: '输入错误'})
-        }
-      }).then(_=>this.$model('houses').create(data, {
+      this.$model('houses').create(data, {
         projectId: this.projectId
-      })).then(res => {
+      }).then(res => {
         this.$store.dispatch('ADD_COMMUNITY',{val:res})
         return Promise.all([this.$model('set_electric_price')
                             .update({
@@ -303,5 +296,11 @@ export default {
 		width: 53px;
 		font-size:14px;
 		display:inline-block
+}
+.el-input.el-input--mini.el-input-group.el-input-group--append.el-input-group--prepend {
+    display: inline-table;
+}
+.el-input-number--mini {
+    width: 100%;
 }
 </style>
