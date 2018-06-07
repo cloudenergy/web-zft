@@ -63,7 +63,7 @@
       </el-row>
       <el-row :gutter=20>
         <el-col :span=8 class=roomInfo>
-          <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off step=0.01 precision=2>
+          <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off min=0 step=0.01 precision=2>
             <template slot="prepend">电费</template>
             <template slot="append">元/度</template>
           </el-input-number>
