@@ -88,6 +88,7 @@ import {
   mapState
 } from 'vuex';
 import fp from 'lodash/fp';
+import Promise from 'bluebird'
 export default {
   props: {
     item: {
@@ -204,38 +205,17 @@ export default {
         data.houseCountOnFloor = this.Entire.houseCountOnFloor
         data.enabledFloors = this.Entire.enabledFloors
       }
+      data.electricPrice = this.form.electricPrice * 100
       this.$model('houses').create(data, {
         projectId: this.projectId
-      }).then(res => {
-        this.$store.dispatch('ADD_COMMUNITY',{val:res})
-        return Promise.all([this.$model('set_electric_price')
-                            .update({
-                              category: 'HOST',
-                              price: this.form.electricPrice
-                            }, {
-                              projectId: this.projectId,
-                              id: 'ELECTRIC',
-                              houseId: res.id
-                            }),
-                            this.$model('set_electric_price')
-                            .update({
-                              category: 'CLIENT',
-                              price: this.form.electricPrice
-                            }, {
-                              projectId: this.projectId,
-                              id: 'ELECTRIC',
-                              houseId: res.id
-                            })
-                           ])
       })
-        .then(_ => {
+        .then(() => {
           this.$message.success('创建成功')
           this.$emit('addhouse')
           // 关闭创建页面
           if(val==='close') {
             this.$modal.$emit('dismiss');
           }
-
         })
         .catch(err=>{
           this.$message(err.message)

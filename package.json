@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"blade-scripts": "~1.2.13",
+		"bluebird": "^3.5.1",
 		"calculatorjs": "^1.0.0",
 		"date-fns": "^1.29.0",
 		"echarts": "^4.0.2",
