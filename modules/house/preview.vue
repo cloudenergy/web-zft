@@ -188,15 +188,11 @@ export default {
 		removeYTLPrefix(val) {
 			return delYTL(val);
 		},
-		electricSwitch(data) {
-			return data.status.switch === 'EMC_ON';
-		},
 		eleciricitySwitch(data) {
-			if (data) {
-				this.reqData.mode = 'EMC_ON';
-			} else {
-				this.reqData.mode = 'EMC_OFF';
+			if (!data) {
+				return;
 			}
+      this.reqData.mode = data;
 			this.$model('electricity_instructions')
 				.patch(this.reqData, {
 					projectId: this.projectId,
