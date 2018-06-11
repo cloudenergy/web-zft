@@ -63,7 +63,7 @@
       </el-row>
       <el-row :gutter=20>
         <el-col :span=8 class=roomInfo>
-          <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off :min=0 :step=0.01 precision=2>
+          <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off :min=0 :step=0.01 :precision=2>
             <template slot="prepend">电费</template>
             <template slot="append">元/度</template>
           </el-input-number>
@@ -88,7 +88,9 @@ import {
   mapState
 } from 'vuex';
 import fp from 'lodash/fp';
-import Promise from 'bluebird'
+import when from 'when'
+import pipe from 'when/pipeline'
+import {validElectricPrice} from '../../utils/validators'
 export default {
   props: {
     item: {
@@ -206,17 +208,22 @@ export default {
         data.enabledFloors = this.Entire.enabledFloors
       }
       data.electricPrice = this.form.electricPrice * 100
-      this.$model('houses').create(data, {
-        projectId: this.projectId
-      })
-        .then(() => {
+
+      pipe([
+        when.lift(validElectricPrice),
+        valid=>valid?when.resolve():when.reject({message: '电费不能为0'}),
+        () => this.$model('houses').create(data, {
+          projectId: this.projectId
+        }),
+        () => {
           this.$message.success('创建成功')
           this.$emit('addhouse')
           // 关闭创建页面
           if(val==='close') {
             this.$modal.$emit('dismiss');
           }
-        })
+        }
+      ], data.electricPrice)
         .catch(err=>{
           this.$message(err.message)
         })
