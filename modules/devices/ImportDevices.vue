@@ -86,7 +86,7 @@
 					.then(() => {
 						this.closeDialog();
 					}).catch(err => {
-					this.$message.error(`批量创建仪表失败。${err}`);
+					this.$message.error(`批量创建仪表失败。${err.message}\n${fp.get('result.message')(err)}`);
 				})
 
 			},
