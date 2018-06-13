@@ -76,7 +76,7 @@ export const isBrowserSupport = function() {
 	const isSafari =
 		userAgent.indexOf('Safari') > -1 && userAgent.indexOf('Chrome') == -1;
 	const isChrome =
-		userAgent.indexOf('Chrome') > -1 && userAgent.indexOf('Safari') > -1 && parseInt(userAgent.substring(userAgent.indexOf('Chrome'),userAgent.indexOf(' Safari')).replace(/Chrome\//,""))>=62;
+		userAgent.indexOf('Chrome') > -1 && userAgent.indexOf('Safari') > -1 && parseInt(userAgent.substring(userAgent.indexOf('Chrome'),userAgent.indexOf(' Safari')).replace(/Chrome\//,''))>=62;
 	const isFF = userAgent.indexOf('Firefox') > -1;
 	// 浏览器判断
 
@@ -84,9 +84,9 @@ export const isBrowserSupport = function() {
 };
 
 /**
- * 删除YTL
+ * 隐藏ID前缀
  */
 
-export const delYTL = function delYTL(val) {
-	return val ? val.replace(/^YTL/g, '') : '';
+export const removePrefix = function delYTL(val) {
+	return val ? val.replace(/^\D+/g, '') : '';
 };

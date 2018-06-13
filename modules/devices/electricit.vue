@@ -12,7 +12,7 @@
                         </el-table-column>
                         <el-table-column label="仪表名称/ID" min-width="120">
                             <template slot-scope="scope">
-                                <span>{{ delYTL(scope.row.device.deviceId) }}</span>
+                                <span>{{ removePrefix(scope.row.device.deviceId) }}</span>
                                 <br>
                             </template>
                         </el-table-column>
@@ -69,7 +69,7 @@
             </el-table-column>
             <el-table-column label="仪表名称/ID" min-width="120">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.details.length!==0">{{ delYTL(scope.row.details[0].device.deviceId) }}</span>
+                    <span v-if="scope.row.details.length!==0">{{ removePrefix(scope.row.details[0].device.deviceId) }}</span>
                     <br>
                 </template>
             </el-table-column>
@@ -135,7 +135,7 @@
             return {
                 valueuser: '',
                 // 获取row的key值
-                
+
                 // 要展开的行，数值的元素是row的key值
                 expands: [],
                 // readingElectricData:[{startDate:'0',endDate:'0'}],
@@ -156,9 +156,6 @@
 			},
             price(val) {
                 return (val / 100).toFixed(2)
-            },
-            delYTL(val) {
-                return val.replace(/YTL/g, '')
             },
             dateTest(data) {},
             oldTime(data, index) {

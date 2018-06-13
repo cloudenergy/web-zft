@@ -8,7 +8,7 @@
 			<el-table-column label="设备id" width="130" prop="deviceId">
 				<template slot-scope="scope">
 					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
-						{{delYTL(scope.row.deviceId)}}
+						{{removePrefix(scope.row.deviceId)}}
 					</div>
 				</template>
 			</el-table-column>
@@ -86,6 +86,7 @@
 <script>
 import format from 'date-fns/format';
 import { houseDevicesDosage } from '~/modules/house';
+import { removePrefix } from '~/utils/helper';
 export default {
 	props: {
 		devices: {
@@ -154,9 +155,6 @@ export default {
 		},
 		fixed(val) {
 			return (val / 10000).toFixed(2);
-		},
-		delYTL(val) {
-			return val.replace(/YTL/g, '');
 		},
 		// 批量送电/断电
 		setElectricSwitch(data) {

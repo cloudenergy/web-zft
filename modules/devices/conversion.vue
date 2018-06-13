@@ -10,7 +10,7 @@
                     <div class="flexcenter space-between">
                         <span>电表:</span>
 						<p class="memo">{{list.memo}}</p>
-                        <span style="padding-right:10px">{{removeYTLPrefix(list.deviceId)}}</span>
+                        <span style="padding-right:10px">{{removePrefix(list.deviceId)}}</span>
                     </div>
                 </el-radio>
             </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { delYTL } from '~/utils/helper';
+import { removePrefix } from '~/utils/helper';
 import { RentSearch } from '~/modules/rent';
 export default {
 	components: {
@@ -52,8 +52,8 @@ export default {
 		this.query();
 	},
 	methods: {
-		removeYTLPrefix(val) {
-			return delYTL(val);
+    removePrefix(val) {
+			return removePrefix(val);
 		},
 		childinfo(val) {
 			this.room.q = val;

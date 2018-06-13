@@ -19,7 +19,7 @@
             <el-table :data="house.devices" stripe>
                 <el-table-column label="ID" width="150">
                     <template slot-scope="scope">
-                        <span>{{removeYTLPrefix(scope.row.deviceId)}}</span>
+                        <span>{{removePrefix(scope.row.deviceId)}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="memo" label="设备备注" min-width="200">
@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { delYTL } from '~/utils/helper';
+import { removePrefix } from '~/utils/helper';
 import conversion from '../devices/conversion.vue';
 import fp from 'lodash/fp';
 export default {
@@ -133,11 +133,8 @@ export default {
 		multipleContracts() {
 			return this.apportionment.length > 1;
         },
-		removeYTLPrefix(val) {
-			return val ? this.delDeYTL(val) : '';
-		},
-		delDeYTL(val) {
-			return delYTL(val);
+    removePrefix(val) {
+			return removePrefix(val);
 		},
 		query() {
 			this.$model('apportionment')
@@ -158,7 +155,7 @@ export default {
 					}))(this.house.rooms);
 
 					//only display one row per room
-                    const idsOfRoom = fp.pipe(fp.map('deviceId'), fp.map(delYTL));
+                    const idsOfRoom = fp.pipe(fp.map('deviceId'), fp.map(removePrefix));
 					const showRooms = fp.map(room => fp.defaults(room)({
 						devices: fp.map(d => fp.defaults({deviceIds: idsOfRoom(room.devices)})(d))(fp.take(1)(room.devices))
 					}))(rooms);

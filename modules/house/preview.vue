@@ -17,9 +17,9 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
-        
+
         <div class="devices section previewRoom">
             <h4 class="flexc" style="aline-item:center">
                 <span style="line-height:20px;margin-right:15px">
@@ -98,7 +98,7 @@
             <el-button @click.native="del" type="danger">删除房间</el-button>
         </div>
         </div>
-        
+
         <el-dialog title="选择要绑定的智能设备" :visible.sync="dialogVisible" width="40%" append-to-body>
             <conversion ref="aaa" @setEquipmentid="setEquipmentid" />
             <span slot="footer" class="dialog-footer">
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { delYTL } from '~/utils/helper';
+import { removePrefix } from '~/utils/helper';
 import conversion from '../devices/conversion.vue';
 export default {
 	props: {
@@ -186,7 +186,7 @@ export default {
 			return format(new Date(val * 1000), 'YYYY-MM-DD');
 		},
 		removeYTLPrefix(val) {
-			return delYTL(val);
+			return removePrefix(val);
 		},
 		eleciricitySwitch(data) {
 			if (!data) {
