@@ -29,7 +29,9 @@ import fp from 'lodash/fp';
 const HEADER_1 = ['仪表ID',	'所属公寓', '备注信息',	'驱动编号']
 const BODY_DEMO_1 = ['001234567890','古鸽公寓',',实际导入请删除这一行', 1]
 const HEADER_2 = ['驱动编码','驱动名称','驱动说明']
-const BODY_DEMO_2 = [1,'YTL/Electric/YTL-BUSv0.0.02.js','WIFI表控制驱动']
+const BODY_DEMO_2 = [[1,'YTL/Electric/YTL-BUSvA.1.02.js','WIFI表控制驱动'],
+                    [2, 'HaiXing/Electric/Q-GDW-2013.js', '单相控制电表']]
+const DB_KEY= ['deviceId', 'name', 'memo','driver']
 
 export default {
 	data() {
@@ -68,17 +70,15 @@ export default {
 			}
 			return fp.drop(1)(content);
 		},
-
-		translate(content) {
-			return fp.map(([id, memo='']) => ({
-				deviceId: fp.padCharsStart('0')(12)(id),
-				memo
-			}))(content);
-		},
 		request(event) {
 			this.readContent(event).then(this.validate)
 				.then(c => {
-					this.$set(this, 'devices', this.translate(c));
+					this.$set(this, 'devices', fp.map(
+            fp.pipe(
+              fp.zipObject(DB_KEY),
+              fp.update('driver', driverIdToName)
+            ),
+            c));
 				}).catch(err => console.log(err));
 		},
 		submit() {
@@ -97,32 +97,43 @@ export default {
 
 		},
     exportData() {
-      const DB_KEY= ['deviceId', 'name', 'memo','driver']
       const DB_HEADER_MAP = fp.zipObject(DB_KEY, HEADER_1)
       const wb = XLSX.utils.book_new();
-      console.log(DB_HEADER_MAP)
       this.$model('devices').query({mode: 'ALL'}, {projectId: this.projectId})
         .then(fp.map(fp.pipe(
           fp.pick(DB_KEY),
-          fp.mapKeys((key)=>DB_HEADER_MAP[key])
+          fp.update('driver', driverNameToId),
+          fp.mapKeys((key)=>DB_HEADER_MAP[key]),
         )))
         .then(fp.curryRight(XLSX.utils.json_to_sheet.bind(XLSX.utils))({header: HEADER_1}))
-        .then(worksheet=>XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1"))
+        .then(worksheet=>{
+          XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1")
+          let worksheet2 = XLSX.utils.aoa_to_sheet([HEADER_2].concat(BODY_DEMO_2))
+          XLSX.utils.book_append_sheet(wb, worksheet2, '驱动列表');
+        })
         .then(()=>XLSX.writeFile(wb, "仪表导出.xlsx"))
     },
 		downloadTemplate() {
-			const worksheet = XLSX.utils.aoa_to_sheet(HEADER_1, BODY_DEMO_1);
-			const wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1");
-      const worksheet2 = XLSX.utils.aoa_to_sheet(HEADER_2, BODY_DEMO_2);
-      XLSX.utils.book_append_sheet(wb, worksheet2, '驱动列表');
-			XLSX.writeFile(wb, "仪表导入模板.xlsx");
+			const worksheet = XLSX.utils.aoa_to_sheet(HEADER_1, BODY_DEMO_1)
+			const wb = XLSX.utils.book_new()
+			XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1")
+      const worksheet2 = XLSX.utils.aoa_to_sheet([HEADER_2].concat(BODY_DEMO_2))
+      XLSX.utils.book_append_sheet(wb, worksheet2, '驱动列表')
+			XLSX.writeFile(wb, "仪表导入模板.xlsx")
 		},
 		closeDialog() {
 			this.$modal.$emit('dismiss');
 		},
 	}
 };
+
+function driverNameToId(name) {
+  return fp.find(x=>x[1]==name, BODY_DEMO_2)[0]
+}
+
+function driverIdToName(id) {
+  return fp.find(x=>x[0]==id, BODY_DEMO_2)[1]
+}
 </script>
 
 <style lang="less" scoped>
