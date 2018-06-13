@@ -60,8 +60,7 @@ export default {
 			});
 		},
 		validate(content) {
-			const [col1, col2] = fp.head(content);
-			if (!(col1 === '仪表ID' && col2 === '备注信息')) {
+			if (!fp.isEqual(fp.head(content), HEADER_1)) {
 				this.$message.error('列名错误，请下载使用模版重新导入。');
 				this.fileList = [];
 				this.devices = [];
