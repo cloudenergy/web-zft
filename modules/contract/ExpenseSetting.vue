@@ -103,9 +103,7 @@
 			return {
 				outerVisible: false,
 				innerVisible: false,
-				selectedCosts: [
-					1043
-				],
+				selectedCosts: [],
 				// (开始前提前-02/开始后固定+02/开始前固定F02/开始前一个月固定M02)
 				availablePlans: [{
 					name: '开始前提前',
@@ -197,7 +195,7 @@
 	.el-select .el-input__inner {
 		text-align: center;
 	}
-	
+
 	.extra-rent-row .el-row {
 		margin-bottom: 18px;
 	}

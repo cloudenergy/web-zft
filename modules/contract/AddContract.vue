@@ -178,7 +178,7 @@ export default {
 					offset: null,
 					standard: {
 						name: '常规租金',
-						rent: 3600,
+						rent: 0,
 						pattern: '1'
 					},
 					extra: [{
@@ -188,7 +188,7 @@ export default {
 						rent: '',
 						pattern: 'withRent'
 					}],
-					bond: 2600
+					bond: 0
 				}
 			};
 		},
