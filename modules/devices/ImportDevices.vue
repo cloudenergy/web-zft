@@ -30,7 +30,7 @@ const HEADER_1 = ['仪表ID',	'所属公寓', '备注信息',	'驱动编号']
 const BODY_DEMO_1 = ['001234567890','古鸽公寓',',实际导入请删除这一行', 1]
 const HEADER_2 = ['驱动编码','驱动名称','驱动说明']
 const BODY_DEMO_2 = [[1,'YTL/Electric/YTL-BUSvA.1.02.js','WIFI表控制驱动'],
-                    [2, 'HaiXing/Electric/Q-GDW-2013.js', '单相控制电表']]
+                     [2, 'HaiXing/Electric/Q-GDW-2013.js', '单相控制电表']]
 const DB_KEY= ['deviceId', 'name', 'memo','driver']
 
 export default {
@@ -100,11 +100,13 @@ export default {
       const DB_HEADER_MAP = fp.zipObject(DB_KEY, HEADER_1)
       const wb = XLSX.utils.book_new();
       this.$model('devices').query({mode: 'ALL'}, {projectId: this.projectId})
-        .then(fp.map(fp.pipe(
-          fp.pick(DB_KEY),
-          fp.update('driver', driverNameToId),
-          fp.mapKeys((key)=>DB_HEADER_MAP[key]),
-        )))
+        .then(fp.compose(
+          fp.filter(fp.prop('驱动编号')),
+          fp.map(fp.pipe(
+            fp.pick(DB_KEY),
+            fp.update('driver', driverNameToId),
+            fp.mapKeys((key)=>DB_HEADER_MAP[key]),
+        ))))
         .then(fp.curryRight(XLSX.utils.json_to_sheet.bind(XLSX.utils))({header: HEADER_1}))
         .then(worksheet=>{
           XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1")
@@ -114,7 +116,7 @@ export default {
         .then(()=>XLSX.writeFile(wb, "仪表导出.xlsx"))
     },
 		downloadTemplate() {
-			const worksheet = XLSX.utils.aoa_to_sheet(HEADER_1, BODY_DEMO_1)
+			const worksheet = XLSX.utils.aoa_to_sheet([HEADER_1, BODY_DEMO_1])
 			const wb = XLSX.utils.book_new()
 			XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1")
       const worksheet2 = XLSX.utils.aoa_to_sheet([HEADER_2].concat(BODY_DEMO_2))
@@ -128,11 +130,11 @@ export default {
 };
 
 function driverNameToId(name) {
-  return fp.find(x=>x[1]==name, BODY_DEMO_2)[0]
+  return (fp.find(x=>x[1]==name, BODY_DEMO_2) || [null]) [0]
 }
 
 function driverIdToName(id) {
-  return fp.find(x=>x[0]==id, BODY_DEMO_2)[1]
+  return (fp.find(x=>x[0]==id, BODY_DEMO_2) || [null, null])[1]
 }
 </script>
 
