@@ -45,7 +45,6 @@ describe('ExpenseSetting', () => {
 		expect(wrapper.html()).toContain('<el-option label="开始前固定" value="F"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="开始前一个月固定" value="M"></el-option>')
 		expect(wrapper.html()).toContain('<el-option label="一年一付" value="12">')
-		expect(wrapper.html()).toContain('<el-option label="预付费" value="prepaid">')
 		expect(wrapper.html()).toContain('<el-option label="一次付清" value="paidOff">')
 	})
 
