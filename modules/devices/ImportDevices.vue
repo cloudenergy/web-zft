@@ -26,11 +26,16 @@
 <script>
 import XLSX from 'xlsx';
 import fp from 'lodash/fp';
+import {removePrefix} from '../../utils/helper'
 const HEADER_1 = ['仪表ID',	'所属公寓', '备注信息',	'驱动编号']
 const BODY_DEMO_1 = ['001234567890','古鸽公寓',',实际导入请删除这一行', 1]
 const HEADER_2 = ['驱动编码','驱动名称','驱动说明']
 const BODY_DEMO_2 = [[1,'YTL/Electric/YTL-BUSvA.1.02.js','WIFI表控制驱动'],
                      [2, 'HaiXing/Electric/Q-GDW-2013.js', '单相控制电表']]
+const DEVICE_PREFIX = {
+  'YTL/Electric/YTL-BUSvA.1.02.js': 'YTL',
+  'HaiXing/Electric/Q-GDW-2013.js': 'HX'
+}
 const DB_KEY= ['deviceId', 'name', 'memo','driver']
 
 export default {
@@ -76,7 +81,8 @@ export default {
 					this.$set(this, 'devices', fp.map(
             fp.pipe(
               fp.zipObject(DB_KEY),
-              fp.update('driver', driverIdToName)
+              fp.update('driver', driverIdToName),
+              addPrefix,
             ),
             c));
 				}).catch(err => console.log(err));
@@ -101,12 +107,13 @@ export default {
       const wb = XLSX.utils.book_new();
       this.$model('devices').query({mode: 'ALL'}, {projectId: this.projectId})
         .then(fp.compose(
+          fp.map(fp.update('仪表ID', removePrefix)),
           fp.filter(fp.prop('驱动编号')),
           fp.map(fp.pipe(
             fp.pick(DB_KEY),
             fp.update('driver', driverNameToId),
             fp.mapKeys((key)=>DB_HEADER_MAP[key]),
-        ))))
+          ))))
         .then(fp.curryRight(XLSX.utils.json_to_sheet.bind(XLSX.utils))({header: HEADER_1}))
         .then(worksheet=>{
           XLSX.utils.book_append_sheet(wb, worksheet, "Sheet1")
@@ -136,6 +143,10 @@ function driverNameToId(name) {
 function driverIdToName(id) {
   return (fp.find(x=>x[0]==id, BODY_DEMO_2) || [null, null])[1]
 }
+function addPrefix(input) {
+  return fp.update('deviceId', id=>(DEVICE_PREFIX[input.driver]||'') + fp.padCharsStart('0')(12,id))(input)
+}
+
 </script>
 
 <style lang="less" scoped>
