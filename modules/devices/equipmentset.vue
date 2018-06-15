@@ -122,6 +122,7 @@ export default {
 		}
 	},
 	methods: {
+    removePrefix,
 		notify(val) {
 			this.dialogVisible = false;
 			if (val) {

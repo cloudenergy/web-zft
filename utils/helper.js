@@ -87,6 +87,6 @@ export const isBrowserSupport = function() {
  * 隐藏ID前缀
  */
 
-export const removePrefix = function delYTL(val) {
+export function removePrefix(val) {
 	return val ? val.replace(/^\D+/g, '') : '';
 };
