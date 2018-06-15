@@ -122,6 +122,7 @@
     import startOfYesterday from 'date-fns/start_of_yesterday'
     import getTime from 'date-fns/get_time'
     import format from 'date-fns/format'
+    import { removePrefix } from '~/utils/helper';
     export default {
         props: {
             readingElectric: {
@@ -148,12 +149,15 @@
             }
         },
         methods: {
+           removePrefix(val) {
+             return removePrefix(val);
+           },
             getRowKeys(row) {
                 return row.index;
             },
             dateTime(data) {
-				return format(new Date(data),'YYYY-MM-DD')
-			},
+				        return format(new Date(data),'YYYY-MM-DD')
+			      },
             price(val) {
                 return (val / 100).toFixed(2)
             },

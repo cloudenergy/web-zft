@@ -157,6 +157,9 @@ export default {
 		fixed(val) {
 			return (val / 10000).toFixed(2);
 		},
+        removePrefix(val) {
+			return removePrefix(val);
+		},
 		// 批量送电/断电
 		setElectricSwitch(data) {
 			if (this.reqData.devicesIds.length !== 0) {
