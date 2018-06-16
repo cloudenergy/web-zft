@@ -185,6 +185,7 @@
             projectId: this.projectId
           })
           .then(res => {
+            //TODO: why only one here?
             if (res.data.length === 1) {
               res.data[0].startDate = startDate * 1000
               res.data[0].endDate = endDate * 1000
