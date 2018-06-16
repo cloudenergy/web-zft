@@ -157,7 +157,7 @@
 </script>
 
 <style lang="less" scoped>
-	.el-input-number--mini {
+	.el-input-number.el-input-number--mini.is-without-controls {
 		width: 100px;
 	}
 	.section-label {
