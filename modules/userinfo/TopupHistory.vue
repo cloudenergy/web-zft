@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData" stripe style="width: 100%">
+    <el-table :data="topupRecords" stripe style="width: 100%">
       <el-table-column label="日期" width="150">
         <template slot-scope="scope">
           {{dateTime(scope.row.time)}}
@@ -11,11 +11,7 @@
           {{price(scope.row.amount)}}
         </template>
       </el-table-column>
-      <el-table-column label="手续费" color="green">
-        <template slot-scope="scope">
-          {{price(scope.row.fee)}}
-        </template>
-      </el-table-column>
+
       <el-table-column label="账户余额" color="green">
         <template slot-scope="scope">
           <span :class="colorOf(scope.row.balance)">{{price(scope.row.balance)}}</span>
@@ -48,11 +44,11 @@
       }
     },
     mounted() {
-      this.query();
+      this.refresh();
     },
     data() {
       return {
-        tableData: [],
+        topupRecords: [],
         reqData: {
           mode: 'topup',
           index: 1,
@@ -61,15 +57,12 @@
         pagination: {}
       }
     },
-    created() {
-      this.query()
-    },
     methods: {
       colorOf(balance) {
         return balance < 0 ? 'red' : 'black';
       },
       refresh() {
-        this.$set(this, 'tableData', []);
+        this.$set(this, 'topupRecords', []);
         this.query();
       },
       dateTime(data) {
@@ -85,7 +78,7 @@
             contractId: this.form.id
           })
           .then(res => {
-            this.$set(this, 'tableData', res.data || []);
+            this.$set(this, 'topupRecords', res.data || []);
             this.$set(this, 'pagination', res.paging || {});
           })
       },

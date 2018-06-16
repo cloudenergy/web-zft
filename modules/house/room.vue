@@ -65,7 +65,7 @@
 					<div class="flexdirection botborder userInfos">
 						<icon type="icon-test1" :symbol="true" />
 						<p>{{updateData.user.name}}</p>
-						<p>{{updateData.user.mobile}}</p>
+            <p>{{ updateData.user.accountName }}</p>
 					</div>
 					<div class="userinfobot">
 						<div>

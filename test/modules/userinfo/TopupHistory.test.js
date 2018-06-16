@@ -10,25 +10,36 @@ describe('TopupHistory', () => {
   const options = {
     localVue,
     propsData: {
-      houseFormat: 'SHARE',
-      readingElectric: [{index: 1, location: {}, details: [{device: {deviceId: 'YTL11223344'}}]}],
-
+      form: {},
+    },
+    methods: {
+      refresh() {
+      }
+    },
+    mocks: {
+      $model: () => ({
+        query: () => Promise.resolve({})
+      }),
+      $store: {
+        state: {
+          userInfo: {user: {projectId: 123}}
+        }
+      }
     }
   };
   const wrapper = mount(TopupHistory, options);
-  it('should have row-key', () => {
+  it('should render page', () => {
+    //TODO: find out how to refresh table
+    // wrapper.setData({
+    //   topupRecords: [{
+    //     time: 1529158151, amount: 1000, balance: 2000, operator: '老王'
+    //   }],
+    //   pagination: {size: 15, count: 6, index: 1},
+    // });
     expect(wrapper.html()).toContain(
-      '<td class="el-table_1_column_1  el-table__expand-column"><div class="cell"><div class="el-table__expand-icon "><i class="el-icon el-icon-arrow-right"></i></div></div></td>'
+      '<table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 470px;"><colgroup><col name="el-table_1_column_1" width="150"><col name="el-table_1_column_2" width="80"><col name="el-table_1_column_3" width="80"><col name="el-table_1_column_4" width="80"><col name="el-table_1_column_5" width="80"></colgroup><thead class=""><tr class=""><th colspan="1" rowspan="1" class="el-table_1_column_1     is-leaf"><div class="cell">日期</div></th><th colspan="1" rowspan="1" class="el-table_1_column_2     is-leaf"><div class="cell">充值金额</div></th><th colspan="1" rowspan="1" class="el-table_1_column_3     is-leaf"><div class="cell">账户余额</div></th><th colspan="1" rowspan="1" class="el-table_1_column_4     is-leaf"><div class="cell">支付方式</div></th><th colspan="1" rowspan="1" class="el-table_1_column_5     is-leaf"><div class="cell">经办人</div></th></tr></thead></table>'
     )
-  });
 
-  it('should hide deviceID prefix', () => {
-    expect(wrapper.html()).toContain(
-      '<td class="el-table_1_column_3  "><div class="cell"><span>11223344</span> <br></div></td>'
-    )
-  });
 
-  it('should have return el-table key', () => {
-    expect(wrapper.vm.getRowKeys({'index': '1'})).toBe('1');
   });
 });
