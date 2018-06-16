@@ -14,18 +14,18 @@ import echarts from 'echarts'
 
 
 export default function(vue) {
-	/**
+  /**
 	 * element ui
 	 */
-	// [Select, Option, Loading, Dialog, Menu, Submenu, MenuItem, RadioButton, RadioGroup].map(el => vue.use(el));
-	vue.prototype.$echarts = echarts 
-	vue.use(Element);
+  // [Select, Option, Loading, Dialog, Menu, Submenu, MenuItem, RadioButton, RadioGroup].map(el => vue.use(el));
+  vue.prototype.$echarts = echarts 
+  vue.use(Element);
 
-	// 设置api
-	vue.prototype.$model = api;
-	vue.prototype.$ELEMENT = { size: 'mini' };
-	// modal作为 event bus 使用
-	vue.prototype.$modal = new vue();
+  // 设置api
+  vue.prototype.$model = api;
+  vue.prototype.$ELEMENT = { size: 'mini' };
+  // modal作为 event bus 使用
+  vue.prototype.$modal = new vue();
 
-	mixin(vue);
+  mixin(vue);
 }

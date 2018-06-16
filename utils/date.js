@@ -23,13 +23,13 @@ export const addDays = convertToFP(_addDays, 2);
 const oneExtraDay = 50296857;
 
 export const readableDuration = date => humanizeDuration.humanizer({
-	language: 'zh_CN',
-	units: ['y', 'mo', 'd'],
-	round: true,
-	delimiter: '',
-	spacer: ''
+  language: 'zh_CN',
+  units: ['y', 'mo', 'd'],
+  round: true,
+  delimiter: '',
+  spacer: ''
 })(date*1000 + oneExtraDay);
 
 export const differentTime = data => {
-	return endOfDay(new Date(data))
+  return endOfDay(new Date(data))
 }
