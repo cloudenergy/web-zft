@@ -1,22 +1,34 @@
-import {mount} from 'vue-test-utils'
+import {createLocalVue, mount} from '@vue/test-utils'
+import ElementUI from 'element-ui';
 import Electricit from '../../../modules/devices/electricit.vue'
 
+const localVue = createLocalVue();
+localVue.use(ElementUI);
+localVue.component('el-table', ElementUI.ElTable);
 
 describe('Electricit', () => {
-	const wrapper = mount(Electricit, {
-		propsData: {
-			houseFormat: 'SHARE',
-			readingElectric: [{index: 1}],
+  const options = {
+    localVue,
+    propsData: {
+      houseFormat: 'SHARE',
+      readingElectric: [{index: 1, location: {}, details: [{device: {deviceId: 'YTL11223344'}}]}],
 
-		}
-	});
-	it('should have row-key', () => {
-		expect(wrapper.html()).toContain(
-			'<el-table-column type="expand">'
-		)
-	})
+    }
+  };
+  const wrapper = mount(Electricit, options);
+  it('should have row-key', () => {
+    expect(wrapper.html()).toContain(
+      '<td class="el-table_1_column_1  el-table__expand-column"><div class="cell"><div class="el-table__expand-icon "><i class="el-icon el-icon-arrow-right"></i></div></div></td>'
+    )
+  });
 
-	it('should have return el-table key', () => {
-		expect(wrapper.vm.getRowKeys({'index': '1'})).toBe('1');
-	});
-})
+  it('should hide deviceID prefix', () => {
+    expect(wrapper.html()).toContain(
+      '<td class="el-table_1_column_3  "><div class="cell"><span>11223344</span> <br></div></td>'
+    )
+  });
+
+  it('should have return el-table key', () => {
+    expect(wrapper.vm.getRowKeys({'index': '1'})).toBe('1');
+  });
+});

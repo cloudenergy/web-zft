@@ -89,4 +89,4 @@ export const isBrowserSupport = function() {
 
 export function removePrefix(val) {
 	return val ? val.replace(/^\D+/g, '') : '';
-};
+}
