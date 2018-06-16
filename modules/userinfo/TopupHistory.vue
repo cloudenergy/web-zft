@@ -1,30 +1,36 @@
 <template>
-  <el-table :data="tableData" stripe style="width: 100%">
-    <el-table-column label="日期" width="150">
-      <template slot-scope="scope">
-        {{dateTime(scope.row.time)}}
-      </template>
-    </el-table-column>
-    <el-table-column label="充值金额" color="green">
-      <template slot-scope="scope">
-        {{price(scope.row.amount)}}
-      </template>
-    </el-table-column>
-    <el-table-column label="手续费" color="green">
-      <template slot-scope="scope">
-        {{price(scope.row.fee)}}
-      </template>
-    </el-table-column>
-    <el-table-column label="账户余额" color="green">
-      <template slot-scope="scope">
-        <span :class="colorOf(scope.row.balance)">{{price(scope.row.balance)}}</span>
-      </template>
-    </el-table-column>
-    <el-table-column prop="fundChannelName" label="支付方式">
-    </el-table-column>
-    <el-table-column prop="operator" label="经办人">
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-table :data="tableData" stripe style="width: 100%">
+      <el-table-column label="日期" width="150">
+        <template slot-scope="scope">
+          {{dateTime(scope.row.time)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="充值金额" color="green">
+        <template slot-scope="scope">
+          {{price(scope.row.amount)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="手续费" color="green">
+        <template slot-scope="scope">
+          {{price(scope.row.fee)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="账户余额" color="green">
+        <template slot-scope="scope">
+          <span :class="colorOf(scope.row.balance)">{{price(scope.row.balance)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="fundChannelName" label="支付方式">
+      </el-table-column>
+      <el-table-column prop="operator" label="经办人">
+      </el-table-column>
+    </el-table>
+    <el-pagination background layout="prev, pager, next" :total='pagination.count' @current-change="paging"
+                   style="margin-top:5px;text-align:right"
+                   :page-size='pagination.size'>
+    </el-pagination>
+  </div>
 </template>
 
 <script>
@@ -46,7 +52,13 @@
     },
     data() {
       return {
-        tableData: []
+        tableData: [],
+        reqData: {
+          mode: 'topup',
+          index: 1,
+          size: 15
+        },
+        pagination: {}
       }
     },
     created() {
@@ -68,18 +80,19 @@
       },
       query() {
         this.$model('paid_bills')
-          .query({
-            mode: 'topup',
-            index: 1,
-            size: 15
-          }, {
+          .query(this.reqData, {
             projectId: this.projectId,
             contractId: this.form.id
           })
           .then(res => {
             this.$set(this, 'tableData', res.data || []);
+            this.$set(this, 'pagination', res.paging || {});
           })
-      }
+      },
+      paging(index) {
+        this.reqData.index = index;
+        this.query()
+      },
     },
     watch: {
       form(newVal, oldVal) {

@@ -29,10 +29,10 @@
 		</el-table-column>
 	</el-table>
 	<el-pagination background layout="prev, pager, next" :total='paging.count' @current-change="handleCurrentChange" style="margin-top:5px;text-align:right"
-        :page-size='15'>
+        :page-size='paging.size'>
     </el-pagination>
 </div>
-	
+
 </template>
 
 <script>
