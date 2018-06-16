@@ -128,7 +128,7 @@
 					<Rentmessasge v-if="showinf==2" :form="updateData" />
 					<Rentmoney v-if="showinf==3&&showmoney==1" :form="updateData" />
 					<Rentlease v-if="showinf==3&&showmoney==2" :form="contractbill" />
-					<Rentsendmoney v-if="showinf==3&&showmoney==3" :form="updateData" />
+					<TopupHistory v-if="showinf==3&&showmoney==3" :form="updateData" />
 				</div>
 			</div>
 		</el-dialog>
@@ -148,7 +148,7 @@
 		Rentlease,
 		Rentmessasge,
 		Rentmoney,
-		Rentsendmoney,
+		TopupHistory,
 		Relet,
 		Showrent,
 		Paym,
@@ -161,7 +161,7 @@
 			Rentlease,
 			Rentmessasge,
 			Rentmoney,
-			Rentsendmoney,
+			TopupHistory,
 			Relet,
 			Showrent,
 			Paym,
@@ -359,7 +359,7 @@
 						.catch(err => {
 							this.$message('提醒失败!')
 						})
-						
+
 					})
 					.catch(err => {
 						this.$message({
