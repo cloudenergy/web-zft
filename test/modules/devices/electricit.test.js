@@ -4,7 +4,6 @@ import Electricit from '../../../modules/devices/electricit.vue'
 
 const localVue = createLocalVue();
 localVue.use(ElementUI);
-localVue.component('el-table', ElementUI.ElTable);
 
 describe('Electricit', () => {
   const options = {
@@ -12,7 +11,6 @@ describe('Electricit', () => {
     propsData: {
       houseFormat: 'SHARE',
       readingElectric: [{index: 1, location: {}, details: [{device: {deviceId: 'YTL11223344'}}]}],
-
     }
   };
   const wrapper = mount(Electricit, options);
