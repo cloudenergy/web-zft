@@ -6,7 +6,7 @@
       <el-table-column label="应支付日" width="200">
         <template slot-scope="scope">
           <p style="color:red" v-if="isOverdue(nowTime(), scope.row)">已逾期{{overdueDays(nowTime(),
-            scope.row.dueDate)}}天</p>
+            toDate(scope.row.dueDate))}}天</p>
           <p style="" class="gray">{{ scope.row.dueDateTime }}</p>
         </template>
       </el-table-column>
@@ -28,7 +28,7 @@
       </el-table-column>
       <el-table-column label="金额(¥)/类型">
         <template slot-scope="scope">
-          <p>{{ narrow(scope.row.dueAmount) }}元</p>
+          <p>{{ price(scope.row.dueAmount) }}元</p>
           <p v-for="item in type" :key="item.type" v-if="scope.row.type===item.type" class="gray">{{ item.text
             }}{{scope.row.index}}<span v-if="scope.row.type==='rent'">期</span></p>
         </template>
@@ -62,7 +62,6 @@
   import fp from 'lodash/fp'
   import differenceInDays from 'date-fns/difference_in_days'
   import endOfDay from 'date-fns/end_of_day'
-  import isAfter from 'date-fns/is_after'
 
   export default {
     props: {
@@ -136,9 +135,9 @@
       },
       isOverdue(now, bill) {
         return fp.isEmpty(bill.payments)
-          && isAfter(now, endOfDay(this.toDate(bill.dueDate)))
+          && this.overdueDays(now, endOfDay(this.toDate(bill.dueDate))) > 0
       },
-      narrow(data) {
+      price(data) {
         return (data / 100).toFixed(2)
       },
       handleReceive(index, data) {
@@ -162,7 +161,7 @@
           .then(data => (this.otherCost = fp.filter(fp.get('enabled'))(data)));
       },
       overdueDays(now, dueDate) {
-        return differenceInDays(now, this.toDate(dueDate))
+        return differenceInDays(now, dueDate)
       },
       handleCurrentChange(val) {
         this.index = val
