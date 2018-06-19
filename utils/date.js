@@ -6,7 +6,6 @@ import _addYears from 'date-fns/add_years';
 import _addDays from 'date-fns/add_days';
 export { chain } from './helper';
 import humanizeDuration from 'humanize-duration'
-import endOfDay from 'date-fns/end_of_day'
 
 /**
  * 时间操作
@@ -29,7 +28,3 @@ export const readableDuration = date => humanizeDuration.humanizer({
   delimiter: '',
   spacer: ''
 })(date*1000 + oneExtraDay);
-
-export const differentTime = data => {
-  return endOfDay(new Date(data))
-}
