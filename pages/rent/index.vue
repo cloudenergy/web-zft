@@ -42,6 +42,8 @@
 		RentOwe
 	} from '~/modules/rent';
 	import {readableDuration} from '../../utils/date.js'
+  import {filterOP} from '../../utils/houseKeeper';
+
 	export default {
 		components: {
 			Tab,
@@ -99,7 +101,7 @@
 			},
 			rentMoneyType(val) {
 			},
-			
+
 			leasingStatus(data) {
 				if(data!=='all'){
 					this.reqData.leasingStatus = data
@@ -143,10 +145,10 @@
 					});
 					this.$set(this, 'housesRent', data)
 				})
-				this.$store.dispatch('HOUSE_KEERER',{
+				this.$store.dispatch('HOUSE_KEEPER',{
 						projectId:this.projectId
 					}).then(data=>{
-						this.$set(this,'houseKeeper',data)
+            this.$set(this, 'houseKeeper', filterOP(data))
 					})
 			},
 			showmessage(data) {

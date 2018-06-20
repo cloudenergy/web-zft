@@ -21,6 +21,8 @@
 </template>
 
 <script>
+  import {filterOP} from '../../utils/houseKeeper';
+
 	export default {
 		props: {
 			form: {
@@ -43,10 +45,10 @@
 		},
 		created() {
 			this.$set(this, 'model', this.form);
-			this.$store.dispatch('HOUSE_KEERER', {
+			this.$store.dispatch('HOUSE_KEEPER', {
 				projectId: this.projectId
 			}).then(data => {
-				this.houseKeepers = data
+				this.houseKeepers = filterOP(data)
 			})
 		},
 		methods: {

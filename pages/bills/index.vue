@@ -35,6 +35,7 @@
 	import {
 		Tab
 	} from '~/modules/house';
+  import {filterOP} from '../../utils/houseKeeper';
 	import {
 		BillStatus,
 		BillType,
@@ -142,10 +143,10 @@
 				})
 				.catch(err => {
 				})
-				this.$store.dispatch('HOUSE_KEERER',{
+				this.$store.dispatch('HOUSE_KEEPER',{
 					projectId:this.projectId
 				}).then(data=>{
-					this.$set(this,'houseKeeper',data)
+					this.$set(this,'houseKeeper', filterOP(data))
 				})
 			},
 			refresh(type,commiunityId) {

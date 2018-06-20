@@ -52,7 +52,7 @@
             </div>
 			<div v-loading="loading"></div>
         </div>
-		
+
         <drawer-panel :open.sync="viewRoom">
             <div v-if="viewRoom" class="drawer">
                 <Preview :room="currentRoom" :house="currentHouse" />
@@ -63,13 +63,14 @@
                 <houseInformation :house="currentHouse" :houseType="reqData.houseFormat" />
             </div>
         </drawer-panel>
-		
+
     </div>
 </template>
 
 <script>
     import _ from 'lodash';
     import { Tab, Room, Search, Preview, houseInformation,houseDevicesDosage } from '~/modules/house';
+    import {filterOP} from '../../utils/houseKeeper';
     export default {
     	components: { Tab, Room, Search, Preview, houseInformation,houseDevicesDosage },
     	data() {
@@ -274,13 +275,13 @@
     				.catch(err => {
     				});
     			this.$store
-    				.dispatch('HOUSE_KEERER', {
+    				.dispatch('HOUSE_KEEPER', {
     					projectId: this.projectId
     				})
     				.then(data => {
-    					this.$set(this, 'houseKeeper', data);
+    					this.$set(this, 'houseKeeper', filterOP(data));
 					});
-				
+
     		},
     		showDrawer({ room, house }) {
     			this.currentRoom = room;

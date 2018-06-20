@@ -1,6 +1,6 @@
 /*
- * @Author: insane.luojie 
- * @Date: 2017-11-10 10:01:31 
+ * @Author: insane.luojie
+ * @Date: 2017-11-10 10:01:31
  * @Last Modified by: mikey.zhaopeng
  * @Last Modified time: 2018-05-14 21:28:57
  */
@@ -145,11 +145,11 @@ export default {
 			}
 			// 保存所有城市
 			if(state.userInfo.communities!==null&&state.userInfo.soleCommunities!==null&&state.userInfo.entireCommunities!==null&&state.userInfo.allCommunityBoolean) {
-				state.userInfo.allCommunity =_.uniqBy(_.concat(state.userInfo.communities,state.userInfo.soleCommunities,state.userInfo.entireCommunities),'geoLocationId') 
+				state.userInfo.allCommunity =_.uniqBy(_.concat(state.userInfo.communities,state.userInfo.soleCommunities,state.userInfo.entireCommunities),'geoLocationId')
 				state.userInfo.allCommunityBoolean = false
-				return 
+				return
 			}
-			
+
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.userInfo.othercost = _.filter(data, {
@@ -165,7 +165,7 @@ export default {
 		CLEAR_USER(state, data) {
 			state.userInfo = userInfo()
 		},
-		SAVE_HOUSE_KEERER(state, data) {
+		SAVE_HOUSE_KEEPER(state, data) {
 			state.userInfo.houseKeeper = data
 		},
 		ADD_COMMUNITYS(state,data) {
@@ -375,7 +375,7 @@ export default {
 		}) {
 			commit('CLEAR_USER')
 		},
-		HOUSE_KEERER({
+		HOUSE_KEEPER({
 			commit,
 			state
 		}, {
@@ -389,7 +389,7 @@ export default {
 					projectId
 				})
 				.then(data => {
-					commit('SAVE_HOUSE_KEERER', data)
+					commit('SAVE_HOUSE_KEEPER', data)
 					return data
 				})
 		},
