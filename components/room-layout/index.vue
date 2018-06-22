@@ -4,7 +4,7 @@
 			<el-col :span="8">
 				<el-input v-model="form.bedRoom">
 					<template slot="prepend">户型</template>
-					<template slot="append">室</template>
+					<template slot="append">间</template>
 				</el-input>
 			</el-col>
 			<el-col :span="8">
@@ -52,7 +52,7 @@
 				this.$emit('input', val);
 			},
 			rentType(val) {
-				if (val == 'SHARE') {
+				if (val === 'SHARE') {
 					this.form.bedRoom = 2;
 				}
 			}
@@ -66,7 +66,7 @@
 
 		.el-input {
 			width: 24%;
-			margin: 2px 10px 2px 0px;
+			margin: 2px 10px 2px 0;
 		}
 	}
 </style>
