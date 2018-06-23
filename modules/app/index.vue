@@ -32,6 +32,7 @@
 	</div>
 </template>
 <script>
+import fp from 'lodash/fp';
 import site_nav from './site-nav';
 import AddModal from '~/modules/house/add';
 import { NewContract } from '~/modules/contract';
@@ -43,9 +44,14 @@ export default {
 	},
 	computed: {
 		userInfo() {
-			return JSON.parse(localStorage.getItem('user'));
+      const userFromStorage = JSON.parse(localStorage.getItem('user'));
+      return userFromStorage || {};
 		}
 	},
+  created() {
+    // read cookie or storage
+    fp.isUndefined(this.$store.state.userInfo.user.auth) ? this.$forward('/login') : '';
+  },
 	methods: {
 		logout() {
 			localStorage.removeItem('user');
@@ -144,5 +150,5 @@ export default {
 </style>
 
 <style lang="less" scoped>
-	
+
 </style>

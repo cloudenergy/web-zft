@@ -4,6 +4,7 @@
  * @Last Modified by: mikey.other
  * @Last Modified time: 2018-02-07 10:09:29
  */
+import fp from 'lodash/fp';
 import { isBrowserSupport } from '~/utils/helper';
 function updateHeader(comp) {
   const { meta } = comp;
@@ -35,8 +36,11 @@ function applyAsyncData(component) {
 
 export default function(router) {
   router.beforeEach((to, from, next) => {
+    if(fp.get('query.source')(to) === 'wx') {
+      router.replace('/mobileLogin');
+    }
     if (!isBrowserSupport()) {
-      if (to.name && to.name != 'upgrade') {
+      if (to.name && to.name !== 'upgrade') {
         return next('/upgrade');
       }
     }

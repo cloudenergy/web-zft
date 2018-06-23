@@ -1,6 +1,6 @@
 <script>
-const defaultLayout = ['login', 'notFound', 'upgrade'];
-import _ from 'lodash';
+const defaultLayout = ['login', 'mobileLogin', 'notFound', 'upgrade'];
+import fp from 'lodash/fp';
 export default {
 	data() {
 		return {
@@ -9,7 +9,7 @@ export default {
 	},
 	render() {
 		const matched = this.$route.matched;
-		const last = matched[matched.length - 1];
+		const last = fp.last(matched);
 
 		if (!last) {
 			return <div class="page" v-loading="loading" />;
@@ -25,15 +25,6 @@ export default {
 			</app>
 		);
 	},
-	created() {
-		// read cookie or storage
-		_.isUndefined(this.$store.state.userInfo.user.auth) ? this.stubLogin() : '';
-	},
-	methods: {
-		stubLogin() {
-			this.$router.replace('/login');
-		}
-	}
 };
 </script>
 
