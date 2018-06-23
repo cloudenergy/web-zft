@@ -37,7 +37,7 @@ function applyAsyncData(component) {
 export default function(router) {
   router.beforeEach((to, from, next) => {
     if(fp.get('query.source')(to) === 'wx') {
-      router.replace('/mobileLogin');
+      router.replace('/mobile/login');
     }
     if (!isBrowserSupport()) {
       if (to.name && to.name !== 'upgrade') {

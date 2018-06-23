@@ -1,5 +1,5 @@
 <script>
-const defaultLayout = ['login', 'mobileLogin', 'notFound', 'upgrade'];
+const defaultLayout = ['login', 'mobile-login', 'mobile-recharge', 'notFound', 'upgrade'];
 import fp from 'lodash/fp';
 export default {
 	data() {
@@ -11,6 +11,7 @@ export default {
 		const matched = this.$route.matched;
 		const last = fp.last(matched);
 
+		console.log(last);
 		if (!last) {
 			return <div class="page" v-loading="loading" />;
 		}
