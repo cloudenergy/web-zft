@@ -1,30 +1,30 @@
 <template>
-  <div class="recharge">
+  <div class="recharge mobile-rechage">
     <div class="container">
-      <p>充值金额(元)</p>
-      <el-row type="flex" class="amount-row" justify="center" align="middle">
-        <el-col :span="8" v-for="amount in selections1" :key="amount.value">
-          <el-button class="amount-selection" @click="select(amount.value)">{{amount.value}}
-          </el-button>
-        </el-col>
-      </el-row>
-      <el-row type="flex" class="amount-row" justify="center" align="middle">
-        <el-col :span="8" v-for="amount in selections2" :key="amount.value">
-          <el-button :span="6" class="amount-selection" @click="select(amount.value)">{{amount.value}}
-          </el-button>
-        </el-col>
-      </el-row>
+      <p class="container-title">充值金额(元)</p>
+      <div class="amount-row flexcenter">
+        <div v-for="(amount, index) in selections1" :key="amount.value" class="select-button felxc" :class="{centerButton:index===1}">
+          <button class="amount-selection" @click="select(amount.value)" :class="selectButton(amount)">{{amount.value}}
+          </button>
+        </div>
+      </div>
+      <div class="amount-row flexcenter selections2">
+        <div v-for="(amount, index) in selections2" :key="amount.value" class="select-button felxc" :class="{centerButton:index===1}">
+          <button class="amount-selection" @click="select(amount.value)" :class="selectButton(amount)">{{amount.value}}
+          </button>
+        </div>
+      </div>
 
-      <el-row>
-        <label for="input-number">其他金额</label>
+      <el-row class="select-other-num">
         <el-col>
-          <el-input-number id="input-number" class="input-amount" :controls="false" :step="1" placeholder="请输入金额，单位元"
-                           :precision="0" v-model="otherAmount"></el-input-number>
+          <el-input placeholder="请输入其他金额" v-model="inputPayNum">
+            <template slot="prepend">其他金额:</template>
+          </el-input>
         </el-col>
       </el-row>
       <el-row class="payment-row">
-        <label>当前充值金额{{selectAmount}}元</label>
-        <el-button class="payment-button" @click="pay(selectAmount)">支付</el-button>
+        <label class="payment-option">当前充值金额: </label><span class="payment-num">{{selectAmount}}元</span>
+        <el-button class="payment-button" @click="pay(selectAmount)">立即充值</el-button>
       </el-row>
     </div>
   </div>
@@ -39,7 +39,8 @@
         selections1: [{value: 10}, {value: 50}, {value: 100}],
         selections2: [{value: 200}, {value: 500}, {value: 1000}],
         otherAmount: 0,
-        selectAmount: 0,
+        selectAmount: 10,
+        inputPayNum:''
       };
     },
     methods: {
@@ -48,10 +49,13 @@
       },
       pay(amount) {
         this.$message.success(`使用微信公众号支付${amount}元。`);
-      }
+      },
+      selectButton(data) {
+        return this.selectAmount===data.value?'button-active':'button-noneselect'
+      },
     },
-    watch: {
-      otherAmount(newVal, oldVal) {
+     watch: {
+      inputPayNum(newVal, oldVal) {
         this.selectAmount = newVal;
       }
     },
@@ -63,6 +67,11 @@
 <style lang="less" scoped>
   .container {
     margin: 20px;
+    .container-title {
+      font-size: 16px;
+      color: #4A4A4A;
+      margin-bottom: 14px;
+    }
   }
 
   .amount-selection {
@@ -71,7 +80,29 @@
     justify-content: center;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 90%;
+    width: 100%;
+    outline: none;
+    background: #fff;
+    font-size: 16px;
+    color: #4A4A4A;
+  }
+  .selections2 {
+    margin: 14px 0;
+  }
+  .button-active {
+    background: #7BAEE8;
+    color: #fff;
+  }
+  .centerButton {
+    margin: 0 5px;
+  }
+  .select-button {
+    flex: 1;
+    button {
+      padding: 0;
+      margin: 0;
+      flex: 1
+    }
   }
 
   .payment-button {
@@ -79,20 +110,56 @@
     color: #fff;
     margin: 10px auto;
     font-size: 16px;
-    background-color: #84aee7;
-    border-radius: 5px;
+    background: #7BAEE8;
+    border-radius: 4px;
+    height: 40px;
   }
+  .other-pay-num {
+
+  }
+  
 
   .payment-row {
     position: absolute;
     bottom: 150px;
-    padding: 20px;
     width: 90%;
+    .payment-option {
+      font-size: 16px;
+      color: #4a4a4a;
+    }
+    .payment-num {
+      font-size: 16px;
+      color: #F03D53;
+    }
   }
 
   .input-amount {
 
   }
 </style>
+
+<style lang="less">
+  .mobile-rechage {
+    .select-other-num {
+      margin-top: 10px;
+      padding: 5px;
+      background: #FFFFFF;
+      border: 1px solid #CDCBCB;
+      border-radius: 4px;
+      .el-input-group__prepend {
+        background-color: #fff;
+        border: none;
+        padding: 0 10px;
+      }
+      .el-input__inner{
+        border: none;
+        padding-left: 10px
+      }
+
+    }
+  }
+  
+</style>
+
 
 
