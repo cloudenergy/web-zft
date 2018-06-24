@@ -1,85 +1,98 @@
 <template>
-	<div class="recharge">
-		<div class="container">
-      <span>充值页面</span>
+  <div class="recharge">
+    <div class="container">
+      <p>充值金额(元)</p>
+      <el-row type="flex" class="amount-row" justify="center" align="middle">
+        <el-col :span="8" v-for="amount in selections1" :key="amount.value">
+          <el-button class="amount-selection" @click="select(amount.value)">{{amount.value}}
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-row type="flex" class="amount-row" justify="center" align="middle">
+        <el-col :span="8" v-for="amount in selections2" :key="amount.value">
+          <el-button :span="6" class="amount-selection" @click="select(amount.value)">{{amount.value}}
+          </el-button>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <label for="input-number">其他金额</label>
+        <el-col>
+          <el-input-number id="input-number" class="input-amount" :controls="false" :step="1" placeholder="请输入金额，单位元"
+                           :precision="0" v-model="otherAmount"></el-input-number>
+        </el-col>
+      </el-row>
+      <el-row class="payment-row">
+        <label>当前充值金额{{selectAmount}}元</label>
+        <el-button class="payment-button" @click="pay(selectAmount)">支付</el-button>
+      </el-row>
     </div>
-	</div>
+  </div>
 </template>
 
 <script>
-	import {
-		add,
-		format
-	} from '~/utils/date';
-	import _ from 'lodash';
-	export default {
-		data() {
-			return {
-				user: {keepAlive:false},
-				type:null
-			};
-		},
-		methods: {
-			keyLogin(el) {
-				if(el.keyCode===13){
-					this.login()
-				}
-			},
-		}
-	};
+  import fp from 'lodash/fp';
+
+  export default {
+    data() {
+      return {
+        selections1: [{value: 10}, {value: 50}, {value: 100}],
+        selections2: [{value: 200}, {value: 500}, {value: 1000}],
+        otherAmount: 0,
+        selectAmount: 0,
+      };
+    },
+    methods: {
+      select(amount) {
+        this.selectAmount = amount;
+      },
+      pay(amount) {
+        this.$message.success(`使用微信公众号支付${amount}元。`);
+      }
+    },
+    watch: {
+      otherAmount(newVal, oldVal) {
+        this.selectAmount = newVal;
+      }
+    },
+    created() {
+      fp.isUndefined(this.$store.state.userInfo.user.auth) ? this.$forward('/mobile/login') : '';
+    }
+  };
 </script>
 <style lang="less" scoped>
-	.login {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		text-align: center;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  .container {
+    margin: 20px;
+  }
 
-		// h4 {
-		// 	padding: 10px 0 0;
-		// 	color: @dark;
-		// 	text-align: center;
+  .amount-selection {
+    margin: 5px;
+    height: 45px;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 90%;
+  }
 
-		// 	span {
-		// 		display: inline-block;
-		// 		letter-spacing: 20px;
-		// 		text-indent: 20px;
-		// 		border-bottom: 3px solid @primary;
-		// 		padding-bottom: 10px;
-		// 		margin-bottom: 20px;
-		// 	}
-		// }
+  .payment-button {
+    width: 100%;
+    color: #fff;
+    margin: 10px auto;
+    font-size: 16px;
+    background-color: #84aee7;
+    border-radius: 5px;
+  }
 
+  .payment-row {
+    position: absolute;
+    bottom: 150px;
+    padding: 20px;
+    width: 90%;
+  }
 
-		.container {
-			width: 700px;
-			height: 450px;
-			background: #fff;
-			box-shadow: 0 0 15px #999;
-			border-radius: 8px;
-			.logo-image {
-				background: #F5F8FC;
-				padding:20px 0;
-				margin-bottom:60px;
-			}
-			.lofin-form{
-				width: 300px;
-				margin:0 auto;
-			}
-		}
+  .input-amount {
 
-		.bottom-btn {
-			margin-bottom: 0px;
-
-			button {
-				box-shadow: 0 0 10px @primary;
-			}
-		}
-	}
+  }
 </style>
 
 
