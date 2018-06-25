@@ -225,7 +225,7 @@
 				});
 			},
 			successInfo() {
-				this.$emit('successRefresh');
+				this.$root.$emit('successRefresh');
 			},
 			rentPay(datanum) {
 				this.showmoney = datanum;

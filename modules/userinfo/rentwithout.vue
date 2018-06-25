@@ -11,8 +11,9 @@
                 </el-form-item>
                 <el-form-item label="未付账单">
                     <span class="gray" v-for="item in contractbill" :key="item.id">
-                        <span v-if="item.type==='rent'">押金{{item.index}}期</span>
-                        <span v-if="item.type==='bond'">租金</span>{{price(item.dueAmount)}}元 </span>
+                        <span v-if="item.type==='rent'">租金{{item.index}}期</span>
+                        <span v-if="item.type==='bond'">押金</span>{{price(item.dueAmount)}}元 </span>
+                    <span v-if="contractbill.length === 0">无</span>
                 </el-form-item>
                 <el-form-item label="结算类型">
                     <el-radio-group v-model="radio">
@@ -21,9 +22,11 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="结算金额">
-                    <el-input v-model="input" placeholder="输入结算金额" style="widht:158px;" type="number">
-                        <template slot="append">￥</template>
-                    </el-input>
+                  <el-col>
+                    <el-input-number v-model.number="finalAmount" placeholder="输入结算金额" style="widht:158px;" :precision="2" :min="0" :step="1" :controls="false">
+                      <template slot="append">¥</template>
+                    </el-input-number>
+                  </el-col>
                 </el-form-item>
                 <el-form-item label="支付方式">
                     <el-select v-model="withOutInfo.transaction.fundChannelId" placeholder="请选择" style="width:100%">
@@ -96,7 +99,7 @@
         data() {
             return {
                 withOutInfo: this.newModel(),
-                input: '',
+                finalAmount: 0,
                 textarea: '',
                 contractInfo: {
                     user: ''
@@ -110,6 +113,7 @@
             }
         },
         mounted() {
+            this.$set(this, 'contractInfo', {user: ''})
             this.query(this.id)
         },
         methods: {
@@ -142,12 +146,15 @@
                 })
                 this.$model('fund_channel')
                 .query({
-                    category: 'all',
+                    category: 'offline',
                     flow: 'receive'
                 }, {
                     projectId: this.projectId
                 })
-                .then(res => this.$set(this, 'payRoad', res))
+                .then(res => {
+                  console.log(res);
+                  this.$set(this, 'payRoad', res)
+                })
                 this.$model('user_info')
                 .query({},{
                     projectId:this.projectId,
@@ -181,8 +188,8 @@
                 if (data) {
                     this.withOutInfo.transaction.flow = this.radio===1?'receive':'pay'
                     this.withOutInfo.endDate = this.nowData()
-                    this.withOutInfo.transaction.amount = this.input * 100
-                    this.input = ''
+                    this.withOutInfo.transaction.amount = this.finalAmount * 100;
+                    this.finalAmount = 0
                     this.radio = 2
                     this.newModel()
                     this.$model('contracts')
@@ -219,4 +226,13 @@
             margin-bottom: 0;
         }
     }
+</style>
+
+<style lang="less">
+  .el-input.el-input--mini.el-input-group.el-input-group--append {
+    display: inline-table;
+  }
+  .el-input-number.el-input-number--mini.is-without-controls {
+    width: 100%;
+  }
 </style>
