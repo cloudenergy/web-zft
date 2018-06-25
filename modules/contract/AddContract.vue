@@ -103,7 +103,7 @@ export default {
 							.then(res => {
 								this.closeDialog();
 								this.resetForm();
-								this.successMessage();
+								this.successMessage(res);
 							})
 							.catch(err => {
 								let _this = this;
@@ -235,12 +235,12 @@ export default {
 			this.$refs['form'].resetFields();
 			this.$modal.$emit('dismiss');
 		},
-		successMessage() {
+		successMessage(roomRes) {
 			this.$message({
 				message: '创建成功',
 				type: 'success'
 			});
-			this.$emit('successRefresh');
+      this.$root.$emit('successRefresh', roomRes);
 		},
 		unitAsCent(obj) {
 			const rent = obj.rent * 100;
