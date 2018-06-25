@@ -77,6 +77,7 @@
 
 <script>
   import _ from 'lodash';
+  import fp from 'lodash/fp';
   import {Tab, Room, Search, Preview, houseInformation, houseDevicesDosage} from '~/modules/house';
   import {filterOP} from '../../utils/houseKeeper';
 
@@ -119,9 +120,9 @@
       this.$modal.$on('refresh', () => {
         this.formatting()
       });
-      this.$root.$on('successRefresh', () => {
+      this.$root.$on('successRefresh', roomId => {
         this.loading = true;
-        this.$set(this, 'houses', []);
+        this.$set(this, 'houses', this.forceRoomRefresh(this.houses, roomId));
         this.formatting()
       })
     },
@@ -147,6 +148,10 @@
       }
     },
     methods: {
+      forceRoomRefresh(houses, roomId) {
+        //TODO: clear all houses or only room, revisit this later.
+        return roomId ? fp.reject(fp.pipe(fp.get('rooms'), fp.some({id: roomId})))(houses) : houses;
+      },
       // 搜索
       keyup(val) {
         this.setSearch(val);

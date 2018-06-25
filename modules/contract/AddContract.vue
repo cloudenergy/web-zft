@@ -102,9 +102,9 @@ export default {
 							})
 							.then(res => {
 								this.closeDialog();
-								this.resetForm();
-								this.successMessage(res);
-							})
+								this.successMessage(this.form.property.roomId);
+                this.resetForm();
+              })
 							.catch(err => {
 								let _this = this;
 								switch (err.code) {
@@ -235,12 +235,12 @@ export default {
 			this.$refs['form'].resetFields();
 			this.$modal.$emit('dismiss');
 		},
-		successMessage(roomRes) {
+		successMessage(roomId) {
 			this.$message({
 				message: '创建成功',
 				type: 'success'
 			});
-      this.$root.$emit('successRefresh', roomRes);
+      this.$root.$emit('successRefresh', roomId);
 		},
 		unitAsCent(obj) {
 			const rent = obj.rent * 100;
