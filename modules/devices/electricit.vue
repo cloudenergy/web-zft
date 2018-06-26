@@ -18,19 +18,13 @@
                   <br>
                 </template>
               </el-table-column>
-              <el-table-column label="归属账单" min-width="160">
-                <template slot-scope="scope">
-                                <span class="el-dropdown-link devicesuser" v-if="scope.row.contract">
-                                    {{ scope.row.contract.userName }}
-                                </span>
-                  <span style="margin-left: 2px;" class="margin_top" v-if="scope.row.contract">{{ scope.row.contract.userId }}</span>
-                </template>
+              <el-table-column label="用户姓名" min-width="160">
               </el-table-column>
               <el-table-column label="起始日期" min-width="160">
                 <template slot-scope="scope">
                   <div class="margin_left">
                     <p>{{dateTime(scope.row.startDate*1000)}}</p>
-                    <p>{{ scope.row.startScale }}</p>
+                    <p>{{ usageDisplay(scope.row.startScale) }}</p>
                   </div>
                 </template>
               </el-table-column>
@@ -38,7 +32,7 @@
                 <template slot-scope="scope">
                   <div class="margin_left">
                     <p>{{dateTime(scope.row.endDate*1000)}}</p>
-                    <p>{{ scope.row.startScale }}</p>
+                    <p>{{ usageDisplay(scope.row.endScale) }}</p>
                   </div>
                 </template>
               </el-table-column>
@@ -82,9 +76,9 @@
       </el-table-column>
       <el-table-column label="起始日期" min-width="160">
         <template slot-scope="scope">
-          <el-date-picker v-model="scope.row.startDate" type="date" placeholder="选择日期" style="width:160px"
-                          @input="oldTime(scope.row,scope.$index)"
-                          @blur="dateTest()">
+          <el-date-picker v-model="scope.row.startDateForControl" type="date" placeholder="选择日期" style="width:160px"
+                          @input="oldTime(scope.row,scope.$index)" @focus="mountTime(scope.row)"
+                          @blur="updateTimeField(scope.row)">
           </el-date-picker>
           <br/>
           <span v-if="scope.row.details.length!==0"
@@ -94,8 +88,8 @@
       </el-table-column>
       <el-table-column label="截止日期" min-width="160">
         <template slot-scope="scope">
-          <el-date-picker v-model="scope.row.endDate" type="date" placeholder="选择日期" style="width:160px"
-                          @change="newTime(scope.row,scope.$index)">
+          <el-date-picker v-model="scope.row.endDateForControl" type="date" placeholder="选择日期" style="width:160px"
+                          @change="newTime(scope.row,scope.$index)" @focus="mountTime(scope.row)" @blur="updateTimeField(scope.row)">
           </el-date-picker>
           <br/>
           <span v-if="scope.row.details.length!==0"
@@ -153,7 +147,25 @@
         return this.$store.state.userInfo.user.projectId
       }
     },
+    mounted(){
+      fp.each(this.mountTime.bind(this))(this.readingElectric)
+    },
+    watch: {
+      readingElectric(newVal, oldVal) {
+        if(fp.isEmpty(oldVal) && !fp.isEmpty(newVal)) {
+          fp.each(this.mountTime.bind(this))(newVal)
+        }
+      }
+    },
     methods: {
+      mountTime(data) {
+        data.startDateForControl = new Date(data.startDate)
+        data.endDateForControl = new Date(data.endDate)
+      },
+      updateTimeField(data) {
+        data.startDate = data.startDateForControl.getTime();
+        data.endDate = data.endDateForControl.getTime();
+      },
       username(row) {
         return fp.getOr('')('details[0].userName')(row)
       },
@@ -173,12 +185,10 @@
         return (val / 100).toFixed(2)
       },
       usageDisplay(val) {
-        return Number(val).toFixed(2)
-      },
-      dateTest(data) {
+        return val ? Number(val).toFixed(2) : '0.00'
       },
       oldTime(data, index) {
-        this.roomReading(getTime(data.startDate) / 1000, getTime(data.endDate) / 1000, data.houseId, data.roomId,
+        this.roomReading(data.startDateForControl.getTime() / 1000, data.endDateForControl.getTime() / 1000, data.houseId, data.roomId,
           index)
       },
       roomReading(startDate, endDate, houseId, roomId, index) {
@@ -188,24 +198,25 @@
           endDate,
           houseId,
           roomId
-        }
+        };
         this.$model('reading_equipment')
           .query(roomReadingData, {
             projectId: this.projectId
           })
-          .then(res => {
+          .then(({data, }) => {
             //TODO: why only one here?
-            if (res.data.length === 1) {
-              res.data[0].startDate = startDate * 1000
-              res.data[0].endDate = endDate * 1000
-              res.data[0].index = index
-              this.readingElectric[index] = res.data[0]
-              this.$refs.readingElectric.toggleRowExpansion(this.readingElectric.find(d => d.index == index))
+            if (data.length === 1) {
+              data[0].startDate = startDate * 1000;
+              data[0].endDate = endDate * 1000;
+              data[0].index = index;
+              this.mountTime(data[0]);
+              this.readingElectric[index] = data[0];
+              this.$refs.readingElectric.toggleRowExpansion(this.readingElectric.find(d => d.index === index))
             }
           })
       },
       newTime(data, index) {
-        this.roomReading(getTime(data.startDate) / 1000, getTime(data.endDate) / 1000, data.houseId, data.roomId,
+        this.roomReading(data.startDateForControl.getTime() / 1000, data.endDateForControl.getTime() / 1000, data.houseId, data.roomId,
           index)
       },
       computations(newnum, oldnum) {
