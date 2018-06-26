@@ -2,6 +2,8 @@
   <div class="readingElectric">
     <el-table :data="readingElectric" :row-key="getRowKeys" @row-click='handleRowHandle'
               ref="readingElectric">
+      <el-table-column type="index" width="50" label="序号" :index="indexMethod">
+      </el-table-column>
       <el-table-column type="expand">
         <template slot-scope="props">
           <div class="innerTable">
@@ -154,6 +156,9 @@
       }
     },
     methods: {
+      indexMethod(row) {
+        return row;
+      },
       removePrefix(val) {
         return removePrefix(val);
       },
