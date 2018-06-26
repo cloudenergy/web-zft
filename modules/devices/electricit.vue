@@ -75,12 +75,9 @@
           <br>
         </template>
       </el-table-column>
-      <el-table-column label="归属账单" min-width="160">
-        <template slot-scope="scope" v-if="scope.row.details.length!==0&&scope.row.details[0].contract!==undefined">
-                    <span class="el-dropdown-link devicesuser">
-                        {{ scope.row.details[0].contract.userName }}
-                    </span>
-          <span style="margin-left: 2px;" class="margin_top">{{ scope.row.details[0].contract.userId }}</span>
+      <el-table-column label="用户姓名" min-width="160">
+        <template slot-scope="scope">
+          <span style="margin-left: 2px;" class="margin_top">{{ username(scope.row) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="起始日期" min-width="160">
@@ -91,7 +88,7 @@
           </el-date-picker>
           <br/>
           <span v-if="scope.row.details.length!==0"
-                class="margin_top margin_left">{{ scope.row.details[0].startScale }}</span>
+                class="margin_top margin_left">上期刻度：{{ usageDisplay(scope.row.details[0].startScale) }}Kwh</span>
           <br>
         </template>
       </el-table-column>
@@ -102,13 +99,13 @@
           </el-date-picker>
           <br/>
           <span v-if="scope.row.details.length!==0"
-                class="margin_top margin_left">{{ scope.row.details[0].endScale }}</span>
+                class="margin_top margin_left">本期刻度：{{ usageDisplay(scope.row.details[0].endScale) }}Kwh</span>
           <br>
         </template>
       </el-table-column>
-      <el-table-column label="用量" width="70">
+      <el-table-column label="用量/Kwh" width="80">
         <template slot-scope="scope">
-          <span v-if="scope.row.details[0]">{{ scope.row.details[0].usage }}</span>
+          <span v-if="scope.row.details[0]">{{ usageDisplay(scope.row.details[0].usage) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="单价/元" width="70">
@@ -125,6 +122,7 @@
   </div>
 </template>
 <script>
+  import fp from 'lodash/fp'
   import startOfYesterday from 'date-fns/start_of_yesterday'
   import getTime from 'date-fns/get_time'
   import format from 'date-fns/format'
@@ -156,8 +154,11 @@
       }
     },
     methods: {
+      username(row) {
+        return fp.getOr('')('details[0].userName')(row)
+      },
       indexMethod(row) {
-        return row;
+        return row + 1;
       },
       removePrefix(val) {
         return removePrefix(val);
@@ -170,6 +171,9 @@
       },
       price(val) {
         return (val / 100).toFixed(2)
+      },
+      usageDisplay(val) {
+        return Number(val).toFixed(2)
       },
       dateTest(data) {
       },
