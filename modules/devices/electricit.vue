@@ -9,8 +9,6 @@
           <div class="innerTable">
             <el-table :data="props.row.details">
               <el-table-column label="房源" min-width="160">
-                <template slot-scope="scope">
-                </template>
               </el-table-column>
               <el-table-column label="仪表名称/ID" min-width="120">
                 <template slot-scope="scope">
@@ -18,11 +16,14 @@
                   <br>
                 </template>
               </el-table-column>
-              <el-table-column label="用户姓名" min-width="160">
+              <el-table-column label="用户姓名" min-width="120">
+                <template slot-scope="scope">
+                  <span style="margin-left: 2px;" class="margin_top">{{ username(scope.row) }}</span>
+                </template>
               </el-table-column>
               <el-table-column label="起始日期" min-width="160">
                 <template slot-scope="scope">
-                  <div class="margin_left">
+                  <div>
                     <p>{{dateTime(scope.row.startDate*1000)}}</p>
                     <p>{{ usageDisplay(scope.row.startScale) }}</p>
                   </div>
@@ -30,15 +31,15 @@
               </el-table-column>
               <el-table-column label="截止日期" min-width="160">
                 <template slot-scope="scope">
-                  <div class="margin_left">
+                  <div>
                     <p>{{dateTime(scope.row.endDate*1000)}}</p>
                     <p>{{ usageDisplay(scope.row.endScale) }}</p>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column label="用量" width="70">
+              <el-table-column label="用量/Kwh" width="80">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.usage }}</span>
+                  <span>{{ usageDisplay(scope.row.usage) }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="单价/元" width="70">
@@ -69,7 +70,7 @@
           <br>
         </template>
       </el-table-column>
-      <el-table-column label="用户姓名" min-width="160">
+      <el-table-column label="用户姓名" min-width="120">
         <template slot-scope="scope">
           <span style="margin-left: 2px;" class="margin_top">{{ username(scope.row) }}</span>
         </template>
@@ -77,23 +78,22 @@
       <el-table-column label="起始日期" min-width="160">
         <template slot-scope="scope">
           <el-date-picker v-model="scope.row.startDateForControl" type="date" placeholder="选择日期" style="width:160px"
-                          @input="oldTime(scope.row,scope.$index)" @focus="mountTime(scope.row)"
-                          @blur="updateTimeField(scope.row)">
+                          @input="oldTime(scope.row,scope.$index)">
           </el-date-picker>
           <br/>
           <span v-if="scope.row.details.length!==0"
-                class="margin_top margin_left">上期刻度：{{ usageDisplay(scope.row.details[0].startScale) }}Kwh</span>
+                class="margin_top">上期刻度：{{ usageDisplay(scope.row.details[0].startScale) }}Kwh</span>
           <br>
         </template>
       </el-table-column>
       <el-table-column label="截止日期" min-width="160">
         <template slot-scope="scope">
           <el-date-picker v-model="scope.row.endDateForControl" type="date" placeholder="选择日期" style="width:160px"
-                          @change="newTime(scope.row,scope.$index)" @focus="mountTime(scope.row)" @blur="updateTimeField(scope.row)">
+                          @change="newTime(scope.row,scope.$index)">
           </el-date-picker>
           <br/>
           <span v-if="scope.row.details.length!==0"
-                class="margin_top margin_left">本期刻度：{{ usageDisplay(scope.row.details[0].endScale) }}Kwh</span>
+                class="margin_top">本期刻度：{{ usageDisplay(scope.row.details[0].endScale) }}Kwh</span>
           <br>
         </template>
       </el-table-column>
@@ -152,22 +152,19 @@
     },
     watch: {
       readingElectric(newVal, oldVal) {
-        if(fp.isEmpty(oldVal) && !fp.isEmpty(newVal)) {
+        if(!fp.isEmpty(newVal)) {
           fp.each(this.mountTime.bind(this))(newVal)
         }
       }
     },
     methods: {
       mountTime(data) {
-        data.startDateForControl = new Date(data.startDate)
+        data.startDateForControl = new Date(data.startDate);
         data.endDateForControl = new Date(data.endDate)
       },
-      updateTimeField(data) {
-        data.startDate = data.startDateForControl.getTime();
-        data.endDate = data.endDateForControl.getTime();
-      },
       username(row) {
-        return fp.getOr('')('details[0].userName')(row)
+        console.log('username', row);
+        return fp.get('details[0].userName')(row) || fp.getOr('')('userName')(row)
       },
       indexMethod(row) {
         return row + 1;
@@ -257,19 +254,20 @@
     width: 100%;
   }
 
-  .margin_left {
-    margin-left: 30px;
-  }
-
   .margin_top {
     margin-top: 5px;
   }
+
+  .innerTable {
+    padding-left: 45px;
+  }
+
 </style>
 <style lang="less">
   .no-border > .el-input > .el-input__inner {
     border: 1px solid transparent;
     padding: 0;
-    background-color: none;
+    background-color: unset;
   }
 
   .innerTable .el-table__header-wrapper {
