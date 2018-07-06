@@ -317,14 +317,16 @@
           type: 'warning'
         })
           .then(() => {
-            this.$model('houses')
-              .delete(null, {
-                id: house.houseId,
-                projectId: this.projectId
-              })
+            Promise.all(fp.map(h =>
+              this.$model('houses')
+                .delete({}, {
+                  id: h.houseId,
+                  projectId: this.projectId
+                }))(fp.flatten([house])))
               .then(res => {
                 this.$message.success('删除成功');
                 this.formatting()
+                this.$root.$emit('updateCommunity')
               })
               .catch(e => {
                 this.$message('删除失败');

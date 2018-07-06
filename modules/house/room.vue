@@ -301,7 +301,7 @@
 						})
 						.then(res => {
 							this.$message.success('删除成功!');
-							this.$emit('successRefresh');
+							this.$root.$emit('successRefresh', this.room.id);
 						})
 						.catch(err => {
 							this.$message('删除失败');
