@@ -61,16 +61,15 @@
           </el-input>
         </el-col>
       </el-row>
-      <el-row :gutter=20>
-        <el-col :span=8 class=roomInfo>
-          <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off :min=0 :step=0.01 :precision=2>
-            <template slot="prepend">电费</template>
-            <template slot="append">元/度</template>
-          </el-input-number>
-        </el-col>
-      </el-row>
     </div>
-
+    <el-row :gutter=20>
+      <el-col :span=8 class=roomInfo>
+        <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off :min=0 :step=0.01 :precision=2>
+          <template slot="prepend">电费</template>
+          <template slot="append">元/度</template>
+        </el-input-number>
+      </el-col>
+    </el-row>
     <h3 style="margin-top:30px">房源配置</h3>
     <house-facility class="checkboxes" v-model="form.config"></house-facility>
   </el-form>
