@@ -64,7 +64,7 @@
     </div>
     <el-row :gutter=20>
       <el-col :span=8 class=roomInfo>
-        <el-input-number v-model.number="form.electricPrice" :controls=false auto-complete=off :min=0 :step=0.01 :precision=2>
+        <el-input-number class="electricity-price-input" v-model.number="form.electricPrice" :controls="false" auto-complete="off" :min="0" :step="0.01" :precision="2">
           <template slot="prepend">电费</template>
           <template slot="append">元/度</template>
         </el-input-number>
@@ -236,6 +236,10 @@ export default {
     text-align: right;
 }
 
+.electricity-price-input.el-input-number.is-without-controls {
+  width: 100%;
+}
+
 .el-form {
     h3 {
         margin-bottom: 20px;
@@ -280,7 +284,7 @@ export default {
 .toward {
 		padding:0 0 0 13px;
 		width: 53px;
-		font-size:14px;
+		font-size:12px;
 		display:inline-block
 }
 .el-input.el-input--mini.el-input-group.el-input-group--append.el-input-group--prepend {
