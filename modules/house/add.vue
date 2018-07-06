@@ -63,11 +63,14 @@
       </el-row>
     </div>
     <el-row :gutter=20>
-      <el-col :span=8 class=roomInfo>
-        <el-input-number class="electricity-price-input" v-model.number="form.electricPrice" :controls="false" auto-complete="off" :min="0" :step="0.01" :precision="2">
-          <template slot="prepend">电费</template>
-          <template slot="append">元/度</template>
+      <el-col :span="8" class="roomInfo">
+      <div class="select-with-label el-input-group">
+        <span class="el-input-group__prepend">电费</span>
+        <el-input-number :controls="false" placeholder="电费" auto-complete="off" :min="0" :step="0.01" :precision="2" v-model.number="form.electricPrice">
+          <icon slot="suffix" class="el-input__icon icon-renminbi" style="font-size:20px"></icon>
         </el-input-number>
+        <span class="el-input-group__append">元/度</span>
+      </div>
       </el-col>
     </el-row>
     <h3 style="margin-top:30px">房源配置</h3>
@@ -234,10 +237,6 @@ export default {
 <style lang="less" scoped>
 .dialog-footer {
     text-align: right;
-}
-
-.electricity-price-input.el-input-number.is-without-controls {
-  width: 100%;
 }
 
 .el-form {
