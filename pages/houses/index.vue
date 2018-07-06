@@ -10,7 +10,7 @@
         <div class="room" v-for="(house,index) in equipmentHouses" v-if="tabCard" :key="index">
           <div>
             <span v-if="!entire" class="houseName">{{house.location.name}} {{house.building}}幢 {{house.unit}}单元 {{house.roomNumber}}室</span>
-            <span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} L</span>
+            <span v-if="entire" style="font-size:24px">{{house[0].currentFloor}} 层</span>
             <span>
                             <el-tooltip content="房源预览" placement="top" style="margin:0 5px;">
                                 <span @click="showHouse(house)">
@@ -24,7 +24,7 @@
                                 <el-dropdown-menu slot="dropdown">
                                     <el-dropdown-item @click.native="addRoom(house)">添加房间</el-dropdown-item>
                                     <el-dropdown-item @click.native="deleteHouse(house)">删除房源</el-dropdown-item>
-                                    <el-dropdown-item>关闭房源</el-dropdown-item>
+                                    <el-dropdown-item @click.native="suspendHouse(house)" >关闭房源</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </span>
@@ -309,6 +309,9 @@
       showHouse(house) {
         this.currentHouse = house;
         this.viewHouse = true;
+      },
+      suspendHouse(house) {
+        this.$message('关闭房源功能暂时未实现。');
       },
       deleteHouse(house) {
         this.$confirm('确认删除该房源, 是否继续?', '提示', {
