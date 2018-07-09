@@ -68,7 +68,7 @@
             </el-table-column>
             <el-table-column label="操作人" prop="handlem">
                 <template slot-scope="scope">
-                    <span>{{scope.row.operator.username}}</span>
+                    <span>{{scope.row.operator}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="备注" prop="remark">
@@ -176,7 +176,7 @@
 </script>
 
 <style scoped lang="less">
-    
+
     .gray span:first-child{
         padding-left: 10px;
     }
@@ -215,5 +215,5 @@
         justify-content: space-around
     }
 
-    
+
 </style>
