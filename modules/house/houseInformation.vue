@@ -37,23 +37,28 @@
         </el-table-column>
       </el-table>
       <h4 class="flexc" style="aline-item:center">
-                <span style="line-height:20px;margin-right:15px">
-                    房间设备
+                <span class="sharing-title">
+                    分摊信息
                 </span>
       </h4>
       <div class="roomDevices" v-loading="loading">
-          <el-table :data="this.sharingRooms" style="width: 100%">
-            <el-table-column label="房间号">
+          <el-table :data="this.sharingRooms" style="width: 100%" stripe>
+            <el-table-column label="房间">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">房间{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="电表id">
+            <el-table-column label="住户姓名">
               <template slot-scope="scope">
-                <p v-for="device in scope.row.devices">{{removePrefix(device.deviceId)}}</p>
+                <span>{{scope.row.contract.name}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="登陆账号">
+              <template slot-scope="scope">
+                <span>{{scope.row.username}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="分摊比例">
               <template slot-scope="scope">
                 <div v-if="onlyOneSharingContract()">
                   <el-input-number style="width:100px" :disabled="true"
@@ -75,12 +80,6 @@
                   </el-input-number>
                   %
                 </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="deleteAllDevices(scope.row.devices[0])">删除
-                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -159,27 +158,29 @@
           .then(res => {
             this.$set(this, 'apportionment', res);
             const sharingMap = fp.groupBy('roomId')(res);
-            const rooms = fp.map(room => fp.defaults(room)({
-              devices: fp.map(fp.defaults({
-                share: fp.head(fp.getOr([{value: 0}])(room.id)(sharingMap))
-              }))(room.devices)
-            }))(this.house.rooms);
-
-            console.log('apportionment', this.apportionment);
-            this.$set(this, 'sharingRooms', this.sharingInfo(rooms, this.apportionment));
-            this.$set(this.house, 'rooms', rooms);
+            const rooms = fp.filter(this.showRoom)(fp.map(room => fp.defaults(room)({
+              share: fp.head(fp.getOr([{value: 0}])(room.id)(sharingMap))
+            }))(this.house.rooms));
+            this.$set(this, 'sharingRooms', fp.sortBy(['name'])(rooms));
+            fp.each(this.queryUsername.bind(this))(this.sharingRooms);
             this.loading = false;
-            console.log('sharingInfo', this.sharingRooms);
           });
       },
       showRoom(room) {
-        return fp.getOr(0)('devices.length')(room) > 0 || fp.getOr(0)('share.value')(room) > 0
+        return fp.getOr(0)('share.value')(room) > 0
       },
-      sharingInfo(rooms, apportionment) {
-        return fp.filter(this.showRoom)(fp.map(r => {
-          const share = fp.find(['roomId', r.id])(apportionment);
-          return fp.defaults(r)({share})
-        })(rooms));
+      queryUsername(room) {
+        this.$model('room_contracts')
+          .query({}, {
+            projectId: this.projectId,
+            roomId: room.id
+          })
+          .then(res => {
+            const current = fp.defaults({username: fp.get('data[0].user.accountName')(res)})(fp.find(fp.pipe(fp.get('id'), fp.eq(room.id)))(this.sharingRooms));
+            this.$set(this, 'sharingRooms', fp.sortBy(['name'])(fp.concat(fp.reject(fp.pipe(fp.get('id'), fp.eq(room.id)))(this.sharingRooms), current)))
+          })
+          .catch(err => {
+          });
       },
       share(val) {
         const newSharing = this.apportionment.map(sharing => {
@@ -188,9 +189,6 @@
             : sharing;
         });
         this.$set(this, 'apportionment', newSharing);
-      },
-      writePercent() {
-        this.visibility = true;
       },
       saveSharing() {
         if (fp.sumBy('value')(this.apportionment) === 100) {
@@ -214,8 +212,7 @@
         }
       },
       // 删除house电表
-      deleteAllDevices(data) {
-        console.log(data);
+      handleDelete(data) {
         this.$confirm(`此操作将解绑电表${removePrefix(data.deviceId)}, 是否继续?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -223,49 +220,22 @@
         })
           .then(() => {
             this.$model('house_devices')
-              .delete(
-                {},
+              .delete({},
                 {
                   projectId: this.projectId,
                   houseId: this.house.houseId,
                   id: data.deviceId
                 }
               )
-              .then(res => {
+              .then(() => {
                 this.queryAgain();
               })
               .catch(err => {
+                console.log(err);
                 this.$message('解绑失败');
               });
           })
-          .catch(err => {
-          });
-      },
-      // 删除room电表
-      handleRoomDelete(data, val) {
-        this.$confirm('此操作将解绑此电表, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
-          .then(() => {
-            this.$model('room_devices')
-              .delete(
-                {},
-                {
-                  projectId: this.projectId,
-                  houseId: this.house.houseId,
-                  roomId: this.data,
-                  id: val
-                }
-              )
-              .then(res => {
-                this.queryAgain('unbundling');
-              });
-          })
-          .catch(err => {
-            this.$message('取消解绑');
-          });
+          .catch(err => {});
       },
       bindEleciricity() {
         this.dialogVisible = true;
@@ -333,6 +303,11 @@
 </script>
 
 <style lang="less" scoped>
+  .sharing-title {
+    margin-top: 30px;
+    line-height:20px;
+    margin-right:15px
+  }
   .houseInformationHeader {
     padding: 20px;
     background-color: #f5f7fa;
@@ -369,14 +344,5 @@
       font-size: 20px;
       line-height: 28px;
     }
-  }
-</style>
-<style>
-  .el-switch {
-    height: 22px;
-  }
-
-  .roomDevices .el-table__header-wrapper {
-    display: none;
   }
 </style>
