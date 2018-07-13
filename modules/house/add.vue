@@ -220,6 +220,7 @@ export default {
         () => {
           this.$message.success('创建成功')
           this.$emit('addhouse')
+          this.$root.$emit('successRefresh')
           // 关闭创建页面
           if(val==='close') {
             this.$modal.$emit('dismiss');

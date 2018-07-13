@@ -163,7 +163,6 @@
         data.endDateForControl = new Date(data.endDate)
       },
       username(row) {
-        console.log('username', row);
         return fp.get('details[0].userName')(row) || fp.getOr('')('userName')(row)
       },
       indexMethod(row) {

@@ -236,59 +236,20 @@ export default {
 			houseType,
 			districtsCode,
 		}) {
-			if (houseType === 'SHARE') {
-				if (state.userInfo.communities) {
-					return Promise.resolve(state.userInfo.communities);
-				}
-			} else if (houseType === 'SOLE') {
-				if (state.userInfo.soleCommunities) {
-					return Promise.resolve(state.userInfo.soleCommunities);
-				}
-			} else {
-				if (state.userInfo.entireCommunities) {
-					return Promise.resolve(state.userInfo.entireCommunities);
-				}
-			}
-			api('communities')
-				.query({
-					houseFormat: 'SOLE'
-				}, {
-					projectId: state.userInfo.user.projectId
-				})
-				.then(data => {
-					commit('SAVE_COMMUNITIES', {
-						data,
-						houseType:'SOLE'
-					});
-				})
-			api('communities')
-				.query({
-					houseFormat: 'ENTIRE'
-				}, {
-					projectId: state.userInfo.user.projectId
-				})
-				.then(data => {
-					commit('SAVE_COMMUNITIES', {
-						data,
-						houseType:'ENTIRE'
-					});
-				})
-			return api('communities')
-				.query({
-					houseFormat: houseType
-				}, {
-					projectId: state.userInfo.user.projectId
-				})
-				.then(data => {
-					commit('SAVE_COMMUNITIES', {
-						data,
-						houseType
-					});
-				})
-				.then(() => {
-					return state.userInfo.communitiesChoose.data
-				})
-		},
+      return api('communities')
+        .query({
+          houseFormat: houseType
+        }, {
+          projectId: state.userInfo.user.projectId
+        })
+        .then(data => {
+          commit('SAVE_COMMUNITIES', {
+            data,
+            houseType
+          });
+          return data;
+        })
+    },
 		GET_DISTRICTS({
 			commit,
 			state
