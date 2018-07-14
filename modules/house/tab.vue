@@ -100,7 +100,9 @@
       },
       clearFilters() {
         this.$set(this, 'areaFilter', null);
-        this.$set(this, 'cityFilter', null)
+        this.$set(this, 'cityFilter', null);
+        this.typeNum = '0';
+        this.$emit('change', this.clickType)
       },
       districtChanged(filters) {
         if (filters.area !== '') {
@@ -121,8 +123,8 @@
         }
       },
       handleSelect(key, keyPath) {
-        this.$store.state.userInfo.index++
-        this.typeNum = 'a'
+        this.$store.state.userInfo.index++;
+        this.typeNum = 'a';
         this.$emit('communityChange', key)
       },
       setChoose() {
