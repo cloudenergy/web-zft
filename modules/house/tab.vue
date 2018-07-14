@@ -24,13 +24,15 @@
 
 <script>
   import fp from 'lodash/fp'
-  import {
-    mapState
-  } from 'vuex';
 
   export default {
     computed: {
-      ...mapState(['userInfo', 'defaultHouseType']),
+      userInfo() {
+        return this.$store.state.userInfo
+      },
+      defaultHouseType() {
+        return this.$store.state.defaultHouseType
+      },
       projectId() {
         return this.$store.state.userInfo.projectId
       },
@@ -130,7 +132,11 @@
       },
       extractCommunities(data) {
         const flattenResult = fp.pipe(fp.values, fp.map(fp.pipe(fp.values, fp.flatten)), fp.flatten);
-        const extracts = fp.mapValues(fp.pipe(fp.get('districts'), fp.mapValues(fp.getOr([])('communities'))));
+        const extracts = fp.mapValues(city => fp.pipe(fp.get('districts'), fp.mapValues(area => {
+            const attributes = fp.map(fp.defaults({cityId: city.districtId, areaId: area.districtId}));
+            return fp.pipe(fp.getOr([])('communities'), attributes)(area)
+          }))(city)
+        );
         return fp.pipe(extracts, flattenResult)(data)
       },
       updateCommunity() {

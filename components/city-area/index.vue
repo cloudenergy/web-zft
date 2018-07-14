@@ -1,6 +1,5 @@
 <script>
 import _ from 'lodash'
-import Vue from 'vue';
 
 function isCity(city) {
 	return function(item) {
@@ -21,7 +20,7 @@ export default {
 	computed: {
 		listCity() {
 			return this.$store.state.userInfo.businessCity
-		}	
+		}
 	},
 	created () {
 		if(this.roadType==='flow') {
@@ -35,7 +34,7 @@ export default {
 					this.list.city = result.map(mapper);
 				})
 			}
-			this.houseFormatChange('SHARE')	
+			this.houseFormatChange('SHARE')
 		}
 		console.log(this.list.city)
 	},
@@ -49,7 +48,7 @@ export default {
 					return ele.city
 				}).map(mapper),'value')
 			}
-		}	
+		}
 	},
 	data() {
 		return {
