@@ -127,15 +127,6 @@ export default {
 			} else {
 				state.userInfo.entireArea = state.userInfo.businessArea
 			}
-
-      _.values(data.data).forEach(ele => {
-        _.values(ele.districts).forEach(item => {
-          item.communities.forEach(communities => {
-            communities.cityId = ele.districtId
-            communities.areaId = item.districtId
-          })
-        })
-      })
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.userInfo.othercost = _.filter(data, {
