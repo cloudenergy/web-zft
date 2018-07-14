@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  import _ from 'lodash'
   import fp from 'lodash/fp'
   import {
     mapState
@@ -84,7 +83,7 @@
     },
     methods: {
       menuStyle(community = []) {
-        if ((!_.isUndefined(this.$refs.menuLocation)) && community.length !== 0) {
+        if ((!fp.isUndefined(this.$refs.menuLocation)) && community.length !== 0) {
           const b = (community.length + 1) * 42 + 30;
           return `height:${this.h < b ? b : this.h}px`
         }

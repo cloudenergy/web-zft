@@ -120,36 +120,22 @@ export default {
 				}
 			})
 
-			state.userInfo.communitiesChoose = {}
-			state.userInfo.communitiesChoose.houseFormat = data.houseType
-			state.userInfo.communitiesChoose.data = []
-			_.values(data.data).forEach(ele => {
-				_.values(ele.districts).forEach(item => {
-					item.communities.forEach(communities => {
-						communities.cityId = ele.districtId
-						communities.areaId = item.districtId
-						state.userInfo.communitiesChoose.data.push(communities)
-						return
-					})
-				})
-			})
 			if (data.houseType === 'SHARE') {
-				state.userInfo.communities = state.userInfo.communitiesChoose.data;
 				state.userInfo.shareArea = state.userInfo.businessArea
 			} else if (data.houseType === 'SOLE') {
-				state.userInfo.soleCommunities = state.userInfo.communitiesChoose.data
 				state.userInfo.soleArea = state.userInfo.businessArea
 			} else {
-				state.userInfo.entireCommunities = state.userInfo.communitiesChoose.data
 				state.userInfo.entireArea = state.userInfo.businessArea
 			}
-			// 保存所有城市
-			if(state.userInfo.communities!==null&&state.userInfo.soleCommunities!==null&&state.userInfo.entireCommunities!==null&&state.userInfo.allCommunityBoolean) {
-				state.userInfo.allCommunity =_.uniqBy(_.concat(state.userInfo.communities,state.userInfo.soleCommunities,state.userInfo.entireCommunities),'geoLocationId')
-				state.userInfo.allCommunityBoolean = false
-				return
-			}
 
+      _.values(data.data).forEach(ele => {
+        _.values(ele.districts).forEach(item => {
+          item.communities.forEach(communities => {
+            communities.cityId = ele.districtId
+            communities.areaId = item.districtId
+          })
+        })
+      })
 		},
 		SAVE_OTHERCOST(state, data) {
 			state.userInfo.othercost = _.filter(data, {
@@ -168,26 +154,7 @@ export default {
 		SAVE_HOUSE_KEEPER(state, data) {
 			state.userInfo.houseKeeper = data
 		},
-		ADD_COMMUNITYS(state,data) {
-			let addCommunityInfo = {
-				'areaId':data.area,
-				'cityId':data.city,
-				'name':data.location.name,
-				'geoLocationId':data.location.id
-			}
-			// push返回的是数组长度，不是数组
-			if (data.houseFormat === 'SHARE') {
-				state.userInfo.communities.push(addCommunityInfo)
-				state.userInfo.communities = _.uniqBy(state.userInfo.communities,'geoLocationId')
-			} else if (data.houseFormat === 'SOLE') {
-				state.userInfo.soleCommunities.push(addCommunityInfo)
-				state.userInfo.soleCommunities = _.uniqBy(state.userInfo.soleCommunities,'geoLocationId')
-			} else {
-				state.userInfo.entireCommunities.push(addCommunityInfo)
-				state.userInfo.entireCommunities = _.uniqBy(state.userInfo.entireCommunities,'geoLocationId')
-			}
-		}
-	},
+  },
 	actions: {
 		POST_LOGIN({
 			commit,
@@ -354,13 +321,5 @@ export default {
 					return data
 				})
 		},
-		ADD_COMMUNITY({
-			commit,
-			state
-		},{
-			val
-		}) {
-			commit('ADD_COMMUNITYS',val)
-		}
-	}
+  }
 };
