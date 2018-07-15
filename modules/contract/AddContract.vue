@@ -104,6 +104,7 @@ export default {
 								this.closeDialog();
 								this.successMessage(this.form.property.roomId);
                 this.resetForm();
+                this.$root.$emit('successRefresh')
               })
 							.catch(err => {
 								let _this = this;

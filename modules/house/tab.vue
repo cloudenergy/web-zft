@@ -122,15 +122,15 @@
           this.$emit('cityArea', {city: data.city})
         }
       },
-      handleSelect(key, keyPath) {
+      handleSelect(key) {
         this.$store.state.userInfo.index++;
         this.typeNum = 'a';
         this.$emit('communityChange', key)
       },
       setChoose() {
-        this.$refs.menuLocation.$children.forEach((item, index) => {
+        fp.each((item) => {
           item.$el.classList.value = "el-menu-item"
-        })
+        })(fp.getOr([])('$children')(this.$refs.menuLocation))
       },
       extractCommunities(data) {
         const flattenResult = fp.pipe(fp.values, fp.map(fp.pipe(fp.values, fp.flatten)), fp.flatten);
