@@ -22,7 +22,7 @@
 						</div>
 					</div>
 				</div>
-				<search-all :title="'搜索'" @keyup="keyup"></search-all>
+				<search-all title="搜索" @keyup="keyup"></search-all>
 			</el-header>
 			<el-main style="max-width:100%;padding-right:0;padding:0;margin-left:10px">
 				<equipmentset :devices="devices" :type="this.reqData.mode" :loading="loading" ref="equipmentset" @refresh='refresh' @restoreSwitch="restoreSwitch"
@@ -89,8 +89,9 @@
 				return this.$store.state.userInfo.user.projectId
 			}
 		},
-		created() {
-			
+		mounted() {
+      this.$root.$emit('successRefresh')
+      this.communityChange('0')
 		},
 		methods: {
 			// 搜索
@@ -150,9 +151,10 @@
 			manager(data) {
 			},
 			refresh(type, commiunityId) {
-				if (type === 'first') {
+				if (type === 'BIND') {
+          this.reqData.locationId = commiunityId
 					this.reqData.mode = 'BIND'
-				} else if (type === 'second') {
+				} else if (type === 'FREE') {
 					this.reqData.mode = 'FREE'
 				} else {
 					this.reqData.houseFormat = type

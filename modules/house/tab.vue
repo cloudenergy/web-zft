@@ -4,9 +4,9 @@
       <el-tab-pane v-for="item in userInfo.houseTypes" :key="item[0]" :label="item[1]" :name="item[0]"/>
     </el-tabs>
     <el-tabs v-model="bindEquipment" @tab-click="change" v-if="urlLocation">
-      <el-tab-pane label="已绑定" name="first"/>
-      <el-tab-pane label="" name="first"/>
-      <el-tab-pane label="未绑定" name="second"/>
+      <el-tab-pane label="已绑定" name="BIND"/>
+      <el-tab-pane label="" name="placeholder"/>
+      <el-tab-pane label="未绑定" name="FREE"/>
     </el-tabs>
     <city-area @change="districtChanged" ref="cityChoose" :clickType="clickType" @cityChange="cityChange" :type="type"/>
     <el-menu @select="handleSelect" ref="menuLocation" :style="menuStyle(community)" style="overflow:hidden">
@@ -69,7 +69,7 @@
         communityType: 'SHARE',
         cityFilter: null,
         areaFilter: null,
-        bindEquipment: 'first',
+        bindEquipment: 'BIND',
         addHouse: false,
         communityTable: false
       };
@@ -91,7 +91,7 @@
         }
       },
       change(tab, event) {
-        this.communityTable = tab.name === 'second';
+        this.communityTable = tab.name === 'FREE';
         this.clickType = tab.name
         this.firNum = 0
         this.clearFilters()
@@ -151,6 +151,7 @@
             this.$set(this, 'community', this.extractCommunities(data));
             // 绑表页面全部小区
             if (this.urlLocation) {
+              this.typeNum = '0';
               this.$emit('change', this.clickType)
             } else {
               this.communityType = this.type;
