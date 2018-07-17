@@ -293,17 +293,12 @@
 						type: 'warning'
 					})
 					.then(() => {
-						this.$model('delete_room')
-						.delete({}, {
-							projectId: this.projectId,
-							houseId: this.house.houseId,
-							id: this.room.id
-						})
-						.then(res => {
+            const houseModel = this.modelFromFormat(this.houseFormat)
+            houseModel.then(() => {
 							this.$message.success('删除成功!');
 							this.$root.$emit('successRefresh', this.room.id);
 						})
-						.catch(err => {
+						.catch(() => {
 							this.$message('删除失败');
 						});
 					})
@@ -363,6 +358,16 @@
 			},
 			// 关闭房间
 			closeRoom() {},
+      modelFromFormat(houseFormat) {
+        return houseFormat === 'SHARE' ? this.$model('delete_room').delete({}, {
+          projectId: this.projectId,
+          houseId: this.house.houseId,
+          id: this.room.id
+        }) : this.$model('houses').delete({}, {
+          projectId: this.projectId,
+          id: this.house.houseId,
+        })
+      },
 			operateRent() {
 				this.dialogVisibleWithout = false;
 			},
