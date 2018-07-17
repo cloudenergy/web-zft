@@ -2,4 +2,4 @@
 
 import fp from 'lodash/fp';
 
-export const filterOP = fp.reject(c => c.level === 'OP');
+export const filterOP = fp.reject(c => fp.includes(fp.get('level')(c))(['OP', 'USER']));
