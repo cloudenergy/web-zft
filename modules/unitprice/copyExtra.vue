@@ -10,7 +10,7 @@
               <div class="full">
                 <el-row>
                   <el-col :span="20">{{item.location.name}} {{item.building}}幢{{item.unit}}单元{{item.roomNumber}}{{nameOf(item)}}</el-col>
-                  <el-col :span="4">{{price(item.electricity[0].price)}}元</el-col>
+                  <el-col :span="4">{{price(item.electricity[0].price)}}</el-col>
                 </el-row>
               </div>
             </el-checkbox>
@@ -62,7 +62,7 @@
         if (isNaN(data)) {
           return '未设置'
         } else {
-          return (data / 100).toFixed(2)
+          return `${(data / 100).toFixed(2)}元`
         }
       },
       nameOf(room) {
