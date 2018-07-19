@@ -153,6 +153,7 @@
             if (val) {
               this.$set(this, 'houses', res.data)
               this.reqData.index = 2
+              this.loading = false;
             } else {
               if (fp.isEmpty(res.data)) {
                 this.reqData.index = -1;

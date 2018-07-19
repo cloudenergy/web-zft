@@ -5,16 +5,13 @@
       <el-row>
         <el-col :span="8" v-for="(item,index) in data" :key="index" :class="{rightBorder:(index+1)%3!==0}"
                 class="copyExtra">
-          <div class="">
-            <el-checkbox :label="item.houseId" text-color="#000000">
-              <div>
-                <span>{{item.location.name}}</span>
-                <span>{{item.building}}幢</span>
-                <span>{{item.unit}}单元</span>
-                <span>{{item.roomNumber}} </span>
-                <span v-if="houseFormat==='SHARE'&&item.name===undefined">公区</span>
-                <span v-if="houseFormat==='SHARE'&&item.name!==undefined">{{item.name}}</span>
-                <p>当前电价：{{price(item.electricity[0].price)}}</p>
+          <div class="full">
+            <el-checkbox :label="item.houseId" text-color="#000000" class="full">
+              <div class="full">
+                <el-row>
+                  <el-col :span="20">{{item.location.name}} {{item.building}}幢{{item.unit}}单元{{item.roomNumber}}{{nameOf(item)}}</el-col>
+                  <el-col :span="4">{{price(item.electricity[0].price)}}元</el-col>
+                </el-row>
               </div>
             </el-checkbox>
           </div>
@@ -29,6 +26,7 @@
 </template>
 
 <script>
+  import fp from 'lodash/fp'
   export default {
     props: {
       data: {
@@ -67,6 +65,9 @@
           return (data / 100).toFixed(2)
         }
       },
+      nameOf(room) {
+        return fp.isEmpty(room.name) ? (this.houseFormat === 'SHARE' ? '公区' : '') : room.name;
+      }
     }
   }
 </script>
@@ -76,7 +77,7 @@
     background-color: #fff;
     padding: 20px;
     .copyExtra {
-      height: 80px;
+      height: 40px;
       display: flex;
       align-items: center;
     }
@@ -84,6 +85,10 @@
       text-align: right;
       display: block;
     }
+  }
+  .full {
+    width: 100%;
+    min-width: 350px;
   }
 
 
