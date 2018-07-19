@@ -136,6 +136,7 @@ const apis = {
   housedetail: resource('/projects/{projectId}/houses/{id}'),
   // 添加资金渠道
   fund_channel: resource('/projects/{projectId}/fundChannels'),
+  pay_channel: resource('/projects/{projectId}/payChannels'),
   top_up: resource('/projects/{projectId}/users/{userId}'),
   all_user_bills: resource('/projects/{projectId}/bills'),
   config_list: resource('/projects/{projectId}/config'),

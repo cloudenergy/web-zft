@@ -46,110 +46,136 @@
         </div>
 
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">提交审核</el-button>
+            <el-button type="primary" @click="onSubmit" :disabled="auditDisable">{{auditStatus}}</el-button>
         </el-form-item>
     </el-form>
 </template>
 <script>
-    import { fromPairs, map } from 'lodash'
-    export default {
-        data() {
-            return {
-                region: 'person',
-                form: {
-                    name: '',
-                    flow: 'pay',
-                    tag:'alipay'
-                },
-                form1: {
-                    account:'',
-                    linkman:''
-                },
-                form2: {
-                    account:'',
-                    subbranch:''
-                },
-                province:[],
-                city:[],
-                county:[],
-                value: '',
-                banks:[]
-            }
-        },
-        computed: {
-            projectId() {
-                return this.$store.state.userInfo.user.projectId
-            }
-        },
-        created() {
-            this.cityChoose(1,'province')
-            this.$model('environments')
-            .then(env => fromPairs(map(env, i => [i.key, i.value])))
-            .then(env=>{this.$set(this,'banks',env.banks)})
-        },
-        methods: {
-            provinceChange(val) {
-                this.province.forEach(element => {
-                    if(element.id===val) {
-                        this.form.locate.province = element.name
-                    }
-                })
-                this.cityChoose(2,'city',val)
-            },
-            cityChange(val) {
-                this.city.forEach(element => {
-                    if(element.id===val) {
-                        this.form.locate.city = element.name
-                    }
-                })
-                this.cityChoose(3,'county',val)
-            },
-            districtChange(val) {
-                this.county.forEach(element => {
-                    if(element.id===val) {
-                        this.form.locate.district = element.name
-                    }
-                })
-            },
-            cityChoose(level,setCity,id) {
-                this.$model('districts',{level,cityId:id})
-                .then(res=>{
-                    this.$set(this,setCity,res.result)
-                })
-            },
-            receiveChange(val) {
-                if(val==='person') {
-                    this.form = {
-                        account:'',
-                        linkman:'',
-                        name:this.form.name,
-                        tag:'alipay',
-                        flow:'pay'
-                    }
-                }else {
-                    this.form = {
-                        name:this.form.name,
-                        account:'',
-                        tag:'',
-                        subbranch:'',
-                        flow:'pay',
-                        locate:{}
-                    }
-                }
-            },
-            resetForm() {
-                return {
-                    
-                }
-            },
-            onSubmit() {
-                this.$model('fund_channel')
-                .create(this.form,{projectId:this.projectId})
-                .then(res=>this.$message.success('提交审核成功'))
-                .catch(err=>this.$message('提交审核失败'))
-            }
-        }
+import { fromPairs, map } from 'lodash'
+import fp from 'lodash/fp'
+const statusMap = {
+  'PASSED': '审核成功',
+  'DENY': '审核失败',
+  'PENDING': '审核中',
+}
+export default {
+  data() {
+    return {
+      auditStatus: '提交审核',
+      auditDisable: false,
+      region: 'person',
+      form: {
+        name: '',
+        flow: 'pay',
+        tag:'alipay'
+      },
+      form1: {
+        account:'',
+        linkman:''
+      },
+      form2: {
+        account:'',
+        subbranch:''
+      },
+      province:[],
+      city:[],
+      county:[],
+      value: '',
+      banks:[]
     }
+  },
+  computed: {
+    projectId() {
+      return this.$store.state.userInfo.user.projectId
+    }
+  },
+  created() {
+    this.cityChoose(1,'province')
+    this.$model('pay_channel').query({flow:'pay'}, {projectId:this.projectId})
+      .then(existingChannels => {
+        if(existingChannels.length > 0){
+          this.$set(this, 'auditStatus', statusMap[fp.path([0,'fundChannel','status'], existingChannels)])
+          this.$set(this, 'auditDisable', true)
+          this.$set(this, 'region', fp.path([0,'fundChannel','tag'], existingChannels)=='alipay'?'person':'company')
+          this.$set(this, 'form', {
+            tag: fp.path([0,'fundChannel','tag'], existingChannels),
+            name: fp.path([0,'fundChannel','name'], existingChannels),
+            account: fp.path([0,'account'], existingChannels),
+            linkman: fp.path([0,'linkman'], existingChannels),
+            subbranch: fp.path([0,'subbranch'], existingChannels),
+            locate: fp.path([0,'locate'], existingChannels),
+          })
+        }
+      })
+    this.$model('environments')
+      .then(env => fromPairs(map(env, i => [i.key, i.value])))
+      .then(env=>{this.$set(this,'banks',env.banks)})
+  },
+  methods: {
+    provinceChange(val) {
+      this.province.forEach(element => {
+        if(element.id===val) {
+          this.form.locate.province = element.name
+        }
+      })
+      this.cityChoose(2,'city',val)
+    },
+    cityChange(val) {
+      this.city.forEach(element => {
+        if(element.id===val) {
+          this.form.locate.city = element.name
+        }
+      })
+      this.cityChoose(3,'county',val)
+    },
+    districtChange(val) {
+      this.county.forEach(element => {
+        if(element.id===val) {
+          this.form.locate.district = element.name
+        }
+      })
+    },
+    cityChoose(level,setCity,id) {
+      this.$model('districts',{level,cityId:id})
+        .then(res=>{
+          this.$set(this,setCity,res.result)
+        })
+    },
+    receiveChange(val) {
+      if(this.auditDisable)
+        return;
+      if(val==='person') {
+        this.form = {
+          account:'',
+          linkman:'',
+          name:this.form.name,
+          tag:'alipay',
+          flow:'pay'
+        }
+      }else {
+        this.form = {
+          name:this.form.name,
+          account:'',
+          tag:'',
+          subbranch:'',
+          flow:'pay',
+          locate:{}
+        }
+      }
+    },
+    resetForm() {
+      return {
+
+      }
+    },
+    onSubmit() {
+      this.$model('fund_channel')
+        .create(this.form,{projectId:this.projectId})
+        .then(res=>this.$message.success('提交审核成功'))
+        .catch(err=>this.$message('提交审核失败'))
+    }
+  }
+}
 </script>
 <style lang="less">
     .attributionSelection {
