@@ -328,8 +328,8 @@
                 }))(fp.flatten([house])))
               .then(res => {
                 this.$message.success('删除成功');
-                this.formatting()
-                this.$root.$emit('updateCommunity')
+                this.formatting();
+                this.$root.$emit('successRefresh');
               })
               .catch(e => {
                 this.$message('删除失败');
