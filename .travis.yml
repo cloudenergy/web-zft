@@ -10,7 +10,7 @@ env:
   - REPO=kpse/web-zft
   - DEPLOY_USER=kpse
   - KEY_PATH=/tmp/deploy_rsa
-  - HOST=testzft.cloudenergy.me
+  - HOST=stage.exgcc.com
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then docker/script/publish.sh v$TRAVIS_BUILD_NUMBER; fi
@@ -22,7 +22,7 @@ before_deploy:
   - scp -i $KEY_PATH docker/script/deploy.sh $DEPLOY_USER@$HOST:/home/$DEPLOY_USER
   - zip /tmp/dist.zip .blade/dist/**
 addons:
-  ssh_known_hosts: testzft.cloudenergy.me
+  ssh_known_hosts: stage.exgcc.com
 
 deploy:
   - provider: script
