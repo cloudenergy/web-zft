@@ -311,7 +311,7 @@
         this.viewHouse = true;
       },
       suspendHouse(house) {
-        this.$message('关闭房源功能暂时未实现。');
+        this.$message.warning('关闭房源功能暂时未实现。');
       },
       deleteHouse(house) {
         this.$confirm('确认删除该房源, 是否继续?', '提示', {
@@ -343,6 +343,11 @@
           });
       },
       addRoom(data) {
+        if(this.houseFormat === 'ENTIRE') {
+          this.$message.warning('整栋模式暂时不支持添加房间。');
+          return
+        }
+
         this.$model('add_room')
           .create(
             {},
