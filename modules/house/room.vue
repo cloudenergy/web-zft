@@ -126,7 +126,7 @@
 	import {
 		NewContract
 	} from '~/modules/contract';
-	import { houseDevicesDosage } from './index'
+	import { DeviceUsageChart } from './index'
 	import ContractsList from './contractsList';
 	import format from 'date-fns/format'
 	import _ from 'lodash'
@@ -217,7 +217,7 @@
 		methods: {
 			houseDevicesDosage(data) {
 				this.$modal.$emit('open', {
-					comp: houseDevicesDosage,
+					comp: DeviceUsageChart,
 					data: {
 						houseDevice:data
 					},

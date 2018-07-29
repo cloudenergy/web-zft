@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '../static/style';
 import Element from 'element-ui';
 import echarts from 'echarts'
+import HighchartsVue from 'highcharts-vue'
 
 
 
@@ -18,8 +19,9 @@ export default function(vue) {
 	 * element ui
 	 */
   // [Select, Option, Loading, Dialog, Menu, Submenu, MenuItem, RadioButton, RadioGroup].map(el => vue.use(el));
-  vue.prototype.$echarts = echarts 
+  vue.prototype.$echarts = echarts
   vue.use(Element);
+  vue.use(HighchartsVue);
 
   // 设置api
   vue.prototype.$model = api;
