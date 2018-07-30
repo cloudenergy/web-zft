@@ -1,41 +1,41 @@
 <template>
-  <div>
+  <div class="usage-dialog">
     <div class="form-inline text-right">
-      <div class="btn-group btn-group-sm pull-left ml15">
-        <a href="javascript:void(0)" class="btn btn-sm btn-primary"
-           ng-class="{active:$ctrl.currentchannelid===item.funcid}" ng-repeat="item in $ctrl.channels"
-           ng-click="$ctrl.currentchannelid=item.funcid;$ctrl.channeldetail()" ng-bind="item.channel"></a>
-      </div>
+      <!--<div class="btn-group btn-group-sm pull-left ml15">-->
+        <!--<a class="btn btn-sm btn-primary"-->
+           <!--:class="{active:currentChannelId===item.funcid}" v-for="item in channels"-->
+           <!--@click="channelDetail()" ng-bind="item.channel"></a>-->
+      <!--</div>-->
       <div class="form-group form-group-sm has-feedback date ml15">
-        <input type="text" class="form-control" ng-model="$ctrl.date" datetimepicker/>
+        <input type="text" class="form-control" v-model="date"/>
         <i class="form-control-feedback emweb web-calendar"></i>
       </div>
       <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-primary" href="javascript:void(0)" ng-click="$ctrl.channeldetail()"><i
+        <a class="btn btn-primary" @click="channelDetail()"><i
           class="emweb web-search"></i> 查询</a>
       </div>
       <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-primary" href="javascript:void(0)" ng-repeat="(key,val) in $ctrl.timetype"
-           ng-class="{active:$ctrl.timetype_current===key}" ng-click="$ctrl.timetypeChange(key)" ng-bind="val"></a>
+        <a class="btn btn-primary" v-for="(key,val) in timeTypes"
+           :class="{active:timeType === key}" @click="timeTypeChange(key)" ng-bind="val"></a>
       </div>
       <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-info" href="javascript:void(0)" ng-class="{active:$ctrl.charttype==='spline'}"
-           ng-click="$ctrl.typeChange('spline');">
+        <a class="btn btn-info" :class="{active: chartType === 'spline'}"
+           @click="typeChange('spline')">
           折线<i class="emweb web-spline"></i>
         </a>
-        <a class="btn btn-info" href="javascript:void(0)" ng-class="{active:$ctrl.charttype==='column'}"
-           ng-click="$ctrl.typeChange('column');">
+        <a class="btn btn-info" :class="{active: chartType === 'column'}"
+           @click="typeChange('column')">
           柱状<i class="emweb web-column"></i>
         </a>
       </div>
       <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-info" href="javascript:void(0)" ng-class="{active:$ctrl.curve.type==='diff'}"
-           ng-click="$ctrl.lineType('diff');">
+        <a class="btn btn-info" :class="{active: curveType === 'diff'}"
+           @click="lineTypeChange('diff')">
           差值
           <i class="emweb web-curve-area"></i>
         </a>
-        <a class="btn btn-info" href="javascript:void(0)" ng-class="{active:$ctrl.curve.type==='scale'}"
-           ng-click="$ctrl.lineType('scale');">
+        <a class="btn btn-info" :class="{active: curveType === 'scale'}"
+           @click="lineTypeChange('scale')">
           刻度
           <i class="emweb web-line-spacing"></i>
         </a>
@@ -51,6 +51,7 @@
     format
   } from 'date-fns';
   import fp from 'lodash/fp';
+
   export default {
     props: {
       houseDevice: {
@@ -58,33 +59,38 @@
       },
       oneEquipment: {
         type: Boolean
+      },
+      title: {
+        type: String
       }
     },
     data() {
       return {
         deviceScale: [],
         curveEnabled: true,
-        curve: {
-            diff: [],
-            scale: [],
-          },
-        categories: []
+        categories: [],
+        chartType: 'spline',
+        curveType: 'diff',
+        currentChannelId: '',
+        timeType: 'DAY',
+        timeTypes: {
+          DAY: '日',
+          WEEK: '周',
+          MONTH: '月',
+          YEAR: '年'
+        },
+        timeFormat: {
+          DAY: 'H',
+          WEEK: 'M-DD',
+          MONTH: 'M-DD',
+          YEAR: 'YYYY-MM'
+        },
+        date: new Date(),
+        channels: [],
       }
     },
-    created() {
-      this.$model('device_usage')
-        .query(this.reqData, {
-          projectId: this.projectId,
-          deviceId: this.oneEquipment ? this.houseDevice : this.houseDevice.devices[0].deviceId
-        })
-        .then(res => {
-          this.$set(this, 'deviceScale', res)
-          console.log(this.deviceScale);
-          this.$set(this, 'categories', fp.map(t => t.time * 1000)(this.deviceScale))
-          this.$set(this.curve, 'diff', fp.map(e => Number((e.usage / 10000).toFixed(2)))(this.deviceScale))
-          this.$set(this.curve, 'scale', fp.map(e => Number((e.endScale / 10000).toFixed(2)))(this.deviceScale))
-        })
-
+    mounted() {
+      this.channelDetail();
     },
     computed: {
       projectId() {
@@ -96,27 +102,18 @@
           'endDate': Date.parse(new Date()) / 1000
         }
       },
-      chartType() {
-        return 'column'
-      },
-      timeFormat() {
-        return 'H'
-      },
       curveUnit() {
         return 'kWh'
       },
-      curveTitle() {
-        return 'title'
-      },
-      curveType() {
-        return 'diff'
-      },
       timeline() {
+        const data = this.curveType === 'diff' ? this.diffCurve(this.deviceScale)
+          : this.scaleCurve(this.deviceScale)
+        console.log(this.deviceScale, this.curveType, data);
         return {
           chart: {
             type: this.chartType
           },
-          title: false,
+          title: true,
           xAxis: {
             type: 'datetime',
             categories: this.categories,
@@ -143,8 +140,8 @@
             }
           },
           series: [{
-            name: this.curveTitle,
-            data: this.curve[this.curveType]
+            name: this.title,
+            data
           }]
         }
       }
@@ -153,10 +150,39 @@
       formatValue(data, f) {
         return format(new Date(data), f)
       },
+      typeChange(type) {
+        this.$set(this, 'chartType', type);
+      },
+      lineTypeChange(type) {
+        this.$set(this, 'curveType', type);
+      },
+      timeTypeChange(type) {
+        this.$set(this, 'timeType', type);
+      },
+      channelDetail() {
+        this.$model('device_usage')
+          .query(this.reqData, {
+            projectId: this.projectId,
+            deviceId: this.oneEquipment ? this.houseDevice : this.houseDevice.devices[0].deviceId
+          })
+          .then(res => {
+            this.$set(this, 'deviceScale', res)
+            console.log(this.deviceScale);
+            this.$set(this, 'categories', fp.map(t => t.time * 1000)(this.deviceScale))
+          })
+      },
+      diffCurve(deviceScale) {
+        return fp.map(e => Number((e.usage / 10000).toFixed(2)))(deviceScale)
+      },
+      scaleCurve(deviceScale) {
+        return fp.map(e => Number((e.endScale / 10000).toFixed(2)))(deviceScale)
+      },
     }
   }
 </script>
 
 <style scoped>
-
+  .usage-dialog {
+    margin: 15px;
+  }
 </style>

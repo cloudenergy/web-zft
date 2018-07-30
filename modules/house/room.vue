@@ -219,9 +219,11 @@
 				this.$modal.$emit('open', {
 					comp: DeviceUsageChart,
 					data: {
-						houseDevice:data
+						houseDevice:data,
+            title: this.room.name,
 					},
-					title: '使用详情'
+					title: '使用详情',
+          className: 'usage-dialog-wrapper'
 				});
 			},
 			successInfo() {
@@ -602,4 +604,7 @@
 			height: 72px;
 		}
 	}
+  .usage-dialog-wrapper .el-dialog {
+    width: 90%;
+  }
 </style>
