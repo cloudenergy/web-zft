@@ -166,7 +166,10 @@
                     }, {
                         projectId: this.projectId
                     })
-                    .then(res => this.$set(this, 'fundChannel', res))
+                    .then(res => {
+                      this.$set(this, 'fundChannel', res)
+                      this.$store.state.fundChannels = res
+                    })
                 this.$store
                     .dispatch('GET_OTHERCOST')
                     .then(data => (this.otherCost = fp.filter(fp.get('enabled'))(data)));
