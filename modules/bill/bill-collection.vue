@@ -44,7 +44,7 @@
             </div>
         </div>
         <div style="margin-top:20px">
-            <el-input type="textarea" :rows="2" placeholder="收款备注" v-model="form.remake">
+            <el-input type="textarea" :rows="2" placeholder="收款备注" v-model="form.remark">
             </el-input>
         </div>
     </div>
@@ -68,7 +68,7 @@
         watch: {
             data(newVal, oldVal) {
                 this.form.fundChannelId = this.defaultFundChannel;
-                this.form.remake = '';
+                this.form.remark = '';
                 this.amountPrice = 0;
             }
         },
@@ -78,7 +78,7 @@
                 nowData: this.date(),
                 form: {
                     fundChannelId: 0,
-                    remake: '',
+                    remark: '',
                     amount: ''
                 },
                 amountPrice: 0
