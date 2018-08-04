@@ -1,18 +1,23 @@
 <template>
   <div class="usage-dialog">
-
-    <div class="form-inline text-right">
+    <div class="form-inline pull-left">
+      <el-button type="primary">
+                 正向有功
+      </el-button>
+    </div>
+    <div class="form-inline text-right pull-right">
       <div class="form-inline pull-left">
-        <el-date-picker v-model="date" :type="pickType" placeholder="选择日期" style="width:160px">
+        <el-date-picker v-model="selectedTime" :type="pickType" placeholder="选择日期" style="width:160px">
         </el-date-picker>
       </div>
+
       <el-button-group>
         <el-button type="primary" icon="el-icon-search" class="search-button"
                    @click="channelDetail()"> 查询
         </el-button>
       </el-button-group>
       <el-button-group>
-        <el-button type="primary" v-for="(val, key) in timeTypes"
+        <el-button type="primary" v-for="(val, key) in timeTypes" :key="key"
                    :class="{active:timeType === key}" class="time-type-buttons" @click="timeTypeChange(key)">{{val}}
         </el-button>
       </el-button-group>
@@ -43,7 +48,10 @@
 
 <script>
   import {
-    subDays,
+    startOfDay,
+    startOfWeek,
+    startOfMonth,
+    startOfYear,
     format
   } from 'date-fns';
   import fp from 'lodash/fp';
@@ -75,6 +83,12 @@
           MONTH: '月',
           YEAR: '年'
         },
+        startTimeOfTypes: {
+          DAY: startOfDay,
+          WEEK: startOfWeek,
+          MONTH: startOfMonth,
+          YEAR: startOfYear
+        },
         timeFormat: {
           DAY: 'H',
           WEEK: 'M-DD',
@@ -87,7 +101,7 @@
           MONTH: 'month',
           YEAR: 'year'
         },
-        date: new Date(),
+        selectedTime: new Date(),
         channels: [],
       }
     },
@@ -99,9 +113,10 @@
         return this.$store.state.userInfo.user.projectId
       },
       reqData() {
+        console.log(`this.selectedTime ${this.selectedTime} ${this.startTimeOfTypes[this.timeType](this.selectedTime)}`);
         return {
-          'startDate': Date.parse(subDays(new Date(), 7)) / 1000,
-          'endDate': Date.parse(new Date()) / 1000
+          startDate: Date.parse(this.startTimeOfTypes[this.timeType](this.selectedTime)) / 1000,
+          mode: this.timeType
         }
       },
       curveUnit() {
@@ -110,7 +125,7 @@
       timeline() {
         const data = this.curveType === 'diff' ? this.diffCurve(this.deviceScale)
           : this.scaleCurve(this.deviceScale)
-        console.log(this.deviceScale, this.curveType, data);
+        const currentFormat = this.timeFormat[this.timeType]
         return {
           chart: {
             type: this.chartType
@@ -121,7 +136,7 @@
             categories: this.categories,
             labels: {
               formatter: function () {
-                return format(new Date(this.value), 'H');
+                return format(new Date(this.value), currentFormat);
               }
             }
           },
@@ -152,9 +167,6 @@
       },
     },
     methods: {
-      formatValue(data, f) {
-        return format(new Date(data), f)
-      },
       typeChange(type) {
         this.$set(this, 'chartType', type);
       },
@@ -187,10 +199,12 @@
 </script>
 
 <style lang="less" scoped>
-  .usage-dialog {
-    margin: 15px;
+  .form-inline {
+    margin-bottom: 10px;
   }
-
+  .el-button-group {
+    margin: 0 5px;
+  }
   .time-type-buttons, .search-button {
     background-color: #1abc9c;
     &.active {

@@ -2,9 +2,7 @@
 	<div class="house-cell" :class="{leased: this.room.contract.id!==undefined||this.room.contract.from*1000<=nowDate}">
 		<div class="cell" @click="view()">
 			<div class="flexcenter between">
-				<h3 v-if="houseFormat==='SHARE'">{{room.name}}</h3>
-				<h3 v-if="houseFormat==='ENTIRE'">{{house.location.name}}{{house.roomNumber}}</h3>
-				<h3 v-if="houseFormat==='SOLE'">{{house.location.name}}{{house.building}}{{house.unit}}{{house.roomNumber}}</h3>
+				<h3>{{nameOfRoom}}</h3>
 				<div v-if="room.devices[0]&&room.devices[0].status" @click.stop="houseDevicesDosage(room)">
 					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.devices[0].status.service==='EMC_ONLINE'" />
 					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.devices[0].status.service==='EMC_OFFLINE'" />
@@ -183,7 +181,15 @@
 			},
 			nowDate() {
 				return Date.parse(new Date());
-			}
+			},
+      nameOfRoom() {
+        if (this.houseFormat === 'ENTIRE') {
+          return `${this.house.location.name}${this.house.roomNumber}`
+        } else if (this.houseFormat === 'SOLE') {
+          return `${this.house.location.name}${this.house.building}${this.house.unit}${this.house.roomNumber}`
+        }
+        return this.room.name;
+      }
 		},
 		created() {
 			this.updateData = this.userdatainfo;
@@ -220,9 +226,8 @@
 					comp: DeviceUsageChart,
 					data: {
 						houseDevice:data,
-            title: this.room.name,
+            title: this.nameOfRoom,
 					},
-					title: '使用详情',
           className: 'usage-dialog-wrapper'
 				});
 			},
