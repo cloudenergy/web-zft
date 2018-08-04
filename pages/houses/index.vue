@@ -112,7 +112,7 @@
         return this.$store.state.userInfo.index
       },
       equipmentHouses: function () {
-        return this.houses
+        return fp.sortBy('[0].currentFloor')(this.houses)
       }
     },
     created() {

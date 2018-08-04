@@ -5,21 +5,21 @@
 		<el-table-column prop="mountha" label="现金">
 			<template slot-scope="scope">
                 <div>
-                    {{price(scope.row.channels[1])}}
+                    {{price(valueOf('channels.cash')(scope.row))}}
                 </div>
             </template>
 		</el-table-column>
 		<el-table-column prop="mounthb" label="支付宝">
 			<template slot-scope="scope">
                 <div>
-                    {{price(scope.row.channels[2])}}
+                  {{price(valueOf('channels.alipay')(scope.row))}}
                 </div>
             </template>
 		</el-table-column>
 		<el-table-column prop="mounthc" label="微信">
 			<template slot-scope="scope">
-                <div v-if="scope.row.channels[9]!==undefined">
-                    {{price(scope.row.channels[9])}}
+                <div>
+                  {{price(valueOf('channels.wx')(scope.row))}}
                 </div>
             </template>
 		</el-table-column>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import fp from 'lodash/fp'
 	export default {
 		props:{
 			channelFlows:{
@@ -45,7 +46,10 @@
 		methods:{
 			price(val) {
 				return (val/100).toFixed(2)
-			}
+			},
+      valueOf(field) {
+        return fp.getOr(0)(field)
+      },
 		},
 		mounted() {
 
