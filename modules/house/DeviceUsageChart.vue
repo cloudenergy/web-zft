@@ -1,45 +1,41 @@
 <template>
   <div class="usage-dialog">
+
     <div class="form-inline text-right">
-      <!--<div class="btn-group btn-group-sm pull-left ml15">-->
-        <!--<a class="btn btn-sm btn-primary"-->
-           <!--:class="{active:currentChannelId===item.funcid}" v-for="item in channels"-->
-           <!--@click="channelDetail()" ng-bind="item.channel"></a>-->
-      <!--</div>-->
-      <div class="form-group form-group-sm has-feedback date ml15">
-        <input type="text" class="form-control" v-model="date"/>
-        <i class="form-control-feedback emweb web-calendar"></i>
+      <div class="form-inline pull-left">
+        <el-date-picker v-model="date" :type="pickType" placeholder="选择日期" style="width:160px">
+        </el-date-picker>
       </div>
-      <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-primary" @click="channelDetail()"><i
-          class="emweb web-search"></i> 查询</a>
-      </div>
-      <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-primary" v-for="(key,val) in timeTypes"
-           :class="{active:timeType === key}" @click="timeTypeChange(key)" ng-bind="val"></a>
-      </div>
-      <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-info" :class="{active: chartType === 'spline'}"
-           @click="typeChange('spline')">
-          折线<i class="emweb web-spline"></i>
-        </a>
-        <a class="btn btn-info" :class="{active: chartType === 'column'}"
-           @click="typeChange('column')">
-          柱状<i class="emweb web-column"></i>
-        </a>
-      </div>
-      <div class="btn-group btn-group-sm ml15">
-        <a class="btn btn-info" :class="{active: curveType === 'diff'}"
-           @click="lineTypeChange('diff')">
-          差值
-          <i class="emweb web-curve-area"></i>
-        </a>
-        <a class="btn btn-info" :class="{active: curveType === 'scale'}"
-           @click="lineTypeChange('scale')">
-          刻度
-          <i class="emweb web-line-spacing"></i>
-        </a>
-      </div>
+      <el-button-group>
+        <el-button type="primary" icon="el-icon-search" class="search-button"
+                   @click="channelDetail()"> 查询
+        </el-button>
+      </el-button-group>
+      <el-button-group>
+        <el-button type="primary" v-for="(val, key) in timeTypes"
+                   :class="{active:timeType === key}" class="time-type-buttons" @click="timeTypeChange(key)">{{val}}
+        </el-button>
+      </el-button-group>
+      <el-button-group class="chart-type-buttons">
+        <el-button type="primary"
+                   :class="{active: chartType === 'spline'}" icon="el-icon-edit-outline"
+                   @click="typeChange('spline')"> 折线
+        </el-button>
+        <el-button type="primary"
+                   :class="{active: chartType === 'column'}" icon="el-icon-picture"
+                   @click="typeChange('column')"> 柱状
+        </el-button>
+      </el-button-group>
+      <el-button-group class="chart-type-buttons">
+        <el-button type="primary"
+                   :class="{active: curveType === 'diff'}" icon="el-icon-tickets"
+                   @click="lineTypeChange('diff')"> 差值
+        </el-button>
+        <el-button type="primary"
+                   :class="{active: curveType === 'scale'}" icon="el-icon-sort"
+                   @click="lineTypeChange('scale')"> 刻度
+        </el-button>
+      </el-button-group>
     </div>
     <highcharts class="highcharts-panel mt15" :options="timeline"></highcharts>
   </div>
@@ -84,6 +80,12 @@
           WEEK: 'M-DD',
           MONTH: 'M-DD',
           YEAR: 'YYYY-MM'
+        },
+        pickTypes: {
+          DAY: 'date',
+          WEEK: 'week',
+          MONTH: 'month',
+          YEAR: 'year'
         },
         date: new Date(),
         channels: [],
@@ -144,7 +146,10 @@
             data
           }]
         }
-      }
+      },
+      pickType() {
+        return this.pickTypes[this.timeType]
+      },
     },
     methods: {
       formatValue(data, f) {
@@ -181,8 +186,23 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .usage-dialog {
     margin: 15px;
   }
+
+  .time-type-buttons, .search-button {
+    background-color: #1abc9c;
+    &.active {
+      background-color: #16a085;
+    }
+  }
+
+  .chart-type-buttons .el-button {
+    background-color: #3498db;
+    &.active {
+      background-color: #2c81ba;
+    }
+  }
+
 </style>
