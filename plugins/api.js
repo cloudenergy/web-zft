@@ -155,7 +155,7 @@ const apis = {
   logout: resource('/logout'),
   user_info: resource('/projects/{projectId}/users/{userInfoId}'),
   scale_read: resource('/projects/{projectId}/devices/{deviceId}/scale'),
-  change_remake: resource('/projects/{projectId}/devices'),
+  change_remark: resource('/projects/{projectId}/devices'),
   project_balance: resource('/projects/{projectId}/balance'),
   blance_withdraw: resource('/projects/{projectId}/withdraw'),
   electric_withdraw: resource('/projects/{projectId}/withdraw/{id}'),
