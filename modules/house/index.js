@@ -11,5 +11,5 @@ export { default as Search } from './search';
 export { default as Add } from './add';
 export { default as Preview } from './preview';
 export { default as houseInformation } from './houseInformation';
-export { default as houseDevicesDosage } from './houseDevicesDosage';
+export { default as openDeviceUsageChart } from './houseDevicesDosage';
 export { default as DeviceUsageChart } from './DeviceUsageChart';

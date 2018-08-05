@@ -7,37 +7,37 @@
 			</el-table-column>
 			<el-table-column label="设备id" width="130" prop="deviceId">
 				<template slot-scope="scope">
-					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
+					<div @click="openDeviceUsageChart(scope.row)" class="cursorp">
 						{{removePrefix(scope.row.deviceId)}}
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="状态">
-				<template slot-scope="scope" @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
+				<template slot-scope="scope" @click="openDeviceUsageChart(scope.row)" class="cursorp">
 					<div v-if="scope.row.status.service==='EMC_ONLINE'" style="color:#13ce66">正常</div>
 					<div v-if="scope.row.status.service==='EMC_OFFLINE'" style="color:#ff4949">异常</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="读数(KWH)" prop="scale">
 				<template slot-scope="scope">
-					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">{{fixed(scope.row.scale)}}</div>
+					<div @click="openDeviceUsageChart(scope.row)" class="cursorp">{{fixed(scope.row.scale)}}</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="通信时间">
 				<template slot-scope="scope">
-					<div @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">{{dateTime(scope.row.updatedAt*1000)}}</div>
+					<div @click="openDeviceUsageChart(scope.row)" class="cursorp">{{dateTime(scope.row.updatedAt*1000)}}</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="关联房源" v-if="loading===1">
 				<template slot-scope="scope">
-					<div class="flexcenter cursorp" style="padding-right: 15px" v-if="scope.row.building.location" @click="houseDevicesDosage(scope.row.deviceId)">
-						{{scope.row.building.location.name}}{{scope.row.building.building}}幢{{scope.row.building.unit}}单元{{scope.row.building.roomNumber}}
+					<div class="flexcenter cursorp" style="padding-right: 15px" v-if="scope.row.building.location" @click="openDeviceUsageChart(scope.row)">
+						{{nameOfRoom(scope.row)}}
 					</div>
 				</template>
 			</el-table-column>
 			<el-table-column label="租户" v-if="loading===1">
 				<template slot-scope="scope">
-					<div v-if="scope.row.contract&&scope.row.contract.user"  @click="houseDevicesDosage(scope.row.deviceId)" class="cursorp">
+					<div v-if="scope.row.contract&&scope.row.contract.user" @click="openDeviceUsageChart(scope.row)" class="cursorp">
 						{{scope.row.contract.user.name}} {{scope.row.contract.userId}}
 					</div>
 				</template>
@@ -45,7 +45,7 @@
 
 			<el-table-column label="备注">
 				<template slot-scope="scope">
-					<div class="flexc remake">
+					<div class="flexc remark">
 						<div v-if="scope.row.memo">
 							{{scope.row.memo}}
 						</div>
@@ -73,7 +73,7 @@
 		</el-table>
 		<el-dialog title="修改备注" :visible.sync="dialogVisible" width="30%" class="changeRemake">
             <div class="flexc">
-				<el-input v-model="remakeInput" type="textarea" placeholder="请输入备注"></el-input>
+				<el-input v-model="remarkInput" type="textarea" placeholder="请输入备注"></el-input>
 			</div>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="notify()">取 消</el-button>
@@ -84,8 +84,9 @@
 </template>
 
 <script>
+import fp from 'lodash/fp';
 import format from 'date-fns/format';
-import { houseDevicesDosage } from '~/modules/house';
+import { DeviceUsageChart } from '~/modules/house';
 import { removePrefix } from '~/utils/helper';
 export default {
 	props: {
@@ -111,7 +112,7 @@ export default {
 				mode: '',
 				devicesIds: []
 			},
-			remakeInput: '',
+			remarkInput: '',
 			deviceInfo: '',
 			dialogVisible: false
 		};
@@ -123,12 +124,15 @@ export default {
 	},
 	methods: {
     removePrefix,
+    nameOfRoom(room) {
+      return `${room.building.location.name}${room.roomNumber}`
+    },
 		notify(val) {
 			this.dialogVisible = false;
 			if (val) {
-				this.$model('change_remake')
+				this.$model('change_remark')
 					.update(
-						{ memo: this.remakeInput },
+						{ memo: this.remarkInput },
 						{ projectId: this.projectId, id: val.deviceId }
 					)
 					.then(res => {
@@ -144,15 +148,16 @@ export default {
 			this.deviceInfo = data;
 			this.dialogVisible = true;
 		},
-		houseDevicesDosage(data) {
-			this.$modal.$emit('open', {
-				comp: houseDevicesDosage,
-				data: {
-					houseDevice: data,
-					oneEquipment: true
-				},
-				title: '使用详情'
-			});
+		openDeviceUsageChart(data) {
+      console.log(`openDeviceUsageChart ${JSON.stringify(data)}`);
+      this.$modal.$emit('open', {
+        comp: DeviceUsageChart,
+        data: {
+          houseDevice: fp.defaults({devices: [{deviceId: data.deviceId}]})(data),
+          title: this.nameOfRoom(data),
+        },
+        className: 'usage-dialog-wrapper'
+      })
 		},
 		fixed(val) {
 			return (val / 10000).toFixed(2);
@@ -288,7 +293,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.remake {
+.remark {
 	&:hover .change {
 		opacity: 1;
 	}
@@ -306,5 +311,8 @@ export default {
 	textarea {
 		height: 80px;
 	}
+}
+.usage-dialog-wrapper .el-dialog {
+  width: 90%;
 }
 </style>

@@ -28,7 +28,7 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </span>
-            <span v-if="house.devices&&house.devices.length>0" class="cursorp" @click="houseDevicesDosage(house)"
+            <span v-if="house.devices&&house.devices.length>0" class="cursorp" @click="openDeviceUsageChart(house)"
                   style="margin-left:4px">
 							<icon type="jian" style="font-size:20px;color:#67c23a"
                     v-if="house.devices[0].status.service==='EMC_ONLINE'"/>
@@ -78,11 +78,11 @@
 <script>
   import _ from 'lodash';
   import fp from 'lodash/fp';
-  import {Tab, Room, Search, Preview, houseInformation, houseDevicesDosage} from '~/modules/house';
+  import {Tab, Room, Search, Preview, houseInformation, DeviceUsageChart} from '~/modules/house';
   import {filterOP} from '../../utils/houseKeeper';
 
   export default {
-    components: {Tab, Room, Search, Preview, houseInformation, houseDevicesDosage},
+    components: {Tab, Room, Search, Preview, houseInformation, DeviceUsageChart},
     data() {
       return {
         houses: [],
@@ -156,15 +156,22 @@
       keyup(val) {
         this.setSearch(val);
       },
+      nameOfHouse(house) {
+        if (this.houseFormat === 'ENTIRE') {
+          return `${house.location.name}${house.roomNumber}`
+        }
+        return `${house.location.name} ${house.building}幢 ${house.unit}单元 ${house.roomNumber}室`;
+      },
       // 打开电表使用详情
-      houseDevicesDosage(data) {
+      openDeviceUsageChart(data) {
         this.$modal.$emit('open', {
-          comp: houseDevicesDosage,
+          comp: DeviceUsageChart,
           data: {
-            houseDevice: data
+            houseDevice: data,
+            title: this.nameOfHouse(data),
           },
-          title: '使用详情'
-        });
+          className: 'usage-dialog-wrapper'
+        })
       },
       // 滚动事件query
       scrollFunc() {

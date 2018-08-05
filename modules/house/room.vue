@@ -3,7 +3,7 @@
 		<div class="cell" @click="view()">
 			<div class="flexcenter between">
 				<h3>{{nameOfRoom}}</h3>
-				<div v-if="room.devices[0]&&room.devices[0].status" @click.stop="houseDevicesDosage(room)">
+				<div v-if="room.devices[0]&&room.devices[0].status" @click.stop="openDeviceUsageChart(room)">
 					<icon type="jian" style="font-size:20px;color:#67c23a" v-if="room.devices[0].status.service==='EMC_ONLINE'" />
 					<icon type="jian" style="font-size:20px;color:#FA5555" v-if="room.devices[0].status.service==='EMC_OFFLINE'" />
 				</div>
@@ -221,7 +221,7 @@
 			};
 		},
 		methods: {
-			houseDevicesDosage(data) {
+      openDeviceUsageChart(data) {
 				this.$modal.$emit('open', {
 					comp: DeviceUsageChart,
 					data: {

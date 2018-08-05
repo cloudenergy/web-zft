@@ -52,6 +52,7 @@
     startOfWeek,
     startOfMonth,
     startOfYear,
+    subDays,
     format
   } from 'date-fns';
   import fp from 'lodash/fp';
@@ -85,7 +86,7 @@
         },
         startTimeOfTypes: {
           DAY: startOfDay,
-          WEEK: startOfWeek,
+          WEEK: t => startOfWeek(t, {weekStartsOn: 1}),
           MONTH: startOfMonth,
           YEAR: startOfYear
         },
@@ -101,7 +102,7 @@
           MONTH: 'month',
           YEAR: 'year'
         },
-        selectedTime: new Date(),
+        selectedTime: subDays(new Date(), 1),
         channels: [],
       }
     },
@@ -175,6 +176,7 @@
       },
       timeTypeChange(type) {
         this.$set(this, 'timeType', type);
+        this.channelDetail()
       },
       channelDetail() {
         this.$model('device_usage')
@@ -184,7 +186,6 @@
           })
           .then(res => {
             this.$set(this, 'deviceScale', res)
-            console.log(this.deviceScale);
             this.$set(this, 'categories', fp.map(t => t.time * 1000)(this.deviceScale))
           })
       },
