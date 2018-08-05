@@ -77,7 +77,7 @@
         chartType: 'spline',
         curveType: 'diff',
         currentChannelId: '',
-        timeType: 'DAY',
+        timeType: null,
         timeTypes: {
           DAY: '日',
           WEEK: '周',
@@ -107,7 +107,7 @@
       }
     },
     mounted() {
-      this.channelDetail();
+      this.timeTypeChange();
     },
     computed: {
       projectId() {
@@ -174,7 +174,7 @@
       lineTypeChange(type) {
         this.$set(this, 'curveType', type);
       },
-      timeTypeChange(type) {
+      timeTypeChange(type = 'DAY') {
         if (this.timeType === type) return
         this.$set(this, 'timeType', type)
         this.channelDetail()
