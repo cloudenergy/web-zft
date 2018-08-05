@@ -175,7 +175,8 @@
         this.$set(this, 'curveType', type);
       },
       timeTypeChange(type) {
-        this.$set(this, 'timeType', type);
+        if (this.timeType === type) return
+        this.$set(this, 'timeType', type)
         this.channelDetail()
       },
       channelDetail() {
